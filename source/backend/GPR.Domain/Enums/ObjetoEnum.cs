@@ -1,0 +1,26 @@
+public enum ObjetoEnum
+{
+  Aditamento,
+  AlienacaoLeilao,
+  AlteracaoEstruturaOrg,
+  AprovacaoNormaGeral,
+  AprovacaoRegulamento,
+  AprovacaoEdital,
+  AprovacaoPolitica,
+  AtaRegPrecos,
+  AtualizacaoRevisaoNormas,
+  CancelamentoRD,
+  Contratacao,
+  ContratacaoDireta,
+  Convenio,
+  DispensaLicitacao,
+  Homologacao,
+  Inexigibilidade,
+  InicioProcsLicit,
+  Outros,
+  Prorrogacao,
+  RenovacaoTPU,
+  RetiRatificacaoRD,
+  TermoPermissaoUso,
+  ViagemExterior
+}
