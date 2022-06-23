@@ -1,4 +1,4 @@
-public enum StatusEnum
+public enum StatusProposicaoEnum
 {
   Preparacao,
   Andamento,

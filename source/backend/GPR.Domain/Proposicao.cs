@@ -24,7 +24,7 @@ public class Proposicao
   public string AreaAtual { get; set; } = string.Empty;
   public string DescricaoFluxo { get; set; } = string.Empty;
   public string TempoPrevPerm { get; set; } = string.Empty;
-  public StatusEnum Status { get; set; }
+  public StatusProposicaoEnum Status { get; set; }
   public string ProximoPasso { get; set; } = string.Empty;
   public string DescricaoProxPasso { get; set; } = string.Empty;
   public string TempoPermProx { get; set; } = string.Empty;
