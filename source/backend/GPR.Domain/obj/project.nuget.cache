@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "12oRO9MSJdhHH0D6Vxa43/xErcvrU487l65fNJ7BWUEAIvstYIJ8jnZ6668pC7DyNtqvmAfl63ZzCwPPK2pLqg==",
+  "dgSpecHash": "FzSpy3ge7ESnETaW5xOgp73FgReyykHB2DcxILfuW0ExPtrGeG8MWRh8EWWmHF6wPAiERW9xAz/wQmn53xZe+A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\urielf\\Documents\\CPTM\\DEV\\GPR\\source\\backend\\GPR.Domain\\GPR.Domain.csproj",
+  "projectFilePath": "D:\\CPTM\\DEV\\GPR\\source\\backend\\GPR.Domain\\GPR.Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
