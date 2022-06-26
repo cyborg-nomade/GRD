@@ -58,11 +58,11 @@ No momento da RD, os funcionários da GRG exibirão uma visualização apropriad
 
 Após a conclusão da Reunião, os funcionários da GRG poderão executar as seguintes ações na **Tela de Gestão de Reunião**:
 
--   Acessar as Proposições daquela Reunião, para a elaboração da Ata e dos Relatórios;
+-   Acessar as Proposições daquela Reunião, para a elaboração da Ata e de outros relatórios;
 -   Adicionar Proposições retroativamente;
 -   Alterar os status das Proposições conforme necessário;
 -   Anexar documentos à Reunião;
--   Emitir o Relatório de Deliberações (Pauta Status). Esta emissão trava a edição todas as Proposições na pauta, e realiza o arquivamento;
+-   Emitir o Relatório Deliberativo ("Pauta Status"). Esta emissão trava a edição todas as Proposições na pauta, e realiza o arquivamento;
 
 ### 2.5. Arquivamento e Pesquisa
 
@@ -74,8 +74,8 @@ Nenhuma edição pode ser realizada nos itens arquivados.
 | #   | Nome                                  |
 | --- | ------------------------------------- |
 | 0   | Em Preenchimento                      |
-| 1   | Em Aprovação da diretoria Responsável |
-| 1.1 | Reprovado pela diretoria Responsável  |
+| 1   | Em Aprovação da Diretoria Responsável |
+| 1.1 | Reprovado pela Diretoria Responsável  |
 | 2   | Disponível para Inclusão em Pauta     |
 | 3   | Em Pauta                              |
 | 4   | Aprovada em RD                        |
@@ -107,15 +107,59 @@ Esta seção dá uma descrição detalhada de quais telas o sistema deverá apre
 ### 3.0. Tela de Login e Navegação
 
 O sistema deverá inicialmente apresentar uma tela de login, com usuário e senha. O logo da CPTM deve aparecer ao lado deste formulário.  
-O login deverá ser feito através do usuário e senhas de rede utilizados normalmente para login nas máquinas da empresa.
+O login deverá ser feito através do usuário e senha de rede utilizados normalmente para login nas máquinas da empresa.
 
-Em todas as telas deve aparecer uma barra de navegação com links adequados para cada usuário, incluindo um link para logout. Essa barra deve aparecer fixa na parte superior da tela quando apresentada em telas maiores (notebooks, desktops), mas ser colapsada em um ícone indicativo em visualizações menores (celulares, tablets).
+Em todas as telas deve aparecer uma barra de navegação com links adequados para cada usuário, incluindo um link para logout. Essa barra deve aparecer fixa na parte superior da tela quando apresentada em telas maiores (notebooks, desktops), mas ser colapsada à direita em um ícone indicativo em visualizações menores (celulares, tablets).
 
 ### 3.1. Tela de Cadastro de Proposição
 
 A tela de Casdastro de Proposição deverá conter um formulário com os seguintes campos e validações:
 
-...
+| Campo                        | Tipo                | Validação   |
+| ---------------------------- | ------------------- | ----------- |
+| Objeto                       | Dropdown            | Obrigatório |
+| Nº Proposição                | Texto               | Opcional    |
+| Protolo                      | Texto               | Opcional    |
+| Nº Processo                  | Texto               | Opcional    |
+| Nº Reunião                   | Automático          | Opcional    |
+| Data RD                      | Automático          | Opcional    |
+| Seq.                         | Número              | Opcional    |
+| IdPrd                        | Número / Automático | Opcional    |
+| Assunto                      | Texto               | Obrigatório |
+| Nº Conselho                  | Texto               | Opcional    |
+| Area Solicitante             | Dropdown            | Obrigatório |
+| Motivo Retorno               | Texto               | Opcional    |
+| Vincular PRD?                | Checkbox            | Opcional    |
+| Extra Pauta?                 | Checkbox            | Opcional    |
+| Ação                         | Dropdown            | Obrigatório |
+| Sigla Gerência               | Texto / Automático  | Obrigatório |
+| Gerência                     | Texto / Automático  | Obrigatório |
+| Sigla Diretoria              | Texto / Automático  | Obrigatório |
+| Diretoria                    | Texto / Automático  | Obrigatório |
+| Área Atual                   | Texto / Automático  | Obrigatório |
+| Descrição Fluxo              | Texto               | Opcional    |
+| Tempo Prev. Perm.            | Texto               | Opcional    |
+| Status                       | Dropdown            | Obrigatório |
+| Desc. Próx. Passo            | Texto               | Opcional    |
+| Tempo Perm. Próx.            | Texto               | Opcional    |
+| Descrição                    | Texto               | Obrigatório |
+| Relator                      | Texto               | Obrigatório |
+| Data Base                    | Data                | Obrigatório |
+| Moeda                        | Texto               | Obrigatório |
+| Valor Original Contrato      | Número              | Obrigatório |
+| Valor Total Proposição       | Número              | Obrigatório |
+| PRD (Anexo)                  | Arquivo             | Obrigatório |
+| TR (Anexo)                   | Arquivo             | Obrigatório |
+| Parecer Jurídico (Anexo)     | Arquivo             | Obrigatório |
+| Relatório Técnico (Anexo)    | Arquivo             | Obrigatório |
+| Planilha Quant. (Anexo)      | Arquivo             | Obrigatório |
+| Edital (Anexo)               | Arquivo             | Obrigatório |
+| Reserva Verba (Anexo)        | Arquivo             | Obrigatório |
+| SC (Anexo)                   | Arquivo             | Obrigatório |
+| RAV (Anexo)                  | Arquivo             | Obrigatório |
+| Cronograma Fís.-Fin. (Anexo) | Arquivo             | Obrigatório |
+| PCA (Anexo)                  | Arquivo             | Obrigatório |
+| Outros (Anexo)               | Arquivos            | Opcionais   |
 
 Abaixo deste formulário, deverá haver uma série de botões, com cores indicativas, para a realização de ações de acordo com o nível de acesso do usuário e o status da Proposição.  
 Todas as ações devem abrir um modal (pop-up), confirmando se o usuário deseja de fato executá-la. Caso clique em "Não", o modal apenas desaparece.  
@@ -123,34 +167,34 @@ Caso o usuário tente sair do formulário sem salvar as alterações, um modal (
 
 #### 3.1.1. Ações Gerenciais
 
-Para as Gerências, as ações são as seguintes caso a Proposição esteja nos status _"Em Preenchimento"_ (status inicial), _"Reprovado pela diretoria Responsável"_, _"Aprovada em RD - Aguardando Ajustes"_ ou _"Suspensa - Aguardando Ajustes"_:
+Para as gerências, caso a Proposição esteja nos status _"Em Preenchimento"_ (status inicial), _"Reprovado pela Diretoria Responsável"_, _"Aprovada em RD - Aguardando Ajustes"_ ou _"Suspensa - Aguardando Ajustes"_, as ações são as seguintes:
 
 -   **Salvar Progresso**: Salva o atual preenchimento do formulário, sem validações. Esta ação não altera o status da Proposição.
--   **Enviar para Aprovação da diretoria**: Verifica e valida o preenchimento correto do formulário, salva as alterações e muda o status para _"Em Aprovação da diretoria Responsável"_. Nesse momento, uma notificação é enviada para o diretor Responsável e para a GRG.  
+-   **Enviar para Aprovação da diretoria**: Verifica e valida o preenchimento correto do formulário, salva as alterações e muda o status para _"Em Aprovação da Diretoria Responsável"_. Nesse momento, uma notificação é enviada para o diretor responsável e para a GRG.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
 -   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
 
-Caso a Proposição esteja nos status _"Em Aprovação da diretoria Responsável"_, _"Disponível para Inclusão em Pauta"_ ou _"Em Pauta"_, as ações são as seguintes:
+Caso a Proposição esteja nos status _"Em Aprovação da Diretoria Responsável"_, _"Disponível para Inclusão em Pauta"_ ou _"Em Pauta"_, as ações são as seguintes:
 
--   **Salvar Alterações**: Verifica e valida o preenchimento correto do formulário e salva as alterações. Nesse momento, uma notificação é enviada para o diretor Responsável e para a GRG.  
+-   **Salvar Alterações**: Verifica e valida o preenchimento correto do formulário e salva as alterações. Nesse momento, uma notificação é enviada para o diretor responsável e para a GRG.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
 -   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
 
-Caso a Proposição esteja nos status _"Aprovada em RD"_, _"Reprovada em RD"_ ou _"Arquivada"_, o formulário estará travado para edições e as ações são as seguintes:
+Caso a Proposição esteja nos status _"Aprovada em RD"_, _"Reprovada em RD"_ ou _"Arquivada"_, o formulário estará travado para edições, e as ações são as seguintes:
 
 -   **Cancelar**: Sai do formulário.
 
 #### 3.1.2. Ações da diretoria
 
-Para as diretorias, as ações são as seguintes, caso a Proposição esteja no status _"Em Aprovação da diretoria Responsável"_:
+Para as diretorias, caso a Proposição esteja no status _"Em Aprovação da Diretoria Responsável"_, as ações são as seguintes:
 
 -   **Aprovar**: Verifica e valida o preenchimento correto do formulário, salva as alterações e muda o status para _"Disponível para Inclusão em Pauta"_. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para a GRG.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
--   **Reprovar**: Verifica e valida o preenchimento correto do formulário, salva as alterações e muda o status para _"Reprovado pela diretoria Responsável"_. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição.  
+-   **Reprovar**: Verifica e valida o preenchimento correto do formulário, salva as alterações e muda o status para _"Reprovado pela Diretoria Responsável"_. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
 -   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
 
-Caso a Proposição esteja nos status _"Reprovado pela diretoria Responsável"_, _"Disponível para Inclusão em Pauta"_ ou _"Em Pauta"_, as ações são as seguintes:
+Caso a Proposição esteja nos status _"Reprovado pela Diretoria Responsável"_, _"Disponível para Inclusão em Pauta"_ ou _"Em Pauta"_, as ações são as seguintes:
 
 -   **Salvar Alterações**: Verifica e valida o preenchimento correto do formulário e salva as alterações. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para a GRG.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
@@ -165,13 +209,13 @@ Caso a Proposição esteja nos status _"Aprovada em RD"_, _"Reprovada em RD"_ ou
 Para os funcionários da GRG, as ações são as seguintes, caso a Proposição esteja no status _"Disponível para Inclusão em Pauta"_:
 
 -   **Incluir em Pauta**: Abre um modal (pop-up) para selecionar, em uma lista suspensa, a Reunião na pauta da qual a Proposição deve ser incluída. A lista suspensa deve apresentar apenas reuniões que ainda não foram arquivadas.  
-    Após selecionada a Reunião apropriada, o usuário deverá clicar em um botão "OK" dentro do modal, confirmando assim a inclusão. Ao clicar nele, o status da Proposição será alterado para _"Em Pauta"_.  
+    Após selecionada a Reunião apropriada, o usuário deverá clicar em um botão "OK" dentro do modal, confirmando assim a inclusão. Ao clicar nele, o status da Proposição será alterado para _"Em Pauta"_, e os campos referentes à Reunião são preenchidos automaticamente no formulário.  
     Um botão "Cancelar" deverá ser exibido também. Neste caso, o modal se fecha, e nenhuma alteração é realizada.
--   **Salvar Alterações**: Verifica e valida o preenchimento correto do formulário e salva as alterações. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.  
+-   **Salvar Alterações**: Verifica e valida o preenchimento correto do formulário e salva as alterações. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor responsável.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
 -   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
 
-Caso a Proposição esteja nos status _"Em Aprovação da diretoria Responsável"_, _"Reprovado pela diretoria Responsável"_, _"Em Pauta"_, _"Aprovada em RD - Aguardando Ajustes"_, _"Suspensa - Aguardando Ajustes"_ as ações são as seguintes:
+Caso a Proposição esteja nos status _"Em Aprovação da Diretoria Responsável"_, _"Reprovado pela Diretoria Responsável"_, _"Em Pauta"_, _"Aprovada em RD - Aguardando Ajustes"_, _"Suspensa - Aguardando Ajustes"_ as ações são as seguintes:
 
 -   **Salvar Alterações**: Verifica e valida o preenchimento correto do formulário e salva as alterações. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
@@ -187,7 +231,19 @@ Como tela inicial para todos os usuários, será exibida uma listagem das Propos
 Os filtros (tais como ordenação e pesquisa) serão disponibilizados acima da lista.  
 A listagem deverá incluir os seguintes campos, servindo de resumo das Proposições:
 
-...
+| Campo                  |
+| ---------------------- |
+| Objeto                 |
+| Nº Reunião             |
+| Data RD                |
+| IdPrd                  |
+| Assunto                |
+| Area Solicitante       |
+| Descrição              |
+| Relator                |
+| Data Base              |
+| Valor Total Proposição |
+| Status                 |
 
 Ao se clicar em uma das linhas da listagem, o sistema deverá abrir, na mesma tela, o **Formulário de Proposição** devidamente preenchido com as informações cadastradas, e disponibilizando as ações conforme seção anterior.
 
@@ -229,7 +285,19 @@ Ao se clicar em uma das linhas da listagem, o sistema deverá abrir, na mesma te
 Para a equipe da GRG, também será disponibilizada uma tela para a gestão das Reuniões. As Reuniões precisarão ser criadas usando esta tela antes que se possa incluir Proposições na sua pauta.  
 Esta tela consistirá de um formulário com os seguintes campos e validações:
 
-...
+| Campo              | Tipo                | Validação   |
+| ------------------ | ------------------- | ----------- |
+| Id (Nº Reunião)    | Número / Automático | Obrigatório |
+| Data               | Data                | Obrigatório |
+| Horário            | Hora                | Obrigatório |
+| Status             | Dropdown            | Obrigatório |
+| Data Prévia        | Data                | Obrigatório |
+| Horário Prévia     | Hora                | Obrigatório |
+| Local              | Texto               | Obrigatório |
+| Tipo Reunião       | Dropdown            | Obrigatório |
+| Proposições        | Automático          | Opcional    |
+| Proposições Prévia | Automático          | Opcional    |
+| Participantes      | Texto               | Opcional    |
 
 Abaixo deste formulário, deverá haver uma série de botões, com cores indicativas, para a realização de ações de acordo com o status da Reunião. A Reunião terá os seguintes status:
 
@@ -262,7 +330,14 @@ Será igualmente disponibilizado para a equipe da GRG uma listagem das Reuniões
 Os filtros (tais como ordenação e pesquisa) serão disponibilizados acima da lista.  
 A listagem deverá incluir os seguintes campos, servindo de resumo das Reuniões:
 
-...
+| Campo           | Tipo                | Validação   |
+| --------------- | ------------------- | ----------- |
+| Id (Nº Reunião) | Número / Automático | Obrigatório |
+| Data            | Data                | Obrigatório |
+| Horário         | Hora                | Obrigatório |
+| Status          | Dropdown            | Obrigatório |
+| Local           | Texto               | Obrigatório |
+| Tipo Reunião    | Dropdown            | Obrigatório |
 
 Ao se clicar em uma das linhas da listagem, o sistema deverá abrir, na mesma tela, o **Formulário de Reuniões** devidamente preenchido com as informações cadastradas, e disponibilizando as ações conforme seção anterior.
 
