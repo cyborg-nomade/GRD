@@ -86,17 +86,15 @@ Nenhuma edição pode ser realizada nos itens arquivados.
 
 Os fluxos possíveis são:
 
-0 > 1 > 1.1
+0 > 1 > 1.1 > 1 > ... (Reprovação na Diretoria)
 
-1.1 > 1...
+0 > 1 > 2 > 3 > 4 > 5 (Fluxo normal)
 
-0 > 1 > 2 > 3 > 4 > 5
+0 > 1 > 2 > 3 > 4.1 > 5 (Reprovação em RD)
 
-0 > 1 > 2 > 3 > 4.1 > 5
+0 > 1 > 2 > 3 > 4.2 > 4 > 5 (Realização de ajustes após aprovação)
 
-0 > 1 > 2 > 3 > 4.2 > 4 > 5
-
-0 > 1 > 2 > 3 > 4.3 > 4 > 5
+0 > 1 > 2 > 3 > 4.3 > 2 > ... (Suspensão)
 
 ---
 
@@ -115,51 +113,71 @@ Em todas as telas deve aparecer uma barra de navegação com links adequados par
 
 A tela de Casdastro de Proposição deverá conter um formulário com os seguintes campos e validações:
 
-| Campo                        | Tipo                | Validação   |
-| ---------------------------- | ------------------- | ----------- |
-| Objeto                       | Dropdown            | Obrigatório |
-| Nº Proposição                | Texto               | Opcional    |
-| Protolo                      | Texto               | Opcional    |
-| Nº Processo                  | Texto               | Opcional    |
-| Nº Reunião                   | Automático          | Opcional    |
-| Data RD                      | Automático          | Opcional    |
-| Seq.                         | Número              | Opcional    |
-| IdPrd                        | Número / Automático | Opcional    |
-| Assunto                      | Texto               | Obrigatório |
-| Nº Conselho                  | Texto               | Opcional    |
-| Area Solicitante             | Dropdown            | Obrigatório |
-| Motivo Retorno               | Texto               | Opcional    |
-| Vincular PRD?                | Checkbox            | Opcional    |
-| Extra Pauta?                 | Checkbox            | Opcional    |
-| Ação                         | Dropdown            | Obrigatório |
-| Sigla Gerência               | Texto / Automático  | Obrigatório |
-| Gerência                     | Texto / Automático  | Obrigatório |
-| Sigla Diretoria              | Texto / Automático  | Obrigatório |
-| Diretoria                    | Texto / Automático  | Obrigatório |
-| Área Atual                   | Texto / Automático  | Obrigatório |
-| Descrição Fluxo              | Texto               | Opcional    |
-| Tempo Prev. Perm.            | Texto               | Opcional    |
-| Status                       | Dropdown            | Obrigatório |
-| Desc. Próx. Passo            | Texto               | Opcional    |
-| Tempo Perm. Próx.            | Texto               | Opcional    |
-| Descrição                    | Texto               | Obrigatório |
-| Relator                      | Texto               | Obrigatório |
-| Data Base                    | Data                | Obrigatório |
-| Moeda                        | Texto               | Obrigatório |
-| Valor Original Contrato      | Número              | Obrigatório |
-| Valor Total Proposição       | Número              | Obrigatório |
-| PRD (Anexo)                  | Arquivo             | Obrigatório |
-| TR (Anexo)                   | Arquivo             | Obrigatório |
-| Parecer Jurídico (Anexo)     | Arquivo             | Obrigatório |
-| Relatório Técnico (Anexo)    | Arquivo             | Obrigatório |
-| Planilha Quant. (Anexo)      | Arquivo             | Obrigatório |
-| Edital (Anexo)               | Arquivo             | Obrigatório |
-| Reserva Verba (Anexo)        | Arquivo             | Obrigatório |
-| SC (Anexo)                   | Arquivo             | Obrigatório |
-| RAV (Anexo)                  | Arquivo             | Obrigatório |
-| Cronograma Fís.-Fin. (Anexo) | Arquivo             | Obrigatório |
-| PCA (Anexo)                  | Arquivo             | Obrigatório |
-| Outros (Anexo)               | Arquivos            | Opcionais   |
+| Campo                        | Tipo                | Validação               |
+| ---------------------------- | ------------------- | ----------------------- |
+| Objeto                       | Dropdown            | Obrigatório             |
+| Nº Proposição                | Texto               | Opcional                |
+| Protolo                      | Texto               | Opcional                |
+| Nº Processo                  | Texto               | Opcional                |
+| Nº Reunião                   | Automático          | Opcional                |
+| Data RD                      | Automático          | Opcional                |
+| Seq.                         | Número              | Opcional                |
+| IdPrd                        | Número / Automático | Opcional                |
+| Assunto                      | Texto               | Obrigatório             |
+| Nº Conselho                  | Texto               | Opcional                |
+| Area Solicitante             | Dropdown            | Obrigatório             |
+| Motivo Retorno               | Texto               | Opcional                |
+| Vincular PRD?                | Checkbox            | Opcional                |
+| Extra Pauta?                 | Checkbox            | Opcional                |
+| Ação                         | Dropdown            | Obrigatório             |
+| Sigla Gerência               | Texto / Automático  | Obrigatório             |
+| Gerência                     | Texto / Automático  | Obrigatório             |
+| Sigla Diretoria              | Texto / Automático  | Obrigatório             |
+| Diretoria                    | Texto / Automático  | Obrigatório             |
+| Área Atual                   | Texto / Automático  | Obrigatório             |
+| Descrição Fluxo              | Texto               | Opcional                |
+| Tempo Prev. Perm.            | Texto               | Opcional                |
+| Status                       | Dropdown            | Obrigatório             |
+| Desc. Próx. Passo            | Texto               | Opcional                |
+| Tempo Perm. Próx.            | Texto               | Opcional                |
+| Descrição                    | Texto               | Obrigatório             |
+| Relator                      | Texto               | Obrigatório             |
+| Data Base                    | Data                | Obrigatório             |
+| Moeda                        | Texto               | Obrigatório             |
+| Valor Original Contrato      | Número              | Obrigatório             |
+| Valor Total Proposição       | Número              | Obrigatório             |
+| PRD (Anexo)                  | Arquivo             | Obrigatório             |
+| TR (Anexo)                   | Arquivo             | Obrigatório             |
+| Parecer Jurídico (Anexo)     | Arquivo             | Obrigatório             |
+| Relatório Técnico (Anexo)    | Arquivo             | Obrigatório             |
+| Planilha Quant. (Anexo)      | Arquivo             | Obrigatório             |
+| Edital (Anexo)               | Arquivo             | Obrigatório             |
+| Reserva Verba (Anexo)        | Arquivo             | Obrigatório             |
+| SC (Anexo)                   | Arquivo             | Obrigatório             |
+| RAV (Anexo)                  | Arquivo             | Obrigatório             |
+| Cronograma Fís.-Fin. (Anexo) | Arquivo             | Obrigatório             |
+| PCA (Anexo)                  | Arquivo             | Obrigatório             |
+| Outros (Anexo)               | Arquivos            | Opcionais               |
+| Nº Contrato                  | Texto               | Opcional                |
+| Termo                        | Texto               | Opcional                |
+| Fornecedor                   | Texto               | Opcional                |
+| Valor Atual Contrato         | Número              | Opcional                |
+| Nº Reserva Verba             | Texto               | Opcional                |
+| Valor Reserva Verba          | Número              | Opcional                |
+| Início Vigência Reserva      | Data                | Opcional                |
+| Fim Vigência Reserva         | Data                | Opcional                |
+| Deliberação                  | Texto               | Obrigatório             |
+| Resumo Geral                 | Texto               | Obrigatório             |
+| Observações Custos           | Texto               | Obrigatório             |
+| Competências Conforme Normas | Texto/Automático    | Obrigatório             |
+| Nº Resolução                 | Número/Automático   | Opcional                |
+| Assinatura Resolução         | Texto/Automático    | Opcional                |
+| Resolução Diretoria          | Texto/Automático    | Opcional                |
+| Resolução (Anexo)            | Arquivo             | Opcional                |
+| Nome Aprovador               | Texto               | Obrigatório se aprovado |
+| Função Aprovador             | Texto               | Obrigatório se aprovado |
+| Data/Hora Aprovação          | Data/Hora           | Obrigatório se aprovado |
+| Observações                  | Texto               | Opcional                |
 
 Abaixo deste formulário, deverá haver uma série de botões, com cores indicativas, para a realização de ações de acordo com o nível de acesso do usuário e o status da Proposição.  
 Todas as ações devem abrir um modal (pop-up), confirmando se o usuário deseja de fato executá-la. Caso clique em "Não", o modal apenas desaparece.  
@@ -285,21 +303,61 @@ Ao se clicar em uma das linhas da listagem, o sistema deverá abrir, na mesma te
 Para a equipe da GRG, também será disponibilizada uma tela para a gestão das Reuniões. As Reuniões precisarão ser criadas usando esta tela antes que se possa incluir Proposições na sua pauta.  
 Esta tela consistirá de um formulário com os seguintes campos e validações:
 
-| Campo              | Tipo                | Validação   |
-| ------------------ | ------------------- | ----------- |
-| Id (Nº Reunião)    | Número / Automático | Obrigatório |
-| Data               | Data                | Obrigatório |
-| Horário            | Hora                | Obrigatório |
-| Status             | Dropdown            | Obrigatório |
-| Data Prévia        | Data                | Obrigatório |
-| Horário Prévia     | Hora                | Obrigatório |
-| Local              | Texto               | Obrigatório |
-| Tipo Reunião       | Dropdown            | Obrigatório |
-| Proposições        | Automático          | Opcional    |
-| Proposições Prévia | Automático          | Opcional    |
-| Participantes      | Texto               | Opcional    |
+| Campo              | Tipo                   | Validação   |
+| ------------------ | ---------------------- | ----------- |
+| Nº Reunião         | Número / Automático    | Obrigatório |
+| Data               | Data                   | Obrigatório |
+| Horário            | Hora                   | Obrigatório |
+| Status             | Dropdown               | Obrigatório |
+| Data Prévia        | Data                   | Obrigatório |
+| Horário Prévia     | Hora                   | Obrigatório |
+| Local              | Texto                  | Obrigatório |
+| Tipo Reunião       | Dropdown               | Obrigatório |
+| Proposições        | Automático             | Opcional    |
+| Proposições Prévia | Automático             | Opcional    |
+| Participantes+     | Lista de Participantes | Opcional    |
+| Outros Assuntos\*  | Lista de Ações         | Opcional    |
+| Comunicado         | Texto                  | Opcional    |
+| Outras Observações | Texto                  | Opcional    |
+| Mensagem E-Mail    | Texto                  | Opcional    |
+| Mensagem E-Mail    | Texto                  | Opcional    |
 
-Abaixo deste formulário, deverá haver uma série de botões, com cores indicativas, para a realização de ações de acordo com o status da Reunião. A Reunião terá os seguintes status:
+-   \+ O campo "Participantes" permitirá a criação de um Participantes, com os seguintes campos:
+    | Campo | Tipo | Validação |
+    | ----- | ---- | --------- |
+    | Diretoria/Area | Texto | Obrigatório |
+    | Nome | Texto | Obrigatório |
+    | Email | Email | Obrigatório |
+
+-   \* O campo "Outros Assuntos" permitirá a criação de uma ação, com os seguintes campos:
+    | Campo | Tipo | Validação |
+    | ----- | ---- | --------- |
+    | Tipo | Dropdown | Obrigatório |
+    | Diretoria Res. | Texto | Obrigatório |
+    | Definição | Texto | Obrigatório |
+    | Periodicidade | Dropdown | Opcional |
+    | Prazo Inicial | Data | Obrigatório |
+    | Status | Automático | Obrigatório |
+    | Responsável | Texto | Obrigatório |
+    | Email Diretor | Email | Obrigatório |
+    | Nº Contrato | Texto | Opcional |
+    | Fornecedor | Texto | Opcional |
+    | Prazo Prorrogado (Dias) | Número | Opcional |
+    | Prazo Final | Data | Opcional |
+    | Dias p/ Vencimento | Número/Automático | Opcional |
+    | Alerta Vencimento | Dropdown | Obrigatório |
+    | Andamentos\*\* | Lista de Andamentos | Opcional |
+
+    -   O campo "Andamentos" permitirá a criação de um andamento, com os seguintes campos:
+        | Campo | Tipo | Validação |
+        | ----- | ---- | --------- |
+        | Data do Registro | Data | Obrigatório |
+        | Responsável | Texto | Obrigatório |
+        | Status | Dropdown/Automático | Obrigatório |
+        | Descrição | Texto | Obrigatório |
+        | Anexos | Lista de Arquivos | Opcional |
+
+Abaixo deste formulário, deverá haver uma série de botões, com cores indicativas, para a realização de ações de acordo com o status da Reunião. A Reunião pederá ter os seguintes status:
 
 | #   | Nome       |
 | --- | ---------- |
@@ -321,6 +379,8 @@ Caso a Reunião esteja nos demais status, as ações serão as seguintes:
 -   **Emitir Pauta Prévia**: Emite o documento de pauta prévia, encaminhando-o para todos os participantes da Reunião, e muda o status da Reunião para _"Prévia"_. Esta ação não aparece caso o status seja _"Prévia"_.
 -   **Emitir Pauta Definitiva**: Emite o documento de pauta definitiva, encaminhando-o para todos os participantes da Reunião, e muda o status da Reunião para _"Pauta"_. Esta ação não aparece caso o status seja _"Pauta"_.
 -   **Emitir Relatório Deliberativo**: Emite o relatório deliberativo da RD, encaminhando-o para todos os participantes da Reunião, e muda o status da Reunião para _"Arquivada"_. Esta ação só aparece caso o status seja _"Realizada"_.
+-   **Emitir Resoluções de Diretoria**: Emite a Resolução de Diretoria para cada Proposição da pauta da RD, encaminhando-o para todos os participantes da Reunião, assim como para o diretor e gerente responsáveis pela Proposição. A Resolução de Diretoria é criada a partir dos campos da Proposição, conforme modelo a ser disponibilizado pela GRG. Esta ação só aparece caso o status seja _"Realizada"_.
+-   **Emitir Ata da Reunião**: Emite a Ata da RD, encaminhando-o para todos os participantes da Reunião. A Ata é criada a partir dos campos das Proposições em pauta, conforme modelo a ser disponibilizado pela GRG. Esta ação só aparece caso o status seja _"Realizada"_.
 -   **Reunião Realizada**: Muda o status da Reunião para _"Realizada"_, eliminando a Reunião da listagem na **Tela de Reunião** e disponibilizando a ação anterior. Esta ação não aparece caso o status seja _"Realizada"_.
 -   **Cancelar**: Sai do formulário sem fazer alterações, voltando à tela inicial.
 
