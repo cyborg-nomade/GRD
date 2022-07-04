@@ -1,27 +1,26 @@
 NEW SYSTEM STEPS
 
-- requirement definition (10 days)
-	- several meetings to define as much as possible the system = gather functional requirements (5 days) => START 21/06, END: 27/06
-	- use cases > domain entities (1 to 4 days) => START: 28/06, END: 01/07
-	- product backlog (screen map + api endpoints) + schedule (1 day) => START/END: 04/07
-- frontend prototype (around 10 days, depending on number of entities and screens)
-	- entity modelling (1 ~ 2 days, 5min/entity) => START: 05/07, END: 06/07
-	- api consumption service creation (2 ~ 4 days, 4h/entity CRUD) => use firebase initially => START: 07/07, END: 12/07
-	- basic proposed interface + component creation (2 days/screen + 30min/entity field in forms) => START: 13/07, END: 15/07
-	- deployment (firebase, heroku or on premises, whatever is faster) (1 day) => START/END: 18/07
-- API development (2 weeks for setup + 1 day per entity CRUD)
-	- setup (5 to 10 days):
-		- request test DB creation (1/2 to 1 day) START/END: 19/07
-		- request test server creation (1/2 to 1 day) START/END: 19/07
-		- request repository creation (1/2 to 1 day) START/END: 19/07
-		- create API project, clean arch if possible (1/2 to 1 day) START/END: 19/07
-		- create infra for user mgmt and access control (3 to 6 days) START: 20/07, END: 27/07
-	- entity modelling + CRUD API + DB access (1 day/entity) => START: 28/07, END: 03/08
-- testing (2 weeks)
-	- pluggin front to backend (5 days for fine tuning) => START: 04/08, END: 10/08
-	- test server config (2 days) => START: 11/08, END: 12/08
-	- initial availability for user testing (1 day) => START/END: 15/08
-- deployment (2 weeks)
-	- homo db and server creation (2 days) => START: 16/08, END: 17/08
-	- changing user tests to homo env (1 day) 
-	- change request and production deployment (5 days) => START: 18/08, END: 25/08
+-   requirement definition
+    -   several meetings to define as much as possible the system = gather functional requirements + schedule => OK
+    -   product backlog (screen map + api endpoints + use cases + domain entities)
+-   API development
+    -   setup:
+        -   request test DB creation
+        -   request test server creation
+    -   create API project, clean arch => OK
+    -   entity modelling
+    -   create infra for user mgmt and access control
+    -   DB access
+    -   CRUD API
+-   frontend development
+    -   next.js project creation + lib installing
+    -   entity modelling
+    -   api consumption service creation
+        -   pluggin front to backend
+    -   interface + component creation
+-   testing
+    -   test server config
+    -   initial availability for user testing
+-   deployment
+    -   homo db and server creation
+    -   change request and production deployment
