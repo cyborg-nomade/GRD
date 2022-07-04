@@ -32,7 +32,7 @@ Esta seção descreve o fluxo principal de aprovação das Proposições.
 
 O fluxo se inicia com o cadastramento da Proposição pelas gerências. Neste momento, o usuário poderá salvar seu progresso antes de encaminhar para aprovação.
 Ao encaminhar para aprovação, o usuário deve ter preenchido todos os campos do formulário de Proposição corretamente, incluindo anexos. Neste momento, caso a Proposição esteja correta, ela aparecerá no sistema para o diretor responsável.  
-Posteriormente, o gerente poderá visualizar o status atual da Proposição cadastrada e também editá-la enquanto ela não tiver sido incluída em pauta de RD. A ação de edição gerará notificações conforme descrito na [seção 4](#envio-de-notificações-por-e-mail).
+Posteriormente, o gerente poderá visualizar o status atual da Proposição cadastrada e também editá-la enquanto ela não tiver sido incluída em pauta de RD. A ação de edição gerará notificações conforme descrito na [seção 4](#4-envio-de-notificações-por-e-mail).
 
 ### 2.2. Aprovação do Diretor Responsável
 
