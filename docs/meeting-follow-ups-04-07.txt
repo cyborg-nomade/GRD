@@ -1,0 +1,27 @@
+- controle de acesso também nas gerencias / diretorias =>nível sub-gerencia
+- tela específica para acompanhamento <2
+- GRG sempre pode editar
+- status que podem fazer edições: ...
+- Tela de apresentação prévia
+- aprovações dos diretores em RD
+- incluir check de parecer jurídico
+- Sintese do Processo anexos
+- Nota Técnica anexos
+- aprovações => mostrar quando solicitado
+- Workflow (pode retirar?) => logs de horas
+- fluxo de ações => incluir
+
+lista de documentos a serem enviados:
+- Pauta Prévia
+- Pauta Definitva
+- Pauta Status
+- Memória da Prévia
+- Ata
+- Resolução de Diretoria
+
+campos a serem revisados:
+- Objeto (lista de opções)
+- Status (lista de opções)
+- Anexos (quais são obrigatório para cada tipo de objeto)
+- Dados Reserva e Contrato (quais são obrigatório para cada tipo de objeto)
+

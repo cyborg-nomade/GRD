@@ -1,8 +1,8 @@
-# Gestão de Proposições - GPR
+# Gestão de Reuniões de Diretoria - GRD
 
 ## Especificações Funcionais
 
-Esse documento visa descrever os requisitos funcionais para o desenvolvimento de um novo sistema para Gestão de Proposições, a fim de substituir o atual módulo no SPI.
+Esse documento visa descrever os requisitos funcionais para o desenvolvimento de um novo sistema para Gestão de Reuniões de Diretoria, a fim de substituir o atual módulo de Gestão de Proposições no SPI.
 
 ---
 
@@ -10,63 +10,64 @@ Esse documento visa descrever os requisitos funcionais para o desenvolvimento de
 
 O sistema deverá ter acesso diferenciado por níveis de senioridade e por grupos correspondentes às áreas funcionais da empresa, conforme abaixo:
 
+### 1.0 Sub-Gerencial
+
+Este nível é de acesso para simples cadastro de Proposições, e deverá ser concedido pelos demais níveis, conforme necessidade da área.
+
 ### 1.1 Gerencial
 
-O primeiro nível de acesso é o nível gerencial, ao qual terão acesso todos os gerentes da CPTM. Os gerentes poderão visualizar e editar apenas as Proposições que tiverem cadastrado para sua própria área.
+O primeiro nível de acesso é o nível gerencial, ao qual terão acesso todos os gerentes da CPTM. Os gerentes poderão visualizar e editar apenas as Proposições que tiverem cadastrado para sua própria área. Os gerentes também poderão permitir acesso ao nível gerencial a seus assessores e secretários, através de interface do sistema.
 
 ### 1.2 Diretorias
 
-O segundo nível de acesso é o nível das diretorias, ao qual terão acesso todos os diretores da CPTM. Os diretores poderão visualizar e editar todas as Proposições cadastradas pelas áreas subordinadas à sua diretoria, e serão responsáveis pela primeira aprovação e encaminhamento para adição da Proposição em pauta de RD.
+O segundo nível de acesso é o nível das diretorias, ao qual terão acesso todos os diretores da CPTM. Os diretores poderão visualizar e editar todas as Proposições cadastradas pelas áreas subordinadas à sua diretoria, e serão responsáveis pela primeira aprovação e encaminhamento para adição da Proposição em pauta de RD. Os diretores também poderão permitir acesso ao nível de diretoria a seus assessores e secretários, através de interface do sistema.
 
 ### 1.3 GRG
 
-O terceiro nível de acesso é o nível da GRG, ao qual terão acesso todos os empregados pertencentes à GRG (ou área que venha a substituí-la). Os membros da GRG poderão visualizar e editar todas as Proposições cadastradas por todos os demais usuários, e serão responsáveis pela inclusão destas nas pautas de RD. Este nível também poderá adicionar ou remover o acesso de usuários do sistema, assim como atribuir níveis e grupos de acesso.
+O terceiro nível de acesso é o nível da GRG, ao qual terão acesso todos os empregados pertencentes à GRG (ou área que venha a substituí-la). Os membros da GRG poderão visualizar e editar todas as Proposições cadastradas por todos os demais usuários, e serão responsáveis pela inclusão destas nas pautas de RD. Este nível também poderá adicionar ou remover o acesso de usuários do sistema, assim como atribuir níveis e grupos de acesso, através de interface do sistema.
 
 ---
 
-## 2. Fluxo de Aprovação de Proposições
+## 2. Ciclo de Vida de Proposições
 
-Esta seção descreve o fluxo principal de aprovação das Proposições.
+A principal funcionalidade do sistema será gerir o fluxo de criação, aprovação e arquivamento das Proposições de Reunião de Diretoria. Esta seção descreve esse ciclo de vida.
 
 ### 2.1. Cadastramento de Proposição
 
-O fluxo se inicia com o cadastramento da Proposição pelas gerências. Neste momento, o usuário poderá salvar seu progresso antes de encaminhar para aprovação.
-Ao encaminhar para aprovação, o usuário deve ter preenchido todos os campos do formulário de Proposição corretamente, incluindo anexos. Neste momento, caso a Proposição esteja correta, ela aparecerá no sistema para o diretor responsável.  
-Posteriormente, o gerente poderá visualizar o status atual da Proposição cadastrada e também editá-la enquanto ela não tiver sido incluída em pauta de RD. A ação de edição gerará notificações conforme descrito na [seção 4](#4-envio-de-notificações-por-e-mail).
+O fluxo se inicia com o cadastramento da Proposição pelas gerências, ou áreas subordinadas. Neste momento, o usuário poderá salvar seu progresso antes de encaminhar para aprovação.  
+Ao encaminhar para aprovação, o usuário deverá ter preenchido todos os campos do [Formulário de Proposição](#5.1.-formulário-de-proposição) corretamente, observando os campos e anexos obrigatório, assim como outras validações. Caso existam erros, o usuário receberá uma mensagem de erro indicando os campos incorretos ou ausentes. Caso a Proposição esteja correta, ela aparecerá no sistema para o diretor responsável.  
+Posteriormente, o gerente poderá visualizar o status atual da Proposição cadastrada e também editá-la, enquanto ela não tiver sido incluída em pauta de RD. A ação de edição gerará notificações conforme descrito na [seção 6](#6-envio-de-notificações-por-e-mail).
 
 ### 2.2. Aprovação do Diretor Responsável
 
-Na fase seguinte do fluxo, os diretores visualizarão uma listagem com todas as Proposições cadastradas pelas gerências, e deverão avaliá-las e aprová-las caso estejam de acordo. Será possível também editar as Proposições, caso necessário, até a inclusão em pauta de RD (o que gerará notificações conforme descrito na [seção 4](#4-envio-de-notificações-por-e-mail)).  
-Caso a Proposição seja aprovada, ela aparecerá para a GRG para a inclusão em pauta. Caso seja reprovada, ela mostrará o status "Reprovado" para o gerente que a cadastrou, e não mais aparecerá para o diretor em questão.
+Na fase seguinte do fluxo, os diretores e demais usuários com acesso de direitoria visualizarão uma listagem com todas as Proposições cadastradas pelas gerências subordinadas, e deverão avaliá-las e aprová-las, caso estejam de acordo. Eles poderão também editar as Proposições, caso necessário, até o momento de inclusão em pauta de RD (o que gerará notificações conforme descrito na [seção 6](#6-envio-de-notificações-por-e-mail).  
+Caso a Proposição seja aprovada, ela aparecerá para a GRG para a inclusão em pauta. Caso seja reprovada, ela mostrará o status _"Reprovado"_, assim como o motivo para a reprovação, para o gerente que a cadastrou, e não mais aparecerá para o diretor em questão.
 
 ### 2.2. Inclusão em Pauta
 
 A próxima fase do fluxo é a Inclusão em Pauta. Neste momento, os funcionários da GRG deverão abrir cada uma das Proposições cadastradas, avaliá-las quanto a corretude, e incluí-las na pauta da RD apropriada.  
-Caso haja erros, a Proposição poderá ser retornada para a diretoria responsável. Caso contrário, ao ser incluída na pauta de uma RD, a Proposição aparecerá na [**Tela de Reunião**](#33-tela-de-apresentação-em-rd-tela-de-reunião), onde poderá ser tratada durante a Reunião de diretoria em questão.  
-Neste momento, os funcionários da GRG também poderão emitir uma "Pauta Prévia" para a RD Prévia e, posteriormente, a "Pauta Definitiva" para a RD, na [**Tela de Gestão de Reunião**](#34-tela-de-gestão-de-reunião).
+Caso haja erros, a Proposição poderá ser retornada para a diretoria responsável. Caso contrário, ao ser incluída na pauta de uma RD, a Proposição aparecerá na [**Tela de Reunião**](#53-tela-de-apresentação-em-rd-tela-de-reunião), onde poderá ser tratada durante a Reunião de Diretoria em questão.  
+Neste momento, os funcionários da GRG também poderão emitir uma "Pauta Prévia" para a RD Prévia e, posteriormente, a "Pauta Definitiva" para a RD, na [**Tela de Gestão de Reunião**](#54-tela-de-gestão-de-reunião).
 
-### 2.3. Ações de RD
+### 2.3. Atividades durante a Reunião de Diretoria
 
-No momento da RD, os funcionários da GRG exibirão uma visualização apropriada ([**Tela de Apresentação**](<(#33-tela-de-apresentação-em-rd-tela-de-reunião)>)), onde as seguintes ações estarão disponíveis:
+No momento da RD, os funcionários da GRG exibirão uma visualização apropriada ([**Tela de Apresentação**](#53-tela-de-apresentação-em-rd-tela-de-reunião)), onde estarão exibidas as Proposições incluídas na pauta daquela RD. Nesta tela, assim como na visualização dos diretores participantes da reunião, será possível realizar atividades de deliberação, alterando os status das Proposições, conforme especificado na seção [**Tela de Apresentação**](#53-tela-de-apresentação-em-rd-tela-de-reunião).
 
--   **Aprovar**: Neste caso, a Proposição entre no status "Aprovada em RD".
--   **Retirar**: Neste caso, a Proposição volta ao status de "Inclusão em Pauta", e fica disponível para inclusão na pauta de uma nova RD.
--   **Reprovado**: Neste caso, a Proposição entra no status "Reprovada em RD".
+### 2.4. Atividades Pós-Reunião
 
-### 2.4. Ações Pós-RD
+Após a conclusão da Reunião, já com todas as Proposições deliberadas, os funcionários da GRG poderão executar as seguintes atividades na [**Tela de Gestão de Reunião**](#54-tela-de-gestão-de-reunião):
 
-Após a conclusão da Reunião, os funcionários da GRG poderão executar as seguintes ações na [**Tela de Gestão de Reunião**](#34-tela-de-gestão-de-reunião):
-
--   Acessar as Proposições daquela Reunião, assim como emitir a Ata e de outros relatórios;
--   Adicionar Proposições retroativamente;
+-   Acessar as Proposições daquela Reunião;
+-   Adicionar Proposições retroativamente, assim como incluir as deliberações para eles;
 -   Alterar os status das Proposições conforme necessário;
--   Anexar documentos à Reunião;
--   Emitir o Relatório Deliberativo ("Pauta Status"). Esta emissão trava a edição todas as Proposições na pauta, e realiza o arquivamento;
+-   Emitir a Resolução de Diretoria para cada Proposição
+-   Emitir a Ata da Reunião;
+-   Emitir o Relatório Deliberativo ("Pauta Status").
 
 ### 2.5. Arquivamento e Pesquisa
 
-Após arquivada a Reunião e as Proposições relacionadas, elas não mais aparecem nas listagens correntes dos gerentes, diretores e da GRG, podendo ser acessadas apenas através de uma tela específica de pesquisa.  
-Nenhuma edição pode ser realizada nos itens arquivados.
+Após arquivada a Reunião e as Proposições relacionadas, elas não mais aparecem nas listagens correntes dos gerentes, diretores e da GRG, podendo ser acessadas apenas através de uma tela específica de pesquisa no arquivo. Nenhuma edição pode ser realizada nos itens arquivados.  
+O arquivo atual das Reuniões e Proposições, existente no SPI, será migrado para o novo sistema quando de sua implantação, a fim de facilitar a pesquisa de dados.
 
 ### 2.6. Sequência de Status
 
@@ -97,113 +98,216 @@ Os fluxos possíveis são:
 
 ---
 
-## 3. Descrição das Telas
+## 3. Ciclo de Vida de Ações
+
+Além das Proposições, o sistema também permitirá a gestão de Ações: itens discutidos em Reunião de Diretoria que não são Proposições, mas que também exigem um acompanhamento de seu desenvolvimento. Esta seção descreve esse ciclo de vida.
+
+### 3.1 Criação de Ações
+
+As Ações serão inicialmente criadas pelos funcionários da GRG, durante ou após a execução da Reunião de Diretoria, para registrar um item debatido durante a Reunião, mas que não é uma Proposição. Essa Ação ficará vinculada inicialmente à Reunião em que foi criada, e especificará um responsável por lhe dar andamento, assim como uma data limite para sua execução, e uma data de próximo acompanhamento. Serão geradas notificações para os participantes da Reunião, para o responsável cadastrada da Ação, e para os membros da GRG, conforme especificado na [seção 6](#6-envio-de-notificações-por-e-mail). Ao ser cadastrada, a Ação se encontra no status _"Em Andamento"_.
+
+### 3.2 Inclusão de Andamentos
+
+Ao longo dos dias após a realização da Reunião em que a Ação foi cadastrada, até sua data limite, o responsável poderá incluir Andamentos, descrevendo a situação atual da Ação, entre outras informações pertinentes à sua conclusão.
+
+### 3.3 Acompanhamento em Reunão de Diretoria
+
+Os membros da GRG deverão incluir as Ações para acompanhamento em Reuniões próxima à data de próximo acompanhamento, ou à data limite. Ao fazerem isso, a Ação passa ao status _"Em Acompanhamento"_. Nesse status, a Ação ainda permite a inclusão de Andamentos por parte do responsável.
+
+### 3.4 Conclusão e Encerramento de Ações
+
+Durante ou após uma Reunião em que foi acompanhada, a Ação poderá ser dada como concluída, ou ser encerrada mesmo sem conclusão. Neste caso, os membros da GRG deverão especificar o status adequado (_"Concluída"_ ou _"Encerrada sem Conclusão"_). Após isso, a Ação não estará mais disponível para acompanhamento em outras Reuniões, e nenhum novo andamento poderá ser cadastrado.
+
+### 3.5 Arquivamento e Pesquisa
+
+As Ações concluídas ou encerradas também ficarão disponíveis para pesquisa em uma tela específica.  
+O arquivo atual de Ações no SPI **_não será migrado_** para a nova aplicação, tendo em vista que a funcionalidade existente atualmente não corresponde à descrita aqui.
+
+### 3.6 Sequência de Status
+
+| #   | Nome                    |
+| --- | ----------------------- |
+| 0   | Em Andamento            |
+| 1   | Em Acompanhamento       |
+| 2   | Concluída               |
+| 2.1 | Encerrada sem Conclusão |
+| 3   | Arquivada               |
+
+Os fluxos possíveis são:
+
+0 > 1 > 2 > 3 (Fluxo normal)
+
+0 > 1 > 2.1 > 3 (Encerramento sem Conclusão)
+
+0 > 1 > (0 > 1...) > 2/2.1 > 3 (Acompanhamento ao longo de várias Reuniões)
+
+---
+
+## 4. Ciclo de Vida das Reuniões
+
+De maneira mais geral, o sistema irá disponibilizar ferramentas para a gestão e realização de Reuniões de Diretoria, que também possuem um ciclo de vida, entre seu registro inicial e seu arquivamento. Esta seção descreve esse ciclo de vida.
+
+### 4.1 Registro de Reuniões
+
+Inicialmente, a Reunião será registrada pelos membros da GRG, em uma tela específica, onde são preenchidas informações sobre data e local de realização, entre outras. Ainda não é possível realizar a inclusão de Ações e Proposições. Ao registrar a Reunião entra no status _"Registrada"_.
+
+### 4.2 Emissão de Pauta Prévia e Realização da Reunião Prévia
+
+Após o registro inicial, a Reunião ficará disponível para inclusão de Proposições em sua pauta. Também fica disponível o cadastramento dos participantes da Reunião Prévia. Com esses dados, pode-se emitir a Pauta Prévia, que incluirá todas as Proposições cadastradas até aquele momento e mencionará os participantes cadastrados no campo "Participantes Prévia". Nesse momento a Reunião passa ao status _"Prévia"_ e é liberada a [**Tela de Apresentação Prévia**](#5.3.1.-tela-de-apresentação-prévia) para realização da Reunião Prévia, onde anotações podem ser realizadas, que constarão na _Memória da Prévia_.  
+Após a realização da Reunião Prévia, será possível emitir a _Memória da Prévia_, com base nas informações registradas até aquele momento, seguindo o modelo a ser fornecido pela GRG.
+
+### 4.3 Emissão de Pauta Definitiva e Realização da Reunião de Diretoria
+
+Após a Reunião Prévia, a Reunião ainda pode receber a inclusao de novas Proposições em sua pauta. Também fica disponível o cadastramento dos participantes da Reunião principal. Com esses dados, pode-se emitir a Pauta Definitiva, que incluíra todas as Proposições cadastradas até aquele momento e será enviada aos e-mails dos participantes cadastrados. Nesse momento, a Reunião passa ao status _"Pauta"_ e é liberada a [**Tela de Apresentação**](#53-tela-de-apresentação-em-rd-tela-de-reunião).
+
+### 4.4 Atividades Pós-Reunião e Emissão de Documentos
+
+Durante e após a realização da Reunião de Diretoria, as Proposições receberão um status deliberativo (aprovada, suspensa, etc.). Quando todas as Proposições cadastradas na pauta de uma Reunião estiverem deliberadas, a Reunião passará ao status _"Realizada"_. Neste momento, torna-se possível emitir uma série de documentos vinculados à reunião, a saber:
+
+-   Resoluções de Diretoria para cada Proposição;
+-   Relatório de Ações, contendo as descrições de todas as Ações cadastradas naquela Reunião;
+-   Ata, contendo as Resoluções para todas as Proposições, assim como as Ações;
+
+Nesse status ainda é possível incluir Proposições retroativamente, assim como Ações.
+
+### 4.5 Emissão de Relatório Deliberativo e Arquivamento da Reunião
+
+Após a emissão de todos os documentos mencionados anteriormente, pode-se emitir o Relatório Deliberativo (Pauta Status) da Reunião. Esta emissão passa a Reunião para o status _"Arquivada"_, e bloqueia a Reunião e todas as Proposições em pauta para edição.
+
+### 4.6 Sequência de Status
+
+| #   | Nome       |
+| --- | ---------- |
+| 0   | Em criação |
+| 1   | Registrada |
+| 2   | Prévia     |
+| 3   | Pauta      |
+| 4   | Realizada  |
+| 5   | Arquivada  |
+
+---
+
+## 5. Descrição das Telas
 
 Esta seção dá uma descrição detalhada de quais telas o sistema deverá apresentar no momento da entrega.
 
-### 3.0. Tela de Login e Navegação
+### 5.0. Tela de Login e Navegação
 
 O sistema deverá inicialmente apresentar uma tela de login, com usuário e senha. O logo da CPTM deve aparecer ao lado deste formulário.  
 O login deverá ser feito através do usuário e senha de rede utilizados normalmente para login nas máquinas da empresa.
 
 Em todas as telas deve aparecer uma barra de navegação com links adequados para cada usuário, incluindo um link para logout. Essa barra deve aparecer fixa na parte superior da tela quando apresentada em telas maiores (notebooks, desktops), mas ser colapsada à direita em um ícone indicativo em visualizações menores (celulares, tablets).
 
-### 3.1. Tela de Cadastro de Proposição
+### 5.1. Formulário de Proposição
 
 A tela de Casdastro de Proposição deverá conter um formulário com os seguintes campos e validações:
 
-| Campo                        | Tipo                | Validação               |
-| ---------------------------- | ------------------- | ----------------------- |
-| Objeto                       | Dropdown            | Obrigatório             |
-| Nº Proposição                | Texto               | Opcional                |
-| Protolo                      | Texto               | Opcional                |
-| Nº Processo                  | Texto               | Opcional                |
-| Nº Reunião                   | Automático          | Opcional                |
-| Data RD                      | Automático          | Opcional                |
-| Seq.                         | Número              | Opcional                |
-| IdPrd                        | Número / Automático | Opcional                |
-| Assunto                      | Texto               | Obrigatório             |
-| Nº Conselho                  | Texto               | Opcional                |
-| Area Solicitante             | Dropdown            | Obrigatório             |
-| Motivo Retorno               | Texto               | Opcional                |
-| Vincular PRD?                | Checkbox            | Opcional                |
-| Extra Pauta?                 | Checkbox            | Opcional                |
-| Ação                         | Dropdown            | Obrigatório             |
-| Sigla Gerência               | Texto / Automático  | Obrigatório             |
-| Gerência                     | Texto / Automático  | Obrigatório             |
-| Sigla Diretoria              | Texto / Automático  | Obrigatório             |
-| Diretoria                    | Texto / Automático  | Obrigatório             |
-| Área Atual                   | Texto / Automático  | Obrigatório             |
-| Descrição Fluxo              | Texto               | Opcional                |
-| Tempo Prev. Perm.            | Texto               | Opcional                |
-| Status                       | Dropdown            | Obrigatório             |
-| Desc. Próx. Passo            | Texto               | Opcional                |
-| Tempo Perm. Próx.            | Texto               | Opcional                |
-| Descrição                    | Texto               | Obrigatório             |
-| Relator                      | Texto               | Obrigatório             |
-| Data Base                    | Data                | Obrigatório             |
-| Moeda                        | Texto               | Obrigatório             |
-| Valor Original Contrato      | Número              | Obrigatório             |
-| Valor Total Proposição       | Número              | Obrigatório             |
-| PRD (Anexo)                  | Arquivo             | Obrigatório             |
-| TR (Anexo)                   | Arquivo             | Obrigatório             |
-| Parecer Jurídico (Anexo)     | Arquivo             | Obrigatório             |
-| Relatório Técnico (Anexo)    | Arquivo             | Obrigatório             |
-| Planilha Quant. (Anexo)      | Arquivo             | Obrigatório             |
-| Edital (Anexo)               | Arquivo             | Obrigatório             |
-| Reserva Verba (Anexo)        | Arquivo             | Obrigatório             |
-| SC (Anexo)                   | Arquivo             | Obrigatório             |
-| RAV (Anexo)                  | Arquivo             | Obrigatório             |
-| Cronograma Fís.-Fin. (Anexo) | Arquivo             | Obrigatório             |
-| PCA (Anexo)                  | Arquivo             | Obrigatório             |
-| Outros (Anexo)               | Arquivos            | Opcionais               |
-| Nº Contrato                  | Texto               | Opcional                |
-| Termo                        | Texto               | Opcional                |
-| Fornecedor                   | Texto               | Opcional                |
-| Valor Atual Contrato         | Número              | Opcional                |
-| Nº Reserva Verba             | Texto               | Opcional                |
-| Valor Reserva Verba          | Número              | Opcional                |
-| Início Vigência Reserva      | Data                | Opcional                |
-| Fim Vigência Reserva         | Data                | Opcional                |
-| Deliberação                  | Texto               | Obrigatório             |
-| Resumo Geral                 | Texto               | Obrigatório             |
-| Observações Custos           | Texto               | Obrigatório             |
-| Competências Conforme Normas | Texto/Automático    | Obrigatório             |
-| Nº Resolução                 | Número/Automático   | Opcional                |
-| Assinatura Resolução         | Texto/Automático    | Opcional                |
-| Resolução Diretoria          | Texto/Automático    | Opcional                |
-| Resolução (Anexo)            | Arquivo             | Opcional                |
-| Nome Aprovador               | Texto               | Obrigatório se aprovado |
-| Função Aprovador             | Texto               | Obrigatório se aprovado |
-| Data/Hora Aprovação          | Data/Hora           | Obrigatório se aprovado |
-| Observações                  | Texto               | Opcional                |
+| Campo                        | Tipo                | Validação                                     |
+| ---------------------------- | ------------------- | --------------------------------------------- |
+| IdPrd                        | Número              | Automático                                    |
+| Status                       | Dropdown            | Automático                                    |
+| Area Solicitante             | Dropdown            | Obrigatório                                   |
+| Sigla Gerência               | Texto               | Automático (Vem da área solicitante)          |
+| Gerência                     | Texto               | Automático (Vem da área solicitante)          |
+| Sigla Diretoria              | Texto               | Automático (Vem da área solicitante)          |
+| Diretoria                    | Texto               | Automático (Vem da área solicitante)          |
+| Relator                      | Texto               | Automático (Vem da área solicitante)          |
+| Título                       | Texto               | Obrigatório                                   |
+| Objeto                       | Dropdown            | Obrigatório                                   |
+| Descrição Proposição         | Texto               | Obrigatório                                   |
+| Possui Parecer Jurídico?     | Checkbox            | Obrigatório                                   |
+| Resumo Geral da Resolução    | Texto               | Obrigatório                                   |
+| Observações Custos           | Texto               | Obrigatório                                   |
+| Competências Conforme Normas | Texto/Automático    | Obrigatório                                   |
+| Data Base                    | Data                | Obrigatório                                   |
+| Moeda                        | Texto               | Obrigatório                                   |
+| Valor Original Contrato      | Número              | Obrigatório                                   |
+| Valor Total Proposição       | Número              | Obrigatório                                   |
+| Nº Contrato                  | Texto               | Opcional / Obrigatório (Dependente do Objeto) |
+| Termo                        | Texto               | Opcional / Obrigatório (Dependente do Objeto) |
+| Fornecedor                   | Texto               | Opcional / Obrigatório (Dependente do Objeto) |
+| Valor Atual Contrato         | Número              | Opcional / Obrigatório (Dependente do Objeto) |
+| Nº Reserva Verba             | Texto               | Opcional / Obrigatório (Dependente do Objeto) |
+| Valor Reserva Verba          | Número              | Opcional / Obrigatório (Dependente do Objeto) |
+| Início Vigência Reserva      | Data                | Opcional / Obrigatório (Dependente do Objeto) |
+| Fim Vigência Reserva         | Data                | Opcional / Obrigatório (Dependente do Objeto) |
+| Nº Proposição                | Texto               | Obrigatório                                   |
+| Protolo/Expediente           | Texto               | Obrigatório                                   |
+| Nº Processo (Licitação)      | Texto               | Opcional / Obrigatório (Dependente do Objeto) |
+| Outras Observações           | Texto               | Opcional                                      |
+| Nº Reunião                   | Número              | Automático (Vem da Reunião)                   |
+| Data RD                      | Data                | Automático (Vem da Reunião)                   |
+| Motivo Retorno               | Texto               | Automático (Vem da Reunião)                   |
+| Deliberação                  | Texto               | Automático (Vem da Reunião)                   |
+| Aprovações \+                | Lista de Aprovações | Automático (Exibição por Solicitação)         |
+| Nº Resolução                 | Número              | Automático (Gerada na emissão da Resolução)   |
+| Assinatura Resolução         | Texto               | Automático (Gerada na emissão da Resolução)   |
+| Resolução Diretoria          | Texto               | Automático (Gerada na emissão da Resolução)   |
+| Resolução (Anexo)            | Arquivo             | Automático (Gerada na emissão da Resolução)   |
+| Extra Pauta?                 | Checkbox            | Opcional                                      |
+| Nº Conselho                  | Texto               | Opcional                                      |
+| Síntese do Processo (Anexo)  | Arquivo             | Opcional / Obrigatório (Dependente do Objeto) |
+| Nota Técnica (Anexo)         | Arquivo             | Opcional / Obrigatório (Dependente do Objeto) |
+| PRD (Anexo)                  | Arquivo             | Opcional / Obrigatório (Dependente do Objeto) |
+| Parecer Jurídico (Anexo)     | Arquivo             | Opcional / Obrigatório (Dependente do Objeto) |
+| TR (Anexo)                   | Arquivo             | Opcional / Obrigatório (Dependente do Objeto) |
+| Relatório Técnico (Anexo)    | Arquivo             | Opcional / Obrigatório (Dependente do Objeto) |
+| Planilha Quant. (Anexo)      | Arquivo             | Opcional / Obrigatório (Dependente do Objeto) |
+| Edital (Anexo)               | Arquivo             | Opcional / Obrigatório (Dependente do Objeto) |
+| Reserva Verba (Anexo)        | Arquivo             | Opcional / Obrigatório (Dependente do Objeto) |
+| SC (Anexo)                   | Arquivo             | Opcional / Obrigatório (Dependente do Objeto) |
+| RAV (Anexo)                  | Arquivo             | Opcional / Obrigatório (Dependente do Objeto) |
+| Cronograma Fís.-Fin. (Anexo) | Arquivo             | Opcional / Obrigatório (Dependente do Objeto) |
+| PCA (Anexo)                  | Arquivo             | Opcional / Obrigatório (Dependente do Objeto) |
+| Outros (Anexo)               | Lista de Arquivos   | Opcionais                                     |
+| Área Atual                   | Texto               | Automático (Sem Exibição)                     |
+| Descrição Fluxo              | Texto               | Automático (Sem Exibição)                     |
+| Tempo Prev. Perm.            | Texto               | Automático (Sem Exibição)                     |
+| Desc. Próx. Passo            | Texto               | Automático (Sem Exibição)                     |
+| Tempo Perm. Próx.            | Texto               | Automático (Sem Exibição)                     |
+| Seq.                         | Número              | Opcional (Sem Exibição)                       |
+
+-   \+ O campo "Aprovações" exibirá, caso requisitado, o registro das aprovações da Proposição, com os seguintes campos:
+    | Campo | Tipo | Validação |
+    | ----- | ---- | --------- |
+    | Nome Aprovador | Texto | Obrigatório se aprovado |
+    | Função Aprovador | Texto | Obrigatório se aprovado |
+    | Data/Hora Aprovação | Data/Hora | Obrigatório se aprovado |
 
 Abaixo deste formulário, deverá haver uma série de botões, com cores indicativas, para a realização de ações de acordo com o nível de acesso do usuário e o status da Proposição.  
 Todas as ações devem abrir um modal (pop-up), confirmando se o usuário deseja de fato executá-la. Caso clique em "Não", o modal apenas desaparece.  
 Caso o usuário tente sair do formulário sem salvar as alterações, um modal (pop-up) deve aparecer informando que as informações preenchidas serão perdidas caso ele prossiga.
 
-#### 3.1.1. Ações Gerenciais
+#### 5.1.0 Atividades Subgerenciais
 
-Para as gerências, caso a Proposição esteja nos status _"Em Preenchimento"_ (status inicial), _"Reprovado pela Diretoria Responsável"_, _"Aprovada em RD - Aguardando Ajustes"_ ou _"Suspensa - Aguardando Ajustes"_, as ações são as seguintes:
+Para o nível subgerencial, independente do status da Proposição, as atividades serão apenas:
+
+-   **Salvar Alterações**: Verifica e valida o preenchimento correto do formulário e salva as alterações. Nesse momento, uma notificação é enviada para o gerente responsável e para a GRG.  
+    Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
+-   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
+
+#### 5.1.1. Atividades Gerenciais
+
+Para as gerências, caso a Proposição esteja nos status _"Em Preenchimento"_ (status inicial), _"Reprovado pela Diretoria Responsável"_, _"Aprovada em RD - Aguardando Ajustes"_ ou _"Suspensa - Aguardando Ajustes"_, as atividades são as seguintes:
 
 -   **Salvar Progresso**: Salva o atual preenchimento do formulário, sem validações. Esta ação não altera o status da Proposição.
 -   **Enviar para Aprovação da diretoria**: Verifica e valida o preenchimento correto do formulário, salva as alterações e muda o status para _"Em Aprovação da Diretoria Responsável"_. Nesse momento, uma notificação é enviada para o diretor responsável e para a GRG.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
 -   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
 
-Caso a Proposição esteja nos status _"Em Aprovação da Diretoria Responsável"_, _"Disponível para Inclusão em Pauta"_ ou _"Em Pauta"_, as ações são as seguintes:
+Caso a Proposição esteja nos status _"Em Aprovação da Diretoria Responsável"_, _"Disponível para Inclusão em Pauta"_ ou _"Em Pauta"_, as atividades são as seguintes:
 
 -   **Salvar Alterações**: Verifica e valida o preenchimento correto do formulário e salva as alterações. Nesse momento, uma notificação é enviada para o diretor responsável e para a GRG.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
 -   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
 
-Caso a Proposição esteja nos status _"Aprovada em RD"_, _"Reprovada em RD"_ ou _"Arquivada"_, o formulário estará travado para edições, e as ações são as seguintes:
+Caso a Proposição esteja nos status _"Aprovada em RD"_, _"Reprovada em RD"_ ou _"Arquivada"_, o formulário estará travado para edições, e as atividades são as seguintes:
 
 -   **Cancelar**: Sai do formulário.
 
-#### 3.1.2. Ações da diretoria
+#### 5.1.2. Atividades da Diretoria
 
-Para as diretorias, caso a Proposição esteja no status _"Em Aprovação da Diretoria Responsável"_, as ações são as seguintes:
+Para as diretorias, caso a Proposição esteja no status _"Em Aprovação da Diretoria Responsável"_, as atividades são as seguintes:
 
 -   **Aprovar**: Verifica e valida o preenchimento correto do formulário, salva as alterações e muda o status para _"Disponível para Inclusão em Pauta"_. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para a GRG.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
@@ -211,19 +315,19 @@ Para as diretorias, caso a Proposição esteja no status _"Em Aprovação da Dir
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
 -   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
 
-Caso a Proposição esteja nos status _"Reprovado pela Diretoria Responsável"_, _"Disponível para Inclusão em Pauta"_ ou _"Em Pauta"_, as ações são as seguintes:
+Caso a Proposição esteja nos status _"Reprovado pela Diretoria Responsável"_, _"Disponível para Inclusão em Pauta"_ ou _"Em Pauta"_, as atividades são as seguintes:
 
 -   **Salvar Alterações**: Verifica e valida o preenchimento correto do formulário e salva as alterações. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para a GRG.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
 -   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
 
-Caso a Proposição esteja nos status _"Aprovada em RD"_, _"Reprovada em RD"_ ou _"Arquivada"_, o formulário estará travado para edições e as ações são as seguintes:
+Caso a Proposição esteja nos status _"Aprovada em RD"_, _"Reprovada em RD"_ ou _"Arquivada"_, o formulário estará travado para edições e as atividades são as seguintes:
 
 -   **Cancelar**: Sai do formulário.
 
-#### 3.1.3. Ações da GRG
+#### 5.1.3. Atividades da GRG
 
-Para os funcionários da GRG, as ações são as seguintes, caso a Proposição esteja no status _"Disponível para Inclusão em Pauta"_:
+Para os funcionários da GRG, as atividades são as seguintes, caso a Proposição esteja no status _"Disponível para Inclusão em Pauta"_:
 
 -   **Incluir em Pauta**: Abre um modal (pop-up) para selecionar, em uma lista suspensa, a Reunião na pauta da qual a Proposição deve ser incluída. A lista suspensa deve apresentar apenas reuniões que ainda não foram arquivadas.  
     Após selecionada a Reunião apropriada, o usuário deverá clicar em um botão "OK" dentro do modal, confirmando assim a inclusão. Ao clicar nele, o status da Proposição será alterado para _"Em Pauta"_, e os campos referentes à Reunião são preenchidos automaticamente no formulário.  
@@ -232,62 +336,53 @@ Para os funcionários da GRG, as ações são as seguintes, caso a Proposição 
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
 -   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
 
-Caso a Proposição esteja nos status _"Em Aprovação da Diretoria Responsável"_, _"Reprovado pela Diretoria Responsável"_, _"Em Pauta"_, _"Aprovada em RD - Aguardando Ajustes"_, _"Suspensa - Aguardando Ajustes"_ as ações são as seguintes:
+Caso a Proposição esteja nos status _"Em Aprovação da Diretoria Responsável"_, _"Reprovado pela Diretoria Responsável"_, _"Em Pauta"_, _"Aprovada em RD - Aguardando Ajustes"_, _"Suspensa - Aguardando Ajustes"_ as atividades são as seguintes:
 
 -   **Salvar Alterações**: Verifica e valida o preenchimento correto do formulário e salva as alterações. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
 -   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
 
-Caso a Proposição esteja nos status _"Aprovada em RD"_, _"Reprovada em RD"_ ou _"Arquivada"_, o formulário estará travado para edições e as ações são as seguintes:
+Caso a Proposição esteja nos status _"Aprovada em RD"_, _"Reprovada em RD"_ ou _"Arquivada"_, o formulário estará travado para edições e as atividades são as seguintes:
 
 -   **Cancelar**: Sai do formulário.
 
-### 3.2. Listagem de Proposições Cadastradas
+### 5.2. Listagem de Proposições Cadastradas
 
 Como tela inicial para todos os usuários, será exibida uma listagem das Proposições já cadastradas no sistema, com uma filtragem inicial já definida pelo nível e grupo de acesso, e permitindo filtragens adicionais, além de algumas ações.  
-Os filtros (tais como ordenação e pesquisa) serão disponibilizados acima da lista.  
+O usuário poderá pesquisar e ordernar por todos os campos disponíveis na lista. Os controles para filtros (tais como ordenação e pesquisa) serão disponibilizados acima da lista.  
 A listagem deverá incluir os seguintes campos, servindo de resumo das Proposições:
 
 | Campo                  |
 | ---------------------- |
+| IdPrd                  |
+| Area Solicitante       |
 | Objeto                 |
+| Título                 |
+| Valor Total Proposição |
 | Nº Reunião             |
 | Data RD                |
-| IdPrd                  |
-| Assunto                |
-| Area Solicitante       |
-| Descrição              |
-| Relator                |
-| Data Base              |
-| Valor Total Proposição |
 | Status                 |
 
-Ao se clicar em uma das linhas da listagem, o sistema deverá abrir, na mesma tela, o [**Formulário de Proposição**](#31-tela-de-cadastro-de-proposição) devidamente preenchido com as informações cadastradas, e disponibilizando as ações conforme seção anterior.
+Ao se clicar em uma das linhas da listagem, o sistema deverá abrir, na mesma tela, o [**Formulário de Proposição**](#31-tela-de-cadastro-de-proposição) devidamente preenchido com as informações cadastradas, e disponibilizando as atividades conforme seção anterior.
 
-#### 3.2.1. Filtros Gerenciais
+#### 5.2.1. Filtros Gerenciais
 
-A filtragem inicial para as Gerências deverá mostrar apenas as proposições não arquivadas que tenham sido cadastradas pela Gerência em questão.
+A filtragem inicial para as Gerências deverá mostrar apenas as proposições não arquivadas que tenham sido cadastradas pela gerência em questão ou seus subordinados.
 
-O usuário poderá ainda pesquisar e ordernar por todos os campos disponíveis na lista, conforme [seção anterior](#32-listagem-de-proposições-cadastradas).
+#### 5.2.2. Filtros da Diretoria
 
-#### 3.2.2. Filtros da Diretoria
+A filtragem inicial para as diretorias deverá mostrar apenas as proposições não arquivadas que tenham sido cadastradas por gerências subordinadas à diretoria em questão.
 
-A filtragem inicial para as diretorias deverá mostrar apenas as proposições não arquivadas que tenham sido cadastradas por Gerências subordinadas à diretoria em questão.
+#### 5.2.3. Filtros e Ações da GRG
 
-O usuário poderá ainda pesquisar e ordernar por todos os campos disponíveis na lista, conforme [seção anterior](#32-listagem-de-proposições-cadastradas).
+A filtragem inicial para a GRG deverá mostrar apenas as proposições não arquivadas que tenham sido cadastradas e esteja acima do status 2 - _"Disponível para Inclusão em Pauta"_. A GRG terá ainda uma tela mostrando apenas as proposições não arquivadas que tenham cadastradas e estejam abaixo do status 2 - _"Disponível para Inclusão em Pauta"_, e uma tela mostrando apenas as proposições arquivadas.
 
-#### 3.2.3. Filtros e Ações da GRG
-
-A filtragem inicial para a GRG deverá mostrar apenas as proposições não arquivadas que tenham sido cadastradas pela Gerência em questão.
-
-O usuário poderá ainda pesquisar e ordernar por todos os campos disponíveis na lista, conforme [seção anterior](#32-listagem-de-proposições-cadastradas).
-
-### 3.3. Tela de Apresentação em RD (Tela de Reunião)
+### 5.3. Tela de Apresentação em RD (Tela de Reunião)
 
 Para a GRG, será disponibilizada uma **Tela de Reunião**, a fim de facilitar a apresentação da pauta durante da RD.  
 O acesso a essa tela será realizado através da barra de navegação. Ao clicar no link nessa barra, será apresentada uma lista com as reuniões disponíveis para apresentação. Ao selecionar uma das reuniões e clicar em "Apresentar", o usuário abrirá a **Tela de Reunião** em si.  
-Essa tela consistirá de uma listagem similar às descritas na seção anterior, mas em tamanho aumentado, e contendo os seguintes campos: .... Abaixo da listagem, haverá um botão "Encerrar Reunião", que permitirá finalizar a apresentação.  
-Ao se clicar em uma das linhas da listagem, o sistema deverá abrir, na mesma tela, o **Formulário de Proposição**, também em tamanho aumentado, devidamente preenchido com as informações cadastradas, e disponibilizando as seguintes ações abaixo do formulário:
+Essa tela consistirá de uma listagem similar às descritas na [seção anterior](#5.2.-listagem-de-proposições-cadastradas), mas em tamanho aumentado. Abaixo da listagem, haverá um botão "Encerrar Reunião", que permitirá finalizar a apresentação.  
+Ao se clicar em uma das linhas da listagem, o sistema deverá abrir, na mesma tela, o [**Formulário de Proposição**](#5.1.-formulário-de-proposição), também em tamanho aumentado, devidamente preenchido com as informações cadastradas, e disponibilizando as seguintes ações abaixo do formulário:
 
 -   **Aprovar**: Muda o status para _"Aprovada em RD"_. O sistema mostra um alerta de confirmação e, após fechado, volta à lista inicial, que já exibirá o novo status. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.
 -   **Reprovar**: Muda o status para _"Reprovada em RD"_. O sistema mostra um alerta de confirmação e, após fechado, volta à lista inicial, que já exibirá o novo status. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.
@@ -297,7 +392,13 @@ Ao se clicar em uma das linhas da listagem, o sistema deverá abrir, na mesma te
     -   _Suspender_: Muda o status para _"Suspensa - Aguardando Ajustes"_. O sistema mostra um alerta de confirmação e, após fechado, volta à lista inicial, que já exibirá o novo status. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.
 -   **Cancelar**: Sai do formulário sem fazer alterações, voltando à lista inicial.
 
-### 3.4. Tela de Gestão de Reunião
+Essa mesma tela será disponibilizada em menu aos diretores participantes da Reunião, mas constando apenas as opções de **Aprovar** e **Reprovar**, através da qual será possível computar seus votos. Em evolução futura, o sistema não necessitaria das ações da GRG descritas acima, e deveria apenas calcular a aprovação/reprovação com base nos votos registrados pelo diretores diretamente em suas contas.
+
+#### 5.3.1. Tela de Apresentação Prévia
+
+Para a Reunião Prévia, será disponibilizada uma tela similar à anterior, mas sem as atividades descritas. Nela constará apenas, para cada Proposição, a opção de adicionar anotações, que serão feitas durante a apresentação dos participantes da prévia. O documento de _"Memória da Prévia"_ será construído principalmente a partir dos dados apresentados nesta tela.
+
+### 5.4. Tela de Gestão de Reunião
 
 Para a equipe da GRG, também será disponibilizada uma tela para a gestão das Reuniões. As Reuniões precisarão ser criadas usando esta tela antes que se possa incluir Proposições na sua pauta.  
 Esta tela consistirá de um formulário com os seguintes campos e validações:
@@ -356,16 +457,7 @@ Esta tela consistirá de um formulário com os seguintes campos e validações:
         | Descrição | Texto | Obrigatório |
         | Anexos | Lista de Arquivos | Opcional |
 
-Abaixo deste formulário, deverá haver uma série de botões, com cores indicativas, para a realização de ações de acordo com o status da Reunião. A Reunião pederá ter os seguintes status:
-
-| #   | Nome       |
-| --- | ---------- |
-| 0   | Em criação |
-| 1   | Registrada |
-| 2   | Prévia     |
-| 3   | Pauta      |
-| 4   | Realizada  |
-| 5   | Arquivada  |
+Abaixo deste formulário, deverá haver uma série de botões, com cores indicativas, para a realização de ações de acordo com o status da Reunião.
 
 Caso a Reunião esteja no status _"Em criação"_, as ações serão as seguintes:
 
@@ -383,7 +475,7 @@ Caso a Reunião esteja nos demais status, as ações serão as seguintes:
 -   **Reunião Realizada**: Muda o status da Reunião para _"Realizada"_, eliminando a Reunião da listagem na **Tela de Reunião** e disponibilizando a ação anterior. Esta ação não aparece caso o status seja _"Realizada"_.
 -   **Cancelar**: Sai do formulário sem fazer alterações, voltando à tela inicial.
 
-### 3.5. Listagem de Reuniões
+### 5.5. Listagem de Reuniões
 
 Será igualmente disponibilizado para a equipe da GRG uma listagem das Reuniões já cadastradas no sistema, permitindo filtragens.  
 Os filtros (tais como ordenação e pesquisa) serão disponibilizados acima da lista.  
@@ -400,19 +492,19 @@ A listagem deverá incluir os seguintes campos, servindo de resumo das Reuniões
 
 Ao se clicar em uma das linhas da listagem, o sistema deverá abrir, na mesma tela, o **Formulário de Reuniões** devidamente preenchido com as informações cadastradas, e disponibilizando as ações conforme seção anterior.
 
-## 4. Envio de Notificações por E-mail
+## 6. Envio de Notificações por E-mail
 
 O sistema deverá, nos momentos descritos abaixo, enviar notificações a certos usuários por e-mail.
 
-### 4.1. Remetentes
+### 6.1. Remetentes
 
-Todos as notificações serão enviados do e-mail (...), que é uma conta já existente da GRG.
+Todos as notificações serão enviados do e-mail "governanca@cptm.sp.gov.br", que é uma conta já existente da GRG.
 
-### 4.2. Destinatários
+### 6.2. Destinatários
 
-Conforme os eventos descritos na próxima seções, as notificações serão enviadas a gerentes e diretores em seus e-mails pessoais, definidos no AD CPTM. A GRG receberá notificações no e-mail de grupo (...), que distribuirá o conteúdo a seus membros.
+Conforme os eventos descritos na próxima seções, as notificações serão enviadas a gerentes e diretores em seus e-mails pessoais, definidos no AD CPTM. A GRG receberá notificações no e-mail de grupo "governanca@cptm.sp.gov.br", que distribuirá o conteúdo a seus membros.
 
-### 4.3. Eventos de Acionamento
+### 6.3. Eventos de Acionamento
 
 As notificações serão encaminhadas nas seguintes ocasiões:
 
@@ -422,4 +514,6 @@ As notificações serão encaminhadas nas seguintes ocasiões:
 -   **Inclusão de Proposição em pauta de RD**: Quando a GRG incluir uma proposição na pauta de uma Reunião, serão encaminhados e-mails para o gerente que cadastrou a proposição e para o diretor responsável pela área em questão.
 -   **Deliberação em RD**: Quando a proposição for aprovada, reprovada, suspensa ou retirada da pauta, conforme deliberação em RD, serão encaminhados e-mails para o gerente que cadastrou a proposição e para o diretor responsável pela área em questão, assim como para todos os participantes da Reunião.
 -   **Arquivamento de Proposição**: Quando a proposição for arquivada pela GRG, serão encaminhados e-mails para o gerente que cadastrou a proposição arquivada e para o diretor responsável pela área em questão.
+-   **Criação de Ação**: Quando uma Ação for criada em uma Reunião, serão encaminhados e-mails aos participantes da Reunião, ao responsável designado e aos membros da GRG.
+-   **Inclusão de Andamento**: Quando um Andamento for criado em uma Ação, serão encaminhados e-mails aos participantes da Reunião em que a Ação está inclusa, ao responsável designado e aos membros da GRG.
 -   **Envio de Pauta Prévia, Pauta Definitiva e Relatório Deliberativo**: Quando o envio desses documentos for realizado, serão encaminhados e-mails para os participantes da Reunião em questão.

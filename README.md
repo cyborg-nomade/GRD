@@ -1,2 +1,3 @@
-# GPR
-Aplicação para gestão de proposições de Reuniões de Diretoria na CPTM
+# GRD
+
+Aplicação para gestão de Reuniões de Diretoria na CPTM
