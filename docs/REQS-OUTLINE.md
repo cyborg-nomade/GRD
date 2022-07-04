@@ -36,29 +36,28 @@ Posteriormente, o gerente poderá visualizar o status atual da Proposição cada
 
 ### 2.2. Aprovação do Diretor Responsável
 
-Na fase seguinte do fluxo, os diretores visualizarão uma listagem com todas as Proposições cadastradas pelas gerências, e deverão avaliá-las e aprová-las caso estejam de acordo. Será possível também editar as Proposições, caso necessário, até a inclusão em pauta de RD (o que gerará notificações conforme descrito na seção 4).  
+Na fase seguinte do fluxo, os diretores visualizarão uma listagem com todas as Proposições cadastradas pelas gerências, e deverão avaliá-las e aprová-las caso estejam de acordo. Será possível também editar as Proposições, caso necessário, até a inclusão em pauta de RD (o que gerará notificações conforme descrito na [seção 4](#4-envio-de-notificações-por-e-mail)).  
 Caso a Proposição seja aprovada, ela aparecerá para a GRG para a inclusão em pauta. Caso seja reprovada, ela mostrará o status "Reprovado" para o gerente que a cadastrou, e não mais aparecerá para o diretor em questão.
 
 ### 2.2. Inclusão em Pauta
 
 A próxima fase do fluxo é a Inclusão em Pauta. Neste momento, os funcionários da GRG deverão abrir cada uma das Proposições cadastradas, avaliá-las quanto a corretude, e incluí-las na pauta da RD apropriada.  
-Caso haja erros, a Proposição poderá ser retornada para a diretoria responsável. Caso contrário, ao ser incluída na pauta de uma RD, a Proposição aparecerá na **Tela de Reunião**, onde poderá ser tratada durante a Reunião de diretoria em questão.  
-Neste momento, os funcionários da GRG também poderão emitir uma "Pauta Prévia" para a RD Prévia e, poteriormente, a "Pauta Definitiva" para a RD, na **Tela de Gestão de Reunião**.
+Caso haja erros, a Proposição poderá ser retornada para a diretoria responsável. Caso contrário, ao ser incluída na pauta de uma RD, a Proposição aparecerá na [**Tela de Reunião**](#33-tela-de-apresentação-em-rd-tela-de-reunião), onde poderá ser tratada durante a Reunião de diretoria em questão.  
+Neste momento, os funcionários da GRG também poderão emitir uma "Pauta Prévia" para a RD Prévia e, posteriormente, a "Pauta Definitiva" para a RD, na [**Tela de Gestão de Reunião**](#34-tela-de-gestão-de-reunião).
 
 ### 2.3. Ações de RD
 
-No momento da RD, os funcionários da GRG exibirão uma visualização apropriada (**Tela de Apresentação**), onde as seguintes ações estarão disponíveis:
+No momento da RD, os funcionários da GRG exibirão uma visualização apropriada ([**Tela de Apresentação**](<(#33-tela-de-apresentação-em-rd-tela-de-reunião)>)), onde as seguintes ações estarão disponíveis:
 
 -   **Aprovar**: Neste caso, a Proposição entre no status "Aprovada em RD".
 -   **Retirar**: Neste caso, a Proposição volta ao status de "Inclusão em Pauta", e fica disponível para inclusão na pauta de uma nova RD.
--   **Suspenso**: Neste caso, a Proposição volta ao status de "Inclusão em Pauta", e fica disponível para inclusão na pauta de uma nova RD.
 -   **Reprovado**: Neste caso, a Proposição entra no status "Reprovada em RD".
 
 ### 2.4. Ações Pós-RD
 
-Após a conclusão da Reunião, os funcionários da GRG poderão executar as seguintes ações na **Tela de Gestão de Reunião**:
+Após a conclusão da Reunião, os funcionários da GRG poderão executar as seguintes ações na [**Tela de Gestão de Reunião**](#34-tela-de-gestão-de-reunião):
 
--   Acessar as Proposições daquela Reunião, para a elaboração da Ata e de outros relatórios;
+-   Acessar as Proposições daquela Reunião, assim como emitir a Ata e de outros relatórios;
 -   Adicionar Proposições retroativamente;
 -   Alterar os status das Proposições conforme necessário;
 -   Anexar documentos à Reunião;
@@ -263,25 +262,25 @@ A listagem deverá incluir os seguintes campos, servindo de resumo das Proposiç
 | Valor Total Proposição |
 | Status                 |
 
-Ao se clicar em uma das linhas da listagem, o sistema deverá abrir, na mesma tela, o **Formulário de Proposição** devidamente preenchido com as informações cadastradas, e disponibilizando as ações conforme seção anterior.
+Ao se clicar em uma das linhas da listagem, o sistema deverá abrir, na mesma tela, o [**Formulário de Proposição**](#31-tela-de-cadastro-de-proposição) devidamente preenchido com as informações cadastradas, e disponibilizando as ações conforme seção anterior.
 
-#### 3.2.1. Filtros e Gerenciais
+#### 3.2.1. Filtros Gerenciais
 
 A filtragem inicial para as Gerências deverá mostrar apenas as proposições não arquivadas que tenham sido cadastradas pela Gerência em questão.
 
-O usuário poderá ainda pesquisar e ordernar pelos seguintes campos: ...
+O usuário poderá ainda pesquisar e ordernar por todos os campos disponíveis na lista, conforme [seção anterior](#32-listagem-de-proposições-cadastradas).
 
-#### 3.2.2. Filtros e Ações da diretoria
+#### 3.2.2. Filtros da Diretoria
 
 A filtragem inicial para as diretorias deverá mostrar apenas as proposições não arquivadas que tenham sido cadastradas por Gerências subordinadas à diretoria em questão.
 
-O usuário poderá ainda pesquisar e ordernar pelos seguintes campos: ...
+O usuário poderá ainda pesquisar e ordernar por todos os campos disponíveis na lista, conforme [seção anterior](#32-listagem-de-proposições-cadastradas).
 
 #### 3.2.3. Filtros e Ações da GRG
 
 A filtragem inicial para a GRG deverá mostrar apenas as proposições não arquivadas que tenham sido cadastradas pela Gerência em questão.
 
-O usuário poderá ainda pesquisar e ordernar pelos seguintes campos: ...
+O usuário poderá ainda pesquisar e ordernar por todos os campos disponíveis na lista, conforme [seção anterior](#32-listagem-de-proposições-cadastradas).
 
 ### 3.3. Tela de Apresentação em RD (Tela de Reunião)
 
@@ -292,7 +291,7 @@ Ao se clicar em uma das linhas da listagem, o sistema deverá abrir, na mesma te
 
 -   **Aprovar**: Muda o status para _"Aprovada em RD"_. O sistema mostra um alerta de confirmação e, após fechado, volta à lista inicial, que já exibirá o novo status. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.
 -   **Reprovar**: Muda o status para _"Reprovada em RD"_. O sistema mostra um alerta de confirmação e, após fechado, volta à lista inicial, que já exibirá o novo status. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.
--   **Suspender**: Muda o status para _"Reprovada em RD"_. O sistema mostra um alerta de confirmação e, após fechado, volta à lista inicial, que já exibirá o novo status. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.
+-   **Suspender**: Muda o status para _"Disponível para Inclusão em Pauta"_. O sistema mostra um alerta de confirmação e, após fechado, volta à lista inicial, que já exibirá o novo status. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.
 -   **Ajustes**: Abre um modal (pop-up), com uma caixa de texto, onde devem ser inseridos os ajustes necessários na Proposição. No modal, duas ações pode ser tomadas, a saber:
     -   _Aprovar_: Muda o status para _"Aprovada em RD - Aguardando Ajustes"_. O sistema mostra um alerta de confirmação e, após fechado, volta à lista inicial, que já exibirá o novo status. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.
     -   _Suspender_: Muda o status para _"Suspensa - Aguardando Ajustes"_. O sistema mostra um alerta de confirmação e, após fechado, volta à lista inicial, que já exibirá o novo status. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.
