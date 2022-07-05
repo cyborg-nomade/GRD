@@ -18,11 +18,15 @@ Este nível é de acesso para simples cadastro de Proposições, e deverá ser c
 
 O primeiro nível de acesso é o nível gerencial, ao qual terão acesso todos os gerentes da CPTM. Os gerentes poderão visualizar e editar apenas as Proposições que tiverem cadastrado para sua própria área. Os gerentes também poderão permitir acesso ao nível gerencial a seus assessores e secretários, através de interface do sistema.
 
-### 1.2 Diretorias
+### 1.2 Assessor Diretoria
+
+Este nível de acesso é o nível dos assessores das diretorias, ao qual terão acesso todos aqueles que tiverem este nível concedido pelos diretores da CPTM. Os assessores terão acesso similar ao do diretor que lhe concedeu acesso, com exceção das ações vinculadas à participação na RD.
+
+### 1.3 Diretorias
 
 O segundo nível de acesso é o nível das diretorias, ao qual terão acesso todos os diretores da CPTM. Os diretores poderão visualizar e editar todas as Proposições cadastradas pelas áreas subordinadas à sua diretoria, e serão responsáveis pela primeira aprovação e encaminhamento para adição da Proposição em pauta de RD. Os diretores também poderão permitir acesso ao nível de diretoria a seus assessores e secretários, através de interface do sistema.
 
-### 1.3 GRG
+### 1.4 GRG
 
 O terceiro nível de acesso é o nível da GRG, ao qual terão acesso todos os empregados pertencentes à GRG (ou área que venha a substituí-la). Os membros da GRG poderão visualizar e editar todas as Proposições cadastradas por todos os demais usuários, e serão responsáveis pela inclusão destas nas pautas de RD. Este nível também poderá adicionar ou remover o acesso de usuários do sistema, assim como atribuir níveis e grupos de acesso, através de interface do sistema.
 
@@ -153,7 +157,7 @@ Inicialmente, a Reunião será registrada pelos membros da GRG, em uma tela espe
 
 ### 4.2 Emissão de Pauta Prévia e Realização da Reunião Prévia
 
-Após o registro inicial, a Reunião ficará disponível para inclusão de Proposições em sua pauta. Também fica disponível o cadastramento dos participantes da Reunião Prévia. Com esses dados, pode-se emitir a Pauta Prévia, que incluirá todas as Proposições cadastradas até aquele momento e mencionará os participantes cadastrados no campo "Participantes Prévia". Nesse momento a Reunião passa ao status _"Prévia"_ e é liberada a [**Tela de Apresentação Prévia**](#5.3.1.-tela-de-apresentação-prévia) para realização da Reunião Prévia, onde anotações podem ser realizadas, que constarão na _Memória da Prévia_.  
+Após o registro inicial, a Reunião ficará disponível para inclusão de Proposições em sua pauta. Também fica disponível o cadastramento dos participantes da Reunião Prévia. Com esses dados, pode-se emitir a Pauta Prévia, que incluirá todas as Proposições cadastradas até aquele momento e não estejam marcadas como "Extra Pauta", e mencionará os participantes cadastrados no campo "Participantes Prévia". Nesse momento a Reunião passa ao status _"Prévia"_ e é liberada a [**Tela de Apresentação Prévia**](#5.3.1.-tela-de-apresentação-prévia) para realização da Reunião Prévia, onde anotações podem ser realizadas, que constarão na _Memória da Prévia_.  
 Após a realização da Reunião Prévia, será possível emitir a _Memória da Prévia_, com base nas informações registradas até aquele momento, seguindo o modelo a ser fornecido pela GRG.
 
 ### 4.3 Emissão de Pauta Definitiva e Realização da Reunião de Diretoria
@@ -223,6 +227,7 @@ A tela de Casdastro de Proposição deverá conter um formulário com os seguint
 | Moeda                        | Texto               | Obrigatório                                   |
 | Valor Original Contrato      | Número              | Obrigatório                                   |
 | Valor Total Proposição       | Número              | Obrigatório                                   |
+| Receita/Despesa              | Radio               | Obrigatório                                   |
 | Nº Contrato                  | Texto               | Opcional / Obrigatório (Dependente do Objeto) |
 | Termo                        | Texto               | Opcional / Obrigatório (Dependente do Objeto) |
 | Fornecedor                   | Texto               | Opcional / Obrigatório (Dependente do Objeto) |
@@ -384,12 +389,12 @@ O acesso a essa tela será realizado através da barra de navegação. Ao clicar
 Essa tela consistirá de uma listagem similar às descritas na [seção anterior](#5.2.-listagem-de-proposições-cadastradas), mas em tamanho aumentado. Abaixo da listagem, haverá um botão "Encerrar Reunião", que permitirá finalizar a apresentação.  
 Ao se clicar em uma das linhas da listagem, o sistema deverá abrir, na mesma tela, o [**Formulário de Proposição**](#5.1.-formulário-de-proposição), também em tamanho aumentado, devidamente preenchido com as informações cadastradas, e disponibilizando as seguintes ações abaixo do formulário:
 
--   **Aprovar**: Muda o status para _"Aprovada em RD"_. O sistema mostra um alerta de confirmação e, após fechado, volta à lista inicial, que já exibirá o novo status. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.
--   **Reprovar**: Muda o status para _"Reprovada em RD"_. O sistema mostra um alerta de confirmação e, após fechado, volta à lista inicial, que já exibirá o novo status. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.
--   **Suspender**: Muda o status para _"Disponível para Inclusão em Pauta"_. O sistema mostra um alerta de confirmação e, após fechado, volta à lista inicial, que já exibirá o novo status. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.
+-   **Aprovar**: Muda o status para _"Aprovada em RD"_. O sistema mostra um alerta de confirmação e solicita a discriminação dos votos dos participantes. Após fechado o alerta, o sistema volta à lista inicial, que já exibirá o novo status. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.
+-   **Reprovar**: Muda o status para _"Reprovada em RD"_. O sistema mostra um alerta de confirmação e solicita a discriminação dos votos dos participantes. Após fechado o alerta, o sistema volta à lista inicial, que já exibirá o novo status. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.
+-   **Suspender**: Muda o status para _"Disponível para Inclusão em Pauta"_. O sistema mostra um alerta de confirmação e solicita a discriminação dos votos dos participantes. Após fechado o alerta, o sistema volta à lista inicial, que já exibirá o novo status. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.
 -   **Ajustes**: Abre um modal (pop-up), com uma caixa de texto, onde devem ser inseridos os ajustes necessários na Proposição. No modal, duas ações pode ser tomadas, a saber:
-    -   _Aprovar_: Muda o status para _"Aprovada em RD - Aguardando Ajustes"_. O sistema mostra um alerta de confirmação e, após fechado, volta à lista inicial, que já exibirá o novo status. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.
-    -   _Suspender_: Muda o status para _"Suspensa - Aguardando Ajustes"_. O sistema mostra um alerta de confirmação e, após fechado, volta à lista inicial, que já exibirá o novo status. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.
+    -   _Aprovar_: Muda o status para _"Aprovada em RD - Aguardando Ajustes"_. O sistema mostra um alerta de confirmação e solicita a discriminação dos votos dos participantes. Após fechado o alerta, o sistema volta à lista inicial, que já exibirá o novo status. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.
+    -   _Suspender_: Muda o status para _"Suspensa - Aguardando Ajustes"_. O sistema mostra um alerta de confirmação e solicita a discriminação dos votos dos participantes. Após fechado o alerta, o sistema volta à lista inicial, que já exibirá o novo status. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.
 -   **Cancelar**: Sai do formulário sem fazer alterações, voltando à lista inicial.
 
 Essa mesma tela será disponibilizada em menu aos diretores participantes da Reunião, mas constando apenas as opções de **Aprovar** e **Reprovar**, através da qual será possível computar seus votos. Em evolução futura, o sistema não necessitaria das ações da GRG descritas acima, e deveria apenas calcular a aprovação/reprovação com base nos votos registrados pelo diretores diretamente em suas contas.
@@ -468,6 +473,7 @@ Caso a Reunião esteja nos demais status, as ações serão as seguintes:
 
 -   **Salvar Alterações**: Verifica e valida o preenchimento correto do formulário e salva as alterações nos campos da Reunião.
 -   **Emitir Pauta Prévia**: Emite o documento de pauta prévia, encaminhando-o para todos os participantes da Reunião, e muda o status da Reunião para _"Prévia"_. Esta ação não aparece caso o status seja _"Prévia"_.
+-   **Emitir Memória da Prévia**: Emite a Memória da P´revia, encaminhando-a para todos os participantes da Reunião Prévia. A Memória é criada a partir dos campos das Proposições em pauta prévia, conforme modelo a ser disponibilizado pela GRG. Esta ação só aparece caso o status seja _"Prévia"_.
 -   **Emitir Pauta Definitiva**: Emite o documento de pauta definitiva, encaminhando-o para todos os participantes da Reunião, e muda o status da Reunião para _"Pauta"_. Esta ação não aparece caso o status seja _"Pauta"_.
 -   **Emitir Relatório Deliberativo**: Emite o relatório deliberativo da RD, encaminhando-o para todos os participantes da Reunião, e muda o status da Reunião para _"Arquivada"_. Esta ação só aparece caso o status seja _"Realizada"_.
 -   **Emitir Resoluções de Diretoria**: Emite a Resolução de Diretoria para cada Proposição da pauta da RD, encaminhando-o para todos os participantes da Reunião, assim como para o diretor e gerente responsáveis pela Proposição. A Resolução de Diretoria é criada a partir dos campos da Proposição, conforme modelo a ser disponibilizado pela GRG. Esta ação só aparece caso o status seja _"Realizada"_.
