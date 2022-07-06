@@ -114,16 +114,26 @@
     -   _auth_: assessor-diretoria, diretor, grg, sysAdmin
     -   _inputs_: proposicao id
     -   _outputs_: status message + proposicao repproved
--   **POST /api/proposicoes/:pid:/rd-approve/diretor/:did:/**
-    -   rd-approves a proposicao by a given diretor
+-   **POST /api/proposicoes/:pid:/return-to-diretoria/**
+    -   returns a proposicao to diretoria responsável
+    -   _auth_: grg, sysAdmin
+    -   _inputs_: proposicao id
+    -   _outputs_: status message + proposicao sent to diretoria
+-   **POST /api/proposicoes/:pid:/return-to-grg/**
+    -   returns a proposicao to grg after fixes have been made
+    -   _auth_: sub, gerente, assessor-diretoria, diretor, grg, sysAdmin
+    -   _inputs_: proposicao id + proposicao (in req body)
+    -   _outputs_: status message + proposicao sent to grg
+-   **POST /api/proposicoes/:pid:/fixes-done/**
+    -   marks proposicao as having its fixes done
+    -   _auth_: grg, sysAdmin
+    -   _inputs_: proposicao id + proposicao (in req body)
+    -   _outputs_: status message + proposicao
+-   **POST /api/proposicoes/:pid:/rd-deliberate/diretor/:did:/**
+    -   rd-deliberates a proposicao for a given diretor with a given vote
     -   _auth_: diretor (for itself), grg (for members of meeting), sysAdmin
-    -   _inputs_: proposicao id + diretor user id
+    -   _inputs_: proposicao id + diretor user id + diretor vote (in req body)
     -   _outputs_: status message + proposicao approved
--   **POST /api/proposicoes/:pid:/rd-repprove/diretor/:did:/**
-    -   rd-repproves a proposicao by a given diretor
-    -   _auth_: diretor (for itself), grg (for members of meeting), sysAdmin
-    -   _inputs_: proposicao id + diretor user id
-    -   _outputs_: status message + proposicao repproved
 -   **POST /api/proposicoes/:pid:/reuniao/:rid:/add**
     -   add a proposicao to a reuniao
     -   _auth_: grg, sysAdmin

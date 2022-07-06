@@ -75,30 +75,37 @@ O arquivo atual das Reuniões e Proposições, existente no SPI, será migrado p
 
 ### 2.6. Sequência de Status
 
-| #   | Nome                                  |
-| --- | ------------------------------------- |
-| 0   | Em Preenchimento                      |
-| 1   | Em Aprovação da Diretoria Responsável |
-| 1.1 | Reprovado pela Diretoria Responsável  |
-| 2   | Disponível para Inclusão em Pauta     |
-| 3   | Em Pauta                              |
-| 4   | Aprovada em RD                        |
-| 4.1 | Reprovada em RD                       |
-| 4.2 | Aprovada em RD - Aguardando Ajustes   |
-| 4.3 | Suspensa - Aguardando Ajustes         |
-| 5   | Arquivada                             |
+| #     | Nome                                  |
+| ----- | ------------------------------------- |
+| 0     | Em Preenchimento                      |
+| 1     | Em Aprovação da Diretoria Responsável |
+| 1.1   | Reprovado pela Diretoria Responsável  |
+| 2     | Disponível para Inclusão em Pauta     |
+| 2.1   | Retornado pela GRG                    |
+| 3     | Em Pauta                              |
+| 4     | Aprovada em RD                        |
+| 4.1   | Reprovada em RD                       |
+| 4.2   | Aprovada em RD - Aguardando Ajustes   |
+| 4.2.1 | Aprovada em RD - Ajustes Realizados   |
+| 4.3   | Suspensa - Aguardando Ajustes         |
+| 4.3.1 | Suspensa - Ajustes Realizados         |
+| 5     | Arquivada                             |
 
 Os fluxos possíveis são:
 
 0 > 1 > 1.1 > 1 > ... (Reprovação na Diretoria)
 
+0 > 1 > 2 > 2.1 > ... (Retornado pela GRG)
+
 0 > 1 > 2 > 3 > 4 > 5 (Fluxo normal)
 
 0 > 1 > 2 > 3 > 4.1 > 5 (Reprovação em RD)
 
-0 > 1 > 2 > 3 > 4.2 > 4 > 5 (Realização de ajustes após aprovação)
+0 > 1 > 2 > 3 > 4.2 > 4.2.1 > 4 > 5 (Realização de ajustes após aprovação)
 
 0 > 1 > 2 > 3 > 4.3 > 2 > ... (Suspensão)
+
+0 > 1 > 2 > 3 > 4.3 > 4.3.1 > 2 > ... (Suspensão com ajustes)
 
 ---
 
@@ -293,16 +300,23 @@ Para o nível subgerencial, independente do status da Proposição, as atividade
 
 #### 5.1.1. Atividades Gerenciais
 
-Para as gerências, caso a Proposição esteja nos status _"Em Preenchimento"_ (status inicial), _"Reprovado pela Diretoria Responsável"_, _"Aprovada em RD - Aguardando Ajustes"_ ou _"Suspensa - Aguardando Ajustes"_, as atividades são as seguintes:
+Para as gerências, caso a Proposição esteja nos status _"Em Preenchimento"_ (status inicial) ou _"Reprovado pela Diretoria Responsável"_, as atividades são as seguintes:
 
 -   **Salvar Progresso**: Salva o atual preenchimento do formulário, sem validações. Esta ação não altera o status da Proposição.
--   **Enviar para Aprovação da diretoria**: Verifica e valida o preenchimento correto do formulário, salva as alterações e muda o status para _"Em Aprovação da Diretoria Responsável"_. Nesse momento, uma notificação é enviada para o diretor responsável e para a GRG.  
+-   **Enviar para Aprovação da Diretoria Responsável**: Verifica e valida o preenchimento correto do formulário, salva as alterações e muda o status para _"Em Aprovação da Diretoria Responsável"_. Nesse momento, uma notificação é enviada para o diretor responsável e para a GRG.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
 -   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
 
 Caso a Proposição esteja nos status _"Em Aprovação da Diretoria Responsável"_, _"Disponível para Inclusão em Pauta"_ ou _"Em Pauta"_, as atividades são as seguintes:
 
 -   **Salvar Alterações**: Verifica e valida o preenchimento correto do formulário e salva as alterações. Nesse momento, uma notificação é enviada para o diretor responsável e para a GRG.  
+    Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
+-   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
+
+Caso a Proposição esteja nos status _"Aprovada em RD - Aguardando Ajustes"_ ou _"Suspensa - Aguardando Ajustes"_, as atividades são as seguintes:
+
+-   **Salvar Progresso**: Salva o atual preenchimento do formulário, sem validações. Esta ação não altera o status da Proposição.
+-   **Retornar à GRG**: Verifica e valida o preenchimento correto do formulário, salva as alterações e muda o status para _"Aprovada em RD - Ajustes Realizados"_ ou _"Suspensa - Ajustes Realizados"_. Nesse momento, uma notificação é enviada para o diretor responsável e para a GRG.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
 -   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
 
@@ -317,6 +331,13 @@ Para as diretorias, caso a Proposição esteja no status _"Em Aprovação da Dir
 -   **Aprovar**: Verifica e valida o preenchimento correto do formulário, salva as alterações e muda o status para _"Disponível para Inclusão em Pauta"_. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para a GRG.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
 -   **Reprovar**: Verifica e valida o preenchimento correto do formulário, salva as alterações e muda o status para _"Reprovado pela Diretoria Responsável"_. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição.  
+    Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
+-   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
+
+Caso a Proposição esteja nos status _"Aprovada em RD - Aguardando Ajustes"_ ou _"Suspensa - Aguardando Ajustes"_, as atividades são as seguintes:
+
+-   **Salvar Progresso**: Salva o atual preenchimento do formulário, sem validações. Esta ação não altera o status da Proposição.
+-   **Retornar à GRG**: Verifica e valida o preenchimento correto do formulário, salva as alterações e muda o status para _"Aprovada em RD - Ajustes Realizados"_ ou _"Suspensa - Ajustes Realizados"_. Nesse momento, uma notificação é enviada para o diretor responsável e para a GRG.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
 -   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
 
@@ -337,6 +358,8 @@ Para os funcionários da GRG, as atividades são as seguintes, caso a Proposiç�
 -   **Incluir em Pauta**: Abre um modal (pop-up) para selecionar, em uma lista suspensa, a Reunião na pauta da qual a Proposição deve ser incluída. A lista suspensa deve apresentar apenas reuniões que ainda não foram arquivadas.  
     Após selecionada a Reunião apropriada, o usuário deverá clicar em um botão "OK" dentro do modal, confirmando assim a inclusão. Ao clicar nele, o status da Proposição será alterado para _"Em Pauta"_, e os campos referentes à Reunião são preenchidos automaticamente no formulário.  
     Um botão "Cancelar" deverá ser exibido também. Neste caso, o modal se fecha, e nenhuma alteração é realizada.
+-   **Retornar à Diretoria Responsável**: Verifica e valida o preenchimento correto do formulário, salva as alterações e muda o status para _"Retornado pelo GRG"_. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor responsável.
+    Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
 -   **Salvar Alterações**: Verifica e valida o preenchimento correto do formulário e salva as alterações. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor responsável.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
 -   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
@@ -344,6 +367,13 @@ Para os funcionários da GRG, as atividades são as seguintes, caso a Proposiç�
 Caso a Proposição esteja nos status _"Em Aprovação da Diretoria Responsável"_, _"Reprovado pela Diretoria Responsável"_, _"Em Pauta"_, _"Aprovada em RD - Aguardando Ajustes"_, _"Suspensa - Aguardando Ajustes"_ as atividades são as seguintes:
 
 -   **Salvar Alterações**: Verifica e valida o preenchimento correto do formulário e salva as alterações. Nesse momento, uma notificação é enviada para o gerente que criou a Proposição e para o diretor Responsável.  
+    Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
+-   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
+
+Caso a Proposição esteja nos status _"Aprovada em RD - Ajustes Realizados"_ ou _"Suspensa - Ajustes Realizados"_, as atividades são as seguintes:
+
+-   **Salvar Progresso**: Salva o atual preenchimento do formulário, sem validações. Esta ação não altera o status da Proposição.
+-   **Ajustes Realizados**: Verifica e valida o preenchimento correto do formulário, salva as alterações e muda o status para _"Aprovada em RD"_ ou _"Disponível para Inclusão em Pauta"_. Nesse momento, uma notificação é enviada para o gerente e o diretor responsáveis e para a GRG.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
 -   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
 
