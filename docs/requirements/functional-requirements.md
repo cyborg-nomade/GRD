@@ -296,6 +296,7 @@ Para o nível subgerencial, independente do status da Proposição, as atividade
 
 -   **Salvar Alterações**: Verifica e valida o preenchimento correto do formulário e salva as alterações. Nesse momento, uma notificação é enviada para o gerente responsável e para a GRG.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
+-   **Remover**: Remove a Proposição do sistema. Nesse momento, uma notificação é enviada para o gerente responsável e para a GRG.
 -   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
 
 #### 5.1.1. Atividades Gerenciais
@@ -305,6 +306,7 @@ Para as gerências, caso a Proposição esteja nos status _"Em Preenchimento"_ (
 -   **Salvar Progresso**: Salva o atual preenchimento do formulário, sem validações. Esta ação não altera o status da Proposição.
 -   **Enviar para Aprovação da Diretoria Responsável**: Verifica e valida o preenchimento correto do formulário, salva as alterações e muda o status para _"Em Aprovação da Diretoria Responsável"_. Nesse momento, uma notificação é enviada para o diretor responsável e para a GRG.  
     Em caso de erros de preenchimento, aparecerá um modal (pop-up) indicando que há erros no formulário, e os campos inválidos devem ser indicados.
+-   **Remover**: Remove a Proposição do sistema. Nesse momento, uma notificação é enviada para o criador da Proposição e para a GRG.
 -   **Cancelar**: Sai do formulário sem salvar as informações preenchidas.
 
 Caso a Proposição esteja nos status _"Em Aprovação da Diretoria Responsável"_, _"Disponível para Inclusão em Pauta"_ ou _"Em Pauta"_, as atividades são as seguintes:

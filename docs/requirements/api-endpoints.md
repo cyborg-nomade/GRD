@@ -99,6 +99,11 @@
     -   _auth_: sub, gerente, assessor-diretoria, diretor, grg, sysAdmin
     -   _inputs_: proposicao id + proposicao (in req body)
     -   _outputs_: status message + edited proposicao
+-   **POST /api/proposicoes/:pid:/remove**
+    -   removes a proposicao in the system
+    -   _auth_: creator if status === 0 or 1.1, grg, sysAdmin
+    -   _inputs_: proposicao id + proposicao (in req body)
+    -   _outputs_: status message + edited proposicao
 -   **POST /api/proposicoes/:pid:/send-diretoria-approval/**
     -   send a proposicao to diretoria-approval
     -   _auth_: sub, gerente, grg, sysAdmin
