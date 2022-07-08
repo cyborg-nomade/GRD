@@ -11,9 +11,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{4A773747-840
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{1A2731C4-54E5-4EA5-B1AA-B11FECC897B9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{5F23AC4F-1011-4266-8145-1877EC7B7B19}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{5F23AC4F-1011-4266-8145-1877EC7B7B19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CPTM.GRD.Domain", "CPTM.GRD.Domain\CPTM.GRD.Domain.csproj", "{991F9674-E964-48EC-B128-070B40851BCA}"
 EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{991F9674-E964-48EC-B128-070B40851BCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{991F9674-E964-48EC-B128-070B40851BCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{991F9674-E964-48EC-B128-070B40851BCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{991F9674-E964-48EC-B128-070B40851BCA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
@@ -21,6 +33,7 @@ Global
 		{4A773747-8409-4297-A389-B27A30D3852B} = {56726037-D9CD-495C-ABFA-3668EBA519EB}
 		{1A2731C4-54E5-4EA5-B1AA-B11FECC897B9} = {56726037-D9CD-495C-ABFA-3668EBA519EB}
 		{5F23AC4F-1011-4266-8145-1877EC7B7B19} = {56726037-D9CD-495C-ABFA-3668EBA519EB}
+		{991F9674-E964-48EC-B128-070B40851BCA} = {1A2731C4-54E5-4EA5-B1AA-B11FECC897B9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FBCE4506-DEF2-4EC0-A66A-5712F894A21B}

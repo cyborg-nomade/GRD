@@ -8,7 +8,7 @@ interface Proposicao {
     objeto: ObjetoProposicao;
     descriçãoProposicao: string;
     possuiParecerJuridico: boolean;
-    resumoGeralResolução: string;
+    resumoGeralResolucao: string;
     observacoesCustos: string;
     competenciasConformeNormas: string;
     dataBaseValor: Date;
@@ -55,7 +55,7 @@ interface Proposicao {
     descricaoFluxo: string;
     tempoPrevPerm: string;
     descProxPasso: string;
-    tempoPermPróx: string;
+    tempoPermProx: string;
     seq?: number;
 }
 
@@ -107,10 +107,10 @@ enum ReceitaDespesa {
 
 interface Resolucao {
     id: number;
-    numeroResolução: number;
+    numeroResolucao: number;
     assinaturaResolucao: string;
-    resoluçãoDiretoria: string;
-    resoluçãoFilePath: string;
+    resolucaoDiretoria: string;
+    resolucaoFilePath: string;
     proposicao: Proposicao;
 }
 
@@ -127,10 +127,12 @@ interface Reuniao {
     proposicoes: Proposicao[];
     proposicoesPrevia: Proposicao[];
     participantes: Participante[];
+    participantesPrevia: Participante[];
     acoes: Acao[];
     comunicado?: string;
     outrasObservacoes?: string;
     mensagemEMail?: string;
+    logs: LogReuniao[];
 }
 
 enum ReuniaoStatus {
@@ -173,6 +175,7 @@ interface Acao {
     diasParaVencimento: number;
     alertaVencimento: TipoAlertaVencimento;
     andamentos: Andamento[];
+    logs: LogAcao[];
 }
 
 enum TipoAcao {
@@ -199,7 +202,7 @@ enum AcaoStatus {
 enum TipoAlertaVencimento {
     noPrazo,
     umDiaVencimento,
-    Atrasado,
+    atrasado,
 }
 
 interface Andamento {
@@ -224,10 +227,12 @@ interface User {
     nivelAcesso: AccessLevel;
     areasAcesso: Group[];
     funcao: string;
+    logs: LogAccessControl[];
 }
 
 interface Group {
     id: number;
+    nome: string;
     siglaGerencia: string;
     gerencia: string;
     siglaDiretoria: string;

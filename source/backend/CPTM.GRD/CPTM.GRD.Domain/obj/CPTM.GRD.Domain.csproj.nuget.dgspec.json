@@ -1,0 +1,61 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Domain\\CPTM.GRD.Domain.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Domain\\CPTM.GRD.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Domain\\CPTM.GRD.Domain.csproj",
+        "projectName": "CPTM.GRD.Domain",
+        "projectPath": "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Domain\\CPTM.GRD.Domain.csproj",
+        "packagesPath": "C:\\Users\\urielf\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\urielf\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
