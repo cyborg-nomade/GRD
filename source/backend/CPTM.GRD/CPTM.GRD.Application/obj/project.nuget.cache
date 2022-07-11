@@ -1,11 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "DAdvrpXFPg+UepQZ/ZADcaa4l/wrsjpwD9qv81nIg/6qQOidt9WnzTfLaL/nuI0QOOdbV0uVhlTK+iUoxk/6Bw==",
+  "dgSpecHash": "Q+rltqX/7TdOEDVR6dCuoYhL/ntz1pH4XLaeGh+HOfwATkDKkquS/kuCsE2YiC0Gn+TUPBMVT1G1KgljVOdHYQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Application\\CPTM.GRD.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\urielf\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\urielf\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
+    "C:\\Users\\urielf\\.nuget\\packages\\mediatr\\10.0.1\\mediatr.10.0.1.nupkg.sha512",
+    "C:\\Users\\urielf\\.nuget\\packages\\mediatr.contracts\\1.0.1\\mediatr.contracts.1.0.1.nupkg.sha512",
+    "C:\\Users\\urielf\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\10.0.1\\mediatr.extensions.microsoft.dependencyinjection.10.0.1.nupkg.sha512",
     "C:\\Users\\urielf\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\urielf\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\urielf\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",

@@ -10,6 +10,7 @@
     <Folder Include="DTOs\AccessControl\" />
     <Folder Include="DTOs\Logging\" />
     <Folder Include="DTOs\Lists\" />
+    <Folder Include="Features\Proposicoes\Handlers\Queries\" />
     <Folder Include="Profiles\" />
     <Folder Include="Persistence\Contracts\AccessControl\" />
     <Folder Include="Persistence\Contracts\Logging\" />
@@ -17,6 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
   </ItemGroup>
 
   <ItemGroup>
