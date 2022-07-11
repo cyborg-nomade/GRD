@@ -1,0 +1,12 @@
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Common\bin\Debug\net6.0\CPTM.GRD.Common.deps.json
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Common\bin\Debug\net6.0\CPTM.GRD.Common.dll
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Common\bin\Debug\net6.0\CPTM.GRD.Common.pdb
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Common\obj\Debug\net6.0\CPTM.GRD.Common.csproj.AssemblyReference.cache
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Common\obj\Debug\net6.0\CPTM.GRD.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Common\obj\Debug\net6.0\CPTM.GRD.Common.AssemblyInfoInputs.cache
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Common\obj\Debug\net6.0\CPTM.GRD.Common.AssemblyInfo.cs
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Common\obj\Debug\net6.0\CPTM.GRD.Common.csproj.CoreCompileInputs.cache
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Common\obj\Debug\net6.0\CPTM.GRD.Common.dll
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Common\obj\Debug\net6.0\refint\CPTM.GRD.Common.dll
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Common\obj\Debug\net6.0\CPTM.GRD.Common.pdb
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Common\obj\Debug\net6.0\ref\CPTM.GRD.Common.dll

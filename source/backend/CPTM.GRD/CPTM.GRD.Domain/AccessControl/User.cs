@@ -1,4 +1,6 @@
-﻿namespace CPTM.GRD.Domain.AccessControl;
+﻿using CPTM.GRD.Common;
+
+namespace CPTM.GRD.Domain.AccessControl;
 
 public class User
 {

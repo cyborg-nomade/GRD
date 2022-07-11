@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CPTM.GRD.Common\CPTM.GRD.Common.csproj" />
+  </ItemGroup>
+
 </Project>

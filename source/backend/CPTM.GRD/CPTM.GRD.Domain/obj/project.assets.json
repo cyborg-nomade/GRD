@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net6.0": {
+      "CPTM.GRD.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/CPTM.GRD.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CPTM.GRD.Common.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "CPTM.GRD.Common/1.0.0": {
+      "type": "project",
+      "path": "../CPTM.GRD.Common/CPTM.GRD.Common.csproj",
+      "msbuildProject": "../CPTM.GRD.Common/CPTM.GRD.Common.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net6.0": []
+    "net6.0": [
+      "CPTM.GRD.Common >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\urielf\\.nuget\\packages\\": {}
@@ -27,12 +46,17 @@
         "net6.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {}
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Common\\CPTM.GRD.Common.csproj": {
+              "projectPath": "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Common\\CPTM.GRD.Common.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

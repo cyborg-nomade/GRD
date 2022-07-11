@@ -1,5 +1,5 @@
-﻿using CPTM.GRD.Domain.AccessControl;
-using CPTM.GRD.Domain.Enum;
+﻿using CPTM.GRD.Common;
+using CPTM.GRD.Domain.AccessControl;
 using CPTM.GRD.Domain.Logging;
 
 namespace CPTM.GRD.Domain;
@@ -8,7 +8,7 @@ public class Acao
 {
     public int Id { get; set; }
     public TipoAcao Tipo { get; set; }
-    public Group DiretoriaRes { get; set; }
+    public Group DiretoriaRes { get; set; } = new Group();
     public string Definicao { get; set; } = string.Empty;
     public TipoPeriodicidadeAcao Periodicidade { get; set; }
     public DateOnly PrazoInicial { get; set; }

@@ -1,0 +1,17 @@
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Application\bin\Debug\net6.0\CPTM.GRD.Application.deps.json
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Application\bin\Debug\net6.0\CPTM.GRD.Application.dll
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Application\bin\Debug\net6.0\CPTM.GRD.Application.pdb
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Application\bin\Debug\net6.0\CPTM.GRD.Common.dll
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Application\bin\Debug\net6.0\CPTM.GRD.Domain.dll
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Application\bin\Debug\net6.0\CPTM.GRD.Domain.pdb
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Application\bin\Debug\net6.0\CPTM.GRD.Common.pdb
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Application\obj\Debug\net6.0\CPTM.GRD.Application.csproj.AssemblyReference.cache
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Application\obj\Debug\net6.0\CPTM.GRD.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Application\obj\Debug\net6.0\CPTM.GRD.Application.AssemblyInfoInputs.cache
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Application\obj\Debug\net6.0\CPTM.GRD.Application.AssemblyInfo.cs
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Application\obj\Debug\net6.0\CPTM.GRD.Application.csproj.CoreCompileInputs.cache
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Application\obj\Debug\net6.0\CPTM.GRD.Application.csproj.CopyComplete
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Application\obj\Debug\net6.0\CPTM.GRD.Application.dll
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Application\obj\Debug\net6.0\refint\CPTM.GRD.Application.dll
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Application\obj\Debug\net6.0\CPTM.GRD.Application.pdb
+C:\Users\urielf\source\repos\cyborg-nomade\GRD\source\backend\CPTM.GRD\CPTM.GRD.Application\obj\Debug\net6.0\ref\CPTM.GRD.Application.dll

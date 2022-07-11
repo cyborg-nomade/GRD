@@ -1,4 +1,4 @@
-﻿using CPTM.GRD.Domain.Enum;
+﻿using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Logging;
 
 namespace CPTM.GRD.Domain;

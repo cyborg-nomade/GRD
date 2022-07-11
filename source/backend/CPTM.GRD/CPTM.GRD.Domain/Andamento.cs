@@ -1,5 +1,5 @@
-﻿using CPTM.GRD.Domain.AccessControl;
-using CPTM.GRD.Domain.Enum;
+﻿using CPTM.GRD.Common;
+using CPTM.GRD.Domain.AccessControl;
 
 namespace CPTM.GRD.Domain;
 
