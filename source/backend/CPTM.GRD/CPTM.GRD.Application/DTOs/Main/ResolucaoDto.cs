@@ -1,4 +1,6 @@
-﻿namespace CPTM.GRD.Application.DTOs;
+﻿using CPTM.GRD.Application.DTOs.Main.Proposicao;
+
+namespace CPTM.GRD.Application.DTOs.Main;
 
 public class ResolucaoDto
 {

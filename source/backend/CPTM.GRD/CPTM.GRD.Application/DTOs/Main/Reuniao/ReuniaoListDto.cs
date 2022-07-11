@@ -1,7 +1,7 @@
 ﻿using CPTM.GRD.Application.DTOs.Logging;
 using CPTM.GRD.Common;
 
-namespace CPTM.GRD.Application.DTOs.Lists;
+namespace CPTM.GRD.Application.DTOs.Main.Reuniao;
 
 public class ReuniaoListDto
 {

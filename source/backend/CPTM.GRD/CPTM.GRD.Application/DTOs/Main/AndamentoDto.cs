@@ -1,7 +1,7 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl;
 using CPTM.GRD.Common;
 
-namespace CPTM.GRD.Application.DTOs;
+namespace CPTM.GRD.Application.DTOs.Main;
 
 public class AndamentoDto
 {

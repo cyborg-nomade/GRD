@@ -1,8 +1,9 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl;
 using CPTM.GRD.Application.DTOs.Logging;
+using CPTM.GRD.Application.DTOs.Main.Reuniao;
 using CPTM.GRD.Common;
 
-namespace CPTM.GRD.Application.DTOs;
+namespace CPTM.GRD.Application.DTOs.Main.Proposicao;
 
 public class ProposicaoDto
 {

@@ -1,4 +1,4 @@
-﻿using CPTM.GRD.Application.DTOs.Lists;
+﻿using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Common;
 using MediatR;
 

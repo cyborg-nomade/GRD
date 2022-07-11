@@ -1,6 +1,6 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl;
 
-namespace CPTM.GRD.Application.DTOs;
+namespace CPTM.GRD.Application.DTOs.Main;
 
 public class ParticipanteDto
 {

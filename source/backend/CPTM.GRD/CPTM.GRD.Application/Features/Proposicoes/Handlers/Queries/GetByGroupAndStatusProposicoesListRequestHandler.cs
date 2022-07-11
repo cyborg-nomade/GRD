@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CPTM.GRD.Application.DTOs.Lists;
+using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Queries;
 using CPTM.GRD.Application.Persistence.Contracts;
 using MediatR;

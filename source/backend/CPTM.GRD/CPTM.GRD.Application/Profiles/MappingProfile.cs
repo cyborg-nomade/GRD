@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
-using CPTM.GRD.Application.DTOs;
 using CPTM.GRD.Application.DTOs.AccessControl;
-using CPTM.GRD.Application.DTOs.Lists;
 using CPTM.GRD.Application.DTOs.Logging;
+using CPTM.GRD.Application.DTOs.Main;
+using CPTM.GRD.Application.DTOs.Main.Acao;
+using CPTM.GRD.Application.DTOs.Main.Proposicao;
+using CPTM.GRD.Application.DTOs.Main.Reuniao;
 using CPTM.GRD.Domain;
 using CPTM.GRD.Domain.AccessControl;
 using CPTM.GRD.Domain.Logging;
