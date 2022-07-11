@@ -22,5 +22,4 @@ public class ReuniaoDto
     public string? Comunicado { get; set; }
     public string? OutrasObservacoes { get; set; }
     public string? MensagemEMail { get; set; }
-    public ICollection<LogReuniaoDto> Logs { get; set; } = new List<LogReuniaoDto>();
 }

@@ -40,7 +40,6 @@ public class ProposicaoDto
     public string MotivoRetornoGrg { get; set; } = string.Empty;
     public string MotivoRetornoRd { get; set; } = string.Empty;
     public string Deliberacao { get; set; } = string.Empty;
-    public ICollection<LogProposicaoDto> Logs { get; set; } = new List<LogProposicaoDto>();
     public ResolucaoDto Resolucao { get; set; } = new ResolucaoDto();
     public bool IsExtraPauta { get; set; }
     public string? NumeroConselho { get; set; }

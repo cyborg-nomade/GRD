@@ -23,5 +23,4 @@ public class AcaoDto
     public int DiasParaVencimento { get; set; }
     public TipoAlertaVencimento AlertaVencimento { get; set; }
     public ICollection<AndamentoDto> Andamentos { get; set; } = new List<AndamentoDto>();
-    public ICollection<LogAcaoDto> Logs { get; set; } = new List<LogAcaoDto>();
 }

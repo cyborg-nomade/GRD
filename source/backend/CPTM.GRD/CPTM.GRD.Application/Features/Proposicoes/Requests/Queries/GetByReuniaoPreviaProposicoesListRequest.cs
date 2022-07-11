@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Proposicoes.Requests.Queries;
 
-public class GetProposicaoListRequest : IRequest<List<ProposicaoListDto>>
+public class GetByReuniaoPreviaProposicoesListRequest : IRequest<List<ProposicaoListDto>>
 {
-
+    public int Rid { get; set; }
 }

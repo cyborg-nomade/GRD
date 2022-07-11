@@ -10,7 +10,6 @@
     <Folder Include="DTOs\AccessControl\" />
     <Folder Include="DTOs\Logging\" />
     <Folder Include="DTOs\Lists\" />
-    <Folder Include="Features\Proposicoes\Handlers\Queries\" />
     <Folder Include="Profiles\" />
     <Folder Include="Persistence\Contracts\AccessControl\" />
     <Folder Include="Persistence\Contracts\Logging\" />
