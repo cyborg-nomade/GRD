@@ -64,4 +64,28 @@ public class Proposicao
     public string DescProxPasso { get; set; } = string.Empty;
     public string TempoPermProx { get; set; } = string.Empty;
     public int? Seq { get; set; }
+
+    public Proposicao CalculateNewProposicaoStatusFromVotes()
+    {
+        var votes = Logs.Where(l => l.Tipo is TipoLogProposicao.AbstencaoRd or TipoLogProposicao.AprovacaoRd
+            or TipoLogProposicao.SuspensaoRd or TipoLogProposicao.ReprovacaoRd).ToList();
+        var voteCount = votes.Count;
+        var approvedCount = votes.Count(l => l.Tipo == TipoLogProposicao.AprovacaoRd);
+        var repprovedCount = votes.Count(l => l.Tipo == TipoLogProposicao.ReprovacaoRd);
+        var suspensionCount = votes.Count(l => l.Tipo == TipoLogProposicao.SuspensaoRd);
+        var abstentionCount = votes.Count(l => l.Tipo == TipoLogProposicao.AbstencaoRd);
+
+        if (abstentionCount == voteCount)
+        {
+            Status = ProposicaoStatus.SuspensaRd;
+            return this;
+        }
+
+        if (approvedCount > voteCount / 2)
+        {
+            Status = ProposicaoStatus.AprovadaRd;
+        }
+
+        return this;
+    }
 }
