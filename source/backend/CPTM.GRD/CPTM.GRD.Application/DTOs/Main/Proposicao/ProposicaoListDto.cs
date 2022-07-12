@@ -10,6 +10,7 @@ public class ProposicaoListDto
     public int IdPrd { get; set; }
     public ProposicaoStatus Status { get; set; }
     public bool Arquivada { get; set; }
+    public UserDto Criador { get; set; } = new UserDto();
     public GroupDto AreaSolicitante { get; set; } = new GroupDto();
     public string Titulo { get; set; } = string.Empty;
     public ObjetoProposicao Objeto { get; set; }
