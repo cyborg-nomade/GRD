@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="DTOs\AccessControl\" />
     <Folder Include="DTOs\Logging\" />
+    <Folder Include="Util\" />
     <Folder Include="Persistence\Contracts\StrictSequenceControl\" />
     <Folder Include="Profiles\" />
     <Folder Include="Persistence\Contracts\AccessControl\" />
@@ -17,6 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="CompareNETObjects" Version="4.77.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
   </ItemGroup>
 
