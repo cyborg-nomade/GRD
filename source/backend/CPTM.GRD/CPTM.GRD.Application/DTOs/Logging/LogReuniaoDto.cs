@@ -8,7 +8,7 @@ public class LogReuniaoDto
 {
     public int Id { get; set; }
     public TipoLogReuniao Tipo { get; set; }
-    public ReuniaoDto Reuniao { get; set; } = new ReuniaoDto();
+    public string ReuniaoId { get; set; } = string.Empty;
     public string Diferenca { get; set; } = string.Empty;
     public DateTime Data { get; set; }
     public UserDto UsuarioResp { get; set; } = new UserDto();
