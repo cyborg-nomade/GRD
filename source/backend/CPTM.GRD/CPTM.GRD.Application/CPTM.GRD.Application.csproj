@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="DTOs\AccessControl\" />
     <Folder Include="DTOs\Logging\" />
+    <Folder Include="DTOs\Main\Mixed\" />
     <Folder Include="Util\" />
     <Folder Include="Persistence\Contracts\StrictSequenceControl\" />
     <Folder Include="Profiles\" />
