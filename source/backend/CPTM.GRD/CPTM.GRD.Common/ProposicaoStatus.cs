@@ -10,6 +10,7 @@ public enum ProposicaoStatus
     EmPauta,
     AprovadaRd,
     ReprovadaRd,
+    SuspensaRd,
     AprovadaRdAguardandoAjustes,
     AprovadaRdAjustesRealizados,
     SuspensaRdAguardandoAjustes,
