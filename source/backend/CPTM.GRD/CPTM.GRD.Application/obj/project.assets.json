@@ -404,19 +404,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\urielf\\.nuget\\packages\\": {}
+    "C:\\Users\\uriel\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Application\\CPTM.GRD.Application.csproj",
+      "projectUniqueName": "D:\\CPTM\\DEV\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Application\\CPTM.GRD.Application.csproj",
       "projectName": "CPTM.GRD.Application",
-      "projectPath": "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Application\\CPTM.GRD.Application.csproj",
-      "packagesPath": "C:\\Users\\urielf\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Application\\obj\\",
+      "projectPath": "D:\\CPTM\\DEV\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Application\\CPTM.GRD.Application.csproj",
+      "packagesPath": "C:\\Users\\uriel\\.nuget\\packages\\",
+      "outputPath": "D:\\CPTM\\DEV\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Application\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\urielf\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\uriel\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -430,8 +430,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Domain\\CPTM.GRD.Domain.csproj": {
-              "projectPath": "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Domain\\CPTM.GRD.Domain.csproj"
+            "D:\\CPTM\\DEV\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Domain\\CPTM.GRD.Domain.csproj": {
+              "projectPath": "D:\\CPTM\\DEV\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Domain\\CPTM.GRD.Domain.csproj"
             }
           }
         }

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Domain\\CPTM.GRD.Domain.csproj": {}
+    "D:\\CPTM\\DEV\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Domain\\CPTM.GRD.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Common\\CPTM.GRD.Common.csproj": {
+    "D:\\CPTM\\DEV\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Common\\CPTM.GRD.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Common\\CPTM.GRD.Common.csproj",
+        "projectUniqueName": "D:\\CPTM\\DEV\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Common\\CPTM.GRD.Common.csproj",
         "projectName": "CPTM.GRD.Common",
-        "projectPath": "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Common\\CPTM.GRD.Common.csproj",
-        "packagesPath": "C:\\Users\\urielf\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Common\\obj\\",
+        "projectPath": "D:\\CPTM\\DEV\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Common\\CPTM.GRD.Common.csproj",
+        "packagesPath": "C:\\Users\\uriel\\.nuget\\packages\\",
+        "outputPath": "D:\\CPTM\\DEV\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Common\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\urielf\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\uriel\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -58,17 +58,17 @@
         }
       }
     },
-    "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Domain\\CPTM.GRD.Domain.csproj": {
+    "D:\\CPTM\\DEV\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Domain\\CPTM.GRD.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Domain\\CPTM.GRD.Domain.csproj",
+        "projectUniqueName": "D:\\CPTM\\DEV\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Domain\\CPTM.GRD.Domain.csproj",
         "projectName": "CPTM.GRD.Domain",
-        "projectPath": "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Domain\\CPTM.GRD.Domain.csproj",
-        "packagesPath": "C:\\Users\\urielf\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Domain\\obj\\",
+        "projectPath": "D:\\CPTM\\DEV\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Domain\\CPTM.GRD.Domain.csproj",
+        "packagesPath": "C:\\Users\\uriel\\.nuget\\packages\\",
+        "outputPath": "D:\\CPTM\\DEV\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\urielf\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\uriel\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -82,8 +82,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Common\\CPTM.GRD.Common.csproj": {
-                "projectPath": "C:\\Users\\urielf\\source\\repos\\cyborg-nomade\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Common\\CPTM.GRD.Common.csproj"
+              "D:\\CPTM\\DEV\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Common\\CPTM.GRD.Common.csproj": {
+                "projectPath": "D:\\CPTM\\DEV\\GRD\\source\\backend\\CPTM.GRD\\CPTM.GRD.Common\\CPTM.GRD.Common.csproj"
               }
             }
           }
