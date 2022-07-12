@@ -59,7 +59,7 @@
     -   gets all proposicoes in the system
     -   _auth_: sysAdmin
     -   _outputs_: list of proposicoes
--   **GET /api/proposicoes/user/:uid:/status/:status/**
+-   **GET /api/proposicoes/user/:uid:/status/:status:/**
     -   gets all proposicoes by user and status
     -   _auth_: sub (for itself), gerente (for its subs), grg, sysAdmin
     -   _inputs_: user id + status
@@ -175,6 +175,11 @@
     -   edits an existing reuniao
     -   _auth_: grg, sysAdmin
     -   _inputs_: reuniao id + reuniao (in req body)
+    -   _outputs_: status message + edited reuniao
+-   **POST /api/reunioes/:rid:/realizada/**
+    -   changes reuniao status to "Realizada"
+    -   _auth_: grg, sysAdmin
+    -   _inputs_: reuniao id
     -   _outputs_: status message + edited reuniao
 -   **GET /api/reunioes/:rid:/pauta-previa/**
     -   emits a reuniao's pauta previa, according to model.

@@ -510,7 +510,7 @@ Caso a Reunião esteja nos demais status, as ações serão as seguintes:
 -   **Emitir Relatório Deliberativo**: Emite o relatório deliberativo da RD, encaminhando-o para todos os participantes da Reunião, e muda o status da Reunião para _"Arquivada"_. Esta ação só aparece caso o status seja _"Realizada"_.
 -   **Emitir Resoluções de Diretoria**: Emite a Resolução de Diretoria para cada Proposição da pauta da RD, encaminhando-o para todos os participantes da Reunião, assim como para o diretor e gerente responsáveis pela Proposição. A Resolução de Diretoria é criada a partir dos campos da Proposição, conforme modelo a ser disponibilizado pela GRG. Esta ação só aparece caso o status seja _"Realizada"_.
 -   **Emitir Ata da Reunião**: Emite a Ata da RD, encaminhando-o para todos os participantes da Reunião. A Ata é criada a partir dos campos das Proposições em pauta, conforme modelo a ser disponibilizado pela GRG. Esta ação só aparece caso o status seja _"Realizada"_.
--   **Reunião Realizada**: Muda o status da Reunião para _"Realizada"_, eliminando a Reunião da listagem na **Tela de Reunião** e disponibilizando a ação anterior. Esta ação não aparece caso o status seja _"Realizada"_.
+-   **Reunião Realizada**: Muda o status da Reunião para _"Realizada"_, eliminando a Reunião da listagem na **Tela de Reunião** e disponibilizando a atividade anterior. Esta ação não aparece caso o status seja _"Realizada"_.
 -   **Cancelar**: Sai do formulário sem fazer alterações, voltando à tela inicial.
 
 ### 5.5. Listagem de Reuniões
