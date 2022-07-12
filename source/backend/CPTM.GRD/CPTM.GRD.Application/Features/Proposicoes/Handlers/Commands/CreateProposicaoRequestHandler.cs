@@ -25,7 +25,7 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
     public async Task<ProposicaoDto> Handle(CreateProposicaoRequest request, CancellationToken cancellationToken)
     {
         var proposicao = _mapper.Map<Proposicao>(request.CreateProposicaoDto);
-        proposicao.IdPrd = await _sequenceControl.GetCurrentSequence() + 1;
+        proposicao.IdPrd = await _sequenceControl.GetNextSequence();
         var addedProposicao = await _proposicaoRepository.Add(proposicao);
         return _mapper.Map<ProposicaoDto>(addedProposicao);
     }
