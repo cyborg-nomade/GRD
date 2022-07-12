@@ -7,4 +7,6 @@ namespace CPTM.GRD.Application.Features.Proposicoes.Requests.Queries;
 public class GetByStatusProposicoesListRequest : IRequest<List<ProposicaoListDto>>
 {
     public ProposicaoStatus Status { get; set; }
+
+    public bool Arquivada { get; set; }
 }

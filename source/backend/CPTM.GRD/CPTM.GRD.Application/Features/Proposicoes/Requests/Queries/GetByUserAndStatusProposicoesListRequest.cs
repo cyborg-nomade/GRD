@@ -8,4 +8,5 @@ public class GetByUserAndStatusProposicoesListRequest : IRequest<List<Proposicao
 {
     public int Uid { get; set; }
     public ProposicaoStatus Status { get; set; }
+    public bool Arquivada { get; set; }
 }

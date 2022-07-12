@@ -8,4 +8,5 @@ public class GetByGroupAndStatusProposicoesListRequest : IRequest<List<Proposica
 {
     public int Gid { get; set; }
     public ProposicaoStatus Status { get; set; }
+    public bool Arquivada { get; set; }
 }

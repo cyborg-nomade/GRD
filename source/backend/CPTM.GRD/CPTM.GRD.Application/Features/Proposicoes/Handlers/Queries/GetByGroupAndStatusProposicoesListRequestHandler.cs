@@ -6,7 +6,9 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Proposicoes.Handlers.Queries;
 
-public class GetByGroupAndStatusProposicoesListRequestHandler : IRequestHandler<GetByGroupAndStatusProposicoesListRequest, List<ProposicaoListDto>>
+public class
+    GetByGroupAndStatusProposicoesListRequestHandler : IRequestHandler<GetByGroupAndStatusProposicoesListRequest,
+        List<ProposicaoListDto>>
 {
     private readonly IProposicaoRepository _proposicaoRepository;
     private readonly IMapper _mapper;
@@ -17,9 +19,11 @@ public class GetByGroupAndStatusProposicoesListRequestHandler : IRequestHandler<
         _mapper = mapper;
     }
 
-    public async Task<List<ProposicaoListDto>> Handle(GetByGroupAndStatusProposicoesListRequest request, CancellationToken cancellationToken)
+    public async Task<List<ProposicaoListDto>> Handle(GetByGroupAndStatusProposicoesListRequest request,
+        CancellationToken cancellationToken)
     {
-        var proposicoes = await _proposicaoRepository.GetByGroupAndStatus(request.Gid, request.Status);
+        var proposicoes =
+            await _proposicaoRepository.GetByGroupAndStatus(request.Gid, request.Status, request.Arquivada);
         return _mapper.Map<List<ProposicaoListDto>>(proposicoes);
     }
 }
