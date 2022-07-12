@@ -6,4 +6,5 @@ namespace CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 public class UpdateProposicaoRequest : IRequest<ProposicaoDto>
 {
     public ProposicaoDto ProposicaoDto { get; set; } = new ProposicaoDto();
+    public int Uid { get; set; }
 }
