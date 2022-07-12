@@ -59,6 +59,21 @@
     -   gets all proposicoes in the system
     -   _auth_: sysAdmin
     -   _outputs_: list of proposicoes
+-   **GET /api/proposicoes/user/:uid:/**
+    -   gets all proposicoes by user
+    -   _auth_: sub (for itself), gerente (for its subs), grg, sysAdmin
+    -   _inputs_: user id + status
+    -   _outputs_: list of proposicoes
+-   **GET /api/proposicoes/group/:gid:/**
+    -   gets all proposicoes by group
+    -   _auth_: gerente (for its own group), assessor-diretoria (for the subordinate groups of its own), diretor (for its subordinate groups), grg, sysAdmin
+    -   _inputs_: user id + status
+    -   _outputs_: list of proposicoes
+-   **GET /api/proposicoes/status/:status:/**
+    -   gets all proposicoes by status
+    -   _auth_: grg, sysAdmin
+    -   _inputs_: status
+    -   _outputs_: list of proposicoes
 -   **GET /api/proposicoes/user/:uid:/status/:status:/**
     -   gets all proposicoes by user and status
     -   _auth_: sub (for itself), gerente (for its subs), grg, sysAdmin
@@ -68,11 +83,6 @@
     -   gets all proposicoes by group and status
     -   _auth_: gerente (for its own group), assessor-diretoria (for the subordinate groups of its own), diretor (for its subordinate groups), grg, sysAdmin
     -   _inputs_: group id + status
-    -   _outputs_: list of proposicoes
--   **GET /api/proposicoes/status/:status:/**
-    -   gets all proposicoes by status
-    -   _auth_: grg, sysAdmin
-    -   _inputs_: status
     -   _outputs_: list of proposicoes
 -   **GET /api/proposicoes/reuniao/:rid:/**
     -   gets all proposicoes of a given reuniao
