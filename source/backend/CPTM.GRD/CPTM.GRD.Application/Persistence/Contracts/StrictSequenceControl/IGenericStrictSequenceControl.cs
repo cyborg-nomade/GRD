@@ -2,5 +2,5 @@
 
 public interface IGenericStrictSequenceControl
 {
-    Task<int> GetCurrentSequence();
+    Task<int> GetNextSequence();
 }
