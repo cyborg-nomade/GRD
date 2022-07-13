@@ -61,6 +61,7 @@ public class Proposicao
     public string CronogramaFisFinFilePath { get; set; } = string.Empty;
     public string PcaFilePath { get; set; } = string.Empty;
     public ICollection<string> OutrosFilePath { get; set; } = new HashSet<string>();
+    public string ResolucaoDiretoriaFilePath { get; set; } = string.Empty;
     public string AreaAtual { get; set; } = string.Empty;
     public string DescricaoFluxo { get; set; } = string.Empty;
     public string TempoPrevPerm { get; set; } = string.Empty;

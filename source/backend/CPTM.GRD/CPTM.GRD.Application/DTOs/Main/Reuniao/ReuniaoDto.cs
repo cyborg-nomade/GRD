@@ -23,4 +23,9 @@ public class ReuniaoDto
     public string? Comunicado { get; set; }
     public string? OutrasObservacoes { get; set; }
     public string? MensagemEMail { get; set; }
+    public string PautaPreviaFilePath { get; set; } = string.Empty;
+    public string MemoriaPreviaFilePath { get; set; } = string.Empty;
+    public string PautaDefinitivaFilePath { get; set; } = string.Empty;
+    public string RelatorioDeliberativoFilePath { get; set; } = string.Empty;
+    public string AtaFilePath { get; set; } = string.Empty;
 }
