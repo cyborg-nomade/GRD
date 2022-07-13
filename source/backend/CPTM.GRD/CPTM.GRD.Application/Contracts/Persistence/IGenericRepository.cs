@@ -1,4 +1,4 @@
-﻿namespace CPTM.GRD.Application.Persistence.Contracts;
+﻿namespace CPTM.GRD.Application.Contracts.Persistence;
 
 public interface IGenericRepository<T> where T : class
 {
@@ -7,5 +7,4 @@ public interface IGenericRepository<T> where T : class
     Task<T> Add(T entity);
     Task<T> Update(T entity);
     Task Delete(int id);
-
 }

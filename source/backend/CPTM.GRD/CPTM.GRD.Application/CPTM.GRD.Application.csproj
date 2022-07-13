@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Contracts\Infrastructure\" />
     <Folder Include="DTOs\AccessControl\" />
     <Folder Include="DTOs\Logging\" />
     <Folder Include="DTOs\Main\Mixed\" />
@@ -22,10 +23,7 @@
     <Folder Include="Features\Reunioes\Handlers\Queries\" />
     <Folder Include="Features\Reunioes\Requests\Queries\" />
     <Folder Include="Util\" />
-    <Folder Include="Persistence\Contracts\StrictSequenceControl\" />
     <Folder Include="Profiles\" />
-    <Folder Include="Persistence\Contracts\AccessControl\" />
-    <Folder Include="Persistence\Contracts\Logging\" />
   </ItemGroup>
 
   <ItemGroup>

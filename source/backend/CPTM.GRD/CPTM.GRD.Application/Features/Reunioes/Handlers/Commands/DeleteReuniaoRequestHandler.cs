@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
-using CPTM.GRD.Application.Persistence.Contracts;
 using CPTM.GRD.Application.Persistence.Contracts.AccessControl;
 using CPTM.GRD.Application.Persistence.Contracts.Logging;
 using CPTM.GRD.Common;

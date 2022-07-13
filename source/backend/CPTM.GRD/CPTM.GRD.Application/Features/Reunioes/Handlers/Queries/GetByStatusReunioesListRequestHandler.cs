@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Queries;
-using CPTM.GRD.Application.Persistence.Contracts;
 using MediatR;
 
 namespace CPTM.GRD.Application.Features.Reunioes.Handlers.Queries;
