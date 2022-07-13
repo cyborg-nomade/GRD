@@ -38,6 +38,7 @@ public class ProposicaoDto
     public string NumeroProcessoLicit { get; set; } = string.Empty;
     public string? OutrasObservacoes { get; set; }
     public ReuniaoDto Reuniao { get; set; } = new ReuniaoDto();
+    public List<VotoDto> VotosRd { get; set; } = new List<VotoDto>();
     public string MotivoRetornoDiretoria { get; set; } = string.Empty;
     public string MotivoRetornoGrg { get; set; } = string.Empty;
     public string MotivoRetornoRd { get; set; } = string.Empty;

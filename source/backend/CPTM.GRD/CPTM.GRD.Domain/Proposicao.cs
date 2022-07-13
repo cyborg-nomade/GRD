@@ -37,7 +37,8 @@ public class Proposicao
     public string NumeroProcessoLicit { get; set; } = string.Empty;
     public string? OutrasObservacoes { get; set; }
     public Reuniao Reuniao { get; set; } = new Reuniao();
-    public string MotivoRetornoDiretoria { get; set; } = string.Empty;
+    public List<Voto> VotosRd { get; set; } = new List<Voto>();
+    public string AjustesRd { get; set; } = string.Empty;
     public string MotivoRetornoGrg { get; set; } = string.Empty;
     public string MotivoRetornoRd { get; set; } = string.Empty;
     public string Deliberacao { get; set; } = string.Empty;
@@ -66,27 +67,88 @@ public class Proposicao
     public string TempoPermProx { get; set; } = string.Empty;
     public int? Seq { get; set; }
 
+    public bool CheckIfParticipanteVoted(Participante participante) => VotosRd.Any(v => v.Participante == participante);
+
+    public Voto GetParticipanteVoto(Participante participante)
+    {
+        return VotosRd.SingleOrDefault(v => v.Participante == participante) ??
+               throw new InvalidOperationException("There's no vote for this Participante");
+    }
+
     public Proposicao CalculateNewProposicaoStatusFromVotes()
     {
-        var votes = Logs.Where(l => l.Tipo is TipoLogProposicao.AbstencaoRd or TipoLogProposicao.AprovacaoRd
-            or TipoLogProposicao.SuspensaoRd or TipoLogProposicao.ReprovacaoRd).ToList();
-        var voteCount = votes.Count;
-        var approvedCount = votes.Count(l => l.Tipo == TipoLogProposicao.AprovacaoRd);
-        var repprovedCount = votes.Count(l => l.Tipo == TipoLogProposicao.ReprovacaoRd);
-        var suspensionCount = votes.Count(l => l.Tipo == TipoLogProposicao.SuspensaoRd);
-        var abstentionCount = votes.Count(l => l.Tipo == TipoLogProposicao.AbstencaoRd);
+        if (Reuniao.Participantes.Count > VotosRd.Count)
+        {
+            // voting hasn't finished, status unchanged
+            return this;
+        }
 
-        if (abstentionCount == voteCount)
+        var approvedCount = 0;
+        var repprovedCount = 0;
+        var suspensionCount = 0;
+        var abstentionCount = 0;
+        foreach (var reuniaoParticipante in Reuniao.Participantes)
+        {
+            if (CheckIfParticipanteVoted(reuniaoParticipante))
+            {
+                var participanteVote = GetParticipanteVoto(reuniaoParticipante);
+                switch (participanteVote.VotoRd)
+                {
+                    case TipoVotoRd.Aprovacao:
+                        approvedCount++;
+                        break;
+                    case TipoVotoRd.Reprovacao:
+                        repprovedCount++;
+                        break;
+                    case TipoVotoRd.Suspensao:
+                        suspensionCount++;
+                        break;
+                    case TipoVotoRd.Abstencao:
+                        abstentionCount++;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
+        if (abstentionCount == VotosRd.Count)
         {
             Status = ProposicaoStatus.SuspensaRd;
             return this;
         }
 
-        if (approvedCount > voteCount / 2)
+        if (approvedCount > (VotosRd.Count - abstentionCount) / 2)
         {
             Status = ProposicaoStatus.AprovadaRd;
+            return this;
         }
 
+        if (repprovedCount > (VotosRd.Count - abstentionCount) / 2)
+        {
+            Status = ProposicaoStatus.ReprovadaRd;
+            return this;
+        }
+
+        if (suspensionCount > (VotosRd.Count - abstentionCount) / 2)
+        {
+            Status = ProposicaoStatus.SuspensaRd;
+            return this;
+        }
+
+        if (approvedCount >= repprovedCount || approvedCount >= suspensionCount)
+        {
+            Status = ProposicaoStatus.AprovadaRd;
+            return this;
+        }
+
+        if (repprovedCount >= suspensionCount)
+        {
+            Status = ProposicaoStatus.ReprovadaRd;
+            return this;
+        }
+
+        Status = ProposicaoStatus.SuspensaRd;
         return this;
     }
 }

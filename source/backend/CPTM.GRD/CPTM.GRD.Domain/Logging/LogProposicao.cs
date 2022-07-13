@@ -11,4 +11,16 @@ public class LogProposicao
     public string Diferenca { get; set; } = string.Empty;
     public DateTime Data { get; set; }
     public User UsuarioResp { get; set; } = new User();
+
+    public static TipoLogProposicao ConvertFromTipoVoto(TipoVotoRd tipoVotoRd)
+    {
+        return tipoVotoRd switch
+        {
+            TipoVotoRd.Aprovacao => TipoLogProposicao.AprovacaoRd,
+            TipoVotoRd.Reprovacao => TipoLogProposicao.ReprovacaoRd,
+            TipoVotoRd.Suspensao => TipoLogProposicao.SuspensaoRd,
+            TipoVotoRd.Abstencao => TipoLogProposicao.AbstencaoRd,
+            _ => throw new ArgumentOutOfRangeException(nameof(tipoVotoRd), tipoVotoRd, null)
+        };
+    }
 }
