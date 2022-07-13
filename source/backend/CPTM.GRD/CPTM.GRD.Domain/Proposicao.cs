@@ -37,6 +37,7 @@ public class Proposicao
     public string NumeroProcessoLicit { get; set; } = string.Empty;
     public string? OutrasObservacoes { get; set; }
     public Reuniao Reuniao { get; set; } = new Reuniao();
+    public string AnotacoesPrevia { get; set; } = string.Empty;
     public List<Voto> VotosRd { get; set; } = new List<Voto>();
     public string AjustesRd { get; set; } = string.Empty;
     public string MotivoRetornoGrg { get; set; } = string.Empty;
