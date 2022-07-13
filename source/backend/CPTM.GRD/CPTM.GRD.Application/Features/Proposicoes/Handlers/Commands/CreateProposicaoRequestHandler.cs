@@ -16,11 +16,11 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
     private readonly IProposicaoRepository _proposicaoRepository;
     private readonly ILogProposicaoRepository _logProposicaoRepository;
     private readonly IMapper _mapper;
-    private readonly IGenericStrictSequenceControl _sequenceControl;
+    private readonly IProposicaoStrictSequenceControl _sequenceControl;
 
     public CreateProposicaoRequestHandler(IProposicaoRepository proposicaoRepository,
         ILogProposicaoRepository logProposicaoRepository, IMapper mapper,
-        IGenericStrictSequenceControl sequenceControl)
+        IProposicaoStrictSequenceControl sequenceControl)
     {
         _proposicaoRepository = proposicaoRepository;
         _logProposicaoRepository = logProposicaoRepository;
@@ -31,7 +31,7 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
     public async Task<ProposicaoDto> Handle(CreateProposicaoRequest request, CancellationToken cancellationToken)
     {
         var proposicao = _mapper.Map<Proposicao>(request.CreateProposicaoDto);
-        proposicao.IdPrd = await _sequenceControl.GetNextSequence();
+        proposicao.IdPrd = await _sequenceControl.GetNextIdPrd();
 
         var createLog = new LogProposicao()
         {
@@ -41,8 +41,8 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
             ProposicaoId = $@"IDPRD {proposicao.IdPrd}",
             UsuarioResp = proposicao.Criador,
         };
-        proposicao.Logs.Add(createLog);
         await _logProposicaoRepository.Add(createLog);
+        proposicao.Logs.Add(createLog);
 
         var addedProposicao = await _proposicaoRepository.Add(proposicao);
 

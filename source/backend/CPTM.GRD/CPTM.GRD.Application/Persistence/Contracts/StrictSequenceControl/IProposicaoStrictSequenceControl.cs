@@ -1,6 +1,6 @@
 ﻿namespace CPTM.GRD.Application.Persistence.Contracts.StrictSequenceControl;
 
-public interface IGenericStrictSequenceControl
+public interface IProposicaoStrictSequenceControl
 {
-    Task<int> GetNextSequence();
+    Task<int> GetNextIdPrd();
 }
