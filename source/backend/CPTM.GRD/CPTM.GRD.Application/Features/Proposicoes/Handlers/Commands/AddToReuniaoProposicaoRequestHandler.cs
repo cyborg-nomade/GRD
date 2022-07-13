@@ -54,10 +54,10 @@ public class AddToReuniaoProposicaoRequestHandler : IRequestHandler<AddToReuniao
             Diferenca = $@"Inclusão da Proposição IDPRD: {proposicao.IdPrd}",
             UsuarioResp = await _userRepository.Get(request.Uid),
         };
-
         await _logProposicaoRepository.Add(proposicaoInclusaoLog);
         await _logReuniaoRepository.Add(reuniaoInclusaoLog);
-
+        proposicao.Logs.Add(proposicaoInclusaoLog);
+        reuniao.Logs.Add(reuniaoInclusaoLog);
 
         proposicao.Reuniao = reuniao;
         reuniao.Proposicoes.Add(proposicao);

@@ -40,8 +40,8 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
             ProposicaoId = $@"IDPRD: {savedProposicao.IdPrd}",
             UsuarioResp = await _userRepository.Get(request.Uid),
         };
-        savedProposicao.Logs.Add(editLog);
         await _logProposicaoRepository.Add(editLog);
+        savedProposicao.Logs.Add(editLog);
 
         _mapper.Map(request.ProposicaoDto, savedProposicao);
 

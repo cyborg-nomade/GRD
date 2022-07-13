@@ -40,8 +40,8 @@ public class ChangeStatusProposicaoRequestHandler : IRequestHandler<ChangeStatus
             ProposicaoId = $@"IDPRD: {savedProposicao.IdPrd}",
             UsuarioResp = await _userRepository.Get(request.Uid),
         };
-        savedProposicao.Logs.Add(changeStatusLog);
         await _logProposicaoRepository.Add(changeStatusLog);
+        savedProposicao.Logs.Add(changeStatusLog);
 
         savedProposicao.Status = request.NewStatus;
         var updatedProposicao = await _proposicaoRepository.Update(savedProposicao);
