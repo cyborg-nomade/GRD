@@ -6,5 +6,5 @@ namespace CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 public class CreateReuniaoRequest : IRequest<ReuniaoDto>
 {
     public int Uid { get; set; }
-    public CreateReuniaoDto ReuniaoDto { get; set; } = new CreateReuniaoDto();
+    public CreateReuniaoDto CreateReuniaoDto { get; set; } = new CreateReuniaoDto();
 }

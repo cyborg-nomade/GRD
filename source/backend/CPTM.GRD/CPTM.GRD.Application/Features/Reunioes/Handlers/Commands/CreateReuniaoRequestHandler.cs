@@ -33,7 +33,7 @@ public class CreateReuniaoRequestHandler : IRequestHandler<CreateReuniaoRequest,
 
     public async Task<ReuniaoDto> Handle(CreateReuniaoRequest request, CancellationToken cancellationToken)
     {
-        var reuniao = _mapper.Map<Reuniao>(request.ReuniaoDto);
+        var reuniao = _mapper.Map<Reuniao>(request.CreateReuniaoDto);
         reuniao.NumeroReuniao = await _sequenceControl.GetNextNumeroReuniao();
 
         var createLog = new LogReuniao()
