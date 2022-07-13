@@ -186,6 +186,11 @@
     -   _auth_: grg, sysAdmin
     -   _inputs_: reuniao id + reuniao (in req body)
     -   _outputs_: status message + edited reuniao
+-   **POST /api/reunioes/:rid:/remove**
+    -   removes an existing reuniao
+    -   _auth_: creator, sysAdmin
+    -   _inputs_: reuniao id
+    -   _outputs_: status message + removed reuniao
 -   **POST /api/reunioes/:rid:/realizada/**
     -   changes reuniao status to "Realizada"
     -   _auth_: grg, sysAdmin
