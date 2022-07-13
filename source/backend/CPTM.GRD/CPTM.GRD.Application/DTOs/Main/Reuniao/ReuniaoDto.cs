@@ -1,5 +1,4 @@
-﻿using CPTM.GRD.Application.DTOs.Logging;
-using CPTM.GRD.Application.DTOs.Main.Acao;
+﻿using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Common;
 

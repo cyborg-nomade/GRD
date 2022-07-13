@@ -1,5 +1,4 @@
-﻿using CPTM.GRD.Application.DTOs.Logging;
-using CPTM.GRD.Common;
+﻿using CPTM.GRD.Common;
 
 namespace CPTM.GRD.Application.DTOs.Main.Reuniao;
 

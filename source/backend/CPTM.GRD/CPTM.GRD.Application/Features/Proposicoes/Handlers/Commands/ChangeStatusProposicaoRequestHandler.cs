@@ -4,8 +4,6 @@ using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Application.Persistence.Contracts;
 using CPTM.GRD.Application.Persistence.Contracts.AccessControl;
 using CPTM.GRD.Application.Persistence.Contracts.Logging;
-using CPTM.GRD.Application.Util;
-using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Logging;
 using MediatR;
 
