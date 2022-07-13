@@ -20,7 +20,6 @@
     <Folder Include="Features\Acoes\Requests\Queries\" />
     <Folder Include="Features\Reunioes\Handlers\Commands\" />
     <Folder Include="Features\Reunioes\Handlers\Queries\" />
-    <Folder Include="Features\Reunioes\Requests\Commands\" />
     <Folder Include="Features\Reunioes\Requests\Queries\" />
     <Folder Include="Util\" />
     <Folder Include="Persistence\Contracts\StrictSequenceControl\" />
