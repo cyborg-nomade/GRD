@@ -5,5 +5,5 @@ namespace CPTM.GRD.Application.Features.Reunioes.Requests.Queries;
 
 public class GetReuniaoDetailRequest : IRequest<ReuniaoDto>
 {
-    public int Id { get; set; }
+    public int Rid { get; set; }
 }

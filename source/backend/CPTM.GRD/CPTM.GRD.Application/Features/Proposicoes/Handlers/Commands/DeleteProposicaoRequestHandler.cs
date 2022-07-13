@@ -24,7 +24,7 @@ public class DeleteProposicaoRequestHandler : IRequestHandler<DeleteProposicaoRe
 
     public async Task<Unit> Handle(DeleteProposicaoRequest request, CancellationToken cancellationToken)
     {
-        var proposicao = await _proposicaoRepository.Get(request.Id);
+        var proposicao = await _proposicaoRepository.Get(request.Pid);
         var removeLog = new LogProposicao()
         {
             Data = DateTime.Now,
@@ -35,7 +35,7 @@ public class DeleteProposicaoRequestHandler : IRequestHandler<DeleteProposicaoRe
         };
         await _logProposicaoRepository.Add(removeLog);
 
-        await _proposicaoRepository.Delete(request.Id);
+        await _proposicaoRepository.Delete(request.Pid);
         return Unit.Value;
     }
 }

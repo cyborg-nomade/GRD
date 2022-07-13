@@ -28,7 +28,7 @@ public class ChangeStatusProposicaoRequestHandler : IRequestHandler<ChangeStatus
 
     public async Task<ProposicaoDto> Handle(ChangeStatusProposicaoRequest request, CancellationToken cancellationToken)
     {
-        var savedProposicao = await _proposicaoRepository.Get(request.Id);
+        var savedProposicao = await _proposicaoRepository.Get(request.Pid);
 
         var changeStatusLog = new LogProposicao()
         {

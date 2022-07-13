@@ -5,5 +5,5 @@ namespace CPTM.GRD.Application.Features.Proposicoes.Requests.Queries;
 
 public class GetProposicaoDetailRequest : IRequest<ProposicaoDto>
 {
-    public int Id { get; set; }
+    public int Pid { get; set; }
 }

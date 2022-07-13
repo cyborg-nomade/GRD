@@ -19,7 +19,7 @@ public class GetReuniaoDetailRequestHandler : IRequestHandler<GetReuniaoDetailRe
 
     public async Task<ReuniaoDto> Handle(GetReuniaoDetailRequest request, CancellationToken cancellationToken)
     {
-        var reuniao = await _reuniaoRepository.Get(request.Id);
+        var reuniao = await _reuniaoRepository.Get(request.Rid);
         return _mapper.Map<ReuniaoDto>(reuniao);
     }
 }

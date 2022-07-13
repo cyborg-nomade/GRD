@@ -19,7 +19,7 @@ public class GetProposicaoDetailRequestHandler : IRequestHandler<GetProposicaoDe
 
     public async Task<ProposicaoDto> Handle(GetProposicaoDetailRequest request, CancellationToken cancellationToken)
     {
-        var proposicao = await _proposicaoRepository.Get(request.Id);
+        var proposicao = await _proposicaoRepository.Get(request.Pid);
         return _mapper.Map<ProposicaoDto>(proposicao);
     }
 }
