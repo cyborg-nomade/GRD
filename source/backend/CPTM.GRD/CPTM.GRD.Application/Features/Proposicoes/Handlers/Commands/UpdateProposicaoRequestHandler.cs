@@ -6,6 +6,7 @@ using CPTM.GRD.Application.Persistence.Contracts.AccessControl;
 using CPTM.GRD.Application.Persistence.Contracts.Logging;
 using CPTM.GRD.Application.Util;
 using CPTM.GRD.Common;
+using CPTM.GRD.Domain;
 using CPTM.GRD.Domain.Logging;
 using MediatR;
 
@@ -35,8 +36,8 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
         {
             Data = DateTime.Now,
             Tipo = TipoLogProposicao.Edicao,
-            Diferenca = Differentiator.GetDifferenceString<ProposicaoDto>(_mapper.Map<ProposicaoDto>(savedProposicao),
-                request.ProposicaoDto),
+            Diferenca = Differentiator.GetDifferenceString<Proposicao>(savedProposicao,
+                _mapper.Map<Proposicao>(request.ProposicaoDto)),
             ProposicaoId = $@"IDPRD: {savedProposicao.IdPrd}",
             UsuarioResp = await _userRepository.Get(request.Uid),
         };
