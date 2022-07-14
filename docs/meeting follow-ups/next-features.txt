@@ -1,9 +1,3 @@
-GetAllUsersListRequest
-GetByLevelUsersListRequest
-GetByGroupUsersListRequest
-GetByGroupAndLevelUsersListRequest
-GetUserDetailRequest
-GetAllGroupsListRequest
 GetByUserGroupsListRequest
 GetGroupDetailRequest
 
