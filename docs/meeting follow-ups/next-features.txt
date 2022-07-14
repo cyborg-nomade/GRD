@@ -1,6 +1,3 @@
-GetAllAcoesListRequest
-GetByReuniaoAcoesListRequest
-GetAcaoDetailRequest
 CreateAcaoRequest
 UpdateAcaoRequest
 ChangeStatusAcaoRequest
