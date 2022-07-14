@@ -1,0 +1,2 @@
+CreateMemoriaPreviaReuniaoRequest
+- emite documento com base nas anotações previa
