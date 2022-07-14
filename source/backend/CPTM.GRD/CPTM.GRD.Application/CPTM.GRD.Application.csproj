@@ -12,7 +12,6 @@
     <Folder Include="DTOs\Logging\" />
     <Folder Include="DTOs\Main\Mixed\" />
     <Folder Include="Features\AccessControl\Handlers\Commands\" />
-    <Folder Include="Features\AccessControl\Handlers\Queries\" />
     <Folder Include="Features\AccessControl\Requests\Commands\" />
     <Folder Include="Features\AccessControl\Requests\Queries\" />
     <Folder Include="Features\Acoes\Handlers\Commands\" />
