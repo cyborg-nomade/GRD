@@ -9,6 +9,7 @@ public enum TipoLogProposicao
     AprovacaoDiretoria,
     ReprovacaoDiretoria,
     InclusaoPauta,
+    RemocaoPauta,
     AprovacaoRd,
     ReprovacaoRd,
     SuspensaoRd,

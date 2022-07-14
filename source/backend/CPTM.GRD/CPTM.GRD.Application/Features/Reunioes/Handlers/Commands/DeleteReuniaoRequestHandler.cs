@@ -14,7 +14,6 @@ public class DeleteReuniaoRequestHandler : IRequestHandler<DeleteReuniaoRequest>
     private readonly IReuniaoRepository _reuniaoRepository;
     private readonly ILogReuniaoRepository _logReuniaoRepository;
     private readonly IUserRepository _userRepository;
-    private readonly IMapper _mapper;
 
     public DeleteReuniaoRequestHandler(IReuniaoRepository reuniaoRepository, ILogReuniaoRepository logReuniaoRepository,
         IUserRepository userRepository, IMapper mapper)
@@ -22,7 +21,6 @@ public class DeleteReuniaoRequestHandler : IRequestHandler<DeleteReuniaoRequest>
         _reuniaoRepository = reuniaoRepository;
         _logReuniaoRepository = logReuniaoRepository;
         _userRepository = userRepository;
-        _mapper = mapper;
     }
 
     public async Task<Unit> Handle(DeleteReuniaoRequest request, CancellationToken cancellationToken)

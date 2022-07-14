@@ -24,4 +24,33 @@ public class Acao
     public TipoAlertaVencimento AlertaVencimento { get; set; }
     public ICollection<Andamento> Andamentos { get; set; } = new List<Andamento>();
     public ICollection<LogAcao> Logs { get; set; } = new List<LogAcao>();
+
+    public Acao GenerateLogAcao(TipoLogAcao tipoLogAcao, string diferenca)
+    {
+        var newLog = new LogAcao()
+        {
+            Data = DateTime.Now,
+            Tipo = tipoLogAcao,
+            Diferenca = diferenca,
+            AcaoId = $@"ID Ação: {Id}",
+            UsuarioResp = Responsavel
+        };
+        Logs.Add(newLog);
+        return this;
+    }
+
+    public Acao AddAndamento(Andamento newAndamento)
+    {
+        GenerateLogAcao(TipoLogAcao.InclusaoAndamento, $@"Novo Andamento: {newAndamento.Descricao}");
+        Andamentos.Add(newAndamento);
+        Status = AcaoStatus.EmAcompanhamento;
+        return this;
+    }
+
+    public Acao ChangeStatus(AcaoStatus newStatus, TipoLogAcao tipoLogAcao)
+    {
+        GenerateLogAcao(tipoLogAcao, $@"Mudança de status de {Status} para {newStatus}");
+        Status = newStatus;
+        return this;
+    }
 }

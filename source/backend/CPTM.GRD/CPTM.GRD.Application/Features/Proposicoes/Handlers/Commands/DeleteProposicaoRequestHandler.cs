@@ -12,19 +12,18 @@ public class DeleteProposicaoRequestHandler : IRequestHandler<DeleteProposicaoRe
 {
     private readonly IProposicaoRepository _proposicaoRepository;
     private readonly ILogProposicaoRepository _logProposicaoRepository;
-    private readonly IMapper _mapper;
 
     public DeleteProposicaoRequestHandler(IProposicaoRepository proposicaoRepository,
         ILogProposicaoRepository logProposicaoRepository, IMapper mapper)
     {
         _proposicaoRepository = proposicaoRepository;
         _logProposicaoRepository = logProposicaoRepository;
-        _mapper = mapper;
     }
 
     public async Task<Unit> Handle(DeleteProposicaoRequest request, CancellationToken cancellationToken)
     {
         var proposicao = await _proposicaoRepository.Get(request.Pid);
+
         var removeLog = new LogProposicao()
         {
             Data = DateTime.Now,

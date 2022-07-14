@@ -7,7 +7,6 @@ using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 using CPTM.GRD.Application.Util;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain;
-using CPTM.GRD.Domain.Logging;
 using MediatR;
 
 namespace CPTM.GRD.Application.Features.Reunioes.Handlers.Commands;
@@ -15,7 +14,6 @@ namespace CPTM.GRD.Application.Features.Reunioes.Handlers.Commands;
 public class UpdateReuniaoRequestHandler : IRequestHandler<UpdateReuniaoRequest, ReuniaoDto>
 {
     private readonly IReuniaoRepository _reuniaoRepository;
-    private readonly ILogReuniaoRepository _logReuniaoRepository;
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
 
@@ -23,7 +21,6 @@ public class UpdateReuniaoRequestHandler : IRequestHandler<UpdateReuniaoRequest,
         IUserRepository userRepository, IMapper mapper)
     {
         _reuniaoRepository = reuniaoRepository;
-        _logReuniaoRepository = logReuniaoRepository;
         _userRepository = userRepository;
         _mapper = mapper;
     }
@@ -31,18 +28,11 @@ public class UpdateReuniaoRequestHandler : IRequestHandler<UpdateReuniaoRequest,
     public async Task<ReuniaoDto> Handle(UpdateReuniaoRequest request, CancellationToken cancellationToken)
     {
         var savedReuniao = await _reuniaoRepository.Get(request.ReuniaoDto.Id);
+        var responsavel = await _userRepository.Get(request.Uid);
 
-        var editLog = new LogReuniao()
-        {
-            Data = DateTime.Now,
-            Tipo = TipoLogReuniao.Edicao,
-            Diferenca = Differentiator.GetDifferenceString<Reuniao>(savedReuniao,
-                _mapper.Map<Reuniao>(request.ReuniaoDto)),
-            ReuniaoId = $@"Número Reunião: {savedReuniao.NumeroReuniao}",
-            UsuarioResp = await _userRepository.Get(request.Uid),
-        };
-        await _logReuniaoRepository.Add(editLog);
-        savedReuniao.Logs.Add(editLog);
+        savedReuniao.GenerateReuniaoLog(TipoLogReuniao.Edicao, responsavel, Differentiator.GetDifferenceString<Reuniao>(
+            savedReuniao,
+            _mapper.Map<Reuniao>(request.ReuniaoDto)));
 
         _mapper.Map(request.ReuniaoDto, savedReuniao);
 
