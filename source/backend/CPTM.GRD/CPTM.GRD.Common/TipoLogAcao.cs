@@ -3,6 +3,7 @@
 public enum TipoLogAcao
 {
     Criacao,
+    Edicao,
     InclusaoAndamento,
     Finalizacao,
     Arquivamento,
