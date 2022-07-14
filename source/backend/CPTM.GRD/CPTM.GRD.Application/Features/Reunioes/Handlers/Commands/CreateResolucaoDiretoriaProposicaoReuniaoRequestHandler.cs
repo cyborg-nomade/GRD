@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence;
+using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
+using CPTM.GRD.Application.Contracts.Persistence.Logging;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
-using CPTM.GRD.Application.Persistence.Contracts.AccessControl;
-using CPTM.GRD.Application.Persistence.Contracts.Logging;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Logging;
 using MediatR;

@@ -1,7 +1,6 @@
-﻿using CPTM.GRD.Application.Contracts.Persistence;
-using CPTM.GRD.Domain.Logging;
+﻿using CPTM.GRD.Domain.Logging;
 
-namespace CPTM.GRD.Application.Persistence.Contracts.Logging;
+namespace CPTM.GRD.Application.Contracts.Persistence.Logging;
 
 public interface ILogProposicaoRepository : IGenericRepository<LogProposicao>
 {

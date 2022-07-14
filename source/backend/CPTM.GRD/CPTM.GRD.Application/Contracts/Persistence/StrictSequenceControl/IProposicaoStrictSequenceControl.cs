@@ -1,4 +1,4 @@
-﻿namespace CPTM.GRD.Application.Persistence.Contracts.StrictSequenceControl;
+﻿namespace CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
 
 public interface IProposicaoStrictSequenceControl
 {

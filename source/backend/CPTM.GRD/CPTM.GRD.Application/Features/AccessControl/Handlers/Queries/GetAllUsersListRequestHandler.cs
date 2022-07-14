@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.DTOs.AccessControl;
 using CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
-using CPTM.GRD.Application.Persistence.Contracts.AccessControl;
 using MediatR;
 
 namespace CPTM.GRD.Application.Features.AccessControl.Handlers.Queries;
