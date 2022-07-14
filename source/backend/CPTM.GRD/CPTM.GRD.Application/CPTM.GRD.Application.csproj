@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Contracts\Infrastructure\" />
+    <Folder Include="DTOs\AccessControl\" />
+    <Folder Include="DTOs\Logging\" />
+    <Folder Include="DTOs\Main\Mixed\" />
+    <Folder Include="Features\AccessControl\Handlers\Commands\" />
+    <Folder Include="Features\AccessControl\Requests\Commands\" />
+    <Folder Include="Features\AccessControl\Requests\Queries\" />
+    <Folder Include="Features\Acoes\Handlers\Commands\" />
+    <Folder Include="Features\Acoes\Handlers\Queries\" />
+    <Folder Include="Features\Acoes\Requests\Queries\" />
+    <Folder Include="Features\Reunioes\Handlers\Commands\" />
+    <Folder Include="Features\Reunioes\Handlers\Queries\" />
+    <Folder Include="Features\Reunioes\Requests\Queries\" />
+    <Folder Include="Util\" />
+    <Folder Include="Profiles\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="CompareNETObjects" Version="4.77.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CPTM.GRD.Domain\CPTM.GRD.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

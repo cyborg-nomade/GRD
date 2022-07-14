@@ -1,0 +1,5 @@
+CreateMemoriaPreviaReuniaoRequest
+- emite documento com base nas anotações previa
+CreatePautaDefinitivaReuniaoRequest
+- muda o status de todas as proposições para pauta
+- trava a edição das proposições
