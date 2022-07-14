@@ -253,5 +253,15 @@
     -   _auth_: responsavel acao (to add andamentos), grg, sysAdmin
     -   _inputs_: acao id + acao (in req body)
     -   _outputs_: status message + edited acao
+-   **POST /api/acoes/:aid:/remove**
+    -   removes an existing acao
+    -   _auth_: responsavel acao (to add andamentos), grg, sysAdmin
+    -   _inputs_: acao id
+    -   _outputs_: status message
+-   **POST /api/acoes/:aid:/add-andamento**
+    -   add an andamento to an existing acao
+    -   _auth_: responsavel acao (to add andamentos), grg, sysAdmin
+    -   _inputs_: acao id + andamento (in req body)
+    -   _outputs_: status message + edited acao
 
 # 6. utilities controller

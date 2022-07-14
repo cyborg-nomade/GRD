@@ -1,4 +1,5 @@
 CreateAcaoRequest
 UpdateAcaoRequest
+AddAndamentoToAcaoRequest
 ChangeStatusAcaoRequest
 RemoveAcaoRequest
