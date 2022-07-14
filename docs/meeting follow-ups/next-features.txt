@@ -1,0 +1,12 @@
+GetAllUsersListRequest
+GetByLevelUsersListRequest
+GetByGroupUsersListRequest
+GetByGroupAndLevelUsersListRequest
+GetUserDetailRequest
+GetAllGroupsListRequest
+GetByUserGroupsListRequest
+GetGroupDetailRequest
+
+CreateUserRequest
+UpdateUserRequest
+DeleteUserRequest
