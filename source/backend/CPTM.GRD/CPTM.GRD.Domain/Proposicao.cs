@@ -74,7 +74,7 @@ public class Proposicao
     public Voto GetParticipanteVoto(Participante participante)
     {
         return VotosRd.SingleOrDefault(v => v.Participante == participante) ??
-               throw new InvalidOperationException("There's no vote for this Participante");
+               throw new InvalidOperationException("Não há votos para este participante");
     }
 
     public Proposicao CalculateNewProposicaoStatusFromVotes()
@@ -151,6 +151,45 @@ public class Proposicao
         }
 
         Status = ProposicaoStatus.SuspensaRd;
+        return this;
+    }
+
+    public Proposicao GenerateProposicaoLog(TipoLogProposicao tipoLogProposicao, User responsavel, string diferenca)
+    {
+        var newLog = new LogProposicao()
+        {
+            Data = DateTime.Now,
+            Tipo = tipoLogProposicao,
+            ProposicaoId = $@"IDPRD: {IdPrd}",
+            Diferenca = diferenca,
+            UsuarioResp = responsavel,
+        };
+        Logs.Add(newLog);
+        return this;
+    }
+
+    public Proposicao AddToReuniao(Reuniao reuniao, User responsavel)
+    {
+        GenerateProposicaoLog(TipoLogProposicao.InclusaoPauta, responsavel,
+            $@"Inclusão na pauta da RD número {reuniao.NumeroReuniao}");
+        Reuniao = reuniao;
+        Status = ProposicaoStatus.EmPauta;
+        return this;
+    }
+
+    public Proposicao ChangeStatus(ProposicaoStatus newStatus, TipoLogProposicao tipoLogProposicao, User responsavel)
+    {
+        GenerateProposicaoLog(tipoLogProposicao, responsavel, $@"Mudança de status de {Status} para {newStatus}");
+        Status = newStatus;
+        return this;
+    }
+
+    public Proposicao AddDiretorVote(User diretor, Voto vote, string ajustes)
+    {
+        GenerateProposicaoLog(LogProposicao.ConvertFromTipoVoto(vote.VotoRd), diretor,
+            $@"Voto de Diretor {diretor.Nome} em RD: {vote.VotoRd}");
+        AjustesRd += $"\n\n{ajustes}";
+        VotosRd.Add(vote);
         return this;
     }
 }

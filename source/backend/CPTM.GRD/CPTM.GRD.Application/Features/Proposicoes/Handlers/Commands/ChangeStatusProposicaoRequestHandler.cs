@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
-using CPTM.GRD.Application.Contracts.Persistence.Logging;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Domain.Logging;
@@ -12,15 +11,13 @@ namespace CPTM.GRD.Application.Features.Proposicoes.Handlers.Commands;
 public class ChangeStatusProposicaoRequestHandler : IRequestHandler<ChangeStatusProposicaoRequest, ProposicaoDto>
 {
     private readonly IProposicaoRepository _proposicaoRepository;
-    private readonly ILogProposicaoRepository _logProposicaoRepository;
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
 
     public ChangeStatusProposicaoRequestHandler(IProposicaoRepository proposicaoRepository,
-        ILogProposicaoRepository logProposicaoRepository, IUserRepository userRepository, IMapper mapper)
+        IUserRepository userRepository, IMapper mapper)
     {
         _proposicaoRepository = proposicaoRepository;
-        _logProposicaoRepository = logProposicaoRepository;
         _userRepository = userRepository;
         _mapper = mapper;
     }
@@ -29,19 +26,10 @@ public class ChangeStatusProposicaoRequestHandler : IRequestHandler<ChangeStatus
     public async Task<ProposicaoDto> Handle(ChangeStatusProposicaoRequest request, CancellationToken cancellationToken)
     {
         var savedProposicao = await _proposicaoRepository.Get(request.Pid);
+        var responsavel = await _userRepository.Get(request.Uid);
 
-        var changeStatusLog = new LogProposicao()
-        {
-            Data = DateTime.Now,
-            Tipo = request.TipoLogProposicao,
-            Diferenca = $@"Changed status from {savedProposicao.Status} to {request.NewStatus}",
-            ProposicaoId = $@"IDPRD: {savedProposicao.IdPrd}",
-            UsuarioResp = await _userRepository.Get(request.Uid),
-        };
-        await _logProposicaoRepository.Add(changeStatusLog);
-        savedProposicao.Logs.Add(changeStatusLog);
+        savedProposicao.ChangeStatus(request.NewStatus, request.TipoLogProposicao, responsavel);
 
-        savedProposicao.Status = request.NewStatus;
         var updatedProposicao = await _proposicaoRepository.Update(savedProposicao);
         return _mapper.Map<ProposicaoDto>(updatedProposicao);
     }

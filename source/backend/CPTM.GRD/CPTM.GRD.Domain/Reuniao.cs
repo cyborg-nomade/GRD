@@ -1,4 +1,5 @@
 ﻿using CPTM.GRD.Common;
+using CPTM.GRD.Domain.AccessControl;
 using CPTM.GRD.Domain.Logging;
 
 namespace CPTM.GRD.Domain;
@@ -29,10 +30,33 @@ public class Reuniao
     public string RelatorioDeliberativoFilePath { get; set; } = string.Empty;
     public string AtaFilePath { get; set; } = string.Empty;
 
+    public Reuniao GenerateReuniaoLog(TipoLogReuniao tipoLogReuniao, User responsavel, string diferenca)
+    {
+        var newLog = new LogReuniao()
+        {
+            Data = DateTime.Now,
+            Tipo = tipoLogReuniao,
+            ReuniaoId = $@"Número Reunião: {NumeroReuniao}",
+            Diferenca = diferenca,
+            UsuarioResp = responsavel,
+        };
+        Logs.Add(newLog);
+        return this;
+    }
+
     public Reuniao AddAcao(Acao acao)
     {
         acao.GenerateLogAcao(TipoLogAcao.Criacao, "Salvamento inicial");
         Acoes.Add(acao);
+        return this;
+    }
+
+    public Reuniao AddProposicao(Proposicao proposicao, User responsavel)
+    {
+        GenerateReuniaoLog(TipoLogReuniao.InclusaoProposicao, responsavel,
+            $@"Inclusão da Proposição IDPRD: {proposicao.IdPrd}");
+        proposicao.AddToReuniao(this, responsavel);
+        Proposicoes.Add(proposicao);
         return this;
     }
 }

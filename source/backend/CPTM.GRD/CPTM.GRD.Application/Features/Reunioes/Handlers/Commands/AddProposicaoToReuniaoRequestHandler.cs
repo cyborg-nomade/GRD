@@ -5,14 +5,14 @@ using CPTM.GRD.Application.Contracts.Persistence.Logging;
 using CPTM.GRD.Application.DTOs.Main.Mixed;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
-using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
+using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Logging;
 using MediatR;
 
-namespace CPTM.GRD.Application.Features.Proposicoes.Handlers.Commands;
+namespace CPTM.GRD.Application.Features.Reunioes.Handlers.Commands;
 
-public class AddToReuniaoProposicaoRequestHandler : IRequestHandler<AddToReuniaoProposicaoRequest, AddToPautaDto>
+public class AddProposicaoToReuniaoRequestHandler : IRequestHandler<AddProposicaoToReuniaoRequest, AddToPautaDto>
 {
     private readonly IProposicaoRepository _proposicaoRepository;
     private readonly IReuniaoRepository _reuniaoRepository;
@@ -21,7 +21,7 @@ public class AddToReuniaoProposicaoRequestHandler : IRequestHandler<AddToReuniao
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
 
-    public AddToReuniaoProposicaoRequestHandler(IProposicaoRepository proposicaoRepository,
+    public AddProposicaoToReuniaoRequestHandler(IProposicaoRepository proposicaoRepository,
         IReuniaoRepository reuniaoRepository, ILogProposicaoRepository logProposicaoRepository,
         ILogReuniaoRepository logReuniaoRepository, IUserRepository userRepository, IMapper mapper)
     {
@@ -33,37 +33,17 @@ public class AddToReuniaoProposicaoRequestHandler : IRequestHandler<AddToReuniao
         _mapper = mapper;
     }
 
-    public async Task<AddToPautaDto> Handle(AddToReuniaoProposicaoRequest request, CancellationToken cancellationToken)
+    public async Task<AddToPautaDto> Handle(AddProposicaoToReuniaoRequest request, CancellationToken cancellationToken)
     {
         var proposicao = await _proposicaoRepository.Get(request.Pid);
         var reuniao = await _reuniaoRepository.Get(request.Rid);
+        var responsavel = await _userRepository.Get(request.Uid);
 
-        var proposicaoInclusaoLog = new LogProposicao()
-        {
-            Data = DateTime.Now,
-            Tipo = TipoLogProposicao.InclusaoPauta,
-            ProposicaoId = $@"IDPRD: {proposicao.IdPrd}",
-            Diferenca = $@"Inclusão na pauta da RD número {reuniao.NumeroReuniao}",
-            UsuarioResp = await _userRepository.Get(request.Uid),
-        };
-        var reuniaoInclusaoLog = new LogReuniao()
-        {
-            Data = DateTime.Now,
-            Tipo = TipoLogReuniao.InclusaoProposicao,
-            ReuniaoId = $@"Número Reunião: {reuniao.NumeroReuniao}",
-            Diferenca = $@"Inclusão da Proposição IDPRD: {proposicao.IdPrd}",
-            UsuarioResp = await _userRepository.Get(request.Uid),
-        };
-        await _logProposicaoRepository.Add(proposicaoInclusaoLog);
-        await _logReuniaoRepository.Add(reuniaoInclusaoLog);
-        proposicao.Logs.Add(proposicaoInclusaoLog);
-        reuniao.Logs.Add(reuniaoInclusaoLog);
-
-        proposicao.Reuniao = reuniao;
-        reuniao.Proposicoes.Add(proposicao);
+        reuniao.AddProposicao(proposicao, responsavel);
 
         var updatedProposicao = await _proposicaoRepository.Update(proposicao);
         var updatedReuniao = await _reuniaoRepository.Update(reuniao);
+
         return new AddToPautaDto()
         {
             ProposicaoDto = _mapper.Map<ProposicaoDto>(updatedProposicao),

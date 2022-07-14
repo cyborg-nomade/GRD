@@ -11,7 +11,7 @@ using MediatR;
 namespace CPTM.GRD.Application.Features.Proposicoes.Handlers.Commands;
 
 public class
-    GrgAddsDiretorsVoteToProposicaoRequestHandler : IRequestHandler<GrgAddsDiretorsVoteToProposicaoRequest,
+    AddDiretorVoteToProposicaoRequestHandler : IRequestHandler<AddDiretorVoteToProposicaoRequest,
         ProposicaoDto>
 {
     private readonly IProposicaoRepository _proposicaoRepository;
@@ -19,7 +19,7 @@ public class
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
 
-    public GrgAddsDiretorsVoteToProposicaoRequestHandler(IProposicaoRepository proposicaoRepository,
+    public AddDiretorVoteToProposicaoRequestHandler(IProposicaoRepository proposicaoRepository,
         ILogProposicaoRepository logProposicaoRepository, IUserRepository userRepository, IMapper mapper)
     {
         _proposicaoRepository = proposicaoRepository;
@@ -28,31 +28,18 @@ public class
         _mapper = mapper;
     }
 
-    public async Task<ProposicaoDto> Handle(GrgAddsDiretorsVoteToProposicaoRequest request,
+    public async Task<ProposicaoDto> Handle(AddDiretorVoteToProposicaoRequest request,
         CancellationToken cancellationToken)
     {
         var proposicao = await _proposicaoRepository.Get(request.Pid);
 
-        foreach (var vote in request.Votes)
+        foreach (var voteWithAjustes in request.VotesWithAjustes)
         {
-            var diretor = await _userRepository.Get(vote.ParticipanteDto.User.Id);
-            var voteLog = new LogProposicao()
-            {
-                Data = DateTime.Now,
-                ProposicaoId = $@"IDPRD: {proposicao.IdPrd}",
-                Diferenca = $@"Voto de Diretor {diretor.Nome} em RD: {vote.VotoRd}",
-                Tipo = LogProposicao.ConvertFromTipoVoto(vote.VotoRd),
-                UsuarioResp = diretor,
-            };
-            await _logProposicaoRepository.Add(voteLog);
-            proposicao.Logs.Add(voteLog);
+            var diretor = await _userRepository.Get(voteWithAjustes.VotoDto.Participante.User.Id);
+            var votoRd = _mapper.Map<Voto>(voteWithAjustes.VotoDto);
+            var ajustes = voteWithAjustes.Ajustes;
 
-            var newVote = new Voto()
-            {
-                Participante = _mapper.Map<Participante>(vote.ParticipanteDto),
-                VotoRd = vote.VotoRd,
-            };
-            proposicao.VotosRd.Add(newVote);
+            proposicao.AddDiretorVote(diretor, votoRd, ajustes);
         }
 
         proposicao.CalculateNewProposicaoStatusFromVotes();

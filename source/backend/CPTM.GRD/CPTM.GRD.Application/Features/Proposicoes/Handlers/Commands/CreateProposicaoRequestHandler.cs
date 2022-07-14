@@ -14,16 +14,13 @@ namespace CPTM.GRD.Application.Features.Proposicoes.Handlers.Commands;
 public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRequest, ProposicaoDto>
 {
     private readonly IProposicaoRepository _proposicaoRepository;
-    private readonly ILogProposicaoRepository _logProposicaoRepository;
     private readonly IMapper _mapper;
     private readonly IProposicaoStrictSequenceControl _sequenceControl;
 
-    public CreateProposicaoRequestHandler(IProposicaoRepository proposicaoRepository,
-        ILogProposicaoRepository logProposicaoRepository, IMapper mapper,
+    public CreateProposicaoRequestHandler(IProposicaoRepository proposicaoRepository, IMapper mapper,
         IProposicaoStrictSequenceControl sequenceControl)
     {
         _proposicaoRepository = proposicaoRepository;
-        _logProposicaoRepository = logProposicaoRepository;
         _mapper = mapper;
         _sequenceControl = sequenceControl;
     }
@@ -31,19 +28,10 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
     public async Task<ProposicaoDto> Handle(CreateProposicaoRequest request, CancellationToken cancellationToken)
     {
         var proposicao = _mapper.Map<Proposicao>(request.CreateProposicaoDto);
+
+        proposicao.GenerateProposicaoLog(TipoLogProposicao.Criacao, proposicao.Criador, "Salvamento inicial");
+
         proposicao.IdPrd = await _sequenceControl.GetNextIdPrd();
-
-        var createLog = new LogProposicao()
-        {
-            Data = DateTime.Now,
-            Tipo = TipoLogProposicao.Criacao,
-            Diferenca = "Salvamento inicial",
-            ProposicaoId = $@"IDPRD {proposicao.IdPrd}",
-            UsuarioResp = proposicao.Criador,
-        };
-        await _logProposicaoRepository.Add(createLog);
-        proposicao.Logs.Add(createLog);
-
         var addedProposicao = await _proposicaoRepository.Add(proposicao);
 
         return _mapper.Map<ProposicaoDto>(addedProposicao);

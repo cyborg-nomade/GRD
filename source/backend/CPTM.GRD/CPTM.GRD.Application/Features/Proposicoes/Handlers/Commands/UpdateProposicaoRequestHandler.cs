@@ -31,18 +31,11 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
     public async Task<ProposicaoDto> Handle(UpdateProposicaoRequest request, CancellationToken cancellationToken)
     {
         var savedProposicao = await _proposicaoRepository.Get(request.ProposicaoDto.Id);
+        var responsavel = await _userRepository.Get(request.Uid);
 
-        var editLog = new LogProposicao()
-        {
-            Data = DateTime.Now,
-            Tipo = TipoLogProposicao.Edicao,
-            Diferenca = Differentiator.GetDifferenceString<Proposicao>(savedProposicao,
-                _mapper.Map<Proposicao>(request.ProposicaoDto)),
-            ProposicaoId = $@"IDPRD: {savedProposicao.IdPrd}",
-            UsuarioResp = await _userRepository.Get(request.Uid),
-        };
-        await _logProposicaoRepository.Add(editLog);
-        savedProposicao.Logs.Add(editLog);
+        savedProposicao.GenerateProposicaoLog(TipoLogProposicao.Edicao, responsavel,
+            Differentiator.GetDifferenceString<Proposicao>(savedProposicao,
+                _mapper.Map<Proposicao>(request.ProposicaoDto)));
 
         _mapper.Map(request.ProposicaoDto, savedProposicao);
 
