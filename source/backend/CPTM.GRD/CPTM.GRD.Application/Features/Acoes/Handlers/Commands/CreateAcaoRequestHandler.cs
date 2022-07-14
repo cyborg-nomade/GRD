@@ -14,36 +14,26 @@ namespace CPTM.GRD.Application.Features.Acoes.Handlers.Commands;
 public class CreateAcaoRequestHandler : IRequestHandler<CreateAcaoRequest, AcaoDto>
 {
     private readonly IAcaoRepository _acaoRepository;
-    private readonly ILogAcaoRepository _logAcaoRepository;
-    private readonly IUserRepository _userRepository;
+    private readonly IReuniaoRepository _reuniaoRepository;
     private readonly IMapper _mapper;
 
-    public CreateAcaoRequestHandler(IAcaoRepository acaoRepository, ILogAcaoRepository logAcaoRepository,
-        IUserRepository userRepository, IMapper mapper)
+    public CreateAcaoRequestHandler(IAcaoRepository acaoRepository, IReuniaoRepository reuniaoRepository,
+        IMapper mapper)
     {
         _acaoRepository = acaoRepository;
-        _logAcaoRepository = logAcaoRepository;
-        _userRepository = userRepository;
+        _reuniaoRepository = reuniaoRepository;
         _mapper = mapper;
     }
 
     public async Task<AcaoDto> Handle(CreateAcaoRequest request, CancellationToken cancellationToken)
     {
         var acao = _mapper.Map<Acao>(request.CreateAcaoDto);
+        var reuniao = await _reuniaoRepository.Get(request.Rid);
 
-        var createLog = new LogAcao()
-        {
-            Data = DateTime.Now,
-            Tipo = TipoLogAcao.Criacao,
-            Diferenca = "Salvamento inicial",
-            AcaoId = $@"ID Acão: {acao.Id}",
-            UsuarioResp = await _userRepository.Get(request.Uid)
-        };
-        await _logAcaoRepository.Add(createLog);
-        acao.Logs.Add(createLog);
+        reuniao.AddAcao(acao);
 
-        var addedAcao = await _acaoRepository.Add(acao);
+        await _reuniaoRepository.Update(reuniao);
 
-        return _mapper.Map<AcaoDto>(addedAcao);
+        return _mapper.Map<AcaoDto>(acao);
     }
 }

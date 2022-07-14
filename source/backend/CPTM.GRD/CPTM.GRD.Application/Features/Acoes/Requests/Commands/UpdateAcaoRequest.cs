@@ -6,5 +6,4 @@ namespace CPTM.GRD.Application.Features.Acoes.Requests.Commands;
 public class UpdateAcaoRequest : IRequest<AcaoDto>
 {
     public AcaoDto AcaoDto { get; set; } = new AcaoDto();
-    public int Uid { get; set; }
 }

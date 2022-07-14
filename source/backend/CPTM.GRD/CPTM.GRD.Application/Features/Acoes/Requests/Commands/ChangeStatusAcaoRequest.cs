@@ -9,5 +9,4 @@ public class ChangeStatusAcaoRequest : IRequest<AcaoDto>
     public int Aid { get; set; }
     public AcaoStatus NewStatus { get; set; }
     public TipoLogAcao TipoLogAcao { get; set; }
-    public int Uid { get; set; }
 }

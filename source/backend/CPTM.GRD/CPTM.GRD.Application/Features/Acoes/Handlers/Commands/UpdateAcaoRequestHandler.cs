@@ -32,16 +32,8 @@ public class UpdateAcaoRequestHandler : IRequestHandler<UpdateAcaoRequest, AcaoD
     {
         var savedAcao = await _acaoRepository.Get(request.AcaoDto.Id);
 
-        var editLog = new LogAcao()
-        {
-            Data = DateTime.Now,
-            Tipo = TipoLogAcao.Edicao,
-            Diferenca = Differentiator.GetDifferenceString<Acao>(savedAcao, _mapper.Map<Acao>(request.AcaoDto)),
-            AcaoId = $@"ID Acão: {savedAcao.Id}",
-            UsuarioResp = await _userRepository.Get(request.Uid)
-        };
-        await _logAcaoRepository.Add(editLog);
-        savedAcao.Logs.Add(editLog);
+        savedAcao.GenerateLogAcao(TipoLogAcao.Edicao,
+            Differentiator.GetDifferenceString<Acao>(savedAcao, _mapper.Map<Acao>(request.AcaoDto)));
 
         _mapper.Map(request.AcaoDto, savedAcao);
 

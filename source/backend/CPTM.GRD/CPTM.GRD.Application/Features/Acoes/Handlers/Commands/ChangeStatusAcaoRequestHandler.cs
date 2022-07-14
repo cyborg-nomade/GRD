@@ -29,18 +29,7 @@ public class ChangeStatusAcaoRequestHandler : IRequestHandler<ChangeStatusAcaoRe
     {
         var savedAcao = await _acaoRepository.Get(request.Aid);
 
-        var changeStatusLog = new LogAcao()
-        {
-            Data = DateTime.Now,
-            Tipo = request.TipoLogAcao,
-            Diferenca = $@"Mudança de status de {savedAcao.Status} para {request.NewStatus}",
-            AcaoId = $@"ID Ação {savedAcao.Id}",
-            UsuarioResp = await _userRepository.Get(request.Uid)
-        };
-        await _logAcaoRepository.Add(changeStatusLog);
-        savedAcao.Logs.Add(changeStatusLog);
-
-        savedAcao.Status = request.NewStatus;
+        savedAcao.ChangeStatus(request.NewStatus, request.TipoLogAcao);
 
         var updatedAcao = await _acaoRepository.Update(savedAcao);
 

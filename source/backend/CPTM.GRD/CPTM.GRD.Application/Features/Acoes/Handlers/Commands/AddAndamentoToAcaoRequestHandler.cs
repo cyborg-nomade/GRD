@@ -35,18 +35,7 @@ public class AddAndamentoToAcaoRequestHandler : IRequestHandler<AddAndamentoToAc
         var acao = await _acaoRepository.Get(request.Aid);
         var andamento = _mapper.Map<Andamento>(request.AndamentoDto);
 
-        var addAndamentoLog = new LogAcao()
-        {
-            Data = DateTime.Now,
-            Tipo = TipoLogAcao.InclusaoAndamento,
-            Diferenca = $"Incluído andamento: {andamento.Descricao}",
-            AcaoId = $@"ID Ação: {acao.Id}",
-            UsuarioResp = await _userRepository.Get(request.Aid)
-        };
-        await _logAcaoRepository.Add(addAndamentoLog);
-        acao.Andamentos.Add(andamento);
-
-        acao.Status = AcaoStatus.EmAcompanhamento;
+        acao.AddAndamento(andamento);
 
         var updatedAcao = await _acaoRepository.Update(acao);
         return _mapper.Map<AcaoDto>(updatedAcao);

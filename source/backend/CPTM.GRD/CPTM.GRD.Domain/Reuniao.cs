@@ -28,4 +28,11 @@ public class Reuniao
     public string PautaDefinitivaFilePath { get; set; } = string.Empty;
     public string RelatorioDeliberativoFilePath { get; set; } = string.Empty;
     public string AtaFilePath { get; set; } = string.Empty;
+
+    public Reuniao AddAcao(Acao acao)
+    {
+        acao.GenerateLogAcao(TipoLogAcao.Criacao, "Salvamento inicial");
+        Acoes.Add(acao);
+        return this;
+    }
 }
