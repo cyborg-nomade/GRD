@@ -1,8 +1,4 @@
-CreateMemoriaPreviaReuniaoRequest
-- emite documento com base nas anotações previa
-CreatePautaDefinitivaReuniaoRequest
-- muda o status de todas as proposições para pauta
-- trava a edição das proposições
+
 CreateRelatorioDeliberativoReuniaoRequest
 - trava a reunião para adição de novas proposições
 - atualiza os status das proposições conforme deliberação - suspensas  saem da pauta
