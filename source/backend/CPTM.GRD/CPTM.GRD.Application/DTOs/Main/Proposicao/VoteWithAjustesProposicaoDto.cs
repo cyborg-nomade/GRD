@@ -1,6 +1,4 @@
-﻿using CPTM.GRD.Common;
-
-namespace CPTM.GRD.Application.DTOs.Main.Proposicao;
+﻿namespace CPTM.GRD.Application.DTOs.Main.Proposicao;
 
 public class VoteWithAjustesProposicaoDto
 {

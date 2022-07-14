@@ -173,7 +173,16 @@ public class Proposicao
         GenerateProposicaoLog(TipoLogProposicao.InclusaoPauta, responsavel,
             $@"Inclusão na pauta da RD número {reuniao.NumeroReuniao}");
         Reuniao = reuniao;
-        Status = ProposicaoStatus.EmPauta;
+        Status = ProposicaoStatus.InclusaEmReuniao;
+        return this;
+    }
+
+    public Proposicao RemoveFromReuniao(Reuniao reuniao, User responsavel)
+    {
+        GenerateProposicaoLog(TipoLogProposicao.RemocaoPauta, responsavel,
+            $@"Remoção da pauta da RD número {reuniao.NumeroReuniao}");
+        Reuniao = new Reuniao();
+        Status = ProposicaoStatus.DisponivelInclusaoPauta;
         return this;
     }
 

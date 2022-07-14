@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
-using CPTM.GRD.Application.Contracts.Persistence.Logging;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Domain;
-using CPTM.GRD.Domain.Logging;
 using MediatR;
 
 namespace CPTM.GRD.Application.Features.Proposicoes.Handlers.Commands;
@@ -15,15 +13,13 @@ public class
         ProposicaoDto>
 {
     private readonly IProposicaoRepository _proposicaoRepository;
-    private readonly ILogProposicaoRepository _logProposicaoRepository;
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
 
     public AddDiretorVoteToProposicaoRequestHandler(IProposicaoRepository proposicaoRepository,
-        ILogProposicaoRepository logProposicaoRepository, IUserRepository userRepository, IMapper mapper)
+        IUserRepository userRepository, IMapper mapper)
     {
         _proposicaoRepository = proposicaoRepository;
-        _logProposicaoRepository = logProposicaoRepository;
         _userRepository = userRepository;
         _mapper = mapper;
     }

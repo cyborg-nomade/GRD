@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
-using CPTM.GRD.Application.Contracts.Persistence.Logging;
 using CPTM.GRD.Application.DTOs.Main.Mixed;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
-using CPTM.GRD.Common;
-using CPTM.GRD.Domain.Logging;
 using MediatR;
 
 namespace CPTM.GRD.Application.Features.Reunioes.Handlers.Commands;
@@ -16,19 +13,14 @@ public class AddProposicaoToReuniaoRequestHandler : IRequestHandler<AddProposica
 {
     private readonly IProposicaoRepository _proposicaoRepository;
     private readonly IReuniaoRepository _reuniaoRepository;
-    private readonly ILogProposicaoRepository _logProposicaoRepository;
-    private readonly ILogReuniaoRepository _logReuniaoRepository;
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
 
     public AddProposicaoToReuniaoRequestHandler(IProposicaoRepository proposicaoRepository,
-        IReuniaoRepository reuniaoRepository, ILogProposicaoRepository logProposicaoRepository,
-        ILogReuniaoRepository logReuniaoRepository, IUserRepository userRepository, IMapper mapper)
+        IReuniaoRepository reuniaoRepository, IUserRepository userRepository, IMapper mapper)
     {
         _proposicaoRepository = proposicaoRepository;
         _reuniaoRepository = reuniaoRepository;
-        _logProposicaoRepository = logProposicaoRepository;
-        _logReuniaoRepository = logReuniaoRepository;
         _userRepository = userRepository;
         _mapper = mapper;
     }

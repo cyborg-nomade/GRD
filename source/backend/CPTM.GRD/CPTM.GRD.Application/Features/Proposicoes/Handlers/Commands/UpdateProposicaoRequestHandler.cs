@@ -7,7 +7,6 @@ using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Application.Util;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain;
-using CPTM.GRD.Domain.Logging;
 using MediatR;
 
 namespace CPTM.GRD.Application.Features.Proposicoes.Handlers.Commands;
@@ -15,7 +14,6 @@ namespace CPTM.GRD.Application.Features.Proposicoes.Handlers.Commands;
 public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRequest, ProposicaoDto>
 {
     private readonly IProposicaoRepository _proposicaoRepository;
-    private readonly ILogProposicaoRepository _logProposicaoRepository;
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
 
@@ -23,7 +21,6 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
         ILogProposicaoRepository logProposicaoRepository, IUserRepository userRepository, IMapper mapper)
     {
         _proposicaoRepository = proposicaoRepository;
-        _logProposicaoRepository = logProposicaoRepository;
         _userRepository = userRepository;
         _mapper = mapper;
     }

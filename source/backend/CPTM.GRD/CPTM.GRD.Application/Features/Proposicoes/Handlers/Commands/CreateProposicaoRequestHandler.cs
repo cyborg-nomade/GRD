@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Persistence;
-using CPTM.GRD.Application.Contracts.Persistence.Logging;
 using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain;
-using CPTM.GRD.Domain.Logging;
 using MediatR;
 
 namespace CPTM.GRD.Application.Features.Proposicoes.Handlers.Commands;
@@ -28,10 +26,10 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
     public async Task<ProposicaoDto> Handle(CreateProposicaoRequest request, CancellationToken cancellationToken)
     {
         var proposicao = _mapper.Map<Proposicao>(request.CreateProposicaoDto);
+        proposicao.IdPrd = await _sequenceControl.GetNextIdPrd();
 
         proposicao.GenerateProposicaoLog(TipoLogProposicao.Criacao, proposicao.Criador, "Salvamento inicial");
 
-        proposicao.IdPrd = await _sequenceControl.GetNextIdPrd();
         var addedProposicao = await _proposicaoRepository.Add(proposicao);
 
         return _mapper.Map<ProposicaoDto>(addedProposicao);
