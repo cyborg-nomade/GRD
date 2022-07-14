@@ -11,7 +11,7 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Reunioes.Handlers.Commands;
 
-public class CreatePautaPreviaReuniaoRequestHandler : IRequestHandler<CreatePautaPreviaReuniaoRequest, ReuniaoDto>
+public class CreateMemoriaPreviaReuniaoRequestHandler : IRequestHandler<CreateMemoriaPreviaReuniaoRequest, ReuniaoDto>
 {
     private readonly IReuniaoRepository _reuniaoRepository;
     private readonly ILogReuniaoRepository _logReuniaoRepository;
@@ -19,7 +19,7 @@ public class CreatePautaPreviaReuniaoRequestHandler : IRequestHandler<CreatePaut
     private readonly IMapper _mapper;
     private readonly IFileCreator _fileCreator;
 
-    public CreatePautaPreviaReuniaoRequestHandler(IReuniaoRepository reuniaoRepository,
+    public CreateMemoriaPreviaReuniaoRequestHandler(IReuniaoRepository reuniaoRepository,
         ILogReuniaoRepository logReuniaoRepository, IUserRepository userRepository, IMapper mapper,
         IFileCreator fileCreator)
     {
@@ -30,23 +30,22 @@ public class CreatePautaPreviaReuniaoRequestHandler : IRequestHandler<CreatePaut
         _fileCreator = fileCreator;
     }
 
-    public async Task<ReuniaoDto> Handle(CreatePautaPreviaReuniaoRequest request, CancellationToken cancellationToken)
+    public async Task<ReuniaoDto> Handle(CreateMemoriaPreviaReuniaoRequest request, CancellationToken cancellationToken)
     {
         var reuniao = await _reuniaoRepository.Get(request.Rid);
 
-        var criacaoPautaPreviaLog = new LogReuniao()
+        var criacaoMemoriaPreviaLog = new LogReuniao()
         {
             Data = DateTime.Now,
-            Tipo = TipoLogReuniao.EmissaoPautaPrevia,
-            Diferenca = "Emissão Pauta Prévia",
+            Tipo = TipoLogReuniao.EmissaoMemoriaPrevia,
+            Diferenca = "Emissão Memória Prévia",
             ReuniaoId = $@"Número Reunião {reuniao.NumeroReuniao}",
             UsuarioResp = await _userRepository.Get(request.Uid)
         };
-        await _logReuniaoRepository.Add(criacaoPautaPreviaLog);
-        reuniao.Logs.Add(criacaoPautaPreviaLog);
+        await _logReuniaoRepository.Add(criacaoMemoriaPreviaLog);
+        reuniao.Logs.Add(criacaoMemoriaPreviaLog);
 
-        reuniao.ProposicoesPrevia = reuniao.Proposicoes;
-        reuniao.PautaPreviaFilePath = await _fileCreator.CreatePautaPrevia(reuniao);
+        reuniao.MemoriaPreviaFilePath = await _fileCreator.CreateMemoriaPrevia(reuniao);
 
         var updatedReuniao = await _reuniaoRepository.Update(reuniao);
         return _mapper.Map<ReuniaoDto>(updatedReuniao);
