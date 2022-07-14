@@ -17,7 +17,6 @@
     <Folder Include="Features\AccessControl\Requests\Queries\" />
     <Folder Include="Features\Acoes\Handlers\Commands\" />
     <Folder Include="Features\Acoes\Handlers\Queries\" />
-    <Folder Include="Features\Acoes\Requests\Commands\" />
     <Folder Include="Features\Acoes\Requests\Queries\" />
     <Folder Include="Features\Reunioes\Handlers\Commands\" />
     <Folder Include="Features\Reunioes\Handlers\Queries\" />

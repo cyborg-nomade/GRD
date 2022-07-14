@@ -7,4 +7,5 @@ public enum TipoLogAcao
     InclusaoAndamento,
     Finalizacao,
     Arquivamento,
+    Remocao,
 }

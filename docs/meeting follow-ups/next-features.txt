@@ -1,3 +1,0 @@
-AddAndamentoToAcaoRequest
-ChangeStatusAcaoRequest
-RemoveAcaoRequest
