@@ -1,7 +1,7 @@
-
-CreateRelatorioDeliberativoReuniaoRequest
-- trava a reunião para adição de novas proposições
-- atualiza os status das proposições conforme deliberação - suspensas  saem da pauta
-CreateResolucaoDiretoriaProposicaoReuniaoRequest
-CreateAtaReuniaoRequest
-- arquiva reuniao e todas as proposições não suspensas
+GetAllAcoesListRequest
+GetByReuniaoAcoesListRequest
+GetAcaoDetailRequest
+CreateAcaoRequest
+UpdateAcaoRequest
+ChangeStatusAcaoRequest
+RemoveAcaoRequest
