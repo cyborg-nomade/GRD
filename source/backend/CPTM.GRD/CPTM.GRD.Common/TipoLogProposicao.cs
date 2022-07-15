@@ -8,6 +8,7 @@ public enum TipoLogProposicao
     EnvioAprovacaoDiretoria,
     AprovacaoDiretoria,
     ReprovacaoDiretoria,
+    GrgRetornaParaDiretoria,
     InclusaoPauta,
     RemocaoPauta,
     AprovacaoRd,

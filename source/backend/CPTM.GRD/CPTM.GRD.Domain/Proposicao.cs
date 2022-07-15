@@ -41,7 +41,7 @@ public class Proposicao
     public List<Voto> VotosRd { get; set; } = new List<Voto>();
     public string AjustesRd { get; set; } = string.Empty;
     public string MotivoRetornoGrg { get; set; } = string.Empty;
-    public string MotivoRetornoRd { get; set; } = string.Empty;
+    public string MotivoRetornoDiretoriaResp { get; set; } = string.Empty;
     public string Deliberacao { get; set; } = string.Empty;
     public ICollection<LogProposicao> Logs { get; set; } = new List<LogProposicao>();
     public Resolucao Resolucao { get; set; } = new Resolucao();
@@ -82,6 +82,36 @@ public class Proposicao
         return this;
     }
 
+    public Proposicao SendToDiretoriaResponsavelApproval(User responsavel)
+    {
+        ChangeStatus(ProposicaoStatus.EmAprovacaoDiretoriaResp, TipoLogProposicao.EnvioAprovacaoDiretoria, responsavel);
+        MotivoRetornoDiretoriaResp = string.Empty;
+        MotivoRetornoGrg = string.Empty;
+        return this;
+    }
+
+    public Proposicao DiretoriaResponsavelApproveProposicao(User responsavel)
+    {
+        ChangeStatus(ProposicaoStatus.DisponivelInclusaoPauta, TipoLogProposicao.AprovacaoDiretoria, responsavel);
+        MotivoRetornoDiretoriaResp = string.Empty;
+        MotivoRetornoGrg = string.Empty;
+        return this;
+    }
+
+    public Proposicao DiretoriaResponsavelRepproveProposicao(User responsavel, string motivoRetorno)
+    {
+        ChangeStatus(ProposicaoStatus.ReprovadoDiretoriaResp, TipoLogProposicao.ReprovacaoDiretoria, responsavel);
+        MotivoRetornoDiretoriaResp = motivoRetorno;
+        return this;
+    }
+
+    public Proposicao GrgReturnProposicaoToDiretoria(User responsavel, string motivoRetorno)
+    {
+        ChangeStatus(ProposicaoStatus.EmAprovacaoDiretoriaResp, TipoLogProposicao.GrgRetornaParaDiretoria, responsavel);
+        MotivoRetornoGrg = motivoRetorno;
+        return this;
+    }
+
     public Proposicao AddToReuniao(Reuniao reuniao, User responsavel)
     {
         GenerateProposicaoLog(TipoLogProposicao.InclusaoPauta, responsavel,
@@ -100,6 +130,12 @@ public class Proposicao
         return this;
     }
 
+    public Proposicao AnnotateProposicaoInPrevia(User responsavel, string anotacao)
+    {
+        AnotacoesPrevia = anotacao;
+        return this;
+    }
+
     public Proposicao AddDiretorVote(User diretor, Voto vote, string ajustes)
     {
         GenerateProposicaoLog(LogProposicao.ConvertFromTipoVoto(vote.VotoRd), diretor,
@@ -109,12 +145,12 @@ public class Proposicao
         return this;
     }
 
-    public bool CheckIfParticipanteVoted(Participante participante)
+    private bool CheckIfParticipanteVoted(Participante participante)
     {
         return VotosRd.Any(v => v.Participante == participante);
     }
 
-    public Voto GetParticipanteVoto(Participante participante)
+    private Voto GetParticipanteVoto(Participante participante)
     {
         return VotosRd.SingleOrDefault(v => v.Participante == participante) ??
                throw new InvalidOperationException("Não há votos para este participante");
@@ -194,6 +230,77 @@ public class Proposicao
         }
 
         Status = ProposicaoStatus.SuspensaRd;
+        return this;
+    }
+
+    public Proposicao DiretoriaReturnProposicaoToGrgAfterAjustesRd(User responsavel)
+    {
+        switch (Status)
+        {
+            case ProposicaoStatus.AprovadaRdAguardandoAjustes:
+                ChangeStatus(ProposicaoStatus.AprovadaRdAjustesRealizados, TipoLogProposicao.EnvioAjustesRd,
+                    responsavel);
+                break;
+            case ProposicaoStatus.SuspensaRdAguardandoAjustes:
+                ChangeStatus(ProposicaoStatus.SuspensaRdAjustesRealizados, TipoLogProposicao.EnvioAjustesRd,
+                    responsavel);
+                break;
+            case ProposicaoStatus.EmPreenchimento:
+            case ProposicaoStatus.EmAprovacaoDiretoriaResp:
+            case ProposicaoStatus.ReprovadoDiretoriaResp:
+            case ProposicaoStatus.DisponivelInclusaoPauta:
+            case ProposicaoStatus.RetornadoGrg:
+            case ProposicaoStatus.InclusaEmReuniao:
+            case ProposicaoStatus.EmPautaPrevia:
+            case ProposicaoStatus.EmPautaDefinitiva:
+            case ProposicaoStatus.AprovadaRd:
+            case ProposicaoStatus.ReprovadaRd:
+            case ProposicaoStatus.SuspensaRd:
+            case ProposicaoStatus.AprovadaRdAjustesRealizados:
+            case ProposicaoStatus.SuspensaRdAjustesRealizados:
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
+        return this;
+    }
+
+    public Proposicao GrgApproveProposicaoAjustesRd(User responsavel)
+    {
+        AjustesRd = string.Empty;
+        switch (Status)
+        {
+            case ProposicaoStatus.AprovadaRdAjustesRealizados:
+                ChangeStatus(ProposicaoStatus.AprovadaRd, TipoLogProposicao.AjustesRdok, responsavel);
+                break;
+            case ProposicaoStatus.SuspensaRdAjustesRealizados:
+                ChangeStatus(ProposicaoStatus.DisponivelInclusaoPauta, TipoLogProposicao.AjustesRdok, responsavel);
+                if (Reuniao.NumeroReuniao != 0) RemoveFromReuniao(Reuniao, responsavel);
+                break;
+            case ProposicaoStatus.EmPreenchimento:
+            case ProposicaoStatus.EmAprovacaoDiretoriaResp:
+            case ProposicaoStatus.ReprovadoDiretoriaResp:
+            case ProposicaoStatus.DisponivelInclusaoPauta:
+            case ProposicaoStatus.RetornadoGrg:
+            case ProposicaoStatus.InclusaEmReuniao:
+            case ProposicaoStatus.EmPautaPrevia:
+            case ProposicaoStatus.EmPautaDefinitiva:
+            case ProposicaoStatus.AprovadaRd:
+            case ProposicaoStatus.ReprovadaRd:
+            case ProposicaoStatus.SuspensaRd:
+            case ProposicaoStatus.AprovadaRdAguardandoAjustes:
+            case ProposicaoStatus.SuspensaRdAguardandoAjustes:
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
+        return this;
+    }
+
+    public Proposicao Archive(User responsavel)
+    {
+        GenerateProposicaoLog(TipoLogProposicao.Arquivamento, responsavel, "Arquivamento");
+        Arquivada = true;
         return this;
     }
 }
