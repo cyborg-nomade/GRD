@@ -69,13 +69,13 @@ public class Proposicao
     public string TempoPermProx { get; set; } = string.Empty;
     public int? Seq { get; set; }
 
-    public Proposicao GenerateProposicaoLog(TipoLogProposicao tipoLogProposicao, User responsavel, string diferenca)
+    private Proposicao GenerateProposicaoLog(TipoLogProposicao tipoLogProposicao, User responsavel, string diferenca)
     {
         Logs.Add(new LogProposicao(this, tipoLogProposicao, responsavel, diferenca));
         return this;
     }
 
-    public Proposicao ChangeStatus(ProposicaoStatus newStatus, TipoLogProposicao tipoLogProposicao, User responsavel)
+    private Proposicao ChangeStatus(ProposicaoStatus newStatus, TipoLogProposicao tipoLogProposicao, User responsavel)
     {
         GenerateProposicaoLog(tipoLogProposicao, responsavel, $@"Mudança de status de {Status} para {newStatus}");
         Status = newStatus;
@@ -133,6 +133,12 @@ public class Proposicao
     public Proposicao AnnotateProposicaoInPrevia(User responsavel, string anotacao)
     {
         AnotacoesPrevia = anotacao;
+        return this;
+    }
+
+    public Proposicao AddToPautaDefinitiva(User responsavel)
+    {
+        ChangeStatus(ProposicaoStatus.EmPautaDefinitiva, TipoLogProposicao.Edicao, responsavel);
         return this;
     }
 
@@ -230,6 +236,47 @@ public class Proposicao
         }
 
         Status = ProposicaoStatus.SuspensaRd;
+        return this;
+    }
+
+    public Proposicao OnReuniaoRealizada(Reuniao reuniao, User responsavel)
+    {
+        if (AjustesRd != string.Empty)
+        {
+            if (Status == ProposicaoStatus.AprovadaRd)
+            {
+                ChangeStatus(ProposicaoStatus.AprovadaRdAguardandoAjustes,
+                    TipoLogProposicao.SolicitaAjustesRd, responsavel);
+            }
+
+            if (Status == ProposicaoStatus.SuspensaRd)
+            {
+                ChangeStatus(ProposicaoStatus.SuspensaRdAguardandoAjustes,
+                    TipoLogProposicao.SolicitaAjustesRd, responsavel);
+            }
+        }
+        else if (Status == ProposicaoStatus.SuspensaRd)
+        {
+            RemoveFromReuniao(reuniao, responsavel);
+            reuniao.RemoveProposicao(this, responsavel);
+        }
+
+        return this;
+    }
+
+    public Proposicao OnEmitResolucaoDiretoria(User responsavel, string resolucaoDiretoriaFilePath)
+    {
+        if (Status is ProposicaoStatus.AprovadaRd or ProposicaoStatus.ReprovadaRd or ProposicaoStatus.SuspensaRd)
+        {
+            GenerateProposicaoLog(TipoLogProposicao.EmissaoResolucaoDiretoria, responsavel,
+                "Emissão Resolução Diretoria");
+            ResolucaoDiretoriaFilePath = resolucaoDiretoriaFilePath;
+        }
+        else
+        {
+            throw new Exception("Proposição em status incorreto");
+        }
+
         return this;
     }
 

@@ -6,8 +6,6 @@ namespace CPTM.GRD.Application.DTOs.Main.Proposicao;
 
 public class CreateProposicaoDto : IProposicaoDto
 {
-    public ProposicaoStatus Status { get; set; }
-    public bool Arquivada { get; set; }
     public UserDto Criador { get; set; } = new UserDto();
     public GroupDto AreaSolicitante { get; set; } = new GroupDto();
     public string Titulo { get; set; } = string.Empty;

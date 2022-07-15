@@ -6,8 +6,6 @@ namespace CPTM.GRD.Application.DTOs.Main.Proposicao;
 
 public interface IProposicaoDto
 {
-    public ProposicaoStatus Status { get; set; }
-    public bool Arquivada { get; set; }
     public UserDto Criador { get; set; }
     public GroupDto AreaSolicitante { get; set; }
     public string Titulo { get; set; }

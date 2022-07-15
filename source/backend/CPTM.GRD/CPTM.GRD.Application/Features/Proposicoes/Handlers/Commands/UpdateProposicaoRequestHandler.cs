@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
-using CPTM.GRD.Application.Contracts.Persistence.Logging;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Application.Util;
@@ -17,8 +16,8 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
 
-    public UpdateProposicaoRequestHandler(IProposicaoRepository proposicaoRepository,
-        ILogProposicaoRepository logProposicaoRepository, IUserRepository userRepository, IMapper mapper)
+    public UpdateProposicaoRequestHandler(IProposicaoRepository proposicaoRepository, IUserRepository userRepository,
+        IMapper mapper)
     {
         _proposicaoRepository = proposicaoRepository;
         _userRepository = userRepository;

@@ -30,7 +30,7 @@ public class Reuniao
     public string RelatorioDeliberativoFilePath { get; set; } = string.Empty;
     public string AtaFilePath { get; set; } = string.Empty;
 
-    public Reuniao GenerateReuniaoLog(TipoLogReuniao tipoLogReuniao, User responsavel, string diferenca)
+    private Reuniao GenerateReuniaoLog(TipoLogReuniao tipoLogReuniao, User responsavel, string diferenca)
     {
         Logs.Add(new LogReuniao(this, tipoLogReuniao, responsavel, diferenca));
         return this;
@@ -61,80 +61,77 @@ public class Reuniao
         return this;
     }
 
-    public Reuniao ChangeStatus(ReuniaoStatus newStatus, TipoLogReuniao tipoLogReuniao, User responsavel)
+    private Reuniao ChangeStatus(ReuniaoStatus newStatus, TipoLogReuniao tipoLogReuniao, User responsavel)
     {
         GenerateReuniaoLog(tipoLogReuniao, responsavel, $@"Mudança de status de {Status} para {newStatus}");
         Status = newStatus;
         return this;
     }
 
-    public Reuniao OnEmitPautaPrevia(User responsavel)
+    public Reuniao OnEmitPautaPrevia(User responsavel, string pautaPreviaFilePath)
     {
         GenerateReuniaoLog(TipoLogReuniao.EmissaoPautaPrevia, responsavel, "Emissão Pauta Prévia");
         ProposicoesPrevia = Proposicoes;
+        PautaPreviaFilePath = pautaPreviaFilePath;
         return this;
     }
 
-    public Reuniao OnEmitPautaDefinitiva(User responsavel)
+    public Reuniao OnEmitMemoriaPrevia(User responsavel, string memoriaPreviaFilePath)
+    {
+        GenerateReuniaoLog(TipoLogReuniao.EmissaoMemoriaPrevia, responsavel, "Emissão Memória Prévia");
+        MemoriaPreviaFilePath = memoriaPreviaFilePath;
+        return this;
+    }
+
+    public Reuniao OnEmitPautaDefinitiva(User responsavel, string pautaDefinitivaFilePath)
     {
         GenerateReuniaoLog(TipoLogReuniao.EmissaoPautaDefinitiva, responsavel, "Emissão Pauta Definitiva");
+        PautaDefinitivaFilePath = pautaDefinitivaFilePath;
         foreach (var proposicao in Proposicoes)
         {
-            proposicao.ChangeStatus(ProposicaoStatus.EmPautaDefinitiva, TipoLogProposicao.Edicao, responsavel);
+            proposicao.AddToPautaDefinitiva(responsavel);
         }
 
         return this;
     }
 
-    public Reuniao OnEmitRelatorioDeliberativo(User responsavel)
+    public Reuniao OnEmitRelatorioDeliberativo(User responsavel, string relatorioDefinitivoFilePath)
     {
         GenerateReuniaoLog(TipoLogReuniao.EmissaoRelatorioDeliberativo, responsavel, "Emissão Relatório Deliberativo");
         ChangeStatus(ReuniaoStatus.Realizada, TipoLogReuniao.RealizacaoRd, responsavel);
-
+        RelatorioDeliberativoFilePath = relatorioDefinitivoFilePath;
         foreach (var proposicao in Proposicoes.ToList())
         {
-            if (proposicao.AjustesRd != string.Empty)
-            {
-                if (proposicao.Status == ProposicaoStatus.AprovadaRd)
-                {
-                    proposicao.ChangeStatus(ProposicaoStatus.AprovadaRdAguardandoAjustes,
-                        TipoLogProposicao.EnvioAjustesRd, responsavel);
-                }
-
-                if (proposicao.Status == ProposicaoStatus.SuspensaRd)
-                {
-                    proposicao.ChangeStatus(ProposicaoStatus.SuspensaRdAguardandoAjustes,
-                        TipoLogProposicao.EnvioAjustesRd, responsavel);
-                }
-            }
-            else if (proposicao.Status == ProposicaoStatus.SuspensaRd)
-            {
-                RemoveProposicao(proposicao, responsavel);
-            }
+            proposicao.OnReuniaoRealizada(this, responsavel);
         }
 
         return this;
     }
 
-    public Proposicao OnEmitProposicaoResolucaoDiretoria(int pid, User responsavel)
+    public Proposicao OnEmitProposicaoResolucaoDiretoria(int pid, User responsavel, string resolucaoDiretoriaFilePath)
     {
         var proposicao = Proposicoes.SingleOrDefault(p => p.Id == pid);
 
         if (proposicao == null) throw new Exception("Essa Proposição não existe na Reunião indicada");
 
-        proposicao.GenerateProposicaoLog(TipoLogProposicao.EmissaoResolucaoDiretoria, responsavel,
-            "Emissão Resolução Diretoria");
+        proposicao.OnEmitResolucaoDiretoria(responsavel, resolucaoDiretoriaFilePath);
 
         return proposicao;
     }
 
-    public Reuniao Archive(TipoLogReuniao tipoLogReuniao, User responsavel)
+    public Reuniao OnEmitAta(User responsavel, string ataFilePath)
     {
-        ChangeStatus(ReuniaoStatus.Arquivada, tipoLogReuniao, responsavel);
+        AtaFilePath = ataFilePath;
+        Archive(responsavel);
+        return this;
+    }
+
+    public Reuniao Archive(User responsavel)
+    {
+        ChangeStatus(ReuniaoStatus.Arquivada, TipoLogReuniao.Arquivamento, responsavel);
         foreach (var proposicao in Proposicoes)
         {
-            proposicao.GenerateProposicaoLog(TipoLogProposicao.Arquivamento, responsavel, "Proposição Arquivada");
-            proposicao.Arquivada = true;
+            proposicao.Archive(responsavel);
         }
 
         return this;
