@@ -3,7 +3,7 @@ using CPTM.GRD.Common;
 
 namespace CPTM.GRD.Application.DTOs.Main.Acao;
 
-public class CreateAcaoDto
+public class CreateAcaoDto : IAcaoDto
 {
     public TipoAcao Tipo { get; set; }
     public GroupDto DiretoriaRes { get; set; } = new GroupDto();
@@ -20,5 +20,4 @@ public class CreateAcaoDto
     public DateOnly PrazoFinal { get; set; }
     public int DiasParaVencimento { get; set; }
     public TipoAlertaVencimento AlertaVencimento { get; set; }
-    public ICollection<AndamentoDto> Andamentos { get; set; } = new List<AndamentoDto>();
 }

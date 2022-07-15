@@ -4,7 +4,7 @@ using CPTM.GRD.Common;
 
 namespace CPTM.GRD.Application.DTOs.Main.Proposicao;
 
-public class ProposicaoDto
+public class ProposicaoDto : IProposicaoDto
 {
     public int Id { get; set; }
     public int IdPrd { get; set; }
@@ -61,10 +61,5 @@ public class ProposicaoDto
     public string PcaFilePath { get; set; } = string.Empty;
     public ICollection<string> OutrosFilePath { get; set; } = new HashSet<string>();
     public string ResolucaoDiretoriaFilePath { get; set; } = string.Empty;
-    public string AreaAtual { get; set; } = string.Empty;
-    public string DescricaoFluxo { get; set; } = string.Empty;
-    public string TempoPrevPerm { get; set; } = string.Empty;
-    public string DescProxPasso { get; set; } = string.Empty;
-    public string TempoPermProx { get; set; } = string.Empty;
     public int? Seq { get; set; }
 }

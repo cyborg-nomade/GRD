@@ -4,7 +4,7 @@ using CPTM.GRD.Common;
 
 namespace CPTM.GRD.Application.DTOs.Main.Reuniao;
 
-public class ReuniaoDto
+public class ReuniaoDto : IReuniaoDto
 {
     public int Id { get; set; }
     public int NumeroReuniao { get; set; }

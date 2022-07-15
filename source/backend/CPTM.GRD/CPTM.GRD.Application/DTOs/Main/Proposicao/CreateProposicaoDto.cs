@@ -4,7 +4,7 @@ using CPTM.GRD.Common;
 
 namespace CPTM.GRD.Application.DTOs.Main.Proposicao;
 
-public class CreateProposicaoDto
+public class CreateProposicaoDto : IProposicaoDto
 {
     public ProposicaoStatus Status { get; set; }
     public bool Arquivada { get; set; }
@@ -56,10 +56,5 @@ public class CreateProposicaoDto
     public string CronogramaFisFinFilePath { get; set; } = string.Empty;
     public string PcaFilePath { get; set; } = string.Empty;
     public ICollection<string> OutrosFilePath { get; set; } = new HashSet<string>();
-    public string AreaAtual { get; set; } = string.Empty;
-    public string DescricaoFluxo { get; set; } = string.Empty;
-    public string TempoPrevPerm { get; set; } = string.Empty;
-    public string DescProxPasso { get; set; } = string.Empty;
-    public string TempoPermProx { get; set; } = string.Empty;
     public int? Seq { get; set; }
 }

@@ -11,6 +11,7 @@
     <Folder Include="DTOs\AccessControl\" />
     <Folder Include="DTOs\Logging\" />
     <Folder Include="DTOs\Main\Mixed\" />
+    <Folder Include="DTOs\Main\Proposicao\Validators\" />
     <Folder Include="Features\AccessControl\Handlers\Commands\" />
     <Folder Include="Features\AccessControl\Requests\Commands\" />
     <Folder Include="Features\AccessControl\Requests\Queries\" />
@@ -26,6 +27,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="CompareNETObjects" Version="4.77.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.1.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
   </ItemGroup>
 

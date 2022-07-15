@@ -26,14 +26,7 @@ public class DeleteAcaoRequestHandler : IRequestHandler<DeleteAcaoRequest, Unit>
     {
         var acao = await _acaoRepository.Get(request.Aid);
 
-        var removeLog = new LogAcao()
-        {
-            Data = DateTime.Now,
-            Tipo = TipoLogAcao.Remocao,
-            Diferenca = "Remoção",
-            AcaoId = $@"WAS ID Ação {acao.Id}",
-            UsuarioResp = await _userRepository.Get(request.Uid),
-        };
+        var removeLog = new LogAcao(acao, TipoLogAcao.Remocao, "Remoção");
         await _logAcaoRepository.Add(removeLog);
 
         await _acaoRepository.Delete(request.Aid);

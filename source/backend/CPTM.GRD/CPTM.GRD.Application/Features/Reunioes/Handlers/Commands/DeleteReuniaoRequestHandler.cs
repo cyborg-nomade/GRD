@@ -26,15 +26,9 @@ public class DeleteReuniaoRequestHandler : IRequestHandler<DeleteReuniaoRequest>
     public async Task<Unit> Handle(DeleteReuniaoRequest request, CancellationToken cancellationToken)
     {
         var reuniao = await _reuniaoRepository.Get(request.Rid);
+        var responsavel = await _userRepository.Get(request.Uid);
 
-        var removeLog = new LogReuniao()
-        {
-            Data = DateTime.Now,
-            Tipo = TipoLogReuniao.Remocao,
-            Diferenca = "Remoção",
-            ReuniaoId = $@"WAS Número Reunião {reuniao.NumeroReuniao}",
-            UsuarioResp = await _userRepository.Get(request.Uid),
-        };
+        var removeLog = new LogReuniao(reuniao, TipoLogReuniao.Remocao, responsavel, "Remoção");
         await _logReuniaoRepository.Add(removeLog);
 
         await _reuniaoRepository.Delete(request.Rid);

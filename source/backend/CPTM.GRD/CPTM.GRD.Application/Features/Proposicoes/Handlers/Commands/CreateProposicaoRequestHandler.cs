@@ -2,6 +2,7 @@
 using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
+using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain;
@@ -25,6 +26,14 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
 
     public async Task<ProposicaoDto> Handle(CreateProposicaoRequest request, CancellationToken cancellationToken)
     {
+        var validator = new CreateProposicaoDtoValidator();
+        var validationResult = await validator.ValidateAsync(request.CreateProposicaoDto, cancellationToken);
+
+        if (!validationResult.IsValid)
+        {
+            throw new Exception("Objeto inválido");
+        }
+
         var proposicao = _mapper.Map<Proposicao>(request.CreateProposicaoDto);
         proposicao.IdPrd = await _sequenceControl.GetNextIdPrd();
 
