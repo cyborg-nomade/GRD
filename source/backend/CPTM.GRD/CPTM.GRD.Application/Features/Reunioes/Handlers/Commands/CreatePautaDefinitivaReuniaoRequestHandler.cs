@@ -32,9 +32,7 @@ public class
         var reuniao = await _reuniaoRepository.Get(request.Rid);
         var responsavel = await _userRepository.Get(request.Uid);
 
-        reuniao.OnEmitPautaDefinitiva(responsavel);
-
-        reuniao.PautaDefinitivaFilePath = await _fileCreator.CreatePautaDefinitiva(reuniao);
+        reuniao.OnEmitPautaDefinitiva(responsavel, await _fileCreator.CreatePautaDefinitiva(reuniao));
 
         var updatedReuniao = await _reuniaoRepository.Update(reuniao);
         return _mapper.Map<ReuniaoDto>(updatedReuniao);

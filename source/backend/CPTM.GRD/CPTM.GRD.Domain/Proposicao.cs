@@ -82,6 +82,18 @@ public class Proposicao
         return this;
     }
 
+    public Proposicao OnSaveProposicao()
+    {
+        GenerateProposicaoLog(TipoLogProposicao.Criacao, Criador, "Salvamento inicial");
+        return this;
+    }
+
+    public Proposicao OnUpdate(User responsavel, string diferenca)
+    {
+        GenerateProposicaoLog(TipoLogProposicao.Edicao, responsavel, diferenca);
+        return this;
+    }
+
     public Proposicao SendToDiretoriaResponsavelApproval(User responsavel)
     {
         ChangeStatus(ProposicaoStatus.EmAprovacaoDiretoriaResp, TipoLogProposicao.EnvioAprovacaoDiretoria, responsavel);
@@ -126,7 +138,7 @@ public class Proposicao
         GenerateProposicaoLog(TipoLogProposicao.RemocaoPauta, responsavel,
             $@"Remoção da pauta da RD número {reuniao.NumeroReuniao}");
         Reuniao = new Reuniao();
-        Status = ProposicaoStatus.DisponivelInclusaoPauta;
+        ChangeStatus(ProposicaoStatus.DisponivelInclusaoPauta, TipoLogProposicao.RemocaoPauta, responsavel);
         return this;
     }
 

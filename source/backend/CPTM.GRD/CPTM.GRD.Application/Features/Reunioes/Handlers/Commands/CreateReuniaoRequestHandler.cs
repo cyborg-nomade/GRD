@@ -35,7 +35,7 @@ public class CreateReuniaoRequestHandler : IRequestHandler<CreateReuniaoRequest,
 
         var responsavel = await _userRepository.Get(request.Uid);
 
-        reuniao.GenerateReuniaoLog(TipoLogReuniao.Criacao, responsavel, "Salvamento inicial");
+        reuniao.OnSave(responsavel);
 
         var addedReuniao = await _reuniaoRepository.Add(reuniao);
 

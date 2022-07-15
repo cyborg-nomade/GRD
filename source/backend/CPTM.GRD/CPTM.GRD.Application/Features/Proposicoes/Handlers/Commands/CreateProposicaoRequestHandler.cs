@@ -37,7 +37,7 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
         var proposicao = _mapper.Map<Proposicao>(request.CreateProposicaoDto);
         proposicao.IdPrd = await _sequenceControl.GetNextIdPrd();
 
-        proposicao.GenerateProposicaoLog(TipoLogProposicao.Criacao, proposicao.Criador, "Salvamento inicial");
+        proposicao.OnSaveProposicao();
 
         var addedProposicao = await _proposicaoRepository.Add(proposicao);
 

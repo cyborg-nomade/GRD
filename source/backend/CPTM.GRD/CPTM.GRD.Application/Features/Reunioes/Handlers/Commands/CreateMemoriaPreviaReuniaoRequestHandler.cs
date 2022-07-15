@@ -31,9 +31,7 @@ public class CreateMemoriaPreviaReuniaoRequestHandler : IRequestHandler<CreateMe
         var reuniao = await _reuniaoRepository.Get(request.Rid);
         var responsavel = await _userRepository.Get(request.Uid);
 
-        reuniao.GenerateReuniaoLog(TipoLogReuniao.EmissaoMemoriaPrevia, responsavel, "Emissão Memória Prévia");
-
-        reuniao.MemoriaPreviaFilePath = await _fileCreator.CreateMemoriaPrevia(reuniao);
+        reuniao.OnEmitMemoriaPrevia(responsavel, await _fileCreator.CreateMemoriaPrevia(reuniao));
 
         var updatedReuniao = await _reuniaoRepository.Update(reuniao);
         return _mapper.Map<ReuniaoDto>(updatedReuniao);

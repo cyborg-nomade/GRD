@@ -30,7 +30,7 @@ public class UpdateReuniaoRequestHandler : IRequestHandler<UpdateReuniaoRequest,
         var savedReuniao = await _reuniaoRepository.Get(request.ReuniaoDto.Id);
         var responsavel = await _userRepository.Get(request.Uid);
 
-        savedReuniao.GenerateReuniaoLog(TipoLogReuniao.Edicao, responsavel, Differentiator.GetDifferenceString<Reuniao>(
+        savedReuniao.OnUpdate(responsavel, Differentiator.GetDifferenceString<Reuniao>(
             savedReuniao,
             _mapper.Map<Reuniao>(request.ReuniaoDto)));
 

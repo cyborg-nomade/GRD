@@ -10,7 +10,8 @@ using MediatR;
 namespace CPTM.GRD.Application.Features.Reunioes.Handlers.Commands;
 
 public class
-    RemoveProposicaoFromReuniaoRequestHandler : IRequestHandler<RemoveProposicaoFromReuniaoRequest, AddToPautaDto>
+    RemoveProposicaoFromReuniaoRequestHandler : IRequestHandler<RemoveProposicaoFromReuniaoRequest,
+        AddProposicaoToReuniaoDto>
 {
     private readonly IReuniaoRepository _reuniaoRepository;
     private readonly IProposicaoRepository _proposicaoRepository;
@@ -26,7 +27,7 @@ public class
         _mapper = mapper;
     }
 
-    public async Task<AddToPautaDto> Handle(RemoveProposicaoFromReuniaoRequest request,
+    public async Task<AddProposicaoToReuniaoDto> Handle(RemoveProposicaoFromReuniaoRequest request,
         CancellationToken cancellationToken)
     {
         var reuniao = await _reuniaoRepository.Get(request.Rid);
@@ -38,7 +39,7 @@ public class
         var updatedProposicao = await _proposicaoRepository.Update(proposicao);
         var updatedReuniao = await _reuniaoRepository.Update(reuniao);
 
-        return new AddToPautaDto()
+        return new AddProposicaoToReuniaoDto()
         {
             ProposicaoDto = _mapper.Map<ProposicaoDto>(updatedProposicao),
             ReuniaoDto = _mapper.Map<ReuniaoDto>(updatedReuniao)

@@ -9,7 +9,8 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Reunioes.Handlers.Commands;
 
-public class AddProposicaoToReuniaoRequestHandler : IRequestHandler<AddProposicaoToReuniaoRequest, AddToPautaDto>
+public class
+    AddProposicaoToReuniaoRequestHandler : IRequestHandler<AddProposicaoToReuniaoRequest, AddProposicaoToReuniaoDto>
 {
     private readonly IProposicaoRepository _proposicaoRepository;
     private readonly IReuniaoRepository _reuniaoRepository;
@@ -25,7 +26,8 @@ public class AddProposicaoToReuniaoRequestHandler : IRequestHandler<AddProposica
         _mapper = mapper;
     }
 
-    public async Task<AddToPautaDto> Handle(AddProposicaoToReuniaoRequest request, CancellationToken cancellationToken)
+    public async Task<AddProposicaoToReuniaoDto> Handle(AddProposicaoToReuniaoRequest request,
+        CancellationToken cancellationToken)
     {
         var proposicao = await _proposicaoRepository.Get(request.Pid);
         var reuniao = await _reuniaoRepository.Get(request.Rid);
@@ -36,7 +38,7 @@ public class AddProposicaoToReuniaoRequestHandler : IRequestHandler<AddProposica
         var updatedProposicao = await _proposicaoRepository.Update(proposicao);
         var updatedReuniao = await _reuniaoRepository.Update(reuniao);
 
-        return new AddToPautaDto()
+        return new AddProposicaoToReuniaoDto()
         {
             ProposicaoDto = _mapper.Map<ProposicaoDto>(updatedProposicao),
             ReuniaoDto = _mapper.Map<ReuniaoDto>(updatedReuniao)

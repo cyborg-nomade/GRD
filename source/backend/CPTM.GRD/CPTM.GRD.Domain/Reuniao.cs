@@ -36,10 +36,35 @@ public class Reuniao
         return this;
     }
 
-    public Reuniao AddAcao(Acao acao)
+    public Reuniao OnSave(User responsavel)
     {
-        acao.GenerateAcaoLog(TipoLogAcao.Criacao, "Salvamento inicial");
+        GenerateReuniaoLog(TipoLogReuniao.Criacao, responsavel, "Salvamento inicial");
+        return this;
+    }
+
+    public Reuniao OnUpdate(User responsavel, string diferenca)
+    {
+        GenerateReuniaoLog(TipoLogReuniao.Edicao, responsavel, diferenca);
+        return this;
+    }
+
+    public Reuniao CreateAcao(Acao acao, User responsavel)
+    {
+        acao.AddToReuniao(this, responsavel);
         Acoes.Add(acao);
+        return this;
+    }
+
+    internal Reuniao FollowUpAcao(Acao acao)
+    {
+        Acoes.Add(acao);
+        return this;
+    }
+
+    public Reuniao RemoveAcao(Acao acao, User responsavel)
+    {
+        acao.RemoveFromReuniao(this, responsavel);
+        Acoes.Remove(acao);
         return this;
     }
 
@@ -126,7 +151,7 @@ public class Reuniao
         return this;
     }
 
-    public Reuniao Archive(User responsavel)
+    internal Reuniao Archive(User responsavel)
     {
         ChangeStatus(ReuniaoStatus.Arquivada, TipoLogReuniao.Arquivamento, responsavel);
         foreach (var proposicao in Proposicoes)

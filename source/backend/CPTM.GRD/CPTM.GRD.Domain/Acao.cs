@@ -23,11 +23,41 @@ public class Acao
     public int DiasParaVencimento { get; set; }
     public TipoAlertaVencimento AlertaVencimento { get; set; }
     public ICollection<Andamento> Andamentos { get; set; } = new List<Andamento>();
+    public ICollection<Reuniao> Reunioes { get; set; } = new List<Reuniao>();
     public ICollection<LogAcao> Logs { get; set; } = new List<LogAcao>();
 
-    public Acao GenerateAcaoLog(TipoLogAcao tipoLogAcao, string diferenca)
+    private Acao GenerateAcaoLog(TipoLogAcao tipoLogAcao, string diferenca)
     {
         Logs.Add(new LogAcao(this, tipoLogAcao, diferenca));
+        return this;
+    }
+
+    private Acao ChangeStatus(AcaoStatus newStatus, TipoLogAcao tipoLogAcao, User responsavel)
+    {
+        GenerateAcaoLog(tipoLogAcao, $@"Mudança de status de {Status} para {newStatus}");
+        Status = newStatus;
+        return this;
+    }
+
+    internal Acao AddToReuniao(Reuniao reuniao, User responsavel)
+    {
+        GenerateAcaoLog(TipoLogAcao.Criacao, "Salvamento inicial");
+        Reunioes.Add(reuniao);
+        ChangeStatus(AcaoStatus.EmAndamento, TipoLogAcao.Criacao, responsavel);
+        return this;
+    }
+
+    internal Acao RemoveFromReuniao(Reuniao reuniao, User responsavel)
+    {
+        GenerateAcaoLog(TipoLogAcao.RemocaoDeReuniao, $@"Remoção da pauta da RD número {reuniao.NumeroReuniao}");
+        Reunioes.Remove(reuniao);
+        ChangeStatus(AcaoStatus.EmAndamento, TipoLogAcao.RemocaoDeReuniao, responsavel);
+        return this;
+    }
+
+    public Acao OnUpdate(string diferenca)
+    {
+        GenerateAcaoLog(TipoLogAcao.Edicao, diferenca);
         return this;
     }
 
@@ -35,14 +65,20 @@ public class Acao
     {
         GenerateAcaoLog(TipoLogAcao.InclusaoAndamento, $@"Novo Andamento: {newAndamento.Descricao}");
         Andamentos.Add(newAndamento);
-        Status = AcaoStatus.EmAcompanhamento;
         return this;
     }
 
-    public Acao ChangeStatus(AcaoStatus newStatus, TipoLogAcao tipoLogAcao)
+    public Acao FollowUp(Reuniao reuniao, User responsavel)
     {
-        GenerateAcaoLog(tipoLogAcao, $@"Mudança de status de {Status} para {newStatus}");
-        Status = newStatus;
+        ChangeStatus(AcaoStatus.EmAcompanhamento, TipoLogAcao.Edicao, responsavel);
+        reuniao.FollowUpAcao(this);
+        Reunioes.Add(reuniao);
+        return this;
+    }
+
+    public Acao Finish(AcaoStatus status, User responsavel)
+    {
+        ChangeStatus(status, TipoLogAcao.Finalizacao, responsavel);
         return this;
     }
 }

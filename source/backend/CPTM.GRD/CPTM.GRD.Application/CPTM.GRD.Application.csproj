@@ -11,7 +11,6 @@
     <Folder Include="DTOs\AccessControl\" />
     <Folder Include="DTOs\Logging\" />
     <Folder Include="DTOs\Main\Acao\Validators\" />
-    <Folder Include="DTOs\Main\Mixed\" />
     <Folder Include="DTOs\Main\Proposicao\Validators\" />
     <Folder Include="DTOs\Main\Reuniao\Validators\" />
     <Folder Include="Features\AccessControl\Handlers\Commands\" />

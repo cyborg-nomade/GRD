@@ -7,13 +7,15 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Proposicoes.Handlers.Commands;
 
-public class ChangeStatusProposicaoRequestHandler : IRequestHandler<ChangeStatusProposicaoRequest, ProposicaoDto>
+public class
+    DiretoriaReturnToGrgAfterAjustesRdProposicaoRequestHandler : IRequestHandler<
+        DiretoriaReturnToGrgAfterAjustesRdProposicaoRequest, ProposicaoDto>
 {
     private readonly IProposicaoRepository _proposicaoRepository;
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
 
-    public ChangeStatusProposicaoRequestHandler(IProposicaoRepository proposicaoRepository,
+    public DiretoriaReturnToGrgAfterAjustesRdProposicaoRequestHandler(IProposicaoRepository proposicaoRepository,
         IUserRepository userRepository, IMapper mapper)
     {
         _proposicaoRepository = proposicaoRepository;
@@ -21,15 +23,17 @@ public class ChangeStatusProposicaoRequestHandler : IRequestHandler<ChangeStatus
         _mapper = mapper;
     }
 
-
-    public async Task<ProposicaoDto> Handle(ChangeStatusProposicaoRequest request, CancellationToken cancellationToken)
+    public async Task<ProposicaoDto> Handle(DiretoriaReturnToGrgAfterAjustesRdProposicaoRequest request,
+        CancellationToken cancellationToken)
     {
-        var savedProposicao = await _proposicaoRepository.Get(request.Pid);
+        var proposicao = await _proposicaoRepository.Get(request.Pid);
         var responsavel = await _userRepository.Get(request.Uid);
 
-        savedProposicao.ChangeStatus(request.NewStatus, request.TipoLogProposicao, responsavel);
+        proposicao.DiretoriaReturnProposicaoToGrgAfterAjustesRd(responsavel);
 
-        var updatedProposicao = await _proposicaoRepository.Update(savedProposicao);
+        var updatedProposicao = await _proposicaoRepository.Update(proposicao);
+
         return _mapper.Map<ProposicaoDto>(updatedProposicao);
+        ;
     }
 }

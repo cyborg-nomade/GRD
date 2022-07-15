@@ -7,4 +7,5 @@ public class CreateAcaoRequest : IRequest<AcaoDto>
 {
     public CreateAcaoDto CreateAcaoDto { get; set; } = new CreateAcaoDto();
     public int Rid { get; set; }
+    public int Uid { get; set; }
 }

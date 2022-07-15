@@ -31,9 +31,7 @@ public class CreateAtaReuniaoRequestHandler : IRequestHandler<CreateAtaReuniaoRe
         var reuniao = await _reuniaoRepository.Get(request.Rid);
         var responsavel = await _userRepository.Get(request.Uid);
 
-        reuniao.AtaFilePath = await _fileCreator.CreateAta(reuniao);
-
-        reuniao.Archive(TipoLogReuniao.EmissaoAta, responsavel);
+        reuniao.OnEmitAta(responsavel, await _fileCreator.CreateAta(reuniao));
 
         var updatedReuniao = await _reuniaoRepository.Update(reuniao);
         return _mapper.Map<ReuniaoDto>(updatedReuniao);

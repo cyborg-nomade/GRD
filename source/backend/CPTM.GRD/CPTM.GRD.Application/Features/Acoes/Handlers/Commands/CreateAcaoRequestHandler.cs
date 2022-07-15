@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Persistence;
+using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.Features.Acoes.Requests.Commands;
 using CPTM.GRD.Domain;
@@ -10,12 +11,14 @@ namespace CPTM.GRD.Application.Features.Acoes.Handlers.Commands;
 public class CreateAcaoRequestHandler : IRequestHandler<CreateAcaoRequest, AcaoDto>
 {
     private readonly IReuniaoRepository _reuniaoRepository;
+    private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
 
-    public CreateAcaoRequestHandler(IReuniaoRepository reuniaoRepository,
+    public CreateAcaoRequestHandler(IReuniaoRepository reuniaoRepository, IUserRepository userRepository,
         IMapper mapper)
     {
         _reuniaoRepository = reuniaoRepository;
+        _userRepository = userRepository;
         _mapper = mapper;
     }
 
@@ -23,8 +26,9 @@ public class CreateAcaoRequestHandler : IRequestHandler<CreateAcaoRequest, AcaoD
     {
         var acao = _mapper.Map<Acao>(request.CreateAcaoDto);
         var reuniao = await _reuniaoRepository.Get(request.Rid);
+        var responsavel = await _userRepository.Get(request.Uid);
 
-        reuniao.AddAcao(acao);
+        reuniao.CreateAcao(acao, responsavel);
 
         await _reuniaoRepository.Update(reuniao);
 

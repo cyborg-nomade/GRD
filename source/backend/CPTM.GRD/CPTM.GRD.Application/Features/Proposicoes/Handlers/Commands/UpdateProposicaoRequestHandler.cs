@@ -29,7 +29,7 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
         var savedProposicao = await _proposicaoRepository.Get(request.ProposicaoDto.Id);
         var responsavel = await _userRepository.Get(request.Uid);
 
-        savedProposicao.GenerateProposicaoLog(TipoLogProposicao.Edicao, responsavel,
+        savedProposicao.OnUpdate(responsavel,
             Differentiator.GetDifferenceString<Proposicao>(savedProposicao,
                 _mapper.Map<Proposicao>(request.ProposicaoDto)));
 

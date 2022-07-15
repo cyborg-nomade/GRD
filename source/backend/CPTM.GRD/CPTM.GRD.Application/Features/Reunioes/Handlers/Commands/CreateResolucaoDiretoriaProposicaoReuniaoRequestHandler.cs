@@ -34,10 +34,10 @@ public class
     {
         var reuniao = await _reuniaoRepository.Get(request.Rid);
         var responsavel = await _userRepository.Get(request.Uid);
+        var proposicao = await _proposicaoRepository.Get(request.Pid);
 
-        var proposicao = reuniao.OnEmitProposicaoResolucaoDiretoria(request.Pid, responsavel);
-
-        proposicao.ResolucaoDiretoriaFilePath = await _fileCreator.CreateResolucaoDiretoria(reuniao, proposicao);
+        reuniao.OnEmitProposicaoResolucaoDiretoria(request.Pid, responsavel,
+            await _fileCreator.CreateResolucaoDiretoria(reuniao, proposicao));
 
         var updatedProposicao = await _proposicaoRepository.Update(proposicao);
         return _mapper.Map<ProposicaoDto>(updatedProposicao);
