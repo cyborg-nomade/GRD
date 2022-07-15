@@ -32,21 +32,13 @@ public class Reuniao
 
     public Reuniao GenerateReuniaoLog(TipoLogReuniao tipoLogReuniao, User responsavel, string diferenca)
     {
-        var newLog = new LogReuniao()
-        {
-            Data = DateTime.Now,
-            Tipo = tipoLogReuniao,
-            ReuniaoId = $@"Número Reunião: {NumeroReuniao}",
-            Diferenca = diferenca,
-            UsuarioResp = responsavel,
-        };
-        Logs.Add(newLog);
+        Logs.Add(new LogReuniao(this, tipoLogReuniao, responsavel, diferenca));
         return this;
     }
 
     public Reuniao AddAcao(Acao acao)
     {
-        acao.GenerateLogAcao(TipoLogAcao.Criacao, "Salvamento inicial");
+        acao.GenerateAcaoLog(TipoLogAcao.Criacao, "Salvamento inicial");
         Acoes.Add(acao);
         return this;
     }
@@ -76,14 +68,14 @@ public class Reuniao
         return this;
     }
 
-    public Reuniao PautaPrevia(User responsavel)
+    public Reuniao OnEmitPautaPrevia(User responsavel)
     {
         GenerateReuniaoLog(TipoLogReuniao.EmissaoPautaPrevia, responsavel, "Emissão Pauta Prévia");
         ProposicoesPrevia = Proposicoes;
         return this;
     }
 
-    public Reuniao PautaDefinitiva(User responsavel)
+    public Reuniao OnEmitPautaDefinitiva(User responsavel)
     {
         GenerateReuniaoLog(TipoLogReuniao.EmissaoPautaDefinitiva, responsavel, "Emissão Pauta Definitiva");
         foreach (var proposicao in Proposicoes)
@@ -94,7 +86,7 @@ public class Reuniao
         return this;
     }
 
-    public Reuniao RelatorioDeliberativo(User responsavel)
+    public Reuniao OnEmitRelatorioDeliberativo(User responsavel)
     {
         GenerateReuniaoLog(TipoLogReuniao.EmissaoRelatorioDeliberativo, responsavel, "Emissão Relatório Deliberativo");
         ChangeStatus(ReuniaoStatus.Realizada, TipoLogReuniao.RealizacaoRd, responsavel);
@@ -124,7 +116,7 @@ public class Reuniao
         return this;
     }
 
-    public Proposicao ResolucaoDiretoria(int pid, User responsavel)
+    public Proposicao OnEmitProposicaoResolucaoDiretoria(int pid, User responsavel)
     {
         var proposicao = Proposicoes.SingleOrDefault(p => p.Id == pid);
 

@@ -69,7 +69,50 @@ public class Proposicao
     public string TempoPermProx { get; set; } = string.Empty;
     public int? Seq { get; set; }
 
-    public bool CheckIfParticipanteVoted(Participante participante) => VotosRd.Any(v => v.Participante == participante);
+    public Proposicao GenerateProposicaoLog(TipoLogProposicao tipoLogProposicao, User responsavel, string diferenca)
+    {
+        Logs.Add(new LogProposicao(this, tipoLogProposicao, responsavel, diferenca));
+        return this;
+    }
+
+    public Proposicao ChangeStatus(ProposicaoStatus newStatus, TipoLogProposicao tipoLogProposicao, User responsavel)
+    {
+        GenerateProposicaoLog(tipoLogProposicao, responsavel, $@"Mudança de status de {Status} para {newStatus}");
+        Status = newStatus;
+        return this;
+    }
+
+    public Proposicao AddToReuniao(Reuniao reuniao, User responsavel)
+    {
+        GenerateProposicaoLog(TipoLogProposicao.InclusaoPauta, responsavel,
+            $@"Inclusão na pauta da RD número {reuniao.NumeroReuniao}");
+        Reuniao = reuniao;
+        Status = ProposicaoStatus.InclusaEmReuniao;
+        return this;
+    }
+
+    public Proposicao RemoveFromReuniao(Reuniao reuniao, User responsavel)
+    {
+        GenerateProposicaoLog(TipoLogProposicao.RemocaoPauta, responsavel,
+            $@"Remoção da pauta da RD número {reuniao.NumeroReuniao}");
+        Reuniao = new Reuniao();
+        Status = ProposicaoStatus.DisponivelInclusaoPauta;
+        return this;
+    }
+
+    public Proposicao AddDiretorVote(User diretor, Voto vote, string ajustes)
+    {
+        GenerateProposicaoLog(LogProposicao.ConvertFromTipoVoto(vote.VotoRd), diretor,
+            $@"Voto de Diretor {diretor.Nome} em RD: {vote.VotoRd}");
+        AjustesRd += $"\n\n{ajustes}";
+        VotosRd.Add(vote);
+        return this;
+    }
+
+    public bool CheckIfParticipanteVoted(Participante participante)
+    {
+        return VotosRd.Any(v => v.Participante == participante);
+    }
 
     public Voto GetParticipanteVoto(Participante participante)
     {
@@ -151,54 +194,6 @@ public class Proposicao
         }
 
         Status = ProposicaoStatus.SuspensaRd;
-        return this;
-    }
-
-    public Proposicao GenerateProposicaoLog(TipoLogProposicao tipoLogProposicao, User responsavel, string diferenca)
-    {
-        var newLog = new LogProposicao()
-        {
-            Data = DateTime.Now,
-            Tipo = tipoLogProposicao,
-            ProposicaoId = $@"IDPRD: {IdPrd}",
-            Diferenca = diferenca,
-            UsuarioResp = responsavel,
-        };
-        Logs.Add(newLog);
-        return this;
-    }
-
-    public Proposicao AddToReuniao(Reuniao reuniao, User responsavel)
-    {
-        GenerateProposicaoLog(TipoLogProposicao.InclusaoPauta, responsavel,
-            $@"Inclusão na pauta da RD número {reuniao.NumeroReuniao}");
-        Reuniao = reuniao;
-        Status = ProposicaoStatus.InclusaEmReuniao;
-        return this;
-    }
-
-    public Proposicao RemoveFromReuniao(Reuniao reuniao, User responsavel)
-    {
-        GenerateProposicaoLog(TipoLogProposicao.RemocaoPauta, responsavel,
-            $@"Remoção da pauta da RD número {reuniao.NumeroReuniao}");
-        Reuniao = new Reuniao();
-        Status = ProposicaoStatus.DisponivelInclusaoPauta;
-        return this;
-    }
-
-    public Proposicao ChangeStatus(ProposicaoStatus newStatus, TipoLogProposicao tipoLogProposicao, User responsavel)
-    {
-        GenerateProposicaoLog(tipoLogProposicao, responsavel, $@"Mudança de status de {Status} para {newStatus}");
-        Status = newStatus;
-        return this;
-    }
-
-    public Proposicao AddDiretorVote(User diretor, Voto vote, string ajustes)
-    {
-        GenerateProposicaoLog(LogProposicao.ConvertFromTipoVoto(vote.VotoRd), diretor,
-            $@"Voto de Diretor {diretor.Nome} em RD: {vote.VotoRd}");
-        AjustesRd += $"\n\n{ajustes}";
-        VotosRd.Add(vote);
         return this;
     }
 }

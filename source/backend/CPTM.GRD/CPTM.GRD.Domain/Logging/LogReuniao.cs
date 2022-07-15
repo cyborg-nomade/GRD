@@ -7,8 +7,17 @@ public class LogReuniao
 {
     public int Id { get; set; }
     public TipoLogReuniao Tipo { get; set; }
-    public string ReuniaoId { get; set; } = string.Empty;
-    public string Diferenca { get; set; } = string.Empty;
+    public string ReuniaoId { get; set; }
+    public string Diferenca { get; set; }
     public DateTime Data { get; set; }
-    public User UsuarioResp { get; set; } = new User();
+    public User UsuarioResp { get; set; }
+
+    public LogReuniao(Reuniao reuniao, TipoLogReuniao tipoLogReuniao, User responsavel, string diferenca)
+    {
+        Data = DateTime.Now;
+        Tipo = tipoLogReuniao;
+        ReuniaoId = $@"Número Reunião: {reuniao.NumeroReuniao}";
+        Diferenca = diferenca;
+        UsuarioResp = responsavel;
+    }
 }

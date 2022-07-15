@@ -24,14 +24,9 @@ public class DeleteProposicaoRequestHandler : IRequestHandler<DeleteProposicaoRe
     {
         var proposicao = await _proposicaoRepository.Get(request.Pid);
 
-        var removeLog = new LogProposicao()
-        {
-            Data = DateTime.Now,
-            Tipo = TipoLogProposicao.Remocao,
-            Diferenca = "Remoção",
-            ProposicaoId = $@"WAS IDPRD {proposicao.IdPrd}",
-            UsuarioResp = proposicao.Criador,
-        };
+        var removeLog = new LogProposicao(proposicao, TipoLogProposicao.Remocao,
+            proposicao.Criador,
+            "Remoção");
         await _logProposicaoRepository.Add(removeLog);
 
         await _proposicaoRepository.Delete(request.Pid);

@@ -33,7 +33,7 @@ public class
         var reuniao = await _reuniaoRepository.Get(request.Rid);
         var responsavel = await _userRepository.Get(request.Uid);
 
-        reuniao.RelatorioDeliberativo(responsavel);
+        reuniao.OnEmitRelatorioDeliberativo(responsavel);
 
         reuniao.RelatorioDeliberativoFilePath = await _fileCreator.CreateRelatorioDeliberativo(reuniao);
 

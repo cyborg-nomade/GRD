@@ -31,7 +31,7 @@ public class CreatePautaPreviaReuniaoRequestHandler : IRequestHandler<CreatePaut
         var reuniao = await _reuniaoRepository.Get(request.Rid);
         var responsavel = await _userRepository.Get(request.Uid);
 
-        reuniao.PautaPrevia(responsavel);
+        reuniao.OnEmitPautaPrevia(responsavel);
 
         reuniao.PautaPreviaFilePath = await _fileCreator.CreatePautaPrevia(reuniao);
 

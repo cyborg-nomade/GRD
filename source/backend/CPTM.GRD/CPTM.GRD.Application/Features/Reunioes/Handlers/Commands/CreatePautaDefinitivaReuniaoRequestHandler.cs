@@ -32,7 +32,7 @@ public class
         var reuniao = await _reuniaoRepository.Get(request.Rid);
         var responsavel = await _userRepository.Get(request.Uid);
 
-        reuniao.PautaDefinitiva(responsavel);
+        reuniao.OnEmitPautaDefinitiva(responsavel);
 
         reuniao.PautaDefinitivaFilePath = await _fileCreator.CreatePautaDefinitiva(reuniao);
 

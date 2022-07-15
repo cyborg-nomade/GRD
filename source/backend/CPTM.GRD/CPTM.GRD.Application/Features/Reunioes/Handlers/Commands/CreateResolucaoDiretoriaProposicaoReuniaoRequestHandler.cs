@@ -35,7 +35,7 @@ public class
         var reuniao = await _reuniaoRepository.Get(request.Rid);
         var responsavel = await _userRepository.Get(request.Uid);
 
-        var proposicao = reuniao.ResolucaoDiretoria(request.Pid, responsavel);
+        var proposicao = reuniao.OnEmitProposicaoResolucaoDiretoria(request.Pid, responsavel);
 
         proposicao.ResolucaoDiretoriaFilePath = await _fileCreator.CreateResolucaoDiretoria(reuniao, proposicao);
 

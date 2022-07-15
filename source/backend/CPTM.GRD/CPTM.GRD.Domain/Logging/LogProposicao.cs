@@ -7,10 +7,20 @@ public class LogProposicao
 {
     public int Id { get; set; }
     public TipoLogProposicao Tipo { get; set; }
-    public string ProposicaoId { get; set; } = string.Empty;
-    public string Diferenca { get; set; } = string.Empty;
+    public string ProposicaoId { get; set; }
+    public string Diferenca { get; set; }
     public DateTime Data { get; set; }
-    public User UsuarioResp { get; set; } = new User();
+    public User UsuarioResp { get; set; }
+
+    public LogProposicao(Proposicao proposicao, TipoLogProposicao tipoLogProposicao,
+        User responsavel, string diferenca)
+    {
+        Data = DateTime.Now;
+        Tipo = tipoLogProposicao;
+        ProposicaoId = $@"IDPRD: {proposicao.IdPrd}";
+        Diferenca = diferenca;
+        UsuarioResp = responsavel;
+    }
 
     public static TipoLogProposicao ConvertFromTipoVoto(TipoVotoRd tipoVotoRd)
     {
