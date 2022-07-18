@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
-using CPTM.GRD.Application.Contracts.Persistence;
+using CPTM.GRD.Application.Contracts.Infrastructure;
+using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
+using CPTM.GRD.Application.Contracts.Persistence.Acoes;
 using CPTM.GRD.Application.DTOs.Main.Acao;
+using CPTM.GRD.Application.DTOs.Main.Acao.Validators;
 using CPTM.GRD.Application.Features.Acoes.Requests.Commands;
 using CPTM.GRD.Application.Util;
-using CPTM.GRD.Common;
-using CPTM.GRD.Domain;
+using CPTM.GRD.Domain.Acoes;
 using MediatR;
 
 namespace CPTM.GRD.Application.Features.Acoes.Handlers.Commands;
@@ -13,19 +15,37 @@ public class UpdateAcaoRequestHandler : IRequestHandler<UpdateAcaoRequest, AcaoD
 {
     private readonly IAcaoRepository _acaoRepository;
     private readonly IMapper _mapper;
+    private readonly IUserRepository _userRepository;
+    private readonly IGroupRepository _groupRepository;
+    private readonly IAuthenticationService _authenticationService;
 
-    public UpdateAcaoRequestHandler(IAcaoRepository acaoRepository, IMapper mapper)
+    public UpdateAcaoRequestHandler(IAcaoRepository acaoRepository, IMapper mapper, IUserRepository userRepository,
+        IGroupRepository groupRepository, IAuthenticationService authenticationService)
     {
         _acaoRepository = acaoRepository;
         _mapper = mapper;
+        _userRepository = userRepository;
+        _groupRepository = groupRepository;
+        _authenticationService = authenticationService;
     }
 
     public async Task<AcaoDto> Handle(UpdateAcaoRequest request, CancellationToken cancellationToken)
     {
-        var savedAcao = await _acaoRepository.Get(request.AcaoDto.Id);
+        var responsavelExists = await _userRepository.Exists(request.Uid);
+        var acaoDtoValidator =
+            new AcaoDtoValidator(_groupRepository, _authenticationService, _userRepository, _acaoRepository);
+        var acaoValidationResult = await acaoDtoValidator.ValidateAsync(request.AcaoDto, cancellationToken);
 
-        savedAcao.GenerateAcaoLog(TipoLogAcao.Edicao,
-            Differentiator.GetDifferenceString<Acao>(savedAcao, _mapper.Map<Acao>(request.AcaoDto)));
+        if (!(acaoValidationResult.IsValid || responsavelExists))
+        {
+            throw new Exception("Objetos inválidos");
+        }
+
+        var savedAcao = await _acaoRepository.Get(request.AcaoDto.Id);
+        var responsavel = await _userRepository.Get(request.Uid);
+
+        savedAcao.OnUpdate(Differentiator.GetDifferenceString<Acao>(savedAcao, _mapper.Map<Acao>(request.AcaoDto)),
+            responsavel);
 
         _mapper.Map(request.AcaoDto, savedAcao);
 

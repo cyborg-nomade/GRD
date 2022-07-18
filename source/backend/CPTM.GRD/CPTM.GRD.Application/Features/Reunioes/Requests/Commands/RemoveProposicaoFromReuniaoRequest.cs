@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 
-public class RemoveProposicaoFromReuniaoRequest : IRequest<AddToPautaDto>
+public class RemoveProposicaoFromReuniaoRequest : IRequest<AddProposicaoToReuniaoDto>
 {
     public int Rid { get; set; }
     public int Pid { get; set; }

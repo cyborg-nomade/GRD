@@ -3,4 +3,5 @@
 public interface IReuniaoStrictSequenceControl
 {
     Task<int> GetNextNumeroReuniao();
+    Task<bool> IsValid(int numeroReuniao);
 }

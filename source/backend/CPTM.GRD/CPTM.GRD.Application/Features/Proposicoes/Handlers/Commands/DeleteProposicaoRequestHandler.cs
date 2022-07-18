@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.Contracts.Persistence.Logging;
+using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Logging;
@@ -22,6 +22,13 @@ public class DeleteProposicaoRequestHandler : IRequestHandler<DeleteProposicaoRe
 
     public async Task<Unit> Handle(DeleteProposicaoRequest request, CancellationToken cancellationToken)
     {
+        var proposicaoExists = await _proposicaoRepository.Exists(request.Pid);
+
+        if (!(proposicaoExists))
+        {
+            throw new Exception("Proposição não encontrada");
+        }
+
         var proposicao = await _proposicaoRepository.Get(request.Pid);
 
         var removeLog = new LogProposicao(proposicao, TipoLogProposicao.Remocao,

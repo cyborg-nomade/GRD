@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
+using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
+using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.DTOs.Main.Mixed;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
@@ -9,7 +10,8 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Reunioes.Handlers.Commands;
 
-public class AddProposicaoToReuniaoRequestHandler : IRequestHandler<AddProposicaoToReuniaoRequest, AddToPautaDto>
+public class
+    AddProposicaoToReuniaoRequestHandler : IRequestHandler<AddProposicaoToReuniaoRequest, AddProposicaoToReuniaoDto>
 {
     private readonly IProposicaoRepository _proposicaoRepository;
     private readonly IReuniaoRepository _reuniaoRepository;
@@ -25,20 +27,29 @@ public class AddProposicaoToReuniaoRequestHandler : IRequestHandler<AddProposica
         _mapper = mapper;
     }
 
-    public async Task<AddToPautaDto> Handle(AddProposicaoToReuniaoRequest request, CancellationToken cancellationToken)
+    public async Task<AddProposicaoToReuniaoDto> Handle(AddProposicaoToReuniaoRequest request,
+        CancellationToken cancellationToken)
     {
+        var reuniaoExists = await _reuniaoRepository.Exists(request.Rid);
+        var proposicaoExists = await _proposicaoRepository.Exists(request.Pid);
+        var responsavelExists = await _userRepository.Exists(request.Uid);
+
+        if (!(proposicaoExists || responsavelExists || reuniaoExists))
+        {
+            throw new Exception("Reunião, proposição ou responsável não encontrado");
+        }
+
         var proposicao = await _proposicaoRepository.Get(request.Pid);
         var reuniao = await _reuniaoRepository.Get(request.Rid);
         var responsavel = await _userRepository.Get(request.Uid);
 
         reuniao.AddProposicao(proposicao, responsavel);
 
-        var updatedProposicao = await _proposicaoRepository.Update(proposicao);
         var updatedReuniao = await _reuniaoRepository.Update(reuniao);
 
-        return new AddToPautaDto()
+        return new AddProposicaoToReuniaoDto()
         {
-            ProposicaoDto = _mapper.Map<ProposicaoDto>(updatedProposicao),
+            ProposicaoDto = _mapper.Map<ProposicaoDto>(proposicao),
             ReuniaoDto = _mapper.Map<ReuniaoDto>(updatedReuniao)
         };
     }

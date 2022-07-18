@@ -1,9 +1,11 @@
-﻿using CPTM.GRD.Application.DTOs.AccessControl;
+﻿using CPTM.GRD.Application.DTOs.AccessControl.Group;
+using CPTM.GRD.Application.DTOs.AccessControl.User;
+using CPTM.GRD.Application.DTOs.Main.Acao.Children;
 using CPTM.GRD.Common;
 
 namespace CPTM.GRD.Application.DTOs.Main.Acao;
 
-public class AcaoDto
+public class AcaoDto : IAcaoDto
 {
     public int Id { get; set; }
     public TipoAcao Tipo { get; set; }

@@ -15,6 +15,13 @@ public class DeleteUserRequestHandler : IRequestHandler<DeleteUserRequest, Unit>
 
     public async Task<Unit> Handle(DeleteUserRequest request, CancellationToken cancellationToken)
     {
+        var userExists = await _userRepository.Exists(request.Uid);
+
+        if (!userExists)
+        {
+            throw new Exception("Usuário não encontrado");
+        }
+
         await _userRepository.Delete(request.Uid);
         return Unit.Value;
     }

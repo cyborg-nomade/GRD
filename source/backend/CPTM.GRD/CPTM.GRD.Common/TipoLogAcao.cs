@@ -5,7 +5,7 @@ public enum TipoLogAcao
     Criacao,
     Edicao,
     InclusaoAndamento,
+    RemocaoDeReuniao,
     Finalizacao,
-    Arquivamento,
     Remocao,
 }

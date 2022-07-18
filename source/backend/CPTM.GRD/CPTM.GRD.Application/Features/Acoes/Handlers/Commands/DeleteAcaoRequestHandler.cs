@@ -1,5 +1,5 @@
-﻿using CPTM.GRD.Application.Contracts.Persistence;
-using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
+﻿using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
+using CPTM.GRD.Application.Contracts.Persistence.Acoes;
 using CPTM.GRD.Application.Contracts.Persistence.Logging;
 using CPTM.GRD.Application.Features.Acoes.Requests.Commands;
 using CPTM.GRD.Common;
@@ -24,16 +24,18 @@ public class DeleteAcaoRequestHandler : IRequestHandler<DeleteAcaoRequest, Unit>
 
     public async Task<Unit> Handle(DeleteAcaoRequest request, CancellationToken cancellationToken)
     {
-        var acao = await _acaoRepository.Get(request.Aid);
+        var acaoExists = await _acaoRepository.Exists(request.Aid);
+        var responsavelExists = await _userRepository.Exists(request.Uid);
 
-        var removeLog = new LogAcao()
+        if (!(acaoExists || responsavelExists))
         {
-            Data = DateTime.Now,
-            Tipo = TipoLogAcao.Remocao,
-            Diferenca = "Remoção",
-            AcaoId = $@"WAS ID Ação {acao.Id}",
-            UsuarioResp = await _userRepository.Get(request.Uid),
-        };
+            throw new Exception("Ação ou responsável não existe");
+        }
+
+        var acao = await _acaoRepository.Get(request.Aid);
+        var responsavel = await _userRepository.Get(request.Uid);
+
+        var removeLog = new LogAcao(acao, TipoLogAcao.Remocao, "Remoção", responsavel);
         await _logAcaoRepository.Add(removeLog);
 
         await _acaoRepository.Delete(request.Aid);

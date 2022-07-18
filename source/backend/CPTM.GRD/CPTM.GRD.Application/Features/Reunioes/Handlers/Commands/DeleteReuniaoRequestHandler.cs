@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Logging;
+using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Logging;
@@ -25,16 +25,18 @@ public class DeleteReuniaoRequestHandler : IRequestHandler<DeleteReuniaoRequest>
 
     public async Task<Unit> Handle(DeleteReuniaoRequest request, CancellationToken cancellationToken)
     {
-        var reuniao = await _reuniaoRepository.Get(request.Rid);
+        var reuniaoExists = await _reuniaoRepository.Exists(request.Rid);
+        var responsavelExists = await _userRepository.Exists(request.Uid);
 
-        var removeLog = new LogReuniao()
+        if (!(responsavelExists || reuniaoExists))
         {
-            Data = DateTime.Now,
-            Tipo = TipoLogReuniao.Remocao,
-            Diferenca = "Remoção",
-            ReuniaoId = $@"WAS Número Reunião {reuniao.NumeroReuniao}",
-            UsuarioResp = await _userRepository.Get(request.Uid),
-        };
+            throw new Exception("Reunião, proposição ou responsável não encontrado");
+        }
+
+        var reuniao = await _reuniaoRepository.Get(request.Rid);
+        var responsavel = await _userRepository.Get(request.Uid);
+
+        var removeLog = new LogReuniao(reuniao, TipoLogReuniao.Remocao, responsavel, "Remoção");
         await _logReuniaoRepository.Add(removeLog);
 
         await _reuniaoRepository.Delete(request.Rid);
