@@ -1,8 +1,9 @@
-﻿using CPTM.GRD.Common;
+﻿using CPTM.GRD.Application.DTOs.AccessControl.Group;
+using CPTM.GRD.Common;
 
-namespace CPTM.GRD.Application.DTOs.AccessControl;
+namespace CPTM.GRD.Application.DTOs.AccessControl.User;
 
-public class UserDto
+public class UserDto : IUserDto
 {
     public int Id { get; set; }
     public string Nome { get; set; } = string.Empty;

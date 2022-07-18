@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using CPTM.GRD.Application.DTOs.AccessControl;
+using CPTM.GRD.Application.DTOs.AccessControl.Group;
+using CPTM.GRD.Application.DTOs.AccessControl.User;
 using CPTM.GRD.Application.DTOs.Logging;
 using CPTM.GRD.Application.DTOs.Main;
 using CPTM.GRD.Application.DTOs.Main.Acao;

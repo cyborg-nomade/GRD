@@ -1,6 +1,8 @@
-﻿namespace CPTM.GRD.Domain.AccessControl;
+﻿using CPTM.GRD.Application.DTOs.AccessControl.User;
 
-public class Group
+namespace CPTM.GRD.Application.DTOs.AccessControl.Group;
+
+public class GroupDto : IGroupDto
 {
     public int Id { get; set; }
     public string Sigla { get; set; } = string.Empty;
@@ -9,5 +11,5 @@ public class Group
     public string Gerencia { get; set; } = string.Empty;
     public string SiglaDiretoria { get; set; } = string.Empty;
     public string Diretoria { get; set; } = string.Empty;
-    public User Relator { get; set; } = new User();
+    public UserDto Relator { get; set; } = new UserDto();
 }

@@ -1,8 +1,10 @@
-﻿namespace CPTM.GRD.Application.DTOs.AccessControl;
+﻿using CPTM.GRD.Application.DTOs.AccessControl.User;
 
-public class GroupDto
+namespace CPTM.GRD.Application.DTOs.AccessControl.Group;
+
+public class CreateGroupDto : IGroupDto
 {
-    public int Id { get; set; }
+    public string Sigla { get; set; } = string.Empty;
     public string Nome { get; set; } = string.Empty;
     public string SiglaGerencia { get; set; } = string.Empty;
     public string Gerencia { get; set; } = string.Empty;

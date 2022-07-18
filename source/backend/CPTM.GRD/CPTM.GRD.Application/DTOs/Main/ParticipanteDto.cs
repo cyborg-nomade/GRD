@@ -1,4 +1,4 @@
-﻿using CPTM.GRD.Application.DTOs.AccessControl;
+﻿using CPTM.GRD.Application.DTOs.AccessControl.User;
 
 namespace CPTM.GRD.Application.DTOs.Main;
 

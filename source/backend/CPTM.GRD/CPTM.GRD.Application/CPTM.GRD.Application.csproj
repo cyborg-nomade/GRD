@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Contracts\Infrastructure\" />
-    <Folder Include="DTOs\AccessControl\" />
+    <Folder Include="DTOs\AccessControl\User\Validators\" />
     <Folder Include="DTOs\Logging\" />
     <Folder Include="DTOs\Main\Acao\Validators\" />
     <Folder Include="DTOs\Main\Proposicao\Validators\" />
