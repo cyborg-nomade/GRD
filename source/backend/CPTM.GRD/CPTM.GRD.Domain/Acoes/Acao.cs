@@ -41,6 +41,12 @@ public class Acao
         return this;
     }
 
+    private Acao CalculateDiasParaVencimento()
+    {
+        DiasParaVencimento = PrazoFinal.DayNumber - PrazoInicial.DayNumber;
+        return this;
+    }
+
     internal Acao AddToReuniao(Reuniao reuniao, User responsavel)
     {
         GenerateAcaoLog(TipoLogAcao.Criacao, "Salvamento inicial");

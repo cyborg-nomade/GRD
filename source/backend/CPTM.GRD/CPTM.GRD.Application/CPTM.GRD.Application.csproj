@@ -10,6 +10,7 @@
     <Folder Include="Contracts\Infrastructure\" />
     <Folder Include="DTOs\AccessControl\User\Validators\" />
     <Folder Include="DTOs\Logging\" />
+    <Folder Include="DTOs\Main\Acao\Children\Validators\" />
     <Folder Include="DTOs\Main\Acao\Validators\" />
     <Folder Include="DTOs\Main\Reuniao\Children\Validators\" />
     <Folder Include="DTOs\Main\Reuniao\Validators\" />
