@@ -30,6 +30,15 @@ public class FollowUpAcaoRequestHandler : IRequestHandler<FollowUpAcaoRequest, A
 
     public async Task<AddAcaoToReuniaoDto> Handle(FollowUpAcaoRequest request, CancellationToken cancellationToken)
     {
+        var acaoExists = await _acaoRepository.Exists(request.Aid);
+        var reuniaoExists = await _reuniaoRepository.Exists(request.Rid);
+        var responsavelExists = await _userRepository.Exists(request.Uid);
+
+        if (!(acaoExists || reuniaoExists || responsavelExists))
+        {
+            throw new Exception("Ação, reunião ou responsável não existe");
+        }
+
         var acao = await _acaoRepository.Get(request.Aid);
         var reuniao = await _reuniaoRepository.Get(request.Rid);
         var responsavel = await _userRepository.Get(request.Uid);

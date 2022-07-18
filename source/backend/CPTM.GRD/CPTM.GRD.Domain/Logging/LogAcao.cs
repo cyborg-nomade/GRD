@@ -8,17 +8,17 @@ public class LogAcao
 {
     public int Id { get; set; }
     public TipoLogAcao Tipo { get; set; }
-    public string AcaoId { get; set; } = string.Empty;
-    public string Diferenca { get; set; } = string.Empty;
+    public string AcaoId { get; set; }
+    public string Diferenca { get; set; }
     public DateTime Data { get; set; }
-    public User UsuarioResp { get; set; } = new User();
+    public User UsuarioResp { get; set; }
 
-    public LogAcao(Acao acao, TipoLogAcao tipoLogAcao, string diferenca)
+    public LogAcao(Acao acao, TipoLogAcao tipoLogAcao, string diferenca, User responsavel)
     {
         Data = DateTime.Now;
         Tipo = tipoLogAcao;
         Diferenca = diferenca;
         AcaoId = $@"ID Ação: {acao.Id}";
-        UsuarioResp = acao.Responsavel;
+        UsuarioResp = responsavel;
     }
 }

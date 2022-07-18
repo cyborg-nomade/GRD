@@ -24,9 +24,18 @@ public class DeleteAcaoRequestHandler : IRequestHandler<DeleteAcaoRequest, Unit>
 
     public async Task<Unit> Handle(DeleteAcaoRequest request, CancellationToken cancellationToken)
     {
-        var acao = await _acaoRepository.Get(request.Aid);
+        var acaoExists = await _acaoRepository.Exists(request.Aid);
+        var responsavelExists = await _userRepository.Exists(request.Uid);
 
-        var removeLog = new LogAcao(acao, TipoLogAcao.Remocao, "Remoção");
+        if (!(acaoExists || responsavelExists))
+        {
+            throw new Exception("Ação ou responsável não existe");
+        }
+
+        var acao = await _acaoRepository.Get(request.Aid);
+        var responsavel = await _userRepository.Get(request.Uid);
+
+        var removeLog = new LogAcao(acao, TipoLogAcao.Remocao, "Remoção", responsavel);
         await _logAcaoRepository.Add(removeLog);
 
         await _acaoRepository.Delete(request.Aid);

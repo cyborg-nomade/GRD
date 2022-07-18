@@ -22,6 +22,14 @@ public class FinishAcaoRequestHandler : IRequestHandler<FinishAcaoRequest, AcaoD
 
     public async Task<AcaoDto> Handle(FinishAcaoRequest request, CancellationToken cancellationToken)
     {
+        var acaoExists = await _acaoRepository.Exists(request.Aid);
+        var responsavelExists = await _userRepository.Exists(request.Uid);
+
+        if (!(acaoExists || responsavelExists))
+        {
+            throw new Exception("Ação ou responsável não existe");
+        }
+
         var acao = await _acaoRepository.Get(request.Aid);
         var responsavel = await _userRepository.Get(request.Uid);
 

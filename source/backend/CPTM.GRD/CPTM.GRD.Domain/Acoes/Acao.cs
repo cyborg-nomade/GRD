@@ -28,15 +28,15 @@ public class Acao
     public ICollection<Reuniao> Reunioes { get; set; } = new List<Reuniao>();
     public ICollection<LogAcao> Logs { get; set; } = new List<LogAcao>();
 
-    private Acao GenerateAcaoLog(TipoLogAcao tipoLogAcao, string diferenca)
+    private Acao GenerateAcaoLog(TipoLogAcao tipoLogAcao, string diferenca, User responsavel)
     {
-        Logs.Add(new LogAcao(this, tipoLogAcao, diferenca));
+        Logs.Add(new LogAcao(this, tipoLogAcao, diferenca, responsavel));
         return this;
     }
 
     private Acao ChangeStatus(AcaoStatus newStatus, TipoLogAcao tipoLogAcao, User responsavel)
     {
-        GenerateAcaoLog(tipoLogAcao, $@"Mudança de status de {Status} para {newStatus}");
+        GenerateAcaoLog(tipoLogAcao, $@"Mudança de status de {Status} para {newStatus}", responsavel);
         Status = newStatus;
         return this;
     }
@@ -49,7 +49,7 @@ public class Acao
 
     internal Acao AddToReuniao(Reuniao reuniao, User responsavel)
     {
-        GenerateAcaoLog(TipoLogAcao.Criacao, "Salvamento inicial");
+        GenerateAcaoLog(TipoLogAcao.Criacao, "Salvamento inicial", responsavel);
         Reunioes.Add(reuniao);
         ChangeStatus(AcaoStatus.EmAndamento, TipoLogAcao.Criacao, responsavel);
         return this;
@@ -57,21 +57,22 @@ public class Acao
 
     internal Acao RemoveFromReuniao(Reuniao reuniao, User responsavel)
     {
-        GenerateAcaoLog(TipoLogAcao.RemocaoDeReuniao, $@"Remoção da pauta da RD número {reuniao.NumeroReuniao}");
+        GenerateAcaoLog(TipoLogAcao.RemocaoDeReuniao, $@"Remoção da pauta da RD número {reuniao.NumeroReuniao}",
+            responsavel);
         Reunioes.Remove(reuniao);
         ChangeStatus(AcaoStatus.EmAndamento, TipoLogAcao.RemocaoDeReuniao, responsavel);
         return this;
     }
 
-    public Acao OnUpdate(string diferenca)
+    public Acao OnUpdate(string diferenca, User responsavel)
     {
-        GenerateAcaoLog(TipoLogAcao.Edicao, diferenca);
+        GenerateAcaoLog(TipoLogAcao.Edicao, diferenca, responsavel);
         return this;
     }
 
     public Acao AddAndamento(Andamento newAndamento)
     {
-        GenerateAcaoLog(TipoLogAcao.InclusaoAndamento, $@"Novo Andamento: {newAndamento.Descricao}");
+        GenerateAcaoLog(TipoLogAcao.InclusaoAndamento, $@"Novo Andamento: {newAndamento.Descricao}", newAndamento.User);
         Andamentos.Add(newAndamento);
         return this;
     }
