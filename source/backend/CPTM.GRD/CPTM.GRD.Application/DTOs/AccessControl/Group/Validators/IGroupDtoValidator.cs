@@ -10,8 +10,8 @@ public class IGroupDtoValidator : AbstractValidator<IGroupDto>
     {
         RuleFor(p => p.Sigla).NotNull().NotEmpty().MaximumLength(4);
         RuleFor(p => p.Nome).NotNull().NotEmpty().MaximumLength(100);
-        RuleFor(p => p.SiglaGerencia).NotNull().NotEmpty().MaximumLength(4);
-        RuleFor(p => p.Gerencia).NotNull().NotEmpty().MaximumLength(100);
+        RuleFor(p => p.SiglaGerencia).NotNull().MaximumLength(4);
+        RuleFor(p => p.Gerencia).NotNull().MaximumLength(100);
         RuleFor(p => p.SiglaDiretoria).NotNull().NotEmpty().MaximumLength(4);
         RuleFor(p => p.Diretoria).NotNull().NotEmpty().MaximumLength(100);
         RuleFor(p => p.SiglaDiretoria).NotNull().NotEmpty().MaximumLength(4);

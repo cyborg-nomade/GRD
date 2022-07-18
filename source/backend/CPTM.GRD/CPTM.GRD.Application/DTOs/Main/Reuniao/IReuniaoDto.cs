@@ -9,7 +9,6 @@ public interface IReuniaoDto
 {
     public DateOnly Data { get; set; }
     public TimeOnly Horario { get; set; }
-    public ReuniaoStatus Status { get; set; }
     public DateOnly DataPrevia { get; set; }
     public TimeOnly HorarioPrevia { get; set; }
     public string Local { get; set; }

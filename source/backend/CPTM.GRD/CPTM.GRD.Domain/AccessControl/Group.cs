@@ -10,4 +10,14 @@ public class Group
     public string SiglaDiretoria { get; set; } = string.Empty;
     public string Diretoria { get; set; } = string.Empty;
     public User Relator { get; set; } = new User();
+
+    public bool CheckIsDiretoria()
+    {
+        return Sigla == SiglaDiretoria && SiglaGerencia == string.Empty;
+    }
+
+    public bool CheckIsGerencia()
+    {
+        return Sigla == SiglaGerencia;
+    }
 }

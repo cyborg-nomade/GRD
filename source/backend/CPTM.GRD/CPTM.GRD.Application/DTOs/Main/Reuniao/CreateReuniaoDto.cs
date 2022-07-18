@@ -7,10 +7,8 @@ namespace CPTM.GRD.Application.DTOs.Main.Reuniao;
 
 public class CreateReuniaoDto : IReuniaoDto
 {
-    public int NumeroReuniao { get; set; }
     public DateOnly Data { get; set; }
     public TimeOnly Horario { get; set; }
-    public ReuniaoStatus Status { get; set; }
     public DateOnly DataPrevia { get; set; }
     public TimeOnly HorarioPrevia { get; set; }
     public string Local { get; set; } = string.Empty;
