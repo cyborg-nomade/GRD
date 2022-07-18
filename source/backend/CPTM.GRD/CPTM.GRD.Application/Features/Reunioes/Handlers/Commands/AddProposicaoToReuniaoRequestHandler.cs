@@ -30,18 +30,26 @@ public class
     public async Task<AddProposicaoToReuniaoDto> Handle(AddProposicaoToReuniaoRequest request,
         CancellationToken cancellationToken)
     {
+        var reuniaoExists = await _reuniaoRepository.Exists(request.Rid);
+        var proposicaoExists = await _proposicaoRepository.Exists(request.Pid);
+        var responsavelExists = await _userRepository.Exists(request.Uid);
+
+        if (!(proposicaoExists || responsavelExists || reuniaoExists))
+        {
+            throw new Exception("Reunião, proposição ou responsável não encontrado");
+        }
+
         var proposicao = await _proposicaoRepository.Get(request.Pid);
         var reuniao = await _reuniaoRepository.Get(request.Rid);
         var responsavel = await _userRepository.Get(request.Uid);
 
         reuniao.AddProposicao(proposicao, responsavel);
 
-        var updatedProposicao = await _proposicaoRepository.Update(proposicao);
         var updatedReuniao = await _reuniaoRepository.Update(reuniao);
 
         return new AddProposicaoToReuniaoDto()
         {
-            ProposicaoDto = _mapper.Map<ProposicaoDto>(updatedProposicao),
+            ProposicaoDto = _mapper.Map<ProposicaoDto>(proposicao),
             ReuniaoDto = _mapper.Map<ReuniaoDto>(updatedReuniao)
         };
     }

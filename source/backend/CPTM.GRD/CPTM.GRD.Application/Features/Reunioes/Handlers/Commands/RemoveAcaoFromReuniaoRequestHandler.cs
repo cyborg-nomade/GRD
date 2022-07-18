@@ -3,6 +3,7 @@ using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Acoes;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.DTOs.Main.Acao;
+using CPTM.GRD.Application.DTOs.Main.Acao.Validators;
 using CPTM.GRD.Application.DTOs.Main.Mixed;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
@@ -30,6 +31,15 @@ public class RemoveAcaoFromReuniaoRequestHandler : IRequestHandler<RemoveAcaoFro
     public async Task<AddAcaoToReuniaoDto> Handle(RemoveAcaoFromReuniaoRequest request,
         CancellationToken cancellationToken)
     {
+        var acaoExists = await _acaoRepository.Exists(request.Aid);
+        var reuniaoExists = await _reuniaoRepository.Exists(request.Rid);
+        var responsavelExists = await _userRepository.Exists(request.Uid);
+
+        if (!(acaoExists || reuniaoExists || responsavelExists))
+        {
+            throw new Exception("Objetos inválidos");
+        }
+
         var acao = await _acaoRepository.Get(request.Aid);
         var reuniao = await _reuniaoRepository.Get(request.Rid);
         var responsavel = await _userRepository.Get(request.Uid);

@@ -27,6 +27,14 @@ public class CreateAtaReuniaoRequestHandler : IRequestHandler<CreateAtaReuniaoRe
 
     public async Task<ReuniaoDto> Handle(CreateAtaReuniaoRequest request, CancellationToken cancellationToken)
     {
+        var reuniaoExists = await _reuniaoRepository.Exists(request.Rid);
+        var responsavelExists = await _userRepository.Exists(request.Uid);
+
+        if (!(responsavelExists || reuniaoExists))
+        {
+            throw new Exception("Reunião ou responsável não encontrado");
+        }
+
         var reuniao = await _reuniaoRepository.Get(request.Rid);
         var responsavel = await _userRepository.Get(request.Uid);
 

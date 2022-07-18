@@ -33,6 +33,15 @@ public class
     public async Task<ProposicaoDto> Handle(CreateResolucaoDiretoriaProposicaoReuniaoRequest request,
         CancellationToken cancellationToken)
     {
+        var reuniaoExists = await _reuniaoRepository.Exists(request.Rid);
+        var proposicaoExists = await _proposicaoRepository.Exists(request.Pid);
+        var responsavelExists = await _userRepository.Exists(request.Uid);
+
+        if (!(proposicaoExists || responsavelExists || reuniaoExists))
+        {
+            throw new Exception("Reunião, proposição ou responsável não encontrado");
+        }
+
         var reuniao = await _reuniaoRepository.Get(request.Rid);
         var responsavel = await _userRepository.Get(request.Uid);
         var proposicao = await _proposicaoRepository.Get(request.Pid);
