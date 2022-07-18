@@ -6,6 +6,7 @@ using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.DTOs.Main.Acao.Validators;
 using CPTM.GRD.Application.DTOs.Main.Mixed;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 using MediatR;
 
@@ -32,12 +33,24 @@ public class RemoveAcaoFromReuniaoRequestHandler : IRequestHandler<RemoveAcaoFro
         CancellationToken cancellationToken)
     {
         var acaoExists = await _acaoRepository.Exists(request.Aid);
+
+        if (!acaoExists)
+        {
+            throw new NotFoundException("Ação", acaoExists);
+        }
+
         var reuniaoExists = await _reuniaoRepository.Exists(request.Rid);
+
+        if (!reuniaoExists)
+        {
+            throw new NotFoundException("Reunião", reuniaoExists);
+        }
+
         var responsavelExists = await _userRepository.Exists(request.Uid);
 
-        if (!(acaoExists || reuniaoExists || responsavelExists))
+        if (!responsavelExists)
         {
-            throw new Exception("Objetos inválidos");
+            throw new NotFoundException("Usuário", responsavelExists);
         }
 
         var acao = await _acaoRepository.Get(request.Aid);

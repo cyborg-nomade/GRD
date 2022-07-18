@@ -4,6 +4,7 @@ using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Acoes;
 using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.DTOs.Main.Acao.Validators;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Acoes.Requests.Commands;
 using CPTM.GRD.Application.Util;
 using CPTM.GRD.Domain.Acoes;
@@ -32,13 +33,19 @@ public class UpdateAcaoRequestHandler : IRequestHandler<UpdateAcaoRequest, AcaoD
     public async Task<AcaoDto> Handle(UpdateAcaoRequest request, CancellationToken cancellationToken)
     {
         var responsavelExists = await _userRepository.Exists(request.Uid);
+
+        if (!responsavelExists)
+        {
+            throw new NotFoundException("Usuário", responsavelExists);
+        }
+
         var acaoDtoValidator =
             new AcaoDtoValidator(_groupRepository, _authenticationService, _userRepository, _acaoRepository);
         var acaoValidationResult = await acaoDtoValidator.ValidateAsync(request.AcaoDto, cancellationToken);
 
-        if (!(acaoValidationResult.IsValid || responsavelExists))
+        if (!acaoValidationResult.IsValid)
         {
-            throw new Exception("Objetos inválidos");
+            throw new ValidationException(acaoValidationResult);
         }
 
         var savedAcao = await _acaoRepository.Get(request.AcaoDto.Id);

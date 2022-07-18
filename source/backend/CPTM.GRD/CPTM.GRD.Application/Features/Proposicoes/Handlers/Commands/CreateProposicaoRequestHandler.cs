@@ -5,6 +5,7 @@ using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
 using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Domain.Proposicoes;
 using MediatR;
@@ -40,7 +41,7 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
 
         if (!validationResult.IsValid)
         {
-            throw new Exception("Objeto inválido");
+            throw new ValidationException(validationResult);
         }
 
         var proposicao = _mapper.Map<Proposicao>(request.CreateProposicaoDto);

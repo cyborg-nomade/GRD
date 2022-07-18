@@ -4,6 +4,7 @@ using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.DTOs.Main.Acao.Validators;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Acoes.Requests.Commands;
 using CPTM.GRD.Domain.Acoes;
 using MediatR;
@@ -31,13 +32,25 @@ public class CreateAcaoRequestHandler : IRequestHandler<CreateAcaoRequest, AcaoD
     public async Task<AcaoDto> Handle(CreateAcaoRequest request, CancellationToken cancellationToken)
     {
         var reuniaoExists = await _reuniaoRepository.Exists(request.Rid);
+
+        if (!reuniaoExists)
+        {
+            throw new NotFoundException("Reunião", reuniaoExists);
+        }
+
         var responsavelExists = await _userRepository.Exists(request.Uid);
+
+        if (!responsavelExists)
+        {
+            throw new NotFoundException("Usuário", responsavelExists);
+        }
+
         var acaoDtoValidator = new IAcaoDtoValidator(_groupRepository, _authenticationService, _userRepository);
         var acaoValidationResult = await acaoDtoValidator.ValidateAsync(request.CreateAcaoDto, cancellationToken);
 
-        if (!(acaoValidationResult.IsValid || reuniaoExists || responsavelExists))
+        if (!acaoValidationResult.IsValid)
         {
-            throw new Exception("Objetos inválidos");
+            throw new ValidationException(acaoValidationResult);
         }
 
         var acao = _mapper.Map<Acao>(request.CreateAcaoDto);

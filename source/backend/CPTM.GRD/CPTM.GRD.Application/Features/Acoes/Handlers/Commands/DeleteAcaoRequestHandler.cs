@@ -1,6 +1,7 @@
 ﻿using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Acoes;
 using CPTM.GRD.Application.Contracts.Persistence.Logging;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Acoes.Requests.Commands;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Logging;
@@ -25,11 +26,17 @@ public class DeleteAcaoRequestHandler : IRequestHandler<DeleteAcaoRequest, Unit>
     public async Task<Unit> Handle(DeleteAcaoRequest request, CancellationToken cancellationToken)
     {
         var acaoExists = await _acaoRepository.Exists(request.Aid);
+
+        if (!acaoExists)
+        {
+            throw new NotFoundException("Ação", acaoExists);
+        }
+
         var responsavelExists = await _userRepository.Exists(request.Uid);
 
-        if (!(acaoExists || responsavelExists))
+        if (!responsavelExists)
         {
-            throw new Exception("Ação ou responsável não existe");
+            throw new NotFoundException("Usuário", responsavelExists);
         }
 
         var acao = await _acaoRepository.Get(request.Aid);

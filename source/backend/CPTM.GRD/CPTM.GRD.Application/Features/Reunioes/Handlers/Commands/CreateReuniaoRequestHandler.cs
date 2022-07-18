@@ -8,6 +8,7 @@ using CPTM.GRD.Application.Contracts.Persistence.Reunioes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
 using CPTM.GRD.Application.DTOs.Main.Reuniao.Validators;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 using CPTM.GRD.Domain.Reunioes;
 using MediatR;
@@ -46,13 +47,19 @@ public class CreateReuniaoRequestHandler : IRequestHandler<CreateReuniaoRequest,
     public async Task<ReuniaoDto> Handle(CreateReuniaoRequest request, CancellationToken cancellationToken)
     {
         var responsavelExists = await _userRepository.Exists(request.Uid);
+
+        if (!responsavelExists)
+        {
+            throw new NotFoundException("Usuário", responsavelExists);
+        }
+
         var reuniaoValidator = new IReuniaoDtoValidator(_groupRepository, _authenticationService, _userRepository,
             _acaoRepository, _votoRepository, _participanteRepository);
         var reuniaoValidationResult = await reuniaoValidator.ValidateAsync(request.CreateReuniaoDto, cancellationToken);
 
-        if (!(reuniaoValidationResult.IsValid || responsavelExists))
+        if (!reuniaoValidationResult.IsValid)
         {
-            throw new Exception("Objetos inválidos");
+            throw new ValidationException(reuniaoValidationResult);
         }
 
         var reuniao = _mapper.Map<Reuniao>(request.CreateReuniaoDto);

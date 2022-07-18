@@ -4,6 +4,7 @@ using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Acoes;
 using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.DTOs.Main.Acao.Children.Validators;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Acoes.Requests.Commands;
 using CPTM.GRD.Domain.Acoes.Children;
 using MediatR;
@@ -29,13 +30,19 @@ public class AddAndamentoToAcaoRequestHandler : IRequestHandler<AddAndamentoToAc
     public async Task<AcaoDto> Handle(AddAndamentoToAcaoRequest request, CancellationToken cancellationToken)
     {
         var acaoExists = await _acaoRepository.Exists(request.Aid);
+
+        if (!acaoExists)
+        {
+            throw new NotFoundException("Ação", acaoExists);
+        }
+
         var andamentoDtoValidator = new IAndamentoDtoValidator(_authenticationService, _userRepository);
         var andamentoValidationResult =
             await andamentoDtoValidator.ValidateAsync(request.AndamentoDto, cancellationToken);
 
-        if (!(andamentoValidationResult.IsValid || acaoExists))
+        if (!andamentoValidationResult.IsValid)
         {
-            throw new Exception("Objetos inválidos");
+            throw new ValidationException(andamentoValidationResult);
         }
 
         var acao = await _acaoRepository.Get(request.Aid);

@@ -7,6 +7,7 @@ using CPTM.GRD.Application.Contracts.Persistence.Proposicoes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes.Children;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Application.Util;
 using CPTM.GRD.Domain.Proposicoes;
@@ -42,13 +43,19 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
     public async Task<ProposicaoDto> Handle(UpdateProposicaoRequest request, CancellationToken cancellationToken)
     {
         var responsavelExists = await _userRepository.Exists(request.Uid);
+
+        if (!responsavelExists)
+        {
+            throw new NotFoundException("Usuário", responsavelExists);
+        }
+
         var validator = new ProposicaoDtoValidator(_groupRepository, _authenticationService, _userRepository,
             _acaoRepository, _votoRepository, _participanteRepository);
         var validationResult = await validator.ValidateAsync(request.ProposicaoDto, cancellationToken);
 
-        if (!(validationResult.IsValid || responsavelExists))
+        if (!validationResult.IsValid)
         {
-            throw new Exception("Objetos inválidos");
+            throw new ValidationException(validationResult);
         }
 
         var savedProposicao = await _proposicaoRepository.Get(request.ProposicaoDto.Id);

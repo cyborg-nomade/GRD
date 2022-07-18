@@ -5,6 +5,7 @@ using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.DTOs.Main.Mixed;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 using MediatR;
 
@@ -32,12 +33,24 @@ public class
         CancellationToken cancellationToken)
     {
         var reuniaoExists = await _reuniaoRepository.Exists(request.Rid);
+
+        if (!reuniaoExists)
+        {
+            throw new NotFoundException("Reunião", reuniaoExists);
+        }
+
         var proposicaoExists = await _proposicaoRepository.Exists(request.Pid);
+
+        if (!proposicaoExists)
+        {
+            throw new NotFoundException("Proposição", proposicaoExists);
+        }
+
         var responsavelExists = await _userRepository.Exists(request.Uid);
 
-        if (!(proposicaoExists || responsavelExists || reuniaoExists))
+        if (!responsavelExists)
         {
-            throw new Exception("Reunião, proposição ou responsável não encontrado");
+            throw new NotFoundException("Usuário", responsavelExists);
         }
 
         var reuniao = await _reuniaoRepository.Get(request.Rid);

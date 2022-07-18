@@ -3,6 +3,7 @@ using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.DTOs.AccessControl.User;
 using CPTM.GRD.Application.DTOs.AccessControl.User.Validators;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.AccessControl.Requests.Commands;
 using MediatR;
 
@@ -29,7 +30,7 @@ public class UpdateUserRequestHandler : IRequestHandler<UpdateUserRequest, UserD
 
         if (!validationResult.IsValid)
         {
-            throw new Exception("Objeto inválido");
+            throw new ValidationException(validationResult);
         }
 
         var savedUser = await _userRepository.Get(request.UserDto.Id);

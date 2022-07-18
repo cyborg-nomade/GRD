@@ -2,6 +2,7 @@
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Logging;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Logging;
@@ -26,11 +27,17 @@ public class DeleteReuniaoRequestHandler : IRequestHandler<DeleteReuniaoRequest>
     public async Task<Unit> Handle(DeleteReuniaoRequest request, CancellationToken cancellationToken)
     {
         var reuniaoExists = await _reuniaoRepository.Exists(request.Rid);
+
+        if (!reuniaoExists)
+        {
+            throw new NotFoundException("Reunião", reuniaoExists);
+        }
+
         var responsavelExists = await _userRepository.Exists(request.Uid);
 
-        if (!(responsavelExists || reuniaoExists))
+        if (!responsavelExists)
         {
-            throw new Exception("Reunião, proposição ou responsável não encontrado");
+            throw new NotFoundException("Usuário", responsavelExists);
         }
 
         var reuniao = await _reuniaoRepository.Get(request.Rid);
