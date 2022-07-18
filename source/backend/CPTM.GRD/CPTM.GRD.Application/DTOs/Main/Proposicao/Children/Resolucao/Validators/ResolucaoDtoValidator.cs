@@ -1,5 +1,4 @@
-﻿using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Resolucao;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Resolucao.Validators;
 

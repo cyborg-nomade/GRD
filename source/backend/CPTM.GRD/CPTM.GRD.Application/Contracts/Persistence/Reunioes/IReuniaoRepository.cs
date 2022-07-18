@@ -1,7 +1,7 @@
 ﻿using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Reunioes;
 
-namespace CPTM.GRD.Application.Contracts.Persistence;
+namespace CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 
 public interface IReuniaoRepository : IGenericRepository<Reuniao>
 {

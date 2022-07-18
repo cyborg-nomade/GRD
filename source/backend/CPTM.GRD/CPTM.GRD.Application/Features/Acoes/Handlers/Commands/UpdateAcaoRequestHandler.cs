@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using CPTM.GRD.Application.Contracts.Persistence;
+using CPTM.GRD.Application.Contracts.Persistence.Acoes;
 using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.Features.Acoes.Requests.Commands;
 using CPTM.GRD.Application.Util;
-using CPTM.GRD.Common;
-using CPTM.GRD.Domain;
 using CPTM.GRD.Domain.Acoes;
 using MediatR;
 

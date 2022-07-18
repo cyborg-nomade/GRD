@@ -1,16 +1,23 @@
-﻿using CPTM.GRD.Application.DTOs.AccessControl.Group.Validators;
+﻿using CPTM.GRD.Application.Contracts.Infrastructure;
+using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
+using CPTM.GRD.Application.DTOs.AccessControl.Group.Validators;
 using FluentValidation;
 
 namespace CPTM.GRD.Application.DTOs.AccessControl.User.Validators;
 
 public class IUserDtoValidator : AbstractValidator<IUserDto>
 {
-    public IUserDtoValidator()
+    public IUserDtoValidator(IAuthenticationService authenticationService, IUserRepository userRepository)
     {
         RuleFor(p => p.Nome).NotNull().NotEmpty().MaximumLength(250);
-        RuleFor(p => p.UsernameAd).NotNull().NotEmpty().MaximumLength(50);
+        RuleFor(p => p.UsernameAd).NotNull().NotEmpty().MaximumLength(50).MustAsync(async (username, token) =>
+        {
+            var usernameExists = await authenticationService.ExistsAd(username);
+            return !usernameExists;
+        });
         RuleFor(p => p.NivelAcesso).NotNull().NotEmpty().IsInEnum();
-        RuleForEach(p => p.AreasAcesso).NotNull().NotEmpty().SetValidator(new IGroupDtoValidator());
+        RuleForEach(p => p.AreasAcesso).NotNull().NotEmpty()
+            .SetValidator(new IGroupDtoValidator(authenticationService, userRepository));
         RuleFor(p => p.Funcao).NotNull().NotEmpty();
     }
 }

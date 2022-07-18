@@ -2,6 +2,7 @@
 using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
+using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 using MediatR;
@@ -14,16 +15,16 @@ public class
     private readonly IReuniaoRepository _reuniaoRepository;
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
-    private readonly IFileCreator _fileCreator;
+    private readonly IFileManagerService _fileManagerService;
 
     public CreatePautaDefinitivaReuniaoRequestHandler(IReuniaoRepository reuniaoRepository,
         IUserRepository userRepository, IMapper mapper,
-        IFileCreator fileCreator)
+        IFileManagerService fileManagerService)
     {
         _reuniaoRepository = reuniaoRepository;
         _userRepository = userRepository;
         _mapper = mapper;
-        _fileCreator = fileCreator;
+        _fileManagerService = fileManagerService;
     }
 
     public async Task<ReuniaoDto> Handle(CreatePautaDefinitivaReuniaoRequest request,
@@ -32,7 +33,7 @@ public class
         var reuniao = await _reuniaoRepository.Get(request.Rid);
         var responsavel = await _userRepository.Get(request.Uid);
 
-        reuniao.OnEmitPautaDefinitiva(responsavel, await _fileCreator.CreatePautaDefinitiva(reuniao));
+        reuniao.OnEmitPautaDefinitiva(responsavel, await _fileManagerService.CreatePautaDefinitiva(reuniao));
 
         var updatedReuniao = await _reuniaoRepository.Update(reuniao);
         return _mapper.Map<ReuniaoDto>(updatedReuniao);

@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\Infrastructure\" />
     <Folder Include="DTOs\AccessControl\User\Validators\" />
     <Folder Include="DTOs\Logging\" />
     <Folder Include="DTOs\Main\Acao\Children\Validators\" />

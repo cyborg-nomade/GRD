@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CPTM.GRD.Application.Contracts.Persistence;
+using CPTM.GRD.Application.Contracts.Persistence.Acoes;
 using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.Features.Acoes.Requests.Queries;
 using MediatR;

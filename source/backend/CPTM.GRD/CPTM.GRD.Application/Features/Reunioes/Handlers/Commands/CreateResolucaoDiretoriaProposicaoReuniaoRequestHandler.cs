@@ -2,6 +2,8 @@
 using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
+using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
+using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 using MediatR;
@@ -16,17 +18,17 @@ public class
     private readonly IProposicaoRepository _proposicaoRepository;
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
-    private readonly IFileCreator _fileCreator;
+    private readonly IFileManagerService _fileManagerService;
 
     public CreateResolucaoDiretoriaProposicaoReuniaoRequestHandler(IReuniaoRepository reuniaoRepository,
         IProposicaoRepository proposicaoRepository, IUserRepository userRepository, IMapper mapper,
-        IFileCreator fileCreator)
+        IFileManagerService fileManagerService)
     {
         _reuniaoRepository = reuniaoRepository;
         _proposicaoRepository = proposicaoRepository;
         _userRepository = userRepository;
         _mapper = mapper;
-        _fileCreator = fileCreator;
+        _fileManagerService = fileManagerService;
     }
 
     public async Task<ProposicaoDto> Handle(CreateResolucaoDiretoriaProposicaoReuniaoRequest request,
@@ -37,7 +39,7 @@ public class
         var proposicao = await _proposicaoRepository.Get(request.Pid);
 
         reuniao.OnEmitProposicaoResolucaoDiretoria(request.Pid, responsavel,
-            await _fileCreator.CreateResolucaoDiretoria(reuniao, proposicao));
+            await _fileManagerService.CreateResolucaoDiretoria(reuniao, proposicao));
 
         var updatedProposicao = await _proposicaoRepository.Update(proposicao);
         return _mapper.Map<ProposicaoDto>(updatedProposicao);

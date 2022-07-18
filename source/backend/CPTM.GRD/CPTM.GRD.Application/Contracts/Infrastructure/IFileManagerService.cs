@@ -1,10 +1,9 @@
-﻿using CPTM.GRD.Domain;
-using CPTM.GRD.Domain.Proposicoes;
+﻿using CPTM.GRD.Domain.Proposicoes;
 using CPTM.GRD.Domain.Reunioes;
 
 namespace CPTM.GRD.Application.Contracts.Infrastructure;
 
-public interface IFileCreator
+public interface IFileManagerService
 {
     Task<string> CreatePautaPrevia(Reuniao reuniao);
     Task<string> CreateMemoriaPrevia(Reuniao reuniao);

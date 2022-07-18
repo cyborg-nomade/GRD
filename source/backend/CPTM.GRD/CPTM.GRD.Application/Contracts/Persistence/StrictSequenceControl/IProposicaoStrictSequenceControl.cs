@@ -3,4 +3,5 @@
 public interface IProposicaoStrictSequenceControl
 {
     Task<int> GetNextIdPrd();
+    Task<bool> IsValid(int idprd);
 }

@@ -1,4 +1,10 @@
-﻿using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto.Validators;
+﻿using CPTM.GRD.Application.Contracts.Infrastructure;
+using CPTM.GRD.Application.Contracts.Persistence;
+using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
+using CPTM.GRD.Application.Contracts.Persistence.Acoes;
+using CPTM.GRD.Application.Contracts.Persistence.Proposicoes.Children;
+using CPTM.GRD.Application.Contracts.Persistence.Reunioes.Children;
+using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto.Validators;
 using CPTM.GRD.Application.DTOs.Main.Reuniao.Validators;
 using CPTM.GRD.Common;
 using FluentValidation;
@@ -7,19 +13,24 @@ namespace CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
 
 public class ProposicaoDtoValidator : AbstractValidator<ProposicaoDto>
 {
-    public ProposicaoDtoValidator()
+    public ProposicaoDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
+        IUserRepository userRepository, IAcaoRepository acaoRepository, IVotoRepository votoRepository,
+        IParticipanteRepository participanteRepository)
     {
-        Include(new IProposicaoDtoValidator());
+        Include(new IProposicaoDtoValidator(groupRepository, authenticationService, userRepository));
 
         RuleFor(p => p.Id).NotNull().NotEmpty().GreaterThan(0);
         RuleFor(p => p.IdPrd).NotNull().NotEmpty().GreaterThan(0);
         RuleFor(p => p.Status).NotNull().NotEmpty().IsInEnum();
         RuleFor(p => p.Arquivada).NotNull().NotEmpty();
-        RuleFor(p => p.Reuniao).NotNull().NotEmpty().SetValidator(new IReuniaoDtoValidator())
+        RuleFor(p => p.Reuniao).NotNull().NotEmpty()
+            .SetValidator(new IReuniaoDtoValidator(groupRepository, authenticationService, userRepository,
+                acaoRepository, votoRepository, participanteRepository))
             .When(p => p.Status >= ProposicaoStatus.InclusaEmReuniao);
         RuleFor(p => p.AnotacoesPrevia).NotNull()
             .When(p => p.Status >= ProposicaoStatus.EmPautaDefinitiva);
-        RuleForEach(p => p.VotosRd).NotNull().SetValidator(new VotoDtoValidator())
+        RuleForEach(p => p.VotosRd).NotNull()
+            .SetValidator(new VotoDtoValidator(groupRepository, authenticationService, userRepository, votoRepository))
             .When(p => p.Status > ProposicaoStatus.EmPautaDefinitiva);
         RuleFor(p => p.MotivoRetornoDiretoria).NotNull().NotEmpty()
             .When(p => p.Status == ProposicaoStatus.ReprovadoDiretoriaResp);
