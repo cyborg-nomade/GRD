@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Queries;

@@ -25,6 +25,14 @@ public class
     public async Task<ProposicaoDto> Handle(GrgApproveAjustesRdProposicaoRequest request,
         CancellationToken cancellationToken)
     {
+        var proposicaoExists = await _proposicaoRepository.Exists(request.Pid);
+        var responsavelExists = await _userRepository.Exists(request.Uid);
+
+        if (!(proposicaoExists || responsavelExists))
+        {
+            throw new Exception("Proposição ou responsável não encontrado");
+        }
+
         var proposicao = await _proposicaoRepository.Get(request.Pid);
         var responsavel = await _userRepository.Get(request.Uid);
 

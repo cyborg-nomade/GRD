@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-using CPTM.GRD.Application.Contracts.Infrastructure;
-using CPTM.GRD.Application.Contracts.Persistence;
+﻿using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes.Children;
 using FluentValidation;
