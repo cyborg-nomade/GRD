@@ -1,8 +1,8 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl.User;
 
-namespace CPTM.GRD.Application.DTOs.Main;
+namespace CPTM.GRD.Application.DTOs.Main.Reuniao.Children;
 
-public class ParticipanteDto
+public class ParticipanteDto : IParticipanteDto
 {
     public int Id { get; set; }
     public UserDto User { get; set; } = new UserDto();

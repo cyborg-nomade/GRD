@@ -5,6 +5,7 @@ using CPTM.GRD.Application.Features.Acoes.Requests.Commands;
 using CPTM.GRD.Application.Util;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain;
+using CPTM.GRD.Domain.Acoes;
 using MediatR;
 
 namespace CPTM.GRD.Application.Features.Acoes.Handlers.Commands;

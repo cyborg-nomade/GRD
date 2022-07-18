@@ -1,5 +1,7 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl.Group;
 using CPTM.GRD.Application.DTOs.AccessControl.User;
+using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Resolucao;
+using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
 using CPTM.GRD.Common;
 
@@ -28,7 +30,7 @@ public class ProposicaoDto : IProposicaoDto
     public string NumeroContrato { get; set; } = string.Empty;
     public string Termo { get; set; } = string.Empty;
     public string Fornecedor { get; set; } = string.Empty;
-    public string ValorAtualContrato { get; set; } = string.Empty;
+    public float ValorAtualContrato { get; set; }
     public string NumeroReservaVerba { get; set; } = string.Empty;
     public float ValorReservaVerba { get; set; }
     public DateOnly InicioVigenciaReserva { get; set; }

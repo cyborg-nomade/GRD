@@ -24,7 +24,7 @@ public interface IProposicaoDto
     public string NumeroContrato { get; set; }
     public string Termo { get; set; }
     public string Fornecedor { get; set; }
-    public string ValorAtualContrato { get; set; }
+    public float ValorAtualContrato { get; set; }
     public string NumeroReservaVerba { get; set; }
     public float ValorReservaVerba { get; set; }
     public DateOnly InicioVigenciaReserva { get; set; }
@@ -33,13 +33,6 @@ public interface IProposicaoDto
     public string ProtoloExpediente { get; set; }
     public string NumeroProcessoLicit { get; set; }
     public string? OutrasObservacoes { get; set; }
-    public ReuniaoDto Reuniao { get; set; }
-    public string MotivoRetornoDiretoria { get; set; }
-    public string MotivoRetornoGrg { get; set; }
-    public string MotivoRetornoRd { get; set; }
-    public string Deliberacao { get; set; }
-    public ResolucaoDto Resolucao { get; set; }
-    public bool IsExtraPauta { get; set; }
     public string? NumeroConselho { get; set; }
     public string SinteseProcessoFilePath { get; set; }
     public string NotaTecnicaFilePath { get; set; }

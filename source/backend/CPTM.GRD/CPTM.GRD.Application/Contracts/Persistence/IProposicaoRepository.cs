@@ -1,5 +1,5 @@
 ﻿using CPTM.GRD.Common;
-using CPTM.GRD.Domain;
+using CPTM.GRD.Domain.Proposicoes;
 
 namespace CPTM.GRD.Application.Contracts.Persistence;
 

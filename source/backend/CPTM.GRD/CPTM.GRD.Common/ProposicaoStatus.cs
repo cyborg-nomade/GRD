@@ -6,7 +6,7 @@ public enum ProposicaoStatus
     EmAprovacaoDiretoriaResp,
     ReprovadoDiretoriaResp,
     DisponivelInclusaoPauta,
-    RetornadoGrg,
+    RetornadoPelaGrgADiretoriaResp,
     InclusaEmReuniao,
     EmPautaPrevia,
     EmPautaDefinitiva,
@@ -14,7 +14,7 @@ public enum ProposicaoStatus
     ReprovadaRd,
     SuspensaRd,
     AprovadaRdAguardandoAjustes,
-    AprovadaRdAjustesRealizados,
     SuspensaRdAguardandoAjustes,
+    AprovadaRdAjustesRealizados,
     SuspensaRdAjustesRealizados,
 }

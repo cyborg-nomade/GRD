@@ -1,4 +1,6 @@
 ﻿using CPTM.GRD.Domain;
+using CPTM.GRD.Domain.Proposicoes;
+using CPTM.GRD.Domain.Reunioes;
 
 namespace CPTM.GRD.Application.Contracts.Infrastructure;
 

@@ -1,8 +1,11 @@
 ﻿using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
+using CPTM.GRD.Domain.Acoes;
 using CPTM.GRD.Domain.Logging;
+using CPTM.GRD.Domain.Proposicoes;
+using CPTM.GRD.Domain.Reunioes.Children;
 
-namespace CPTM.GRD.Domain;
+namespace CPTM.GRD.Domain.Reunioes;
 
 public class Reuniao
 {
@@ -151,7 +154,7 @@ public class Reuniao
         return this;
     }
 
-    internal Reuniao Archive(User responsavel)
+    private Reuniao Archive(User responsavel)
     {
         ChangeStatus(ReuniaoStatus.Arquivada, TipoLogReuniao.Arquivamento, responsavel);
         foreach (var proposicao in Proposicoes)

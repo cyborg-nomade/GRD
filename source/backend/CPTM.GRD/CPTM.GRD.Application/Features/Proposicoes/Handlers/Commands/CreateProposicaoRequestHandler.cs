@@ -5,7 +5,7 @@ using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Common;
-using CPTM.GRD.Domain;
+using CPTM.GRD.Domain.Proposicoes;
 using MediatR;
 
 namespace CPTM.GRD.Application.Features.Proposicoes.Handlers.Commands;
@@ -26,7 +26,7 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
 
     public async Task<ProposicaoDto> Handle(CreateProposicaoRequest request, CancellationToken cancellationToken)
     {
-        var validator = new CreateProposicaoDtoValidator();
+        var validator = new IProposicaoDtoValidator();
         var validationResult = await validator.ValidateAsync(request.CreateProposicaoDto, cancellationToken);
 
         if (!validationResult.IsValid)

@@ -1,5 +1,5 @@
-﻿using CPTM.GRD.Application.DTOs.Main;
-using CPTM.GRD.Application.DTOs.Main.Acao;
+﻿using CPTM.GRD.Application.DTOs.Main.Acao;
+using CPTM.GRD.Application.DTOs.Main.Acao.Children;
 using MediatR;
 
 namespace CPTM.GRD.Application.Features.Acoes.Requests.Commands;

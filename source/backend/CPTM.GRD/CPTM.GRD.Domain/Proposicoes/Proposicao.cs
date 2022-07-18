@@ -1,8 +1,11 @@
 ﻿using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
 using CPTM.GRD.Domain.Logging;
+using CPTM.GRD.Domain.Proposicoes.Children;
+using CPTM.GRD.Domain.Reunioes;
+using CPTM.GRD.Domain.Reunioes.Children;
 
-namespace CPTM.GRD.Domain;
+namespace CPTM.GRD.Domain.Proposicoes;
 
 public class Proposicao
 {
@@ -27,7 +30,7 @@ public class Proposicao
     public string NumeroContrato { get; set; } = string.Empty;
     public string Termo { get; set; } = string.Empty;
     public string Fornecedor { get; set; } = string.Empty;
-    public string ValorAtualContrato { get; set; } = string.Empty;
+    public float ValorAtualContrato { get; set; }
     public string NumeroReservaVerba { get; set; } = string.Empty;
     public float ValorReservaVerba { get; set; }
     public DateOnly InicioVigenciaReserva { get; set; }
@@ -308,7 +311,7 @@ public class Proposicao
             case ProposicaoStatus.EmAprovacaoDiretoriaResp:
             case ProposicaoStatus.ReprovadoDiretoriaResp:
             case ProposicaoStatus.DisponivelInclusaoPauta:
-            case ProposicaoStatus.RetornadoGrg:
+            case ProposicaoStatus.RetornadoPelaGrgADiretoriaResp:
             case ProposicaoStatus.InclusaEmReuniao:
             case ProposicaoStatus.EmPautaPrevia:
             case ProposicaoStatus.EmPautaDefinitiva:
@@ -340,7 +343,7 @@ public class Proposicao
             case ProposicaoStatus.EmAprovacaoDiretoriaResp:
             case ProposicaoStatus.ReprovadoDiretoriaResp:
             case ProposicaoStatus.DisponivelInclusaoPauta:
-            case ProposicaoStatus.RetornadoGrg:
+            case ProposicaoStatus.RetornadoPelaGrgADiretoriaResp:
             case ProposicaoStatus.InclusaEmReuniao:
             case ProposicaoStatus.EmPautaPrevia:
             case ProposicaoStatus.EmPautaDefinitiva:

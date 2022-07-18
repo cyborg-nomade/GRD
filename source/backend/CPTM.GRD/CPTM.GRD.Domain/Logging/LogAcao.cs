@@ -1,5 +1,6 @@
 ﻿using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
+using CPTM.GRD.Domain.Acoes;
 
 namespace CPTM.GRD.Domain.Logging;
 

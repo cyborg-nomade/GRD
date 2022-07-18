@@ -2,13 +2,21 @@
 using CPTM.GRD.Application.DTOs.AccessControl.Group;
 using CPTM.GRD.Application.DTOs.AccessControl.User;
 using CPTM.GRD.Application.DTOs.Logging;
-using CPTM.GRD.Application.DTOs.Main;
 using CPTM.GRD.Application.DTOs.Main.Acao;
+using CPTM.GRD.Application.DTOs.Main.Acao.Children;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
+using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Resolucao;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
+using CPTM.GRD.Application.DTOs.Main.Reuniao.Children;
 using CPTM.GRD.Domain;
 using CPTM.GRD.Domain.AccessControl;
+using CPTM.GRD.Domain.Acoes;
+using CPTM.GRD.Domain.Acoes.Children;
 using CPTM.GRD.Domain.Logging;
+using CPTM.GRD.Domain.Proposicoes;
+using CPTM.GRD.Domain.Proposicoes.Children;
+using CPTM.GRD.Domain.Reunioes;
+using CPTM.GRD.Domain.Reunioes.Children;
 
 namespace CPTM.GRD.Application.Profiles;
 

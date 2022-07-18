@@ -1,8 +1,10 @@
 ﻿using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
+using CPTM.GRD.Domain.Acoes.Children;
 using CPTM.GRD.Domain.Logging;
+using CPTM.GRD.Domain.Reunioes;
 
-namespace CPTM.GRD.Domain;
+namespace CPTM.GRD.Domain.Acoes;
 
 public class Acao
 {

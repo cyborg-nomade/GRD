@@ -1,6 +1,7 @@
 ﻿using CPTM.GRD.Common;
+using CPTM.GRD.Domain.Reunioes.Children;
 
-namespace CPTM.GRD.Domain;
+namespace CPTM.GRD.Domain.Proposicoes.Children;
 
 public class Voto
 {

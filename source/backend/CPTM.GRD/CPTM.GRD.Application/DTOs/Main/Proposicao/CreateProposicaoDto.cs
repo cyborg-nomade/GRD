@@ -24,7 +24,7 @@ public class CreateProposicaoDto : IProposicaoDto
     public string NumeroContrato { get; set; } = string.Empty;
     public string Termo { get; set; } = string.Empty;
     public string Fornecedor { get; set; } = string.Empty;
-    public string ValorAtualContrato { get; set; } = string.Empty;
+    public float ValorAtualContrato { get; set; }
     public string NumeroReservaVerba { get; set; } = string.Empty;
     public float ValorReservaVerba { get; set; }
     public DateOnly InicioVigenciaReserva { get; set; }
@@ -33,13 +33,6 @@ public class CreateProposicaoDto : IProposicaoDto
     public string ProtoloExpediente { get; set; } = string.Empty;
     public string NumeroProcessoLicit { get; set; } = string.Empty;
     public string? OutrasObservacoes { get; set; }
-    public ReuniaoDto Reuniao { get; set; } = new ReuniaoDto();
-    public string MotivoRetornoDiretoria { get; set; } = string.Empty;
-    public string MotivoRetornoGrg { get; set; } = string.Empty;
-    public string MotivoRetornoRd { get; set; } = string.Empty;
-    public string Deliberacao { get; set; } = string.Empty;
-    public ResolucaoDto Resolucao { get; set; } = new ResolucaoDto();
-    public bool IsExtraPauta { get; set; }
     public string? NumeroConselho { get; set; }
     public string SinteseProcessoFilePath { get; set; } = string.Empty;
     public string NotaTecnicaFilePath { get; set; } = string.Empty;
@@ -54,6 +47,6 @@ public class CreateProposicaoDto : IProposicaoDto
     public string RavFilePath { get; set; } = string.Empty;
     public string CronogramaFisFinFilePath { get; set; } = string.Empty;
     public string PcaFilePath { get; set; } = string.Empty;
-    public ICollection<string> OutrosFilePath { get; set; } = new HashSet<string>();
+    public ICollection<string> OutrosFilePath { get; set; } = new List<string>();
     public int? Seq { get; set; }
 }

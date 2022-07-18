@@ -1,4 +1,4 @@
-﻿using CPTM.GRD.Domain;
+﻿using CPTM.GRD.Domain.Acoes;
 
 namespace CPTM.GRD.Application.Contracts.Persistence;
 

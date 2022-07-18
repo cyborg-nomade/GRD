@@ -1,5 +1,6 @@
 ﻿using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
+using CPTM.GRD.Application.DTOs.Main.Reuniao.Children;
 using CPTM.GRD.Common;
 
 namespace CPTM.GRD.Application.DTOs.Main.Reuniao;

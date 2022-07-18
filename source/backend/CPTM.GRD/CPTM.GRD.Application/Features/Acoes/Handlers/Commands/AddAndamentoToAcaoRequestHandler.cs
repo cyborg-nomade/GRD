@@ -2,7 +2,7 @@
 using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.Features.Acoes.Requests.Commands;
-using CPTM.GRD.Domain;
+using CPTM.GRD.Domain.Acoes.Children;
 using MediatR;
 
 namespace CPTM.GRD.Application.Features.Acoes.Handlers.Commands;

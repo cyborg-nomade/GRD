@@ -1,6 +1,6 @@
 ﻿using CPTM.GRD.Domain.AccessControl;
 
-namespace CPTM.GRD.Domain;
+namespace CPTM.GRD.Domain.Reunioes.Children;
 
 public class Participante
 {

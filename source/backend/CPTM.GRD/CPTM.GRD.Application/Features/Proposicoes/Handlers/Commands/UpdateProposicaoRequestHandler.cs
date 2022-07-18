@@ -5,7 +5,7 @@ using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Application.Util;
 using CPTM.GRD.Common;
-using CPTM.GRD.Domain;
+using CPTM.GRD.Domain.Proposicoes;
 using MediatR;
 
 namespace CPTM.GRD.Application.Features.Proposicoes.Handlers.Commands;

@@ -1,4 +1,7 @@
-﻿using FluentValidation;
+﻿using CPTM.GRD.Application.DTOs.AccessControl.Group.Validators;
+using CPTM.GRD.Application.DTOs.AccessControl.User.Validators;
+using CPTM.GRD.Application.DTOs.Main.Reuniao.Validators;
+using FluentValidation;
 
 namespace CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
 
@@ -6,56 +9,51 @@ public class IProposicaoDtoValidator : AbstractValidator<IProposicaoDto>
 {
     public IProposicaoDtoValidator()
     {
-        RuleFor(p => p.Criador).NotEmpty().NotNull();
-    }
+        RuleFor(p => p.Criador).NotNull().NotEmpty().SetValidator(new UserDtoValidator());
+        RuleFor(p => p.AreaSolicitante).NotNull().NotEmpty().SetValidator(new GroupDtoValidator());
+        RuleFor(p => p.Titulo).NotNull().NotEmpty().MaximumLength(250);
+        RuleFor(p => p.Objeto).NotNull().NotEmpty().IsInEnum();
+        RuleFor(p => p.DescricaoProposicao).NotNull().NotEmpty();
+        RuleFor(p => p.PossuiParecerJuridico).NotNull().NotEmpty();
+        RuleFor(p => p.ResumoGeralResolucao).NotNull().NotEmpty();
+        RuleFor(p => p.ObservacoesCustos).NotNull().NotEmpty();
+        RuleFor(p => p.CompetenciasConformeNormas).NotNull().NotEmpty();
+        RuleFor(p => p.DataBaseValor).NotNull().NotEmpty();
+        RuleFor(p => p.Moeda).NotNull().NotEmpty().MaximumLength(15);
+        RuleFor(p => p.ValorOriginalContrato).NotNull().NotEmpty();
+        RuleFor(p => p.ValorTotalProposicao).NotNull().NotEmpty();
+        RuleFor(p => p.ReceitaDespesa).NotNull().NotEmpty().IsInEnum();
 
-    //public UserDto Criador { get; set; }
-    //public GroupDto AreaSolicitante { get; set; }
-    //public string Titulo { get; set; }
-    //public ObjetoProposicao Objeto { get; set; }
-    //public string DescricaoProposicao { get; set; }
-    //public bool PossuiParecerJuridico { get; set; }
-    //public string ResumoGeralResolucao { get; set; }
-    //public string ObservacoesCustos { get; set; }
-    //public string CompetenciasConformeNormas { get; set; }
-    //public DateOnly DataBaseValor { get; set; }
-    //public string Moeda { get; set; }
-    //public float ValorOriginalContrato { get; set; }
-    //public float ValorTotalProposicao { get; set; }
-    //public ReceitaDespesa ReceitaDespesa { get; set; }
-    //public string NumeroContrato { get; set; }
-    //public string Termo { get; set; }
-    //public string Fornecedor { get; set; }
-    //public string ValorAtualContrato { get; set; }
-    //public string NumeroReservaVerba { get; set; }
-    //public float ValorReservaVerba { get; set; }
-    //public DateOnly InicioVigenciaReserva { get; set; }
-    //public DateOnly FimVigenciaReserva { get; set; }
-    //public string NumeroProposicao { get; set; }
-    //public string ProtoloExpediente { get; set; }
-    //public string NumeroProcessoLicit { get; set; }
-    //public string? OutrasObservacoes { get; set; }
-    //public ReuniaoDto Reuniao { get; set; }
-    //public string MotivoRetornoDiretoria { get; set; }
-    //public string MotivoRetornoGrg { get; set; }
-    //public string MotivoRetornoDiretoriaResp { get; set; }
-    //public string Deliberacao { get; set; }
-    //public ResolucaoDto Resolucao { get; set; }
-    //public bool IsExtraPauta { get; set; }
-    //public string? NumeroConselho { get; set; }
-    //public string SinteseProcessoFilePath { get; set; }
-    //public string NotaTecnicaFilePath { get; set; }
-    //public string PrdFilePath { get; set; }
-    //public string ParecerJuridicoFilePath { get; set; }
-    //public string TrFilePath { get; set; }
-    //public string RelatorioTecnicoFilePath { get; set; }
-    //public string PlanilhaQuantFilePath { get; set; }
-    //public string EditalFilePath { get; set; }
-    //public string ReservaVerbaFilePath { get; set; }
-    //public string ScFilePath { get; set; }
-    //public string RavFilePath { get; set; }
-    //public string CronogramaFisFinFilePath { get; set; }
-    //public string PcaFilePath { get; set; }
-    //public ICollection<string> OutrosFilePath { get; set; }
-    //public int? Seq { get; set; }
+        // TODO: RULES DEPENDING ON OBJETO
+        RuleFor(p => p.NumeroContrato).NotNull().NotEmpty().MaximumLength(15);
+        RuleFor(p => p.Termo).NotNull().NotEmpty();
+        RuleFor(p => p.Fornecedor).NotNull().NotEmpty();
+        RuleFor(p => p.ValorAtualContrato).NotNull().NotEmpty();
+        RuleFor(p => p.NumeroReservaVerba).NotNull().NotEmpty().MaximumLength(15);
+        RuleFor(p => p.ValorReservaVerba).NotNull().NotEmpty();
+        RuleFor(p => p.InicioVigenciaReserva).NotNull().NotEmpty().LessThanOrEqualTo(p => p.FimVigenciaReserva);
+        RuleFor(p => p.FimVigenciaReserva).NotNull().NotEmpty().GreaterThanOrEqualTo(p => p.InicioVigenciaReserva);
+        // END
+
+        RuleFor(p => p.NumeroProposicao).NotNull().NotEmpty().MaximumLength(15);
+        RuleFor(p => p.ProtoloExpediente).NotNull().NotEmpty().MaximumLength(15);
+
+        // ALSO DEPENDS ON OBJETO
+        RuleFor(p => p.NumeroProcessoLicit).NotNull().NotEmpty().MaximumLength(15);
+        RuleFor(p => p.SinteseProcessoFilePath).NotNull().NotEmpty();
+        RuleFor(p => p.NotaTecnicaFilePath).NotNull().NotEmpty();
+        RuleFor(p => p.PrdFilePath).NotNull().NotEmpty();
+        RuleFor(p => p.ParecerJuridicoFilePath).NotNull().NotEmpty();
+        RuleFor(p => p.TrFilePath).NotNull().NotEmpty();
+        RuleFor(p => p.RelatorioTecnicoFilePath).NotNull().NotEmpty();
+        RuleFor(p => p.PlanilhaQuantFilePath).NotNull().NotEmpty();
+        RuleFor(p => p.EditalFilePath).NotNull().NotEmpty();
+        RuleFor(p => p.ReservaVerbaFilePath).NotNull().NotEmpty();
+        RuleFor(p => p.ScFilePath).NotNull().NotEmpty();
+        RuleFor(p => p.RavFilePath).NotNull().NotEmpty();
+        RuleFor(p => p.CronogramaFisFinFilePath).NotNull().NotEmpty();
+        RuleFor(p => p.PcaFilePath).NotNull().NotEmpty();
+        RuleForEach(p => p.OutrosFilePath).NotNull().NotEmpty();
+        // END
+    }
 }

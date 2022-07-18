@@ -1,13 +1,13 @@
-﻿using CPTM.GRD.Application.DTOs.AccessControl.User;
-using CPTM.GRD.Common;
+﻿using CPTM.GRD.Common;
+using CPTM.GRD.Domain.AccessControl;
 
-namespace CPTM.GRD.Application.DTOs.Main;
+namespace CPTM.GRD.Domain.Acoes.Children;
 
-public class AndamentoDto
+public class Andamento
 {
     public int Id { get; set; }
     public DateOnly Data { get; set; }
-    public UserDto User { get; set; } = new UserDto();
+    public User User { get; set; } = new User();
     public string NomeResponsavel { get; set; } = string.Empty;
     public AndamentoStatus Status { get; set; }
     public string Descricao { get; set; } = string.Empty;
