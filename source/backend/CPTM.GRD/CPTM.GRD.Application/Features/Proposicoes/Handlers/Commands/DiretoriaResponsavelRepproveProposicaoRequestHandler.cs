@@ -27,22 +27,11 @@ public class
     public async Task<ProposicaoDto> Handle(DiretoriaResponsavelRepproveProposicaoRequest request,
         CancellationToken cancellationToken)
     {
-        var proposicaoExists = await _proposicaoRepository.Exists(request.Pid);
-
-        if (!proposicaoExists)
-        {
-            throw new NotFoundException("Proposição", proposicaoExists);
-        }
-
-        var responsavelExists = await _userRepository.Exists(request.Uid);
-
-        if (!responsavelExists)
-        {
-            throw new NotFoundException("Usuário", responsavelExists);
-        }
-
         var proposicao = await _proposicaoRepository.Get(request.Pid);
+        if (proposicao == null) throw new NotFoundException(nameof(proposicao), request.Pid);
+
         var responsavel = await _userRepository.Get(request.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
 
         proposicao.DiretoriaResponsavelRepproveProposicao(responsavel, request.MotivoReprovacao);
 

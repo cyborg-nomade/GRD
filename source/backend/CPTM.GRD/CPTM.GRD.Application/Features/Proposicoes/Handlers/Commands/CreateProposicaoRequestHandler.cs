@@ -36,17 +36,17 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
 
     public async Task<ProposicaoDto> Handle(CreateProposicaoRequest request, CancellationToken cancellationToken)
     {
-        var validator = new IProposicaoDtoValidator(_groupRepository, _authenticationService, _userRepository);
-        var validationResult = await validator.ValidateAsync(request.CreateProposicaoDto, cancellationToken);
-
-        if (!validationResult.IsValid)
+        var proposicaoDtoValidator =
+            new IProposicaoDtoValidator(_groupRepository, _authenticationService, _userRepository);
+        var proposicaoDtoValidationResult =
+            await proposicaoDtoValidator.ValidateAsync(request.CreateProposicaoDto, cancellationToken);
+        if (!proposicaoDtoValidationResult.IsValid)
         {
-            throw new ValidationException(validationResult);
+            throw new ValidationException(proposicaoDtoValidationResult);
         }
 
         var proposicao = _mapper.Map<Proposicao>(request.CreateProposicaoDto);
         proposicao.IdPrd = await _sequenceControl.GetNextIdPrd();
-
         proposicao.OnSaveProposicao();
 
         var addedProposicao = await _proposicaoRepository.Add(proposicao);

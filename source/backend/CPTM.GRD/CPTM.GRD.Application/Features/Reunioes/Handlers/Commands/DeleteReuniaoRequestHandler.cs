@@ -26,22 +26,11 @@ public class DeleteReuniaoRequestHandler : IRequestHandler<DeleteReuniaoRequest>
 
     public async Task<Unit> Handle(DeleteReuniaoRequest request, CancellationToken cancellationToken)
     {
-        var reuniaoExists = await _reuniaoRepository.Exists(request.Rid);
-
-        if (!reuniaoExists)
-        {
-            throw new NotFoundException("Reunião", reuniaoExists);
-        }
-
-        var responsavelExists = await _userRepository.Exists(request.Uid);
-
-        if (!responsavelExists)
-        {
-            throw new NotFoundException("Usuário", responsavelExists);
-        }
-
         var reuniao = await _reuniaoRepository.Get(request.Rid);
+        if (reuniao == null) throw new NotFoundException(nameof(reuniao), request.Rid);
+
         var responsavel = await _userRepository.Get(request.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
 
         var removeLog = new LogReuniao(reuniao, TipoLogReuniao.Remocao, responsavel, "Remoção");
         await _logReuniaoRepository.Add(removeLog);

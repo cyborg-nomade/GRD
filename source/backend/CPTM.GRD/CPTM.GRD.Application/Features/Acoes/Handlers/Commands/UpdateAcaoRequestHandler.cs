@@ -32,30 +32,24 @@ public class UpdateAcaoRequestHandler : IRequestHandler<UpdateAcaoRequest, AcaoD
 
     public async Task<AcaoDto> Handle(UpdateAcaoRequest request, CancellationToken cancellationToken)
     {
-        var responsavelExists = await _userRepository.Exists(request.Uid);
-
-        if (!responsavelExists)
-        {
-            throw new NotFoundException("Usuário", responsavelExists);
-        }
-
         var acaoDtoValidator =
             new AcaoDtoValidator(_groupRepository, _authenticationService, _userRepository, _acaoRepository);
-        var acaoValidationResult = await acaoDtoValidator.ValidateAsync(request.AcaoDto, cancellationToken);
-
-        if (!acaoValidationResult.IsValid)
+        var acaoDtoValidationResult = await acaoDtoValidator.ValidateAsync(request.AcaoDto, cancellationToken);
+        if (!acaoDtoValidationResult.IsValid)
         {
-            throw new ValidationException(acaoValidationResult);
+            throw new ValidationException(acaoDtoValidationResult);
         }
 
         var savedAcao = await _acaoRepository.Get(request.AcaoDto.Id);
+        if (savedAcao == null) throw new NotFoundException(nameof(savedAcao), request.AcaoDto.Id);
+
         var responsavel = await _userRepository.Get(request.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
 
         savedAcao.OnUpdate(Differentiator.GetDifferenceString<Acao>(savedAcao, _mapper.Map<Acao>(request.AcaoDto)),
             responsavel);
 
         _mapper.Map(request.AcaoDto, savedAcao);
-
         var updatedAcao = await _acaoRepository.Update(savedAcao);
 
         return _mapper.Map<AcaoDto>(updatedAcao);

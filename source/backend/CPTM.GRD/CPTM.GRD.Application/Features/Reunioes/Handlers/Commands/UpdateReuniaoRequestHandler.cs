@@ -2,7 +2,6 @@
 using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Acoes;
-using CPTM.GRD.Application.Contracts.Persistence.Logging;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes.Children;
@@ -29,7 +28,7 @@ public class UpdateReuniaoRequestHandler : IRequestHandler<UpdateReuniaoRequest,
     private readonly IParticipanteRepository _participanteRepository;
     private readonly IReuniaoStrictSequenceControl _strictSequence;
 
-    public UpdateReuniaoRequestHandler(IReuniaoRepository reuniaoRepository, ILogReuniaoRepository logReuniaoRepository,
+    public UpdateReuniaoRequestHandler(IReuniaoRepository reuniaoRepository,
         IUserRepository userRepository, IMapper mapper, IGroupRepository groupRepository,
         IAuthenticationService authenticationService, IAcaoRepository acaoRepository, IVotoRepository votoRepository,
         IParticipanteRepository participanteRepository, IReuniaoStrictSequenceControl strictSequence)
@@ -47,31 +46,25 @@ public class UpdateReuniaoRequestHandler : IRequestHandler<UpdateReuniaoRequest,
 
     public async Task<ReuniaoDto> Handle(UpdateReuniaoRequest request, CancellationToken cancellationToken)
     {
-        var responsavelExists = await _userRepository.Exists(request.Uid);
-
-        if (!responsavelExists)
-        {
-            throw new NotFoundException("Usuário", responsavelExists);
-        }
-
-        var reuniaoValidator = new ReuniaoDtoValidator(_groupRepository, _authenticationService, _userRepository,
+        var reuniaoDtoValidator = new ReuniaoDtoValidator(_groupRepository, _authenticationService, _userRepository,
             _acaoRepository, _votoRepository, _participanteRepository, _reuniaoRepository, _strictSequence);
-        var reuniaoValidationResult = await reuniaoValidator.ValidateAsync(request.ReuniaoDto, cancellationToken);
-
-        if (!reuniaoValidationResult.IsValid)
+        var reuniaoDtoValidationResult = await reuniaoDtoValidator.ValidateAsync(request.ReuniaoDto, cancellationToken);
+        if (!reuniaoDtoValidationResult.IsValid)
         {
-            throw new ValidationException(reuniaoValidationResult);
+            throw new ValidationException(reuniaoDtoValidationResult);
         }
 
         var savedReuniao = await _reuniaoRepository.Get(request.ReuniaoDto.Id);
+        if (savedReuniao == null) throw new NotFoundException(nameof(savedReuniao), request.ReuniaoDto.Id);
+
         var responsavel = await _userRepository.Get(request.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
 
         savedReuniao.OnUpdate(responsavel, Differentiator.GetDifferenceString<Reuniao>(
             savedReuniao,
             _mapper.Map<Reuniao>(request.ReuniaoDto)));
 
         _mapper.Map(request.ReuniaoDto, savedReuniao);
-
         var updatedReuniao = await _reuniaoRepository.Update(savedReuniao);
 
         return _mapper.Map<ReuniaoDto>(updatedReuniao);

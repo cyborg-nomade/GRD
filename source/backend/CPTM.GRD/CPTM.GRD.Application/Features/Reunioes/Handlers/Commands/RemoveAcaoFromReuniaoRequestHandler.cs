@@ -32,34 +32,19 @@ public class RemoveAcaoFromReuniaoRequestHandler : IRequestHandler<RemoveAcaoFro
     public async Task<AddAcaoToReuniaoDto> Handle(RemoveAcaoFromReuniaoRequest request,
         CancellationToken cancellationToken)
     {
-        var acaoExists = await _acaoRepository.Exists(request.Aid);
-
-        if (!acaoExists)
-        {
-            throw new NotFoundException("Ação", acaoExists);
-        }
-
-        var reuniaoExists = await _reuniaoRepository.Exists(request.Rid);
-
-        if (!reuniaoExists)
-        {
-            throw new NotFoundException("Reunião", reuniaoExists);
-        }
-
-        var responsavelExists = await _userRepository.Exists(request.Uid);
-
-        if (!responsavelExists)
-        {
-            throw new NotFoundException("Usuário", responsavelExists);
-        }
-
         var acao = await _acaoRepository.Get(request.Aid);
+        if (acao == null) throw new NotFoundException(nameof(acao), request.Aid);
+
         var reuniao = await _reuniaoRepository.Get(request.Rid);
+        if (reuniao == null) throw new NotFoundException(nameof(reuniao), request.Rid);
+
         var responsavel = await _userRepository.Get(request.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
 
         reuniao.RemoveAcao(acao, responsavel);
 
         var updatedReuniao = await _reuniaoRepository.Update(reuniao);
+
         return new AddAcaoToReuniaoDto()
         {
             AcaoDto = _mapper.Map<AcaoDto>(acao),

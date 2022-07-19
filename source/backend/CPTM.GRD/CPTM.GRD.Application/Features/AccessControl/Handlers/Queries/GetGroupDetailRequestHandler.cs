@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.DTOs.AccessControl.Group;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
 using MediatR;
 
@@ -20,6 +21,9 @@ public class GetGroupDetailRequestHandler : IRequestHandler<GetGroupDetailReques
     public async Task<GroupDto> Handle(GetGroupDetailRequest request, CancellationToken cancellationToken)
     {
         var group = await _groupRepository.Get(request.Gid);
+
+        if (group == null) throw new NotFoundException(nameof(group), request.Gid);
+
         return _mapper.Map<GroupDto>(group);
     }
 }

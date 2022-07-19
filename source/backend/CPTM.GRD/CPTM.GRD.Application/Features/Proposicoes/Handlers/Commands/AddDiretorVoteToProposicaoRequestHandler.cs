@@ -35,36 +35,27 @@ public class
     public async Task<ProposicaoDto> Handle(AddDiretorVoteToProposicaoRequest request,
         CancellationToken cancellationToken)
     {
-        var proposicaoExists = await _proposicaoRepository.Exists(request.Pid);
-
-        if (!proposicaoExists)
-        {
-            throw new NotFoundException("Proposição", proposicaoExists);
-        }
-
         var proposicao = await _proposicaoRepository.Get(request.Pid);
+        if (proposicao == null) throw new NotFoundException(nameof(proposicao), request.Pid);
 
         foreach (var voteWithAjustes in request.VotesWithAjustes)
         {
-            var diretorExists = await _userRepository.Exists(voteWithAjustes.VotoDto.Participante.User.Id);
-
-            if (!diretorExists)
-            {
-                throw new NotFoundException("Diretor", diretorExists);
-            }
-
             var votoRdDtoValidator = new IVotoDtoValidator(_groupRepository, _authenticationService, _userRepository);
-            var andamentoValidationResult =
+            var votoRdDtoValidationResult =
                 await votoRdDtoValidator.ValidateAsync(voteWithAjustes.VotoDto, cancellationToken);
-
-            if (!andamentoValidationResult.IsValid)
+            if (!votoRdDtoValidationResult.IsValid)
             {
-                throw new ValidationException(andamentoValidationResult);
+                throw new ValidationException(votoRdDtoValidationResult);
             }
 
             var diretor = await _userRepository.Get(voteWithAjustes.VotoDto.Participante.User.Id);
+            if (diretor == null)
+                throw new NotFoundException(nameof(diretor), voteWithAjustes.VotoDto.Participante.User.Id);
+
             var votoRd = _mapper.Map<Voto>(voteWithAjustes.VotoDto);
-            var ajustes = voteWithAjustes.Ajustes;
+
+            var ajustes = voteWithAjustes.Ajustes ??
+                          throw new BadRequestException($"{nameof(voteWithAjustes.Ajustes)} não pode ser nulo");
 
             proposicao.AddDiretorVote(diretor, votoRd, ajustes);
         }

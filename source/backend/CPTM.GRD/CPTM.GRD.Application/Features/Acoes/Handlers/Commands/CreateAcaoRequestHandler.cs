@@ -31,31 +31,20 @@ public class CreateAcaoRequestHandler : IRequestHandler<CreateAcaoRequest, AcaoD
 
     public async Task<AcaoDto> Handle(CreateAcaoRequest request, CancellationToken cancellationToken)
     {
-        var reuniaoExists = await _reuniaoRepository.Exists(request.Rid);
-
-        if (!reuniaoExists)
-        {
-            throw new NotFoundException("Reunião", reuniaoExists);
-        }
-
-        var responsavelExists = await _userRepository.Exists(request.Uid);
-
-        if (!responsavelExists)
-        {
-            throw new NotFoundException("Usuário", responsavelExists);
-        }
-
         var acaoDtoValidator = new IAcaoDtoValidator(_groupRepository, _authenticationService, _userRepository);
-        var acaoValidationResult = await acaoDtoValidator.ValidateAsync(request.CreateAcaoDto, cancellationToken);
-
-        if (!acaoValidationResult.IsValid)
+        var acaoDtoValidationResult = await acaoDtoValidator.ValidateAsync(request.CreateAcaoDto, cancellationToken);
+        if (!acaoDtoValidationResult.IsValid)
         {
-            throw new ValidationException(acaoValidationResult);
+            throw new ValidationException(acaoDtoValidationResult);
         }
 
         var acao = _mapper.Map<Acao>(request.CreateAcaoDto);
+
         var reuniao = await _reuniaoRepository.Get(request.Rid);
+        if (reuniao == null) throw new NotFoundException(nameof(reuniao), request.Rid);
+
         var responsavel = await _userRepository.Get(request.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
 
         reuniao.CreateAcao(acao, responsavel);
 

@@ -42,32 +42,29 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
 
     public async Task<ProposicaoDto> Handle(UpdateProposicaoRequest request, CancellationToken cancellationToken)
     {
-        var responsavelExists = await _userRepository.Exists(request.Uid);
-
-        if (!responsavelExists)
-        {
-            throw new NotFoundException("Usuário", responsavelExists);
-        }
-
-        var validator = new ProposicaoDtoValidator(_groupRepository, _authenticationService, _userRepository,
+        var proposicaoDtoValidator = new ProposicaoDtoValidator(_groupRepository, _authenticationService,
+            _userRepository,
             _acaoRepository, _votoRepository, _participanteRepository);
-        var validationResult = await validator.ValidateAsync(request.ProposicaoDto, cancellationToken);
+        var proposicaoDtoValidationResult =
+            await proposicaoDtoValidator.ValidateAsync(request.ProposicaoDto, cancellationToken);
 
-        if (!validationResult.IsValid)
+        if (!proposicaoDtoValidationResult.IsValid)
         {
-            throw new ValidationException(validationResult);
+            throw new ValidationException(proposicaoDtoValidationResult);
         }
 
         var savedProposicao = await _proposicaoRepository.Get(request.ProposicaoDto.Id);
+        if (savedProposicao == null) throw new NotFoundException(nameof(savedProposicao), request.ProposicaoDto.Id);
         var responsavel = await _userRepository.Get(request.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
 
         savedProposicao.OnUpdate(responsavel,
             Differentiator.GetDifferenceString<Proposicao>(savedProposicao,
                 _mapper.Map<Proposicao>(request.ProposicaoDto)));
 
         _mapper.Map(request.ProposicaoDto, savedProposicao);
-
         var updatedProposicao = await _proposicaoRepository.Update(savedProposicao);
+
         return _mapper.Map<ProposicaoDto>(updatedProposicao);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.DTOs.AccessControl.User;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
 using MediatR;
 
@@ -20,6 +21,7 @@ public class GetUserDetailRequestHandler : IRequestHandler<GetUserDetailRequest,
     public async Task<UserDto> Handle(GetUserDetailRequest request, CancellationToken cancellationToken)
     {
         var user = await _userRepository.Get(request.Uid);
+        if (user == null) throw new NotFoundException(nameof(user), request.Uid);
         return _mapper.Map<UserDto>(user);
     }
 }

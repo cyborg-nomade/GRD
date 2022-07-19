@@ -46,26 +46,20 @@ public class CreateReuniaoRequestHandler : IRequestHandler<CreateReuniaoRequest,
 
     public async Task<ReuniaoDto> Handle(CreateReuniaoRequest request, CancellationToken cancellationToken)
     {
-        var responsavelExists = await _userRepository.Exists(request.Uid);
-
-        if (!responsavelExists)
-        {
-            throw new NotFoundException("Usuário", responsavelExists);
-        }
-
-        var reuniaoValidator = new IReuniaoDtoValidator(_groupRepository, _authenticationService, _userRepository,
+        var reuniaoDtoValidator = new IReuniaoDtoValidator(_groupRepository, _authenticationService, _userRepository,
             _acaoRepository, _votoRepository, _participanteRepository);
-        var reuniaoValidationResult = await reuniaoValidator.ValidateAsync(request.CreateReuniaoDto, cancellationToken);
-
-        if (!reuniaoValidationResult.IsValid)
+        var reuniaoDtoValidationResult =
+            await reuniaoDtoValidator.ValidateAsync(request.CreateReuniaoDto, cancellationToken);
+        if (!reuniaoDtoValidationResult.IsValid)
         {
-            throw new ValidationException(reuniaoValidationResult);
+            throw new ValidationException(reuniaoDtoValidationResult);
         }
 
         var reuniao = _mapper.Map<Reuniao>(request.CreateReuniaoDto);
         reuniao.NumeroReuniao = await _sequenceControl.GetNextNumeroReuniao();
 
         var responsavel = await _userRepository.Get(request.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
 
         reuniao.OnSave(responsavel);
 

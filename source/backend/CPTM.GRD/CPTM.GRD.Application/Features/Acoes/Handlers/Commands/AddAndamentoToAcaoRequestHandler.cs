@@ -29,13 +29,6 @@ public class AddAndamentoToAcaoRequestHandler : IRequestHandler<AddAndamentoToAc
 
     public async Task<AcaoDto> Handle(AddAndamentoToAcaoRequest request, CancellationToken cancellationToken)
     {
-        var acaoExists = await _acaoRepository.Exists(request.Aid);
-
-        if (!acaoExists)
-        {
-            throw new NotFoundException("Ação", acaoExists);
-        }
-
         var andamentoDtoValidator = new IAndamentoDtoValidator(_authenticationService, _userRepository);
         var andamentoValidationResult =
             await andamentoDtoValidator.ValidateAsync(request.AndamentoDto, cancellationToken);
@@ -46,6 +39,7 @@ public class AddAndamentoToAcaoRequestHandler : IRequestHandler<AddAndamentoToAc
         }
 
         var acao = await _acaoRepository.Get(request.Aid);
+        if (acao == null) throw new NotFoundException(nameof(acao), request.Aid);
         var andamento = _mapper.Map<Andamento>(request.AndamentoDto);
 
         acao.AddAndamento(andamento);

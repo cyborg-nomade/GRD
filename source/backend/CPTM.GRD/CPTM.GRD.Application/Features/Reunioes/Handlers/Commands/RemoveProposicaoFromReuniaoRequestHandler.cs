@@ -32,30 +32,14 @@ public class
     public async Task<AddProposicaoToReuniaoDto> Handle(RemoveProposicaoFromReuniaoRequest request,
         CancellationToken cancellationToken)
     {
-        var reuniaoExists = await _reuniaoRepository.Exists(request.Rid);
-
-        if (!reuniaoExists)
-        {
-            throw new NotFoundException("Reunião", reuniaoExists);
-        }
-
-        var proposicaoExists = await _proposicaoRepository.Exists(request.Pid);
-
-        if (!proposicaoExists)
-        {
-            throw new NotFoundException("Proposição", proposicaoExists);
-        }
-
-        var responsavelExists = await _userRepository.Exists(request.Uid);
-
-        if (!responsavelExists)
-        {
-            throw new NotFoundException("Usuário", responsavelExists);
-        }
+        var proposicao = await _proposicaoRepository.Get(request.Pid);
+        if (proposicao == null) throw new NotFoundException(nameof(proposicao), request.Pid);
 
         var reuniao = await _reuniaoRepository.Get(request.Rid);
-        var proposicao = await _proposicaoRepository.Get(request.Pid);
+        if (reuniao == null) throw new NotFoundException(nameof(reuniao), request.Rid);
+
         var responsavel = await _userRepository.Get(request.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
 
         reuniao.RemoveProposicao(proposicao, responsavel);
 

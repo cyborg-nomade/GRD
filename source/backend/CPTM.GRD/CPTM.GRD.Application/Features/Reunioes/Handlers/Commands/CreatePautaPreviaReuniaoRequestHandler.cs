@@ -29,22 +29,11 @@ public class CreatePautaPreviaReuniaoRequestHandler : IRequestHandler<CreatePaut
 
     public async Task<ReuniaoDto> Handle(CreatePautaPreviaReuniaoRequest request, CancellationToken cancellationToken)
     {
-        var reuniaoExists = await _reuniaoRepository.Exists(request.Rid);
-
-        if (!reuniaoExists)
-        {
-            throw new NotFoundException("Reunião", reuniaoExists);
-        }
-
-        var responsavelExists = await _userRepository.Exists(request.Uid);
-
-        if (!responsavelExists)
-        {
-            throw new NotFoundException("Usuário", responsavelExists);
-        }
-
         var reuniao = await _reuniaoRepository.Get(request.Rid);
+        if (reuniao == null) throw new NotFoundException(nameof(reuniao), request.Rid);
+
         var responsavel = await _userRepository.Get(request.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
 
         reuniao.OnEmitPautaPrevia(responsavel, await _fileManagerService.CreatePautaPrevia(reuniao));
 
