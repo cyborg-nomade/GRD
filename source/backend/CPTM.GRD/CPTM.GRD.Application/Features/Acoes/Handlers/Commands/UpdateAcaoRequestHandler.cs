@@ -33,23 +33,24 @@ public class UpdateAcaoRequestHandler : IRequestHandler<UpdateAcaoRequest, AcaoD
     public async Task<AcaoDto> Handle(UpdateAcaoRequest request, CancellationToken cancellationToken)
     {
         var acaoDtoValidator =
-            new AcaoDtoValidator(_groupRepository, _authenticationService, _userRepository, _acaoRepository);
-        var acaoDtoValidationResult = await acaoDtoValidator.ValidateAsync(request.AcaoDto, cancellationToken);
+            new UpdateAcaoDtoValidator(_groupRepository, _authenticationService, _userRepository, _acaoRepository);
+        var acaoDtoValidationResult = await acaoDtoValidator.ValidateAsync(request.UpdateAcaoDto, cancellationToken);
         if (!acaoDtoValidationResult.IsValid)
         {
             throw new ValidationException(acaoDtoValidationResult);
         }
 
-        var savedAcao = await _acaoRepository.Get(request.AcaoDto.Id);
-        if (savedAcao == null) throw new NotFoundException(nameof(savedAcao), request.AcaoDto.Id);
+        var savedAcao = await _acaoRepository.Get(request.UpdateAcaoDto.Id);
+        if (savedAcao == null) throw new NotFoundException(nameof(savedAcao), request.UpdateAcaoDto.Id);
 
         var responsavel = await _userRepository.Get(request.Uid);
         if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
 
-        savedAcao.OnUpdate(Differentiator.GetDifferenceString<Acao>(savedAcao, _mapper.Map<Acao>(request.AcaoDto)),
+        savedAcao.OnUpdate(
+            Differentiator.GetDifferenceString<Acao>(savedAcao, _mapper.Map<Acao>(request.UpdateAcaoDto)),
             responsavel);
 
-        _mapper.Map(request.AcaoDto, savedAcao);
+        _mapper.Map(request.UpdateAcaoDto, savedAcao);
         var updatedAcao = await _acaoRepository.Update(savedAcao);
 
         return _mapper.Map<AcaoDto>(updatedAcao);

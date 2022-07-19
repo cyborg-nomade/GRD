@@ -1,9 +1,10 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl.Group;
+using CPTM.GRD.Application.DTOs.AccessControl.User.Interfaces;
 using CPTM.GRD.Common;
 
 namespace CPTM.GRD.Application.DTOs.AccessControl.User;
 
-public class UpdateUserDto : IUserDto
+public class UpdateUserDto : IBaseUserDto, IFullUserDto
 {
     public int Id { get; set; }
     public string Nome { get; set; } = string.Empty;

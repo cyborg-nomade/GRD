@@ -26,7 +26,7 @@ public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, UserD
 
     public async Task<UserDto> Handle(CreateUserRequest request, CancellationToken cancellationToken)
     {
-        var validator = new IUserDtoValidator(_authenticationService, _userRepository);
+        var validator = new CreateUserDtoValidator(_authenticationService, _userRepository);
         var validationResult = await validator.ValidateAsync(request.CreateUserDto, cancellationToken);
 
         if (!validationResult.IsValid)
