@@ -1,7 +1,7 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl.User;
 using CPTM.GRD.Common;
 
-namespace CPTM.GRD.Application.DTOs.Main.Acao.Children;
+namespace CPTM.GRD.Application.DTOs.Main.Acao.Children.Interfaces;
 
 public interface IAndamentoDto
 {

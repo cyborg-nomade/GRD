@@ -1,10 +1,11 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl.Group;
 using CPTM.GRD.Application.DTOs.AccessControl.User;
+using CPTM.GRD.Application.DTOs.Main.Acao.Interfaces;
 using CPTM.GRD.Common;
 
 namespace CPTM.GRD.Application.DTOs.Main.Acao;
 
-public class CreateAcaoDto : IAcaoDto
+public class CreateAcaoDto : IBaseAcaoDto
 {
     public TipoAcao Tipo { get; set; }
     public GroupDto DiretoriaRes { get; set; } = new GroupDto();

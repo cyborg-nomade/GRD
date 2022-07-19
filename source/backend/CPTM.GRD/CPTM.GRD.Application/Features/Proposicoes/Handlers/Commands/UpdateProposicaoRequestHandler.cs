@@ -4,9 +4,12 @@ using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Acoes;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes.Children;
+using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes.Children;
+using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Application.Util;
 using CPTM.GRD.Domain.Proposicoes;
@@ -24,10 +27,15 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
     private readonly IAcaoRepository _acaoRepository;
     private readonly IVotoRepository _votoRepository;
     private readonly IParticipanteRepository _participanteRepository;
+    private readonly IReuniaoRepository _reuniaoRepository;
+    private readonly IReuniaoStrictSequenceControl _reuniaoStrictSequence;
+    private readonly IProposicaoStrictSequenceControl _proposicaoStrictSequence;
 
     public UpdateProposicaoRequestHandler(IProposicaoRepository proposicaoRepository, IUserRepository userRepository,
         IMapper mapper, IGroupRepository groupRepository, IAuthenticationService authenticationService,
-        IAcaoRepository acaoRepository, IVotoRepository votoRepository, IParticipanteRepository participanteRepository)
+        IAcaoRepository acaoRepository, IVotoRepository votoRepository, IParticipanteRepository participanteRepository,
+        IReuniaoRepository reuniaoRepository, IReuniaoStrictSequenceControl reuniaoStrictSequence,
+        IProposicaoStrictSequenceControl proposicaoStrictSequence)
     {
         _proposicaoRepository = proposicaoRepository;
         _userRepository = userRepository;
@@ -37,30 +45,36 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
         _acaoRepository = acaoRepository;
         _votoRepository = votoRepository;
         _participanteRepository = participanteRepository;
+        _reuniaoRepository = reuniaoRepository;
+        _reuniaoStrictSequence = reuniaoStrictSequence;
+        _proposicaoStrictSequence = proposicaoStrictSequence;
     }
 
     public async Task<ProposicaoDto> Handle(UpdateProposicaoRequest request, CancellationToken cancellationToken)
     {
-        var responsavelExists = await _userRepository.Exists(request.Uid);
-        var validator = new ProposicaoDtoValidator(_groupRepository, _authenticationService, _userRepository,
-            _acaoRepository, _votoRepository, _participanteRepository);
-        var validationResult = await validator.ValidateAsync(request.ProposicaoDto, cancellationToken);
+        var proposicaoDtoValidator = new UpdateProposicaoDtoValidator(_groupRepository, _authenticationService,
+            _userRepository, _proposicaoRepository, _proposicaoStrictSequence);
+        var proposicaoDtoValidationResult =
+            await proposicaoDtoValidator.ValidateAsync(request.UpdateProposicaoDto, cancellationToken);
 
-        if (!(validationResult.IsValid || responsavelExists))
+        if (!proposicaoDtoValidationResult.IsValid)
         {
-            throw new Exception("Objetos inválidos");
+            throw new ValidationException(proposicaoDtoValidationResult);
         }
 
-        var savedProposicao = await _proposicaoRepository.Get(request.ProposicaoDto.Id);
+        var savedProposicao = await _proposicaoRepository.Get(request.UpdateProposicaoDto.Id);
+        if (savedProposicao == null)
+            throw new NotFoundException(nameof(savedProposicao), request.UpdateProposicaoDto.Id);
         var responsavel = await _userRepository.Get(request.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
 
         savedProposicao.OnUpdate(responsavel,
             Differentiator.GetDifferenceString<Proposicao>(savedProposicao,
-                _mapper.Map<Proposicao>(request.ProposicaoDto)));
+                _mapper.Map<Proposicao>(request.UpdateProposicaoDto)));
 
-        _mapper.Map(request.ProposicaoDto, savedProposicao);
-
+        _mapper.Map(request.UpdateProposicaoDto, savedProposicao);
         var updatedProposicao = await _proposicaoRepository.Update(savedProposicao);
+
         return _mapper.Map<ProposicaoDto>(updatedProposicao);
     }
 }

@@ -2,13 +2,14 @@
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.DTOs.AccessControl.Group.Validators;
 using CPTM.GRD.Application.DTOs.AccessControl.User.Validators;
+using CPTM.GRD.Application.DTOs.Main.Reuniao.Children.Interfaces;
 using FluentValidation;
 
-namespace CPTM.GRD.Application.DTOs.Main.Reuniao.Children.Validators;
+namespace CPTM.GRD.Application.DTOs.Main.Reuniao.Children.Validators.Interfaces;
 
-public class IParticipanteDtoValidator : AbstractValidator<IParticipanteDto>
+public class IBaseParticipanteDtoValidator : AbstractValidator<IBaseParticipanteDto>
 {
-    public IParticipanteDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
+    public IBaseParticipanteDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
         IUserRepository userRepository)
     {
         RuleFor(p => p.User).NotNull().NotEmpty()

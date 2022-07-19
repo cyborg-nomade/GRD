@@ -5,6 +5,7 @@ using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.DTOs.Main.Mixed;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 using MediatR;
 
@@ -31,18 +32,14 @@ public class
     public async Task<AddProposicaoToReuniaoDto> Handle(RemoveProposicaoFromReuniaoRequest request,
         CancellationToken cancellationToken)
     {
-        var reuniaoExists = await _reuniaoRepository.Exists(request.Rid);
-        var proposicaoExists = await _proposicaoRepository.Exists(request.Pid);
-        var responsavelExists = await _userRepository.Exists(request.Uid);
-
-        if (!(proposicaoExists || responsavelExists || reuniaoExists))
-        {
-            throw new Exception("Reunião, proposição ou responsável não encontrado");
-        }
+        var proposicao = await _proposicaoRepository.Get(request.Pid);
+        if (proposicao == null) throw new NotFoundException(nameof(proposicao), request.Pid);
 
         var reuniao = await _reuniaoRepository.Get(request.Rid);
-        var proposicao = await _proposicaoRepository.Get(request.Pid);
+        if (reuniao == null) throw new NotFoundException(nameof(reuniao), request.Rid);
+
         var responsavel = await _userRepository.Get(request.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
 
         reuniao.RemoveProposicao(proposicao, responsavel);
 

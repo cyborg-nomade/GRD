@@ -2,6 +2,7 @@
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Acoes;
 using CPTM.GRD.Application.DTOs.Main.Acao;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Acoes.Requests.Commands;
 using MediatR;
 
@@ -22,16 +23,11 @@ public class FinishAcaoRequestHandler : IRequestHandler<FinishAcaoRequest, AcaoD
 
     public async Task<AcaoDto> Handle(FinishAcaoRequest request, CancellationToken cancellationToken)
     {
-        var acaoExists = await _acaoRepository.Exists(request.Aid);
-        var responsavelExists = await _userRepository.Exists(request.Uid);
-
-        if (!(acaoExists || responsavelExists))
-        {
-            throw new Exception("Ação ou responsável não existe");
-        }
-
         var acao = await _acaoRepository.Get(request.Aid);
+        if (acao == null) throw new NotFoundException(nameof(acao), request.Aid);
+
         var responsavel = await _userRepository.Get(request.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
 
         acao.Finish(request.Status, responsavel);
 

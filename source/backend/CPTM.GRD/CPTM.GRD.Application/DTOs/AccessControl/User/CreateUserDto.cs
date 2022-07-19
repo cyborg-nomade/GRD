@@ -1,9 +1,10 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl.Group;
+using CPTM.GRD.Application.DTOs.AccessControl.User.Interfaces;
 using CPTM.GRD.Common;
 
 namespace CPTM.GRD.Application.DTOs.AccessControl.User;
 
-public class CreateUserDto : IUserDto
+public class CreateUserDto : IBaseUserDto, IUsernameAdUserDto
 {
     public string Nome { get; set; } = string.Empty;
     public string UsernameAd { get; set; } = string.Empty;

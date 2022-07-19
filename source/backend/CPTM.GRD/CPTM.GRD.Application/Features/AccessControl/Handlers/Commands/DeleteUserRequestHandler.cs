@@ -1,4 +1,5 @@
 ﻿using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.AccessControl.Requests.Commands;
 using MediatR;
 
@@ -19,7 +20,7 @@ public class DeleteUserRequestHandler : IRequestHandler<DeleteUserRequest, Unit>
 
         if (!userExists)
         {
-            throw new Exception("Usuário não encontrado");
+            throw new NotFoundException("Usuário", userExists);
         }
 
         await _userRepository.Delete(request.Uid);

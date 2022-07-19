@@ -6,6 +6,7 @@ using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.DTOs.Main.Acao.Validators;
 using CPTM.GRD.Application.DTOs.Main.Mixed;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 using MediatR;
 
@@ -31,22 +32,19 @@ public class RemoveAcaoFromReuniaoRequestHandler : IRequestHandler<RemoveAcaoFro
     public async Task<AddAcaoToReuniaoDto> Handle(RemoveAcaoFromReuniaoRequest request,
         CancellationToken cancellationToken)
     {
-        var acaoExists = await _acaoRepository.Exists(request.Aid);
-        var reuniaoExists = await _reuniaoRepository.Exists(request.Rid);
-        var responsavelExists = await _userRepository.Exists(request.Uid);
-
-        if (!(acaoExists || reuniaoExists || responsavelExists))
-        {
-            throw new Exception("Objetos inválidos");
-        }
-
         var acao = await _acaoRepository.Get(request.Aid);
+        if (acao == null) throw new NotFoundException(nameof(acao), request.Aid);
+
         var reuniao = await _reuniaoRepository.Get(request.Rid);
+        if (reuniao == null) throw new NotFoundException(nameof(reuniao), request.Rid);
+
         var responsavel = await _userRepository.Get(request.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
 
         reuniao.RemoveAcao(acao, responsavel);
 
         var updatedReuniao = await _reuniaoRepository.Update(reuniao);
+
         return new AddAcaoToReuniaoDto()
         {
             AcaoDto = _mapper.Map<AcaoDto>(acao),

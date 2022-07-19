@@ -2,12 +2,14 @@
 using CPTM.GRD.Application.DTOs.AccessControl.User;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Resolucao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto;
+using CPTM.GRD.Application.DTOs.Main.Proposicao.Interfaces;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
 using CPTM.GRD.Common;
 
 namespace CPTM.GRD.Application.DTOs.Main.Proposicao;
 
-public class ProposicaoDto : IProposicaoDto
+public class ProposicaoDto : IBaseProposicaoDto, IFullProposicaoDto, IOwnerPropertiesProposicaoDto,
+    IAutoPropertiesProposicaoDto
 {
     public int Id { get; set; }
     public int IdPrd { get; set; }

@@ -5,6 +5,8 @@ using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
 using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
+using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators.Interfaces;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Domain.Proposicoes;
 using MediatR;
@@ -35,17 +37,17 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
 
     public async Task<ProposicaoDto> Handle(CreateProposicaoRequest request, CancellationToken cancellationToken)
     {
-        var validator = new IProposicaoDtoValidator(_groupRepository, _authenticationService, _userRepository);
-        var validationResult = await validator.ValidateAsync(request.CreateProposicaoDto, cancellationToken);
-
-        if (!validationResult.IsValid)
+        var proposicaoDtoValidator =
+            new CreateProposicaoDtoValidator(_groupRepository, _authenticationService, _userRepository);
+        var proposicaoDtoValidationResult =
+            await proposicaoDtoValidator.ValidateAsync(request.CreateProposicaoDto, cancellationToken);
+        if (!proposicaoDtoValidationResult.IsValid)
         {
-            throw new Exception("Objeto inválido");
+            throw new ValidationException(proposicaoDtoValidationResult);
         }
 
         var proposicao = _mapper.Map<Proposicao>(request.CreateProposicaoDto);
         proposicao.IdPrd = await _sequenceControl.GetNextIdPrd();
-
         proposicao.OnSaveProposicao();
 
         var addedProposicao = await _proposicaoRepository.Add(proposicao);

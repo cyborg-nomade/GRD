@@ -2,13 +2,14 @@
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.DTOs.AccessControl.Group.Validators;
 using CPTM.GRD.Application.DTOs.AccessControl.User.Validators;
+using CPTM.GRD.Application.DTOs.Main.Acao.Interfaces;
 using FluentValidation;
 
-namespace CPTM.GRD.Application.DTOs.Main.Acao.Validators;
+namespace CPTM.GRD.Application.DTOs.Main.Acao.Validators.Interfaces;
 
-public class IAcaoDtoValidator : AbstractValidator<IAcaoDto>
+public class IBaseAcaoDtoValidator : AbstractValidator<IBaseAcaoDto>
 {
-    public IAcaoDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
+    public IBaseAcaoDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
         IUserRepository userRepository)
     {
         RuleFor(p => p.Tipo).NotNull().NotEmpty().IsInEnum();

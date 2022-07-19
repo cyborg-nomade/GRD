@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Queries;
 using MediatR;
 
@@ -20,6 +21,7 @@ public class GetReuniaoDetailRequestHandler : IRequestHandler<GetReuniaoDetailRe
     public async Task<ReuniaoDto> Handle(GetReuniaoDetailRequest request, CancellationToken cancellationToken)
     {
         var reuniao = await _reuniaoRepository.Get(request.Rid);
+        if (reuniao == null) throw new NotFoundException(nameof(reuniao), request.Rid);
         return _mapper.Map<ReuniaoDto>(reuniao);
     }
 }

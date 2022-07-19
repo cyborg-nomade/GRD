@@ -2,19 +2,16 @@
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.DTOs.AccessControl.Group.Validators;
 using CPTM.GRD.Application.DTOs.AccessControl.User.Validators;
+using CPTM.GRD.Application.DTOs.Main.Proposicao.Interfaces;
 using FluentValidation;
 
-namespace CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
+namespace CPTM.GRD.Application.DTOs.Main.Proposicao.Validators.Interfaces;
 
-public class IProposicaoDtoValidator : AbstractValidator<IProposicaoDto>
+public class IBaseProposicaoDtoValidator : AbstractValidator<IBaseProposicaoDto>
 {
-    public IProposicaoDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
+    public IBaseProposicaoDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
         IUserRepository userRepository)
     {
-        RuleFor(p => p.Criador).NotNull().NotEmpty()
-            .SetValidator(new UserDtoValidator(authenticationService, userRepository));
-        RuleFor(p => p.AreaSolicitante).NotNull().NotEmpty()
-            .SetValidator(new GroupDtoValidator(groupRepository, authenticationService, userRepository));
         RuleFor(p => p.Titulo).NotNull().NotEmpty().MaximumLength(250);
         RuleFor(p => p.Objeto).NotNull().NotEmpty().IsInEnum();
         RuleFor(p => p.DescricaoProposicao).NotNull().NotEmpty();

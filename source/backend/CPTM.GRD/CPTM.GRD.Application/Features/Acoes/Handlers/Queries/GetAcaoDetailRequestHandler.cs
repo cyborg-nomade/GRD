@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Persistence.Acoes;
 using CPTM.GRD.Application.DTOs.Main.Acao;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Acoes.Requests.Queries;
 using MediatR;
 
@@ -20,6 +21,7 @@ public class GetAcaoDetailRequestHandler : IRequestHandler<GetAcaoDetailRequest,
     public async Task<AcaoDto> Handle(GetAcaoDetailRequest request, CancellationToken cancellationToken)
     {
         var acao = await _acaoRepository.Get(request.Aid);
+        if (acao == null) throw new NotFoundException(nameof(acao), request.Aid);
         return _mapper.Map<AcaoDto>(acao);
     }
 }

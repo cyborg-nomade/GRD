@@ -3,6 +3,7 @@ using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 using MediatR;
 
@@ -27,16 +28,10 @@ public class CreateAtaReuniaoRequestHandler : IRequestHandler<CreateAtaReuniaoRe
 
     public async Task<ReuniaoDto> Handle(CreateAtaReuniaoRequest request, CancellationToken cancellationToken)
     {
-        var reuniaoExists = await _reuniaoRepository.Exists(request.Rid);
-        var responsavelExists = await _userRepository.Exists(request.Uid);
-
-        if (!(responsavelExists || reuniaoExists))
-        {
-            throw new Exception("Reunião ou responsável não encontrado");
-        }
-
         var reuniao = await _reuniaoRepository.Get(request.Rid);
+        if (reuniao == null) throw new NotFoundException(nameof(reuniao), request.Rid);
         var responsavel = await _userRepository.Get(request.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
 
         reuniao.OnEmitAta(responsavel, await _fileManagerService.CreateAta(reuniao));
 

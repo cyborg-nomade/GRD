@@ -3,6 +3,7 @@ using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.DTOs.AccessControl.User;
 using CPTM.GRD.Application.DTOs.AccessControl.User.Validators;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.AccessControl.Requests.Commands;
 using CPTM.GRD.Domain.AccessControl;
 using MediatR;
@@ -25,12 +26,12 @@ public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, UserD
 
     public async Task<UserDto> Handle(CreateUserRequest request, CancellationToken cancellationToken)
     {
-        var validator = new IUserDtoValidator(_authenticationService, _userRepository);
+        var validator = new CreateUserDtoValidator(_authenticationService, _userRepository);
         var validationResult = await validator.ValidateAsync(request.CreateUserDto, cancellationToken);
 
         if (!validationResult.IsValid)
         {
-            throw new Exception("Objeto inválido");
+            throw new ValidationException(validationResult);
         }
 
         var user = _mapper.Map<User>(request.CreateUserDto);

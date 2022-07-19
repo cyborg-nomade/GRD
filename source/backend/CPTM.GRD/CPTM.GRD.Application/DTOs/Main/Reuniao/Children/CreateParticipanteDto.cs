@@ -1,9 +1,10 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl.Group;
 using CPTM.GRD.Application.DTOs.AccessControl.User;
+using CPTM.GRD.Application.DTOs.Main.Reuniao.Children.Interfaces;
 
 namespace CPTM.GRD.Application.DTOs.Main.Reuniao.Children;
 
-public class CreateParticipanteDto : IParticipanteDto
+public class CreateParticipanteDto : IBaseParticipanteDto
 {
     public UserDto User { get; set; } = new UserDto();
     public GroupDto DiretoriaArea { get; set; } = new GroupDto();
