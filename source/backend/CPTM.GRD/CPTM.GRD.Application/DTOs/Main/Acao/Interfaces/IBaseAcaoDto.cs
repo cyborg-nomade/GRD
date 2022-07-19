@@ -2,9 +2,9 @@
 using CPTM.GRD.Application.DTOs.AccessControl.User;
 using CPTM.GRD.Common;
 
-namespace CPTM.GRD.Application.DTOs.Main.Acao;
+namespace CPTM.GRD.Application.DTOs.Main.Acao.Interfaces;
 
-public interface IAcaoDto
+public interface IBaseAcaoDto
 {
     public TipoAcao Tipo { get; set; }
     public GroupDto DiretoriaRes { get; set; }

@@ -31,7 +31,7 @@ public class CreateAcaoRequestHandler : IRequestHandler<CreateAcaoRequest, AcaoD
 
     public async Task<AcaoDto> Handle(CreateAcaoRequest request, CancellationToken cancellationToken)
     {
-        var acaoDtoValidator = new IAcaoDtoValidator(_groupRepository, _authenticationService, _userRepository);
+        var acaoDtoValidator = new CreateAcaoDtoValidator(_groupRepository, _authenticationService, _userRepository);
         var acaoDtoValidationResult = await acaoDtoValidator.ValidateAsync(request.CreateAcaoDto, cancellationToken);
         if (!acaoDtoValidationResult.IsValid)
         {
