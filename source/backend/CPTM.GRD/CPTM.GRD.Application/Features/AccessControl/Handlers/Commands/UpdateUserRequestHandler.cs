@@ -25,16 +25,16 @@ public class UpdateUserRequestHandler : IRequestHandler<UpdateUserRequest, UserD
 
     public async Task<UserDto> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
     {
-        var validator = new UserDtoValidator(_authenticationService, _userRepository);
-        var validationResult = await validator.ValidateAsync(request.UserDto, cancellationToken);
+        var validator = new UpdateUserDtoValidator(_authenticationService, _userRepository);
+        var validationResult = await validator.ValidateAsync(request.UpdateUserDto, cancellationToken);
 
         if (!validationResult.IsValid)
         {
             throw new ValidationException(validationResult);
         }
 
-        var savedUser = await _userRepository.Get(request.UserDto.Id);
-        _mapper.Map(request.UserDto, savedUser);
+        var savedUser = await _userRepository.Get(request.UpdateUserDto.Id);
+        _mapper.Map(request.UpdateUserDto, savedUser);
         var updatedUser = await _userRepository.Update(savedUser);
         return _mapper.Map<UserDto>(updatedUser);
     }

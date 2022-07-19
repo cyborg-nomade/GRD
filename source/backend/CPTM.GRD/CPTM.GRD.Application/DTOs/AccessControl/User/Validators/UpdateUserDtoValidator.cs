@@ -4,11 +4,11 @@ using FluentValidation;
 
 namespace CPTM.GRD.Application.DTOs.AccessControl.User.Validators;
 
-public class UserDtoValidator : AbstractValidator<UserDto>
+public class UpdateUserDtoValidator : AbstractValidator<UpdateUserDto>
 {
-    public UserDtoValidator(IAuthenticationService authenticationService, IUserRepository userRepository)
+    public UpdateUserDtoValidator(IAuthenticationService authenticationService, IUserRepository userRepository)
     {
-        Include(new CreateUserDtoValidator(authenticationService, userRepository));
+        Include(new IUserDtoValidator(authenticationService, userRepository));
 
         RuleFor(p => p.Id).NotNull().NotEmpty().GreaterThan(0).MustAsync(async (id, token) =>
         {

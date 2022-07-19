@@ -10,11 +10,6 @@ public class IUserDtoValidator : AbstractValidator<IUserDto>
     public IUserDtoValidator(IAuthenticationService authenticationService, IUserRepository userRepository)
     {
         RuleFor(p => p.Nome).NotNull().NotEmpty().MaximumLength(250);
-        RuleFor(p => p.UsernameAd).NotNull().NotEmpty().MaximumLength(50).MustAsync(async (username, token) =>
-        {
-            var usernameExists = await authenticationService.ExistsAd(username);
-            return !usernameExists;
-        });
         RuleFor(p => p.NivelAcesso).NotNull().NotEmpty().IsInEnum();
         RuleForEach(p => p.AreasAcesso).NotNull().NotEmpty()
             .SetValidator(new IGroupDtoValidator(authenticationService, userRepository));
