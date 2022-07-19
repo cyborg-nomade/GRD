@@ -5,6 +5,7 @@ using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
 using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
+using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators.Interfaces;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Domain.Proposicoes;
@@ -37,7 +38,7 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
     public async Task<ProposicaoDto> Handle(CreateProposicaoRequest request, CancellationToken cancellationToken)
     {
         var proposicaoDtoValidator =
-            new IProposicaoDtoValidator(_groupRepository, _authenticationService, _userRepository);
+            new CreateProposicaoDtoValidator(_groupRepository, _authenticationService, _userRepository);
         var proposicaoDtoValidationResult =
             await proposicaoDtoValidator.ValidateAsync(request.CreateProposicaoDto, cancellationToken);
         if (!proposicaoDtoValidationResult.IsValid)

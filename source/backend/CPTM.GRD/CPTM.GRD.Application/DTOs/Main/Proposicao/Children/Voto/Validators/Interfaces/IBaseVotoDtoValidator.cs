@@ -1,13 +1,14 @@
 ﻿using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
+using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto.Interfaces;
 using CPTM.GRD.Application.DTOs.Main.Reuniao.Children.Validators;
 using FluentValidation;
 
-namespace CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto.Validators;
+namespace CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto.Validators.Interfaces;
 
-public class IVotoDtoValidator : AbstractValidator<IVotoDto>
+public class IBaseVotoDtoValidator : AbstractValidator<IBaseVotoDto>
 {
-    public IVotoDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
+    public IBaseVotoDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
         IUserRepository userRepository)
     {
         RuleFor(p => p.Participante).NotNull().NotEmpty()

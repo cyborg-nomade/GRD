@@ -2,12 +2,10 @@
 using CPTM.GRD.Application.DTOs.AccessControl.User;
 using CPTM.GRD.Common;
 
-namespace CPTM.GRD.Application.DTOs.Main.Proposicao;
+namespace CPTM.GRD.Application.DTOs.Main.Proposicao.Interfaces;
 
-public interface IProposicaoDto
+public interface IBaseProposicaoDto
 {
-    public UserDto Criador { get; set; }
-    public GroupDto AreaSolicitante { get; set; }
     public string Titulo { get; set; }
     public ObjetoProposicao Objeto { get; set; }
     public string DescricaoProposicao { get; set; }

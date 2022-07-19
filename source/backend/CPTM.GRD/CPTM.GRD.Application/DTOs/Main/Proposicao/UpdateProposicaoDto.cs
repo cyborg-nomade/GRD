@@ -1,14 +1,17 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl.Group;
 using CPTM.GRD.Application.DTOs.AccessControl.User;
+using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Resolucao;
+using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Interfaces;
+using CPTM.GRD.Application.DTOs.Main.Reuniao;
 using CPTM.GRD.Common;
 
 namespace CPTM.GRD.Application.DTOs.Main.Proposicao;
 
-public class CreateProposicaoDto : IBaseProposicaoDto, IOwnerPropertiesProposicaoDto
+public class UpdateProposicaoDto : IBaseProposicaoDto, IFullProposicaoDto
 {
-    public UserDto Criador { get; set; } = new UserDto();
-    public GroupDto AreaSolicitante { get; set; } = new GroupDto();
+    public int Id { get; set; }
+    public int IdPrd { get; set; }
     public string Titulo { get; set; } = string.Empty;
     public ObjetoProposicao Objeto { get; set; }
     public string DescricaoProposicao { get; set; } = string.Empty;
@@ -47,6 +50,6 @@ public class CreateProposicaoDto : IBaseProposicaoDto, IOwnerPropertiesProposica
     public string RavFilePath { get; set; } = string.Empty;
     public string CronogramaFisFinFilePath { get; set; } = string.Empty;
     public string PcaFilePath { get; set; } = string.Empty;
-    public ICollection<string> OutrosFilePath { get; set; } = new List<string>();
+    public ICollection<string> OutrosFilePath { get; set; } = new HashSet<string>();
     public int? Seq { get; set; }
 }

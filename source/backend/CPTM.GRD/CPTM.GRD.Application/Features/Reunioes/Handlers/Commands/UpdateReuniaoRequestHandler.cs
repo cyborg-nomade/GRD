@@ -2,6 +2,7 @@
 using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Acoes;
+using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes.Children;
@@ -26,12 +27,15 @@ public class UpdateReuniaoRequestHandler : IRequestHandler<UpdateReuniaoRequest,
     private readonly IAcaoRepository _acaoRepository;
     private readonly IVotoRepository _votoRepository;
     private readonly IParticipanteRepository _participanteRepository;
-    private readonly IReuniaoStrictSequenceControl _strictSequence;
+    private readonly IReuniaoStrictSequenceControl _reuniaoStrictSequence;
+    private readonly IProposicaoRepository _proposicaoRepository;
+    private readonly IProposicaoStrictSequenceControl _proposicaoStrictSequence;
 
     public UpdateReuniaoRequestHandler(IReuniaoRepository reuniaoRepository,
         IUserRepository userRepository, IMapper mapper, IGroupRepository groupRepository,
         IAuthenticationService authenticationService, IAcaoRepository acaoRepository, IVotoRepository votoRepository,
-        IParticipanteRepository participanteRepository, IReuniaoStrictSequenceControl strictSequence)
+        IParticipanteRepository participanteRepository, IReuniaoStrictSequenceControl reuniaoStrictSequence,
+        IProposicaoRepository proposicaoRepository, IProposicaoStrictSequenceControl proposicaoStrictSequence)
     {
         _reuniaoRepository = reuniaoRepository;
         _userRepository = userRepository;
@@ -41,13 +45,16 @@ public class UpdateReuniaoRequestHandler : IRequestHandler<UpdateReuniaoRequest,
         _acaoRepository = acaoRepository;
         _votoRepository = votoRepository;
         _participanteRepository = participanteRepository;
-        _strictSequence = strictSequence;
+        _reuniaoStrictSequence = reuniaoStrictSequence;
+        _proposicaoRepository = proposicaoRepository;
+        _proposicaoStrictSequence = proposicaoStrictSequence;
     }
 
     public async Task<ReuniaoDto> Handle(UpdateReuniaoRequest request, CancellationToken cancellationToken)
     {
         var reuniaoDtoValidator = new ReuniaoDtoValidator(_groupRepository, _authenticationService, _userRepository,
-            _acaoRepository, _votoRepository, _participanteRepository, _reuniaoRepository, _strictSequence);
+            _acaoRepository, _votoRepository, _participanteRepository, _reuniaoRepository, _reuniaoStrictSequence,
+            _proposicaoRepository, _proposicaoStrictSequence);
         var reuniaoDtoValidationResult = await reuniaoDtoValidator.ValidateAsync(request.ReuniaoDto, cancellationToken);
         if (!reuniaoDtoValidationResult.IsValid)
         {

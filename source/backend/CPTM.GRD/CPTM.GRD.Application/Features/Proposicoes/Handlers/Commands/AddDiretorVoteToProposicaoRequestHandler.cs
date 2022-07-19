@@ -4,6 +4,7 @@ using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto.Validators;
+using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto.Validators.Interfaces;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Domain.Proposicoes.Children;
@@ -40,7 +41,8 @@ public class
 
         foreach (var voteWithAjustes in request.VotesWithAjustes)
         {
-            var votoRdDtoValidator = new IVotoDtoValidator(_groupRepository, _authenticationService, _userRepository);
+            var votoRdDtoValidator =
+                new CreateVotoDtoValidator(_groupRepository, _authenticationService, _userRepository);
             var votoRdDtoValidationResult =
                 await votoRdDtoValidator.ValidateAsync(voteWithAjustes.VotoDto, cancellationToken);
             if (!votoRdDtoValidationResult.IsValid)
