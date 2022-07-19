@@ -9,6 +9,7 @@ using CPTM.GRD.Application.Contracts.Persistence.Reunioes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
 using CPTM.GRD.Application.DTOs.Main.Reuniao.Validators;
+using CPTM.GRD.Application.DTOs.Main.Reuniao.Validators.Interfaces;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 using CPTM.GRD.Domain.Reunioes;
@@ -52,7 +53,8 @@ public class CreateReuniaoRequestHandler : IRequestHandler<CreateReuniaoRequest,
 
     public async Task<ReuniaoDto> Handle(CreateReuniaoRequest request, CancellationToken cancellationToken)
     {
-        var reuniaoDtoValidator = new IReuniaoDtoValidator(_groupRepository, _authenticationService, _userRepository,
+        var reuniaoDtoValidator = new CreateReuniaoDtoValidator(_groupRepository, _authenticationService,
+            _userRepository,
             _acaoRepository, _votoRepository, _participanteRepository, _reuniaoRepository, _reuniaoSequenceControl,
             _proposicaoRepository, _proposicaoStrictSequence);
         var reuniaoDtoValidationResult =

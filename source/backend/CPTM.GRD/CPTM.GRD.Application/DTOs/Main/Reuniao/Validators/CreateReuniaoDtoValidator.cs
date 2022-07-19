@@ -11,9 +11,9 @@ using FluentValidation;
 
 namespace CPTM.GRD.Application.DTOs.Main.Reuniao.Validators;
 
-public class ReuniaoDtoValidator : AbstractValidator<ReuniaoDto>
+public class CreateReuniaoDtoValidator : AbstractValidator<CreateReuniaoDto>
 {
-    public ReuniaoDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
+    public CreateReuniaoDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
         IUserRepository userRepository, IAcaoRepository acaoRepository, IVotoRepository votoRepository,
         IParticipanteRepository participanteRepository, IReuniaoRepository reuniaoRepository,
         IReuniaoStrictSequenceControl reuniaoStrictSequence, IProposicaoRepository proposicaoRepository,
@@ -22,8 +22,5 @@ public class ReuniaoDtoValidator : AbstractValidator<ReuniaoDto>
         Include(new IBaseReuniaoDtoValidator(groupRepository, authenticationService, userRepository, acaoRepository,
             votoRepository, participanteRepository, reuniaoRepository, reuniaoStrictSequence, proposicaoRepository,
             proposicaoStrictSequence));
-
-        Include(new IFullReuniaoDtoValidator(reuniaoRepository, reuniaoStrictSequence));
-        Include(new IAutoPropertiesReuniaoDtoValidator());
     }
 }

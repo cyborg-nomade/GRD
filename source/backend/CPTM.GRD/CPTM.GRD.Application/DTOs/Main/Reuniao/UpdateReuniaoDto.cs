@@ -8,7 +8,7 @@ using CPTM.GRD.Common;
 
 namespace CPTM.GRD.Application.DTOs.Main.Reuniao;
 
-public class CreateReuniaoDto : IBaseReuniaoDto
+public class UpdateReuniaoDto : IBaseReuniaoDto, IFullReuniaoDto
 {
     public DateOnly Data { get; set; }
     public TimeOnly Horario { get; set; }
@@ -24,4 +24,6 @@ public class CreateReuniaoDto : IBaseReuniaoDto
     public string? Comunicado { get; set; }
     public string? OutrasObservacoes { get; set; }
     public string? MensagemEMail { get; set; }
+    public int Id { get; set; }
+    public int NumeroReuniao { get; set; }
 }

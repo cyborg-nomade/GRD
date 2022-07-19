@@ -5,6 +5,6 @@ namespace CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 
 public class UpdateReuniaoRequest : IRequest<ReuniaoDto>
 {
-    public ReuniaoDto ReuniaoDto { get; set; } = new ReuniaoDto();
+    public UpdateReuniaoDto UpdateReuniaoDto { get; set; } = new UpdateReuniaoDto();
     public int Uid { get; set; }
 }

@@ -7,15 +7,18 @@ using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
 using CPTM.GRD.Application.DTOs.Main.Acao.Validators;
+using CPTM.GRD.Application.DTOs.Main.Acao.Validators.Interfaces;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
 using CPTM.GRD.Application.DTOs.Main.Reuniao.Children.Validators;
+using CPTM.GRD.Application.DTOs.Main.Reuniao.Children.Validators.Interfaces;
+using CPTM.GRD.Application.DTOs.Main.Reuniao.Interfaces;
 using FluentValidation;
 
-namespace CPTM.GRD.Application.DTOs.Main.Reuniao.Validators;
+namespace CPTM.GRD.Application.DTOs.Main.Reuniao.Validators.Interfaces;
 
-public class IReuniaoDtoValidator : AbstractValidator<IReuniaoDto>
+public class IBaseReuniaoDtoValidator : AbstractValidator<IBaseReuniaoDto>
 {
-    public IReuniaoDtoValidator(IGroupRepository groupRepository,
+    public IBaseReuniaoDtoValidator(IGroupRepository groupRepository,
         IAuthenticationService authenticationService,
         IUserRepository userRepository,
         IAcaoRepository acaoRepository,
@@ -41,12 +44,10 @@ public class IReuniaoDtoValidator : AbstractValidator<IReuniaoDto>
                 proposicaoRepository, proposicaoStrictSequence));
         RuleFor(p => p.Participantes).NotNull().NotEmpty();
         RuleForEach(p => p.Participantes)
-            .SetValidator(new ParticipanteDtoValidator(groupRepository, authenticationService, userRepository,
-                participanteRepository));
+            .SetValidator(new IBaseParticipanteDtoValidator(groupRepository, authenticationService, userRepository));
         RuleForEach(p => p.ParticipantesPrevia)
-            .SetValidator(new ParticipanteDtoValidator(groupRepository, authenticationService, userRepository,
-                participanteRepository));
+            .SetValidator(new IBaseParticipanteDtoValidator(groupRepository, authenticationService, userRepository));
         RuleForEach(p => p.Acoes)
-            .SetValidator(new AcaoDtoValidator(groupRepository, authenticationService, userRepository, acaoRepository));
+            .SetValidator(new IBaseAcaoDtoValidator(groupRepository, authenticationService, userRepository));
     }
 }

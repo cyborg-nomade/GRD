@@ -52,26 +52,28 @@ public class UpdateReuniaoRequestHandler : IRequestHandler<UpdateReuniaoRequest,
 
     public async Task<ReuniaoDto> Handle(UpdateReuniaoRequest request, CancellationToken cancellationToken)
     {
-        var reuniaoDtoValidator = new ReuniaoDtoValidator(_groupRepository, _authenticationService, _userRepository,
+        var reuniaoDtoValidator = new UpdateReuniaoDtoValidator(_groupRepository, _authenticationService,
+            _userRepository,
             _acaoRepository, _votoRepository, _participanteRepository, _reuniaoRepository, _reuniaoStrictSequence,
             _proposicaoRepository, _proposicaoStrictSequence);
-        var reuniaoDtoValidationResult = await reuniaoDtoValidator.ValidateAsync(request.ReuniaoDto, cancellationToken);
+        var reuniaoDtoValidationResult =
+            await reuniaoDtoValidator.ValidateAsync(request.UpdateReuniaoDto, cancellationToken);
         if (!reuniaoDtoValidationResult.IsValid)
         {
             throw new ValidationException(reuniaoDtoValidationResult);
         }
 
-        var savedReuniao = await _reuniaoRepository.Get(request.ReuniaoDto.Id);
-        if (savedReuniao == null) throw new NotFoundException(nameof(savedReuniao), request.ReuniaoDto.Id);
+        var savedReuniao = await _reuniaoRepository.Get(request.UpdateReuniaoDto.Id);
+        if (savedReuniao == null) throw new NotFoundException(nameof(savedReuniao), request.UpdateReuniaoDto.Id);
 
         var responsavel = await _userRepository.Get(request.Uid);
         if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
 
         savedReuniao.OnUpdate(responsavel, Differentiator.GetDifferenceString<Reuniao>(
             savedReuniao,
-            _mapper.Map<Reuniao>(request.ReuniaoDto)));
+            _mapper.Map<Reuniao>(request.UpdateReuniaoDto)));
 
-        _mapper.Map(request.ReuniaoDto, savedReuniao);
+        _mapper.Map(request.UpdateReuniaoDto, savedReuniao);
         var updatedReuniao = await _reuniaoRepository.Update(savedReuniao);
 
         return _mapper.Map<ReuniaoDto>(updatedReuniao);
