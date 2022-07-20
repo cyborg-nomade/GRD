@@ -1,5 +1,16 @@
-﻿namespace CPTM.GRD.Persistence.Repositories.StrictSequenceControl;
+﻿using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
 
-public class ReuniaoStrictSequenceControl
+namespace CPTM.GRD.Persistence.Repositories.StrictSequenceControl;
+
+public class ReuniaoStrictSequenceControl : IReuniaoStrictSequenceControl
 {
+    public Task<int> GetNextNumeroReuniao()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> IsValid(int numeroReuniao)
+    {
+        throw new NotImplementedException();
+    }
 }

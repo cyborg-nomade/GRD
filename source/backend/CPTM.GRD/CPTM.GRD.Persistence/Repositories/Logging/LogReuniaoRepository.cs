@@ -1,5 +1,11 @@
-﻿namespace CPTM.GRD.Persistence.Repositories.Logging;
+﻿using CPTM.GRD.Application.Contracts.Persistence.Logging;
+using CPTM.GRD.Domain.Logging;
 
-public class LogReuniaoRepository
+namespace CPTM.GRD.Persistence.Repositories.Logging;
+
+public class LogReuniaoRepository : GenericRepository<LogReuniao>, ILogReuniaoRepository
 {
+    public LogReuniaoRepository(GrdContext grdContext) : base(grdContext)
+    {
+    }
 }
