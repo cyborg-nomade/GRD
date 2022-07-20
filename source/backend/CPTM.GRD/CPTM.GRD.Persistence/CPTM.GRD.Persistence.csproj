@@ -27,7 +27,6 @@
     <Folder Include="Repositories\AccessControl\" />
     <Folder Include="Repositories\Acoes\Children\" />
     <Folder Include="Repositories\Logging\" />
-    <Folder Include="Repositories\StrictSequenceControl\" />
     <Folder Include="Repositories\Proposicoes\Children\" />
     <Folder Include="Repositories\Reunioes\Children\" />
   </ItemGroup>

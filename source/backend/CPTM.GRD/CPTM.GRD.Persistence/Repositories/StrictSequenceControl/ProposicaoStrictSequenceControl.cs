@@ -4,13 +4,38 @@ namespace CPTM.GRD.Persistence.Repositories.StrictSequenceControl;
 
 public class ProposicaoStrictSequenceControl : IProposicaoStrictSequenceControl
 {
-    public Task<int> GetNextIdPrd()
+    private readonly string _controlFilesDirPath = Path.Combine(Directory.GetCurrentDirectory(), "ControlFiles");
+    private const string ControlFileName = "proposicaoControl.txt";
+    private const int InitialValue = 0;
+
+    public ProposicaoStrictSequenceControl()
     {
-        throw new NotImplementedException();
+        if (!Directory.Exists(_controlFilesDirPath))
+        {
+            Directory.CreateDirectory(_controlFilesDirPath);
+        }
+
+        if (!File.Exists(Path.Combine(_controlFilesDirPath, ControlFileName)))
+        {
+            File.WriteAllText(Path.Combine(_controlFilesDirPath, ControlFileName),
+                InitialValue.ToString());
+        }
     }
 
-    public Task<bool> IsValid(int idprd)
+    public async Task<int> GetNextIdPrd()
     {
-        throw new NotImplementedException();
+        var fileLines = await File.ReadAllLinesAsync(Path.Combine(_controlFilesDirPath, ControlFileName));
+        var currentValue = int.Parse(fileLines[0]);
+        var nextValue = ++currentValue;
+        await File.WriteAllTextAsync(Path.Combine(_controlFilesDirPath, ControlFileName),
+            nextValue.ToString());
+        return nextValue;
+    }
+
+    public async Task<bool> IsValid(int idprd)
+    {
+        var fileLines = await File.ReadAllLinesAsync(Path.Combine(_controlFilesDirPath, ControlFileName));
+        var currentValue = int.Parse(fileLines[0]);
+        return idprd < currentValue;
     }
 }
