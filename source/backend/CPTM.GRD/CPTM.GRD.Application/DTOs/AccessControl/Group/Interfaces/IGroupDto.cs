@@ -1,6 +1,6 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl.User;
 
-namespace CPTM.GRD.Application.DTOs.AccessControl.Group;
+namespace CPTM.GRD.Application.DTOs.AccessControl.Group.Interfaces;
 
 public interface IGroupDto
 {
