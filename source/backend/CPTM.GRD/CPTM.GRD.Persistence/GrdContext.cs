@@ -9,6 +9,8 @@ using CPTM.GRD.Domain.Reunioes.Children;
 using CPTM.GRD.Persistence.ConfigurationTables;
 using CPTM.GRD.Persistence.Views;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Newtonsoft.Json;
 
 namespace CPTM.GRD.Persistence
 {
@@ -54,6 +56,28 @@ namespace CPTM.GRD.Persistence
         {
             modelBuilder.HasDefaultSchema("GRD");
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(GrdContext).Assembly);
+
+            modelBuilder.Entity<Acao>().Navigation(a => a.Andamentos).AutoInclude();
+            modelBuilder.Entity<Acao>().Navigation(a => a.DiretoriaRes).AutoInclude();
+            //modelBuilder.Entity<Acao>().Navigation(a => a.Logs).AutoInclude();
+
+            modelBuilder.Entity<Proposicao>().Navigation(p => p.VotosRd).AutoInclude();
+            modelBuilder.Entity<Proposicao>().Navigation(p => p.AreaSolicitante).AutoInclude();
+            modelBuilder.Entity<Proposicao>().Navigation(p => p.Criador).AutoInclude();
+            modelBuilder.Entity<Proposicao>()
+                .Property(p => p.OutrosFilePath)
+                .HasConversion(new ValueConverter<ICollection<string>, string>(
+                    v => JsonConvert.SerializeObject(v),
+                    v => JsonConvert.DeserializeObject<ICollection<string>>(v) ?? new List<string>()));
+            //modelBuilder.Entity<Proposicao>().Navigation(p => p.Resolucao).AutoInclude();
+            //modelBuilder.Entity<Proposicao>().Navigation(p => p.Logs).AutoInclude();
+
+            modelBuilder.Entity<Reuniao>().Navigation(r => r.Proposicoes).AutoInclude();
+            modelBuilder.Entity<Reuniao>().Navigation(r => r.Participantes).AutoInclude();
+            modelBuilder.Entity<Reuniao>().Navigation(r => r.ParticipantesPrevia).AutoInclude();
+            modelBuilder.Entity<Reuniao>().Navigation(r => r.Acoes).AutoInclude();
+            modelBuilder.Entity<Reuniao>().Navigation(r => r.ProposicoesPrevia).AutoInclude();
+            //modelBuilder.Entity<Reuniao>().Navigation(r => r.Logs).AutoInclude();
 
             modelBuilder.Entity<GrdConfiguracao>(entity =>
             {
