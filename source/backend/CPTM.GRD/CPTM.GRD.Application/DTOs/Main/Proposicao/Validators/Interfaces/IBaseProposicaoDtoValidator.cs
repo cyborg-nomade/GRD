@@ -1,7 +1,5 @@
 ﻿using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
-using CPTM.GRD.Application.DTOs.AccessControl.Group.Validators;
-using CPTM.GRD.Application.DTOs.AccessControl.User.Validators;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Interfaces;
 using FluentValidation;
 

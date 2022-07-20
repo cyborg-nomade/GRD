@@ -1,16 +1,12 @@
 ﻿using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Acoes;
-using CPTM.GRD.Application.Contracts.Persistence.Logging;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
-using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto.Validators;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators.Interfaces;
-using CPTM.GRD.Application.DTOs.Main.Reuniao.Validators;
-using CPTM.GRD.Common;
 using FluentValidation;
 
 namespace CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
