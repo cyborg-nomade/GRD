@@ -23,22 +23,22 @@ namespace CPTM.GRD.Persistence
         {
         }
 
-        public DbSet<User> Users { get; set; } = null!;
-        public DbSet<Group> Groups { get; set; } = null!;
+        public virtual DbSet<User> Users { get; set; } = null!;
+        public virtual DbSet<Group> Groups { get; set; } = null!;
 
-        public DbSet<Acao> Acoes { get; set; } = null!;
-        public DbSet<Andamento> Andamentos { get; set; } = null!;
+        public virtual DbSet<Acao> Acoes { get; set; } = null!;
+        public virtual DbSet<Andamento> Andamentos { get; set; } = null!;
 
-        public DbSet<Proposicao> Proposicoes { get; set; } = null!;
-        public DbSet<Resolucao> Resolucoes { get; set; } = null!;
-        public DbSet<Voto> Votos { get; set; } = null!;
+        public virtual DbSet<Proposicao> Proposicoes { get; set; } = null!;
+        public virtual DbSet<Resolucao> Resolucoes { get; set; } = null!;
+        public virtual DbSet<Voto> Votos { get; set; } = null!;
 
-        public DbSet<Reuniao> Reunioes { get; set; } = null!;
-        public DbSet<Participante> Participantes { get; set; } = null!;
+        public virtual DbSet<Reuniao> Reunioes { get; set; } = null!;
+        public virtual DbSet<Participante> Participantes { get; set; } = null!;
 
-        public DbSet<LogAcao> LogsAcao { get; set; } = null!;
-        public DbSet<LogProposicao> LogsProposicao { get; set; } = null!;
-        public DbSet<LogReuniao> LogReuniao { get; set; } = null!;
+        public virtual DbSet<LogAcao> LogsAcao { get; set; } = null!;
+        public virtual DbSet<LogProposicao> LogsProposicao { get; set; } = null!;
+        public virtual DbSet<LogReuniao> LogReuniao { get; set; } = null!;
 
         public virtual DbSet<GrdConfiguracao> GrdConfiguracoes { get; set; } = null!;
         public virtual DbSet<GrdUsuarioPreferencia> GrdUsuarioPreferencias { get; set; } = null!;
@@ -53,6 +53,7 @@ namespace CPTM.GRD.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("GRD");
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(GrdContext).Assembly);
 
             modelBuilder.Entity<GrdConfiguracao>(entity =>
             {
