@@ -6,6 +6,7 @@ using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
+using CPTM.GRD.Common;
 using MediatR;
 
 namespace CPTM.GRD.Application.Features.Reunioes.Handlers.Commands;
@@ -19,16 +20,22 @@ public class
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
     private readonly IFileManagerService _fileManagerService;
+    private readonly IEmailService _emailService;
 
-    public CreateResolucaoDiretoriaProposicaoReuniaoRequestHandler(IReuniaoRepository reuniaoRepository,
-        IProposicaoRepository proposicaoRepository, IUserRepository userRepository, IMapper mapper,
-        IFileManagerService fileManagerService)
+    public CreateResolucaoDiretoriaProposicaoReuniaoRequestHandler(
+        IReuniaoRepository reuniaoRepository,
+        IProposicaoRepository proposicaoRepository,
+        IUserRepository userRepository,
+        IMapper mapper,
+        IFileManagerService fileManagerService,
+        IEmailService emailService)
     {
         _reuniaoRepository = reuniaoRepository;
         _proposicaoRepository = proposicaoRepository;
         _userRepository = userRepository;
         _mapper = mapper;
         _fileManagerService = fileManagerService;
+        _emailService = emailService;
     }
 
     public async Task<ProposicaoDto> Handle(CreateResolucaoDiretoriaProposicaoReuniaoRequest request,
@@ -47,6 +54,9 @@ public class
             await _fileManagerService.CreateResolucaoDiretoria(reuniao, proposicao));
 
         var updatedProposicao = await _proposicaoRepository.Update(proposicao);
+
+        await _emailService.SendEmailWithFile(updatedProposicao);
+
         return _mapper.Map<ProposicaoDto>(updatedProposicao);
     }
 }

@@ -7,8 +7,10 @@ using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
+using CPTM.GRD.Domain.AccessControl;
 using CPTM.GRD.Domain.Proposicoes;
 using MediatR;
+using static CPTM.GRD.Application.Models.EmailSubjectsAndMessages;
 
 namespace CPTM.GRD.Application.Features.Proposicoes.Handlers.Commands;
 
@@ -20,11 +22,16 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
     private readonly IMapper _mapper;
     private readonly IProposicaoStrictSequenceControl _sequenceControl;
     private readonly IUserRepository _userRepository;
+    private readonly IEmailService _emailService;
 
-    public CreateProposicaoRequestHandler(IProposicaoRepository proposicaoRepository, IGroupRepository groupRepository,
+    public CreateProposicaoRequestHandler(
+        IProposicaoRepository proposicaoRepository,
+        IGroupRepository groupRepository,
         IAuthenticationService authenticationService,
         IMapper mapper,
-        IProposicaoStrictSequenceControl sequenceControl, IUserRepository userRepository)
+        IProposicaoStrictSequenceControl sequenceControl,
+        IUserRepository userRepository,
+        IEmailService emailService)
     {
         _proposicaoRepository = proposicaoRepository;
         _groupRepository = groupRepository;
@@ -32,6 +39,7 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
         _mapper = mapper;
         _sequenceControl = sequenceControl;
         _userRepository = userRepository;
+        _emailService = emailService;
     }
 
     public async Task<ProposicaoDto> Handle(CreateProposicaoRequest request, CancellationToken cancellationToken)
@@ -50,6 +58,8 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
         proposicao.OnSaveProposicao();
 
         var addedProposicao = await _proposicaoRepository.Add(proposicao);
+
+        await _emailService.SendEmail(proposicao, ProposicaoCreationSubject, ProposicaoCreationMessage(proposicao));
 
         return _mapper.Map<ProposicaoDto>(addedProposicao);
     }

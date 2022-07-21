@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
-using CPTM.GRD.Application.Contracts.Persistence.Logging;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
+using CPTM.GRD.Common;
 using MediatR;
 
 namespace CPTM.GRD.Application.Features.Reunioes.Handlers.Commands;
@@ -16,15 +16,20 @@ public class CreatePautaPreviaReuniaoRequestHandler : IRequestHandler<CreatePaut
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
     private readonly IFileManagerService _fileManagerService;
+    private readonly IEmailService _emailService;
 
-    public CreatePautaPreviaReuniaoRequestHandler(IReuniaoRepository reuniaoRepository,
-        ILogReuniaoRepository logReuniaoRepository, IUserRepository userRepository, IMapper mapper,
-        IFileManagerService fileManagerService)
+    public CreatePautaPreviaReuniaoRequestHandler(
+        IReuniaoRepository reuniaoRepository,
+        IUserRepository userRepository,
+        IMapper mapper,
+        IFileManagerService fileManagerService,
+        IEmailService emailService)
     {
         _reuniaoRepository = reuniaoRepository;
         _userRepository = userRepository;
         _mapper = mapper;
         _fileManagerService = fileManagerService;
+        _emailService = emailService;
     }
 
     public async Task<ReuniaoDto> Handle(CreatePautaPreviaReuniaoRequest request, CancellationToken cancellationToken)
@@ -38,6 +43,10 @@ public class CreatePautaPreviaReuniaoRequestHandler : IRequestHandler<CreatePaut
         reuniao.OnEmitPautaPrevia(responsavel, await _fileManagerService.CreatePautaPrevia(reuniao));
 
         var updatedReuniao = await _reuniaoRepository.Update(reuniao);
+
+        await _emailService.SendEmailWithFile(updatedReuniao.ParticipantesPrevia.Select(p => p.User), reuniao,
+            TipoArquivo.PautaPrevia);
+
         return _mapper.Map<ReuniaoDto>(updatedReuniao);
     }
 }

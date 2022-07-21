@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
-using CPTM.GRD.Application.Contracts.Persistence.Acoes;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
-using CPTM.GRD.Application.Contracts.Persistence.Proposicoes.Children;
-using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
-using CPTM.GRD.Application.Contracts.Persistence.Reunioes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
@@ -14,6 +10,7 @@ using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Application.Util;
 using CPTM.GRD.Domain.Proposicoes;
 using MediatR;
+using static CPTM.GRD.Application.Models.EmailSubjectsAndMessages;
 
 namespace CPTM.GRD.Application.Features.Proposicoes.Handlers.Commands;
 
@@ -24,30 +21,25 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
     private readonly IMapper _mapper;
     private readonly IGroupRepository _groupRepository;
     private readonly IAuthenticationService _authenticationService;
-    private readonly IAcaoRepository _acaoRepository;
-    private readonly IVotoRepository _votoRepository;
-    private readonly IParticipanteRepository _participanteRepository;
-    private readonly IReuniaoRepository _reuniaoRepository;
-    private readonly IReuniaoStrictSequenceControl _reuniaoStrictSequence;
     private readonly IProposicaoStrictSequenceControl _proposicaoStrictSequence;
+    private readonly IEmailService _emailService;
 
-    public UpdateProposicaoRequestHandler(IProposicaoRepository proposicaoRepository, IUserRepository userRepository,
-        IMapper mapper, IGroupRepository groupRepository, IAuthenticationService authenticationService,
-        IAcaoRepository acaoRepository, IVotoRepository votoRepository, IParticipanteRepository participanteRepository,
-        IReuniaoRepository reuniaoRepository, IReuniaoStrictSequenceControl reuniaoStrictSequence,
-        IProposicaoStrictSequenceControl proposicaoStrictSequence)
+    public UpdateProposicaoRequestHandler(
+        IProposicaoRepository proposicaoRepository,
+        IUserRepository userRepository,
+        IMapper mapper,
+        IGroupRepository groupRepository,
+        IAuthenticationService authenticationService,
+        IProposicaoStrictSequenceControl proposicaoStrictSequence,
+        IEmailService emailService)
     {
         _proposicaoRepository = proposicaoRepository;
         _userRepository = userRepository;
         _mapper = mapper;
         _groupRepository = groupRepository;
         _authenticationService = authenticationService;
-        _acaoRepository = acaoRepository;
-        _votoRepository = votoRepository;
-        _participanteRepository = participanteRepository;
-        _reuniaoRepository = reuniaoRepository;
-        _reuniaoStrictSequence = reuniaoStrictSequence;
         _proposicaoStrictSequence = proposicaoStrictSequence;
+        _emailService = emailService;
     }
 
     public async Task<ProposicaoDto> Handle(UpdateProposicaoRequest request, CancellationToken cancellationToken)
@@ -74,6 +66,9 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
 
         _mapper.Map(request.UpdateProposicaoDto, savedProposicao);
         var updatedProposicao = await _proposicaoRepository.Update(savedProposicao);
+
+        await _emailService.SendEmail(updatedProposicao, ProposicaoUpdateSubject,
+            ProposicaoUpdateMessage(updatedProposicao, responsavel));
 
         return _mapper.Map<ProposicaoDto>(updatedProposicao);
     }

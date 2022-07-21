@@ -9,5 +9,4 @@ public interface IAuthenticationService
     Task<bool> ExistsAd(string username);
     Task<User> Login(AuthUser user);
     Task<UsuarioAD> GetUsuarioAD(string username);
-    Task<int> GetCodigoCPU(string username);
 }
