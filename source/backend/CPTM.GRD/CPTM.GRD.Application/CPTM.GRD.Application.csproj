@@ -18,6 +18,7 @@
     <Folder Include="Features\Reunioes\Handlers\Queries\" />
     <Folder Include="Features\Reunioes\Requests\Queries\" />
     <Folder Include="Exceptions\" />
+    <Folder Include="Models\" />
     <Folder Include="Responses\" />
     <Folder Include="Util\" />
     <Folder Include="Profiles\" />
