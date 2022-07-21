@@ -1,6 +1,8 @@
 ﻿using CPTM.GRD.Application.Contracts.Infrastructure;
+using CPTM.GRD.Application.Models;
 using CPTM.GRD.Domain.Proposicoes;
 using CPTM.GRD.Domain.Reunioes;
+using Microsoft.Extensions.Options;
 
 namespace CPTM.GRD.Infrastructure.FileManagement;
 
@@ -9,8 +11,10 @@ public class FileManagerService : IFileManagerService
     private readonly string _controlFileDirPath;
     private const string ControlFilesDir = "GeneratedFiles";
 
-    public FileManagerService(string homeDir)
+    public FileManagerService(IOptions<FileManagerSettings> fileOptions)
     {
+        var fileSettings = fileOptions.Value;
+        var homeDir = fileSettings.HomeDir;
         _controlFileDirPath = Path.Combine(homeDir, ControlFilesDir);
         Directory.CreateDirectory(_controlFileDirPath);
     }
