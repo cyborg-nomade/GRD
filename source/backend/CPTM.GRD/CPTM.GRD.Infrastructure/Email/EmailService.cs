@@ -3,13 +3,12 @@ using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Models;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
-using CPTM.GRD.Domain.Acoes;
 using CPTM.GRD.Domain.Proposicoes;
 using CPTM.GRD.Domain.Reunioes;
 using Microsoft.Extensions.Options;
 using RestSharp;
 
-namespace CPTM.GRD.Infrastructure.EmailService;
+namespace CPTM.GRD.Infrastructure.Email;
 
 public class EmailService : IEmailService
 {
