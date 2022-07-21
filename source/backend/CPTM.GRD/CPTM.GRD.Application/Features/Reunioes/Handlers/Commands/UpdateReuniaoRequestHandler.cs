@@ -7,11 +7,11 @@ using CPTM.GRD.Application.Contracts.Persistence.Proposicoes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
+using CPTM.GRD.Application.Contracts.Util;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
 using CPTM.GRD.Application.DTOs.Main.Reuniao.Validators;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
-using CPTM.GRD.Application.Util;
 using CPTM.GRD.Domain.Reunioes;
 using MediatR;
 
@@ -30,12 +30,21 @@ public class UpdateReuniaoRequestHandler : IRequestHandler<UpdateReuniaoRequest,
     private readonly IReuniaoStrictSequenceControl _reuniaoStrictSequence;
     private readonly IProposicaoRepository _proposicaoRepository;
     private readonly IProposicaoStrictSequenceControl _proposicaoStrictSequence;
+    private readonly IDifferentiator _differentiator;
 
-    public UpdateReuniaoRequestHandler(IReuniaoRepository reuniaoRepository,
-        IUserRepository userRepository, IMapper mapper, IGroupRepository groupRepository,
-        IAuthenticationService authenticationService, IAcaoRepository acaoRepository, IVotoRepository votoRepository,
-        IParticipanteRepository participanteRepository, IReuniaoStrictSequenceControl reuniaoStrictSequence,
-        IProposicaoRepository proposicaoRepository, IProposicaoStrictSequenceControl proposicaoStrictSequence)
+    public UpdateReuniaoRequestHandler(
+        IReuniaoRepository reuniaoRepository,
+        IUserRepository userRepository,
+        IMapper mapper,
+        IGroupRepository groupRepository,
+        IAuthenticationService authenticationService,
+        IAcaoRepository acaoRepository,
+        IVotoRepository votoRepository,
+        IParticipanteRepository participanteRepository,
+        IReuniaoStrictSequenceControl reuniaoStrictSequence,
+        IProposicaoRepository proposicaoRepository,
+        IProposicaoStrictSequenceControl proposicaoStrictSequence,
+        IDifferentiator differentiator)
     {
         _reuniaoRepository = reuniaoRepository;
         _userRepository = userRepository;
@@ -48,6 +57,7 @@ public class UpdateReuniaoRequestHandler : IRequestHandler<UpdateReuniaoRequest,
         _reuniaoStrictSequence = reuniaoStrictSequence;
         _proposicaoRepository = proposicaoRepository;
         _proposicaoStrictSequence = proposicaoStrictSequence;
+        _differentiator = differentiator;
     }
 
     public async Task<ReuniaoDto> Handle(UpdateReuniaoRequest request, CancellationToken cancellationToken)
@@ -69,7 +79,7 @@ public class UpdateReuniaoRequestHandler : IRequestHandler<UpdateReuniaoRequest,
         var responsavel = await _userRepository.Get(request.Uid);
         if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
 
-        savedReuniao.OnUpdate(responsavel, Differentiator.GetDifferenceString<Reuniao>(
+        savedReuniao.OnUpdate(responsavel, _differentiator.GetDifferenceString<Reuniao>(
             savedReuniao,
             _mapper.Map<Reuniao>(request.UpdateReuniaoDto)));
 

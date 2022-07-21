@@ -34,4 +34,11 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         return await _grdContext.Users.Where(u => u.AreasAcesso.Contains(group) && u.NivelAcesso == level)
             .ToListAsync();
     }
+
+    public async Task<User> GetByUsername(string username)
+    {
+        var user = await _grdContext.Users.Where(u => u.UsernameAd == username).SingleOrDefaultAsync();
+        if (user == null) throw new NotFoundException(nameof(user), nameof(user));
+        return user;
+    }
 }

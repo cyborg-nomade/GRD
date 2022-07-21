@@ -141,7 +141,10 @@ public class EmailService : IEmailService
         var emailClient = new RestClient(AbiUrl + "enviar");
 
 
-        var emailRequest = new RestRequest(AbiUrl, Method.Post);
+        var emailRequest = new RestRequest
+        {
+            Method = Method.Post
+        };
         emailRequest.AddHeader("Content-Type", "application/json");
         emailRequest.AddJsonBody(args);
         var response = await emailClient.ExecuteAsync(emailRequest);

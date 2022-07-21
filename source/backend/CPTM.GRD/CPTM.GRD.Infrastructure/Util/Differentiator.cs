@@ -1,11 +1,12 @@
 ﻿using System.Text;
+using CPTM.GRD.Application.Contracts.Util;
 using KellermanSoftware.CompareNetObjects;
 
-namespace CPTM.GRD.Application.Util;
+namespace CPTM.GRD.Infrastructure.Util;
 
-public static class Differentiator
+public class Differentiator : IDifferentiator
 {
-    public static string GetDifferenceString<T>(T oldObj, T newObj)
+    public string GetDifferenceString<T>(T oldObj, T newObj)
     {
         var sb = new StringBuilder();
         var propertyCount = typeof(T).GetProperties().Length;
