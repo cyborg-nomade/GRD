@@ -6,33 +6,57 @@ namespace CPTM.GRD.Infrastructure.FileManagement;
 
 public class FileManagerService : IFileManagerService
 {
-    public Task<string> CreatePautaPrevia(Reuniao reuniao)
+    private readonly string _controlFileDirPath;
+    private const string ControlFilesDir = "GeneratedFiles";
+
+    public FileManagerService(string homeDir)
     {
-        throw new NotImplementedException();
+        _controlFileDirPath = Path.Combine(homeDir, ControlFilesDir);
+        Directory.CreateDirectory(_controlFileDirPath);
     }
 
-    public Task<string> CreateMemoriaPrevia(Reuniao reuniao)
+    public async Task<string> CreatePautaPrevia(Reuniao reuniao)
     {
-        throw new NotImplementedException();
+        var pautaPreviaFilePath = Path.Combine(_controlFileDirPath, $"RD{reuniao.NumeroReuniao}-PautaPrévia.txt");
+        await File.WriteAllTextAsync(pautaPreviaFilePath, "Pauta Prévia");
+        return pautaPreviaFilePath;
     }
 
-    public Task<string> CreatePautaDefinitiva(Reuniao reuniao)
+    public async Task<string> CreateMemoriaPrevia(Reuniao reuniao)
     {
-        throw new NotImplementedException();
+        var memoriaPreviaFilePath = Path.Combine(_controlFileDirPath, $"RD{reuniao.NumeroReuniao}-MemóriaPrévia.txt");
+        await File.WriteAllTextAsync(memoriaPreviaFilePath, "Memória Prévia");
+        return memoriaPreviaFilePath;
     }
 
-    public Task<string> CreateRelatorioDeliberativo(Reuniao reuniao)
+    public async Task<string> CreatePautaDefinitiva(Reuniao reuniao)
     {
-        throw new NotImplementedException();
+        var pautaDefinitivaFilePath =
+            Path.Combine(_controlFileDirPath, $"RD{reuniao.NumeroReuniao}-PautaDefinitiva.txt");
+        await File.WriteAllTextAsync(pautaDefinitivaFilePath, "Pauta Definitiva");
+        return pautaDefinitivaFilePath;
     }
 
-    public Task<string> CreateResolucaoDiretoria(Reuniao reuniao, Proposicao proposicao)
+    public async Task<string> CreateRelatorioDeliberativo(Reuniao reuniao)
     {
-        throw new NotImplementedException();
+        var relatorioDeliberativoFilePath =
+            Path.Combine(_controlFileDirPath, $"RD{reuniao.NumeroReuniao}-RelatórioDeliberativo.txt");
+        await File.WriteAllTextAsync(relatorioDeliberativoFilePath, "Relatório Deliberativo");
+        return relatorioDeliberativoFilePath;
     }
 
-    public Task<string> CreateAta(Reuniao reuniao)
+    public async Task<string> CreateResolucaoDiretoria(Reuniao reuniao, Proposicao proposicao)
     {
-        throw new NotImplementedException();
+        var resolucaoDiretoriaFilePath =
+            Path.Combine(_controlFileDirPath, $"IDPRD{proposicao.IdPrd}-ResoluçãoDiretoria.txt");
+        await File.WriteAllTextAsync(resolucaoDiretoriaFilePath, "Resolução Diretoria");
+        return resolucaoDiretoriaFilePath;
+    }
+
+    public async Task<string> CreateAta(Reuniao reuniao)
+    {
+        var ataFilePath = Path.Combine(_controlFileDirPath, $"RD{reuniao.NumeroReuniao}-Ata.txt");
+        await File.WriteAllTextAsync(ataFilePath, "Ata");
+        return ataFilePath;
     }
 }
