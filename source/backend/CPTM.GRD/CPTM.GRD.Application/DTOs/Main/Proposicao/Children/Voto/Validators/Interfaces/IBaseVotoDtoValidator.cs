@@ -1,7 +1,6 @@
 ﻿using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto.Interfaces;
-using CPTM.GRD.Application.DTOs.Main.Reuniao.Children.Validators;
 using CPTM.GRD.Application.DTOs.Main.Reuniao.Children.Validators.Interfaces;
 using FluentValidation;
 

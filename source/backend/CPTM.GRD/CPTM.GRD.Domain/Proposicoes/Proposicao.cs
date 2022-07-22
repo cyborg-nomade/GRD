@@ -262,18 +262,43 @@ public class Proposicao
             {
                 ChangeStatus(ProposicaoStatus.AprovadaRdAguardandoAjustes,
                     TipoLogProposicao.SolicitaAjustesRd, responsavel);
+                Deliberacao = "Proposição Aprovada. Necessita de ajustes";
             }
 
             if (Status == ProposicaoStatus.SuspensaRd)
             {
                 ChangeStatus(ProposicaoStatus.SuspensaRdAguardandoAjustes,
                     TipoLogProposicao.SolicitaAjustesRd, responsavel);
+                Deliberacao = "Proposição Suspensa. Necessita de ajustes. Será avaliada em RD futura";
             }
         }
         else if (Status == ProposicaoStatus.SuspensaRd)
         {
+            Deliberacao = "Proposição Suspensa. Será avaliada em RD futura";
             RemoveFromReuniao(reuniao, responsavel);
             reuniao.RemoveProposicao(this, responsavel);
+        }
+        else
+        {
+            Deliberacao = Status switch
+            {
+                ProposicaoStatus.AprovadaRd => "Proposição Aprovada.",
+                ProposicaoStatus.ReprovadaRd => "Proposição Reprovada.",
+                ProposicaoStatus.EmPreenchimento => throw new ArgumentOutOfRangeException(),
+                ProposicaoStatus.EmAprovacaoDiretoriaResp => throw new ArgumentOutOfRangeException(),
+                ProposicaoStatus.ReprovadoDiretoriaResp => throw new ArgumentOutOfRangeException(),
+                ProposicaoStatus.DisponivelInclusaoPauta => throw new ArgumentOutOfRangeException(),
+                ProposicaoStatus.RetornadoPelaGrgADiretoriaResp => throw new ArgumentOutOfRangeException(),
+                ProposicaoStatus.InclusaEmReuniao => throw new ArgumentOutOfRangeException(),
+                ProposicaoStatus.EmPautaPrevia => throw new ArgumentOutOfRangeException(),
+                ProposicaoStatus.EmPautaDefinitiva => throw new ArgumentOutOfRangeException(),
+                ProposicaoStatus.SuspensaRd => throw new ArgumentOutOfRangeException(),
+                ProposicaoStatus.AprovadaRdAguardandoAjustes => throw new ArgumentOutOfRangeException(),
+                ProposicaoStatus.SuspensaRdAguardandoAjustes => throw new ArgumentOutOfRangeException(),
+                ProposicaoStatus.AprovadaRdAjustesRealizados => throw new ArgumentOutOfRangeException(),
+                ProposicaoStatus.SuspensaRdAjustesRealizados => throw new ArgumentOutOfRangeException(),
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
 
         return this;

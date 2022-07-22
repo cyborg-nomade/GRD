@@ -10,4 +10,5 @@ public class User
     public AccessLevel NivelAcesso { get; set; }
     public ICollection<Group> AreasAcesso { get; set; } = new List<Group>();
     public string Funcao { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
 }

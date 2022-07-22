@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
@@ -8,6 +9,7 @@ using CPTM.GRD.Application.DTOs.Main.Reuniao;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 using MediatR;
+using static CPTM.GRD.Application.Models.EmailSubjectsAndMessages;
 
 namespace CPTM.GRD.Application.Features.Reunioes.Handlers.Commands;
 
@@ -18,14 +20,20 @@ public class
     private readonly IReuniaoRepository _reuniaoRepository;
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
+    private readonly IEmailService _emailService;
 
-    public AddProposicaoToReuniaoRequestHandler(IProposicaoRepository proposicaoRepository,
-        IReuniaoRepository reuniaoRepository, IUserRepository userRepository, IMapper mapper)
+    public AddProposicaoToReuniaoRequestHandler(
+        IProposicaoRepository proposicaoRepository,
+        IReuniaoRepository reuniaoRepository,
+        IUserRepository userRepository,
+        IMapper mapper,
+        IEmailService emailService)
     {
         _proposicaoRepository = proposicaoRepository;
         _reuniaoRepository = reuniaoRepository;
         _userRepository = userRepository;
         _mapper = mapper;
+        _emailService = emailService;
     }
 
     public async Task<AddProposicaoToReuniaoDto> Handle(AddProposicaoToReuniaoRequest request,
@@ -41,6 +49,9 @@ public class
         reuniao.AddProposicao(proposicao, responsavel);
 
         var updatedReuniao = await _reuniaoRepository.Update(reuniao);
+
+        await _emailService.SendEmail(proposicao, ProposicaoAddToReuniaoSubject,
+            ProposicaoAddToReuniaoMessage(proposicao, reuniao));
 
         return new AddProposicaoToReuniaoDto()
         {

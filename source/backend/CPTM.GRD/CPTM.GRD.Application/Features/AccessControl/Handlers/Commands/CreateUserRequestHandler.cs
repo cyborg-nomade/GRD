@@ -7,6 +7,7 @@ using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.AccessControl.Requests.Commands;
 using CPTM.GRD.Domain.AccessControl;
 using MediatR;
+using static CPTM.GRD.Application.Models.EmailSubjectsAndMessages;
 
 namespace CPTM.GRD.Application.Features.AccessControl.Handlers.Commands;
 
@@ -15,13 +16,15 @@ public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, UserD
     private readonly IUserRepository _userRepository;
     private readonly IAuthenticationService _authenticationService;
     private readonly IMapper _mapper;
+    private readonly IEmailService _emailService;
 
     public CreateUserRequestHandler(IUserRepository userRepository, IAuthenticationService authenticationService,
-        IMapper mapper)
+        IMapper mapper, IEmailService emailService)
     {
         _userRepository = userRepository;
         _authenticationService = authenticationService;
         _mapper = mapper;
+        _emailService = emailService;
     }
 
     public async Task<UserDto> Handle(CreateUserRequest request, CancellationToken cancellationToken)
@@ -36,6 +39,7 @@ public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, UserD
 
         var user = _mapper.Map<User>(request.CreateUserDto);
         var addedUser = await _userRepository.Add(user);
+        await _emailService.SendEmail(new List<User>() { user }, UserCreationSubject, UserCreationMessage);
         return _mapper.Map<UserDto>(addedUser);
     }
 }

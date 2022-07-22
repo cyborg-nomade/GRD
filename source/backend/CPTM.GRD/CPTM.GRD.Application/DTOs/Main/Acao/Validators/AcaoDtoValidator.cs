@@ -1,7 +1,6 @@
 ﻿using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Acoes;
-using CPTM.GRD.Application.DTOs.Main.Acao.Children.Validators;
 using CPTM.GRD.Application.DTOs.Main.Acao.Validators.Interfaces;
 using FluentValidation;
 

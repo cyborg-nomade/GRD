@@ -8,6 +8,7 @@ using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Acoes.Requests.Commands;
 using CPTM.GRD.Domain.Acoes.Children;
 using MediatR;
+using static CPTM.GRD.Application.Models.EmailSubjectsAndMessages;
 
 namespace CPTM.GRD.Application.Features.Acoes.Handlers.Commands;
 
@@ -17,14 +18,20 @@ public class AddAndamentoToAcaoRequestHandler : IRequestHandler<AddAndamentoToAc
     private readonly IMapper _mapper;
     private readonly IAuthenticationService _authenticationService;
     private readonly IUserRepository _userRepository;
+    private readonly IEmailService _emailService;
 
-    public AddAndamentoToAcaoRequestHandler(IAcaoRepository acaoRepository, IMapper mapper,
-        IAuthenticationService authenticationService, IUserRepository userRepository)
+    public AddAndamentoToAcaoRequestHandler(
+        IAcaoRepository acaoRepository,
+        IMapper mapper,
+        IAuthenticationService authenticationService,
+        IUserRepository userRepository,
+        IEmailService emailService)
     {
         _acaoRepository = acaoRepository;
         _mapper = mapper;
         _authenticationService = authenticationService;
         _userRepository = userRepository;
+        _emailService = emailService;
     }
 
     public async Task<AcaoDto> Handle(AddAndamentoToAcaoRequest request, CancellationToken cancellationToken)
@@ -45,6 +52,13 @@ public class AddAndamentoToAcaoRequestHandler : IRequestHandler<AddAndamentoToAc
         acao.AddAndamento(andamento);
 
         var updatedAcao = await _acaoRepository.Update(acao);
+
+        foreach (var reuniao in acao.Reunioes)
+        {
+            await _emailService.SendEmail(acao, reuniao, AcaoAddAndamentoSubject,
+                AcaoAddAndamentoMessage(acao, andamento));
+        }
+
         return _mapper.Map<AcaoDto>(updatedAcao);
     }
 }

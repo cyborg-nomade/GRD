@@ -1,4 +1,5 @@
-﻿using CPTM.GRD.Application.DTOs.AccessControl.User;
+﻿using CPTM.GRD.Application.DTOs.AccessControl.Group.Interfaces;
+using CPTM.GRD.Application.DTOs.AccessControl.User;
 
 namespace CPTM.GRD.Application.DTOs.AccessControl.Group;
 

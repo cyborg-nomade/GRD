@@ -1,6 +1,5 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl.Group;
 using CPTM.GRD.Application.DTOs.AccessControl.User;
-using CPTM.GRD.Application.DTOs.Main.Acao.Children;
 using CPTM.GRD.Application.DTOs.Main.Acao.Interfaces;
 using CPTM.GRD.Common;
 
