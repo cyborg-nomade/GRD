@@ -1,15 +1,6 @@
 ﻿using CPTM.GRD.Application.Contracts.Infrastructure;
-using CPTM.GRD.Application.Contracts.Persistence;
-using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
-using CPTM.GRD.Application.Contracts.Persistence.Acoes;
-using CPTM.GRD.Application.Contracts.Persistence.Acoes.Children;
-using CPTM.GRD.Application.Contracts.Persistence.Logging;
-using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
-using CPTM.GRD.Application.Contracts.Persistence.Proposicoes.Children;
-using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
-using CPTM.GRD.Application.Contracts.Persistence.Reunioes.Children;
-using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
-using CPTM.GRD.Application.Models;
+using CPTM.GRD.Application.Models.Settings;
+using CPTM.GRD.Infrastructure.Authentication;
 using CPTM.GRD.Infrastructure.Email;
 using CPTM.GRD.Infrastructure.FileManagement;
 using Microsoft.Extensions.Configuration;
@@ -19,14 +10,16 @@ namespace CPTM.GRD.Infrastructure;
 
 public static class InfrastructureServicesRegistration
 {
-    public static IServiceCollection ConfigurePersistenceServices(this IServiceCollection services,
+    public static IServiceCollection ConfigureInfrastructureServices(this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
-        services.Configure<FileManagerSettings>(configuration.GetSection("FileManagerSettings"));
+        services.Configure<EmailServiceSettings>(configuration.GetSection("EmailServiceSettings"));
+        services.Configure<FileManagerServiceSettings>(configuration.GetSection("FileManagerServiceSettings"));
+        services.Configure<AuthenticationServiceSettings>(configuration.GetSection("AuthenticationServiceSettings"));
 
         services.AddTransient<IEmailService, EmailService>();
         services.AddTransient<IFileManagerService, FileManagerService>();
+        services.AddTransient<IAuthenticationService, AuthenticationService>();
         return services;
     }
 }

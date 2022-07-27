@@ -5,7 +5,9 @@ using CPTM.GRD.Application.Contracts.Persistence.Views;
 using CPTM.GRD.Application.DTOs.AccessControl.User;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Models;
+using CPTM.GRD.Application.Models.Settings;
 using CPTM.GRD.Domain.AccessControl;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -13,14 +15,16 @@ namespace CPTM.GRD.Infrastructure.Authentication;
 
 public class AuthenticationService : IAuthenticationService
 {
+    private AuthenticationServiceSettings AuthenticationServiceSettings { get; }
     private readonly IViewUsuarioRepository _viewUsuarioRepository;
     private readonly IUserRepository _userRepository;
-    private const string AbiUrl = "http://localhost:7000/ABI/api/ad/";
 
-    public AuthenticationService(IViewUsuarioRepository viewUsuarioRepository, IUserRepository userRepository)
+    public AuthenticationService(IOptions<AuthenticationServiceSettings> authOptions,
+        IViewUsuarioRepository viewUsuarioRepository, IUserRepository userRepository)
     {
         _viewUsuarioRepository = viewUsuarioRepository;
         _userRepository = userRepository;
+        AuthenticationServiceSettings = authOptions.Value;
     }
 
     public async Task<bool> ExistsAd(string username)
@@ -50,12 +54,12 @@ public class AuthenticationService : IAuthenticationService
         return JsonConvert.DeserializeObject<UsuarioAD>(response.Content) ?? throw new InvalidOperationException();
     }
 
-    private static async Task<RestResponse> SendRequest(string endpoint, string username = "", AuthUser? user = null)
+    private async Task<RestResponse> SendRequest(string endpoint, string username = "", AuthUser? user = null)
     {
         ServicePointManager.ServerCertificateValidationCallback +=
             (sender, certificate, chain, sslPolicyErrors) => true;
 
-        var emailClient = new RestClient(AbiUrl + endpoint + username);
+        var emailClient = new RestClient(AuthenticationServiceSettings.AbiUrl + endpoint + username);
 
         var emailRequest = new RestRequest();
         emailRequest.AddHeader("Content-Type", "application/json");
