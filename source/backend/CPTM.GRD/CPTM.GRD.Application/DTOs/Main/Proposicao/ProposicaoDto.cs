@@ -24,7 +24,7 @@ public class ProposicaoDto : IBaseProposicaoDto, IFullProposicaoDto, IOwnerPrope
     public string ResumoGeralResolucao { get; set; } = string.Empty;
     public string ObservacoesCustos { get; set; } = string.Empty;
     public string CompetenciasConformeNormas { get; set; } = string.Empty;
-    public DateOnly DataBaseValor { get; set; }
+    public DateTime DataBaseValor { get; set; }
     public string Moeda { get; set; } = string.Empty;
     public float ValorOriginalContrato { get; set; }
     public float ValorTotalProposicao { get; set; }
@@ -35,8 +35,8 @@ public class ProposicaoDto : IBaseProposicaoDto, IFullProposicaoDto, IOwnerPrope
     public float ValorAtualContrato { get; set; }
     public string NumeroReservaVerba { get; set; } = string.Empty;
     public float ValorReservaVerba { get; set; }
-    public DateOnly InicioVigenciaReserva { get; set; }
-    public DateOnly FimVigenciaReserva { get; set; }
+    public DateTime InicioVigenciaReserva { get; set; }
+    public DateTime FimVigenciaReserva { get; set; }
     public string NumeroProposicao { get; set; } = string.Empty;
     public string ProtoloExpediente { get; set; } = string.Empty;
     public string NumeroProcessoLicit { get; set; } = string.Empty;

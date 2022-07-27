@@ -18,12 +18,12 @@ public class IBaseAcaoDtoValidator : AbstractValidator<IBaseAcaoDto>
         RuleFor(p => p.Definicao).NotNull().NotEmpty();
         RuleFor(p => p.Periodicidade).NotNull().NotEmpty().IsInEnum();
         RuleFor(p => p.PrazoInicial).NotNull().NotEmpty().LessThanOrEqualTo(p => p.PrazoFinal)
-            .GreaterThanOrEqualTo(DateOnly.FromDateTime(DateTime.Now));
+            .GreaterThanOrEqualTo(DateTime.Now);
         RuleFor(p => p.Responsavel).NotNull().NotEmpty()
             .SetValidator(new UserDtoValidator(authenticationService, userRepository));
         RuleFor(p => p.EmailDiretor).NotNull().NotEmpty().EmailAddress();
         RuleFor(p => p.PrazoFinal).NotNull().NotEmpty().GreaterThanOrEqualTo(p => p.PrazoInicial)
-            .GreaterThanOrEqualTo(DateOnly.FromDateTime(DateTime.Now));
+            .GreaterThanOrEqualTo(DateTime.Now);
         RuleFor(p => p.AlertaVencimento).NotNull().NotEmpty().IsInEnum();
     }
 }

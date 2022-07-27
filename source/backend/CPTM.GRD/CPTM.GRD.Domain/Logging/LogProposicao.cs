@@ -13,6 +13,10 @@ public class LogProposicao
     public DateTime Data { get; set; }
     public User UsuarioResp { get; set; }
 
+    private LogProposicao()
+    {
+    }
+
     public LogProposicao(Proposicao proposicao, TipoLogProposicao tipoLogProposicao,
         User responsavel, string diferenca)
     {

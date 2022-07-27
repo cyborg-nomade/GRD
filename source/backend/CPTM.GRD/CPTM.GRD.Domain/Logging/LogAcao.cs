@@ -13,6 +13,10 @@ public class LogAcao
     public DateTime Data { get; set; }
     public User UsuarioResp { get; set; }
 
+    private LogAcao()
+    {
+    }
+
     public LogAcao(Acao acao, TipoLogAcao tipoLogAcao, string diferenca, User responsavel)
     {
         Data = DateTime.Now;

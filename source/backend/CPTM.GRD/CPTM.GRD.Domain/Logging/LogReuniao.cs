@@ -13,6 +13,10 @@ public class LogReuniao
     public DateTime Data { get; set; }
     public User UsuarioResp { get; set; }
 
+    private LogReuniao()
+    {
+    }
+
     public LogReuniao(Reuniao reuniao, TipoLogReuniao tipoLogReuniao, User responsavel, string diferenca)
     {
         Data = DateTime.Now;

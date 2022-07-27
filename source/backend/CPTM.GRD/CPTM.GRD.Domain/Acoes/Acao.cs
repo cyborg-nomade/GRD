@@ -13,7 +13,7 @@ public class Acao
     public Group DiretoriaRes { get; set; } = new Group();
     public string Definicao { get; set; } = string.Empty;
     public TipoPeriodicidadeAcao Periodicidade { get; set; }
-    public DateOnly PrazoInicial { get; set; }
+    public DateTime PrazoInicial { get; set; }
     public AcaoStatus Status { get; set; }
     public bool Arquivada { get; set; }
     public User Responsavel { get; set; } = new User();
@@ -21,7 +21,7 @@ public class Acao
     public string? NumeroContrato { get; set; }
     public string? Fornecedor { get; set; }
     public int PrazoProrrogadoDias { get; set; }
-    public DateOnly PrazoFinal { get; set; }
+    public DateTime PrazoFinal { get; set; }
     public int DiasParaVencimento { get; set; }
     public TipoAlertaVencimento AlertaVencimento { get; set; }
     public ICollection<Andamento> Andamentos { get; set; } = new List<Andamento>();
@@ -43,7 +43,7 @@ public class Acao
 
     private Acao CalculateDiasParaVencimento()
     {
-        DiasParaVencimento = PrazoFinal.DayNumber - PrazoInicial.DayNumber;
+        DiasParaVencimento = (int)(PrazoFinal - PrazoInicial).TotalDays;
         return this;
     }
 

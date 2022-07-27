@@ -7,10 +7,10 @@ namespace CPTM.GRD.Application.DTOs.Main.Reuniao.Interfaces;
 
 public interface IBaseReuniaoDto
 {
-    public DateOnly Data { get; set; }
-    public TimeOnly Horario { get; set; }
-    public DateOnly DataPrevia { get; set; }
-    public TimeOnly HorarioPrevia { get; set; }
+    public DateTime Data { get; set; }
+    public DateTime Horario { get; set; }
+    public DateTime DataPrevia { get; set; }
+    public DateTime HorarioPrevia { get; set; }
     public string Local { get; set; }
     public TipoReuniao TipoReuniao { get; set; }
     public ICollection<ProposicaoDto> Proposicoes { get; set; }
