@@ -57,6 +57,29 @@ namespace CPTM.GRD.Persistence
             modelBuilder.HasDefaultSchema("GRD");
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(GrdContext).Assembly);
 
+            modelBuilder.Entity<User>().ToTable("GRD_USERS");
+            modelBuilder.Entity<User>().Property(u => u.UsernameAd).HasMaxLength(250);
+
+            modelBuilder.Entity<Group>().ToTable("GRD_GROUPS");
+            modelBuilder.Entity<Group>().Property(g => g.Sigla).HasMaxLength(250);
+            modelBuilder.Entity<Group>().Property(g => g.SiglaDiretoria).HasMaxLength(250);
+            modelBuilder.Entity<Group>().Property(g => g.SiglaGerencia).HasMaxLength(250);
+
+            modelBuilder.Entity<Acao>().ToTable("GRD_ACOES");
+
+            modelBuilder.Entity<Andamento>().ToTable("GRD_ANDAMENTOS");
+
+            modelBuilder.Entity<Proposicao>().ToTable("GRD_PROPOSICOES");
+            modelBuilder.Entity<Resolucao>().ToTable("GRD_RESOLUCOES");
+            modelBuilder.Entity<Voto>().ToTable("GRD_VOTOS");
+
+            modelBuilder.Entity<Reuniao>().ToTable("GRD_REUNIOES");
+            modelBuilder.Entity<Participante>().ToTable("GRD_PARTICIPANTES");
+
+            modelBuilder.Entity<LogAcao>().ToTable("GRD_LOGS_ACAO");
+            modelBuilder.Entity<LogProposicao>().ToTable("GRD_LOGS_PROPOSICAO");
+            modelBuilder.Entity<LogReuniao>().ToTable("GRD_LOGS_REUNIAO");
+
             modelBuilder.Entity<Acao>().Navigation(a => a.Andamentos).AutoInclude();
             modelBuilder.Entity<Acao>().Navigation(a => a.DiretoriaRes).AutoInclude();
             //modelBuilder.Entity<Acao>().Navigation(a => a.Logs).AutoInclude();

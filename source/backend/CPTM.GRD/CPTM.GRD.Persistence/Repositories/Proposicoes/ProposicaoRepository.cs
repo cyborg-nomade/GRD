@@ -1,4 +1,5 @@
-﻿using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
+﻿using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
+using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Proposicoes;
@@ -10,9 +11,9 @@ namespace CPTM.GRD.Persistence.Repositories.Proposicoes;
 public class ProposicaoRepository : GenericRepository<Proposicao>, IProposicaoRepository
 {
     private readonly GrdContext _grdContext;
-    private readonly GroupRepository _groupRepository;
+    private readonly IGroupRepository _groupRepository;
 
-    public ProposicaoRepository(GrdContext grdContext, GroupRepository groupRepository) : base(grdContext)
+    public ProposicaoRepository(GrdContext grdContext, IGroupRepository groupRepository) : base(grdContext)
     {
         _grdContext = grdContext;
         _groupRepository = groupRepository;

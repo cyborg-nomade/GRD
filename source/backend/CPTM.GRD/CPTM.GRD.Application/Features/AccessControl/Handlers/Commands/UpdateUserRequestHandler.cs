@@ -34,6 +34,7 @@ public class UpdateUserRequestHandler : IRequestHandler<UpdateUserRequest, UserD
         }
 
         var savedUser = await _userRepository.Get(request.UpdateUserDto.Id);
+        if (savedUser == null) throw new NotFoundException(nameof(savedUser), nameof(savedUser));
         _mapper.Map(request.UpdateUserDto, savedUser);
         var updatedUser = await _userRepository.Update(savedUser);
         return _mapper.Map<UserDto>(updatedUser);

@@ -8,6 +8,8 @@ using CPTM.GRD.Application.Contracts.Persistence.Proposicoes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
+using CPTM.GRD.Application.Contracts.Persistence.Views;
+using CPTM.GRD.Application.Models.Settings;
 using CPTM.GRD.Persistence.Repositories;
 using CPTM.GRD.Persistence.Repositories.AccessControl;
 using CPTM.GRD.Persistence.Repositories.Acoes;
@@ -18,6 +20,7 @@ using CPTM.GRD.Persistence.Repositories.Proposicoes.Children;
 using CPTM.GRD.Persistence.Repositories.Reunioes;
 using CPTM.GRD.Persistence.Repositories.Reunioes.Children;
 using CPTM.GRD.Persistence.Repositories.StrictSequenceControl;
+using CPTM.GRD.Persistence.Repositories.Views;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -52,6 +55,12 @@ public static class PersistenceServicesRegistration
 
         services.AddScoped<IProposicaoStrictSequenceControl, ProposicaoStrictSequenceControl>();
         services.AddScoped<IReuniaoStrictSequenceControl, ReuniaoStrictSequenceControl>();
+
+        services.Configure<StrictSequenceControlServiceSettings>(
+            configuration.GetSection("StrictSequenceControlServiceSettings"));
+
+
+        services.AddScoped<IViewUsuarioRepository, ViewUsuarioRepository>();
 
 
         return services;
