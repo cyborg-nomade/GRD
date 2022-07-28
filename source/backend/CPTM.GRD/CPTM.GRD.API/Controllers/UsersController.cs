@@ -1,4 +1,7 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl.User;
+using CPTM.GRD.Application.Features.AccessControl.Handlers.Queries;
+using CPTM.GRD.Application.Features.AccessControl.Requests.Commands;
+using CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
 using CPTM.GRD.Common;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -28,58 +31,58 @@ namespace CPTM.GRD.API.Controllers
 
         // GET: api/users/
         [HttpGet]
-        public IEnumerable<UserDto> Get()
+        public async Task<List<UserDto>> Get()
         {
-            return new List<UserDto>();
+            return await _mediator.Send(new GetAllUsersListRequest());
         }
 
         // GET: api/users/level/:level:/
         [HttpGet("level/{level}")]
-        public IEnumerable<UserDto> GetByLevel(AccessLevel level)
+        public async Task<List<UserDto>> GetByLevel(AccessLevel level)
         {
-            return new List<UserDto>();
+            return await _mediator.Send(new GetByLevelUsersListRequest() { Level = level });
         }
 
         // GET /api/users/group/:gid:/
         [HttpGet("group/{gid:int}")]
-        public IEnumerable<UserDto> GetByGroup(int gid)
+        public async Task<List<UserDto>> GetByGroup(int gid)
         {
-            return new List<UserDto>();
+            return await _mediator.Send(new GetByGroupUsersListRequest() { Gid = gid });
         }
 
         // GET /api/users/level/:level:/group/:gid:/
         [HttpGet("level/{level}/group/{gid:int}")]
-        public IEnumerable<UserDto> GetByLevelAndGroup(AccessLevel level, int gid)
+        public async Task<List<UserDto>> GetByLevelAndGroup(AccessLevel level, int gid)
         {
-            return new List<UserDto>();
+            return await _mediator.Send(new GetByGroupAndLevelUsersListRequest() { Level = level, Gid = gid });
         }
 
         // GET /api/users/:uid:/
         [HttpGet("{uid:int}")]
-        public UserDto Get(int uid)
+        public async Task<UserDto> Get(int uid)
         {
-            return new UserDto();
+            return await _mediator.Send(new GetUserDetailRequest() { Uid = uid });
         }
 
         // POST /api/users/
         [HttpPost]
-        public UserDto Post([FromBody] CreateUserDto createUserDto)
+        public async Task<UserDto> Post([FromBody] CreateUserDto createUserDto)
         {
-            return new UserDto();
+            return await _mediator.Send(new CreateUserRequest() { CreateUserDto = createUserDto });
         }
 
         // PUT /api/users/:uid:/
         [HttpPut("{uid:int}")]
-        public UserDto Put(int uid, [FromBody] UpdateUserDto updateUserDto)
+        public async Task<UserDto> Put(int uid, [FromBody] UpdateUserDto updateUserDto)
         {
-            return new UserDto();
+            return await _mediator.Send(new UpdateUserRequest() { UpdateUserDto = updateUserDto });
         }
 
         // DELETE /api/users/:uid:/
         [HttpDelete("{uid:int}")]
-        public UserDto Delete(int uid)
+        public async Task<Unit> Delete(int uid)
         {
-            return new UserDto();
+            return await _mediator.Send(new DeleteUserRequest() { Uid = uid });
         }
     }
 }

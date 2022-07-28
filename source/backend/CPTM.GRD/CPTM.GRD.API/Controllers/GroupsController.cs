@@ -1,43 +1,35 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CPTM.GRD.Application.DTOs.AccessControl.Group;
+using CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CPTM.GRD.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/groups")]
     [ApiController]
     public class GroupsController : ControllerBase
     {
-        // GET: api/<GroupsController>
+        private readonly IMediator _mediator;
+
+        public GroupsController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        // GET: api/groups
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<List<GroupDto>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return await _mediator.Send(new GetAllGroupsListRequest());
         }
 
-        // GET api/<GroupsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET api/groups/:gid:
+        [HttpGet("{gid:int}")]
+        public async Task<GroupDto> Get(int gid)
         {
-            return "value";
-        }
-
-        // POST api/<GroupsController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<GroupsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<GroupsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return await _mediator.Send(new GetGroupDetailRequest() { Gid = gid });
         }
     }
 }
