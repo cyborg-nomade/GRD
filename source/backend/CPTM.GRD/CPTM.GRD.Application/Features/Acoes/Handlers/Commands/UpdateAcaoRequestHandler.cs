@@ -47,8 +47,8 @@ public class UpdateAcaoRequestHandler : IRequestHandler<UpdateAcaoRequest, AcaoD
             throw new ValidationException(acaoDtoValidationResult);
         }
 
-        var savedAcao = await _acaoRepository.Get(request.UpdateAcaoDto.Id);
-        if (savedAcao == null) throw new NotFoundException(nameof(savedAcao), request.UpdateAcaoDto.Id);
+        var savedAcao = await _acaoRepository.Get(request.Aid);
+        if (savedAcao == null) throw new NotFoundException(nameof(savedAcao), request.Aid);
 
         var responsavel = await _userRepository.Get(request.Uid);
         if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
