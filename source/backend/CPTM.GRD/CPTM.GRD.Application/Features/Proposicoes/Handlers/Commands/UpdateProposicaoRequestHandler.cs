@@ -57,9 +57,9 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
             throw new ValidationException(proposicaoDtoValidationResult);
         }
 
-        var savedProposicao = await _proposicaoRepository.Get(request.UpdateProposicaoDto.Id);
+        var savedProposicao = await _proposicaoRepository.Get(request.Pid);
         if (savedProposicao == null)
-            throw new NotFoundException(nameof(savedProposicao), request.UpdateProposicaoDto.Id);
+            throw new NotFoundException(nameof(savedProposicao), request.Pid);
         var responsavel = await _userRepository.Get(request.Uid);
         if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
 
