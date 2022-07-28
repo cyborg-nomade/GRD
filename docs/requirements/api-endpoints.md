@@ -243,31 +243,36 @@
     -   _auth_: grg, sysAdmin
     -   _inputs_: acao id
     -   _outputs_: acao
--   **POST /api/acoes/**
+-   **POST /api/acoes/reuniao/:rid:**
     -   creates a new acao in the system
     -   _auth_: grg, sysAdmin
-    -   _inputs_: acao (in req body)
+    -   _inputs_: reuniao id (where acao was created) + acao (in req body)
     -   _outputs_: status message + registered acao
--   **POST /api/acoes/:aid:**
+-   **PUT /api/acoes/:aid:**
     -   edits an existing acao
     -   _auth_: responsavel acao (to add andamentos), grg, sysAdmin
     -   _inputs_: acao id + acao (in req body)
     -   _outputs_: status message + edited acao
--   **POST /api/acoes/:aid:/remove**
-    -   removes an existing acao
-    -   _auth_: responsavel acao (to add andamentos), grg, sysAdmin
-    -   _inputs_: acao id
-    -   _outputs_: status message
 -   **POST /api/acoes/:aid:/add-andamento**
     -   add an andamento to an existing acao
     -   _auth_: responsavel acao (to add andamentos), grg, sysAdmin
     -   _inputs_: acao id + andamento (in req body)
     -   _outputs_: status message + edited acao
--   **POST /api/acoes/:aid:/reuniao/:rid/add**
+-   **PUT /api/acoes/:aid:/reuniao/:rid/add**
     -   add an acao to an existing reuniao for follow up actions
     -   _auth_: responsavel acao (to add andamentos), grg, sysAdmin
     -   _inputs_: acao id + reuniao id
     -   _outputs_: status message + edited acao + reuniao
+-   **PUT /api/acoes/:aid:/finish/:status:/**
+    -   finishes an acao, with a certain status
+    -   _auth_: grg, sysAdmin
+    -   _inputs_: acao id + final status
+    -   _outputs_: status message + finished acao
+-   **DELETE /api/acoes/:aid:/**
+    -   removes an existing acao
+    -   _auth_: responsavel acao (to add andamentos), grg, sysAdmin
+    -   _inputs_: acao id
+    -   _outputs_: status message
 -   **POST /api/acoes/:aid:/reuniao/:rid/remove**
     -   removes an acao from a reuniao (except initial)
     -   _auth_: responsavel acao (to add andamentos), grg, sysAdmin
