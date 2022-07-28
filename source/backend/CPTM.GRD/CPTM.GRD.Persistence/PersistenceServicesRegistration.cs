@@ -35,6 +35,9 @@ public static class PersistenceServicesRegistration
         services.AddDbContext<GrdContext>(options =>
             options.UseOracle(configuration.GetConnectionString("GrdContextConnStr")));
 
+        services.Configure<StrictSequenceControlServiceSettings>(settings =>
+            settings.HomeDir = environmentContentRootPath);
+
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IGroupRepository, GroupRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
@@ -56,8 +59,6 @@ public static class PersistenceServicesRegistration
         services.AddScoped<IProposicaoStrictSequenceControl, ProposicaoStrictSequenceControl>();
         services.AddScoped<IReuniaoStrictSequenceControl, ReuniaoStrictSequenceControl>();
 
-        services.Configure<StrictSequenceControlServiceSettings>(settings =>
-            settings.HomeDir = environmentContentRootPath);
 
         services.AddScoped<IViewUsuarioRepository, ViewUsuarioRepository>();
 

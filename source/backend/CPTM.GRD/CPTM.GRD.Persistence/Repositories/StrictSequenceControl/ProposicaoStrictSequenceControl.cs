@@ -11,9 +11,9 @@ public class ProposicaoStrictSequenceControl : IProposicaoStrictSequenceControl
     private const int InitialValue = 0;
     private readonly string _controlFilePath;
 
-    public ProposicaoStrictSequenceControl(string environmentContentRootPath)
+    public ProposicaoStrictSequenceControl(IOptions<StrictSequenceControlServiceSettings> strictSequenceOptions)
     {
-        var controlFileDirPath = Path.Combine(environmentContentRootPath, ControlFilesDir);
+        var controlFileDirPath = Path.Combine(strictSequenceOptions.Value.HomeDir, ControlFilesDir);
         Directory.CreateDirectory(controlFileDirPath);
 
         _controlFilePath = Path.Combine(controlFileDirPath, ControlFileName);
