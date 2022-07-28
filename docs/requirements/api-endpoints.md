@@ -34,12 +34,12 @@
     -   _auth_: gerente (for sub level and its own groups), diretor (for diretor level and its own groups), grg, sysAdmin
     -   _inputs_: user (in req body)
     -   _outputs_: success msg + registered user with id
--   **POST /api/users/:uid:/**
+-   **PUT /api/users/:uid:/**
     -   edits a user in the system
     -   _auth_: grg, sysAdmin
     -   _inputs_: user id + edited user (in req body)
     -   _outputs_: success msg + edited user
--   **POST /api/users/:uid:/delete**
+-   **DELETE /api/users/:uid:/**
     -   creates a new user in the system
     -   _auth_: gerente (for sub level), diretor (for diretor level), grg, sysAdmin
     -   _inputs_: user id
