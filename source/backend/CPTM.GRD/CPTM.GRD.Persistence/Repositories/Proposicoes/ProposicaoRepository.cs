@@ -3,7 +3,6 @@ using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Proposicoes;
-using CPTM.GRD.Persistence.Repositories.AccessControl;
 using Microsoft.EntityFrameworkCore;
 
 namespace CPTM.GRD.Persistence.Repositories.Proposicoes;
