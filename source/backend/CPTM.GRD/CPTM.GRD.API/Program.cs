@@ -28,34 +28,34 @@ builder.Services.AddCors(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Description = @"Autorização com cabeçalho JWT utilizando o esquema de Bearer. 
-                      Entre 'Bearer' [espaço] e seu token no campo de texto abaixo.
-                      Exemplo: 'Bearer 12345abcdef'",
-        Name = "Autorização",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer"
-    });
+    //c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    //{
+    //    Description = @"Autorização com cabeçalho JWT utilizando o esquema de Bearer. 
+    //                  Entre 'Bearer' [espaço] e seu token no campo de texto abaixo.
+    //                  Exemplo: 'Bearer 12345abcdef'",
+    //    Name = "Autorização",
+    //    In = ParameterLocation.Header,
+    //    Type = SecuritySchemeType.ApiKey,
+    //    Scheme = "Bearer"
+    //});
 
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                },
-                Scheme = "oauth2",
-                Name = "Bearer",
-                In = ParameterLocation.Header
-            },
-            new List<string>()
-        }
-    });
+    //c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    //{
+    //    {
+    //        new OpenApiSecurityScheme
+    //        {
+    //            Reference = new OpenApiReference
+    //            {
+    //                Type = ReferenceType.SecurityScheme,
+    //                Id = "Bearer"
+    //            },
+    //            Scheme = "oauth2",
+    //            Name = "Bearer",
+    //            In = ParameterLocation.Header
+    //        },
+    //        new List<string>()
+    //    }
+    //});
 
     c.SwaggerDoc("v1", new OpenApiInfo
     {

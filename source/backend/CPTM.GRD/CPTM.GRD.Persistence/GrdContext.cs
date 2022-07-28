@@ -76,7 +76,6 @@ namespace CPTM.GRD.Persistence
                 .HasForeignKey("User")
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Groups_User");
-            modelBuilder.Entity<Group>().Navigation(g => g.Relator).AutoInclude();
 
             modelBuilder.Entity<Acao>().ToTable("GRD_ACOES");
             modelBuilder.Entity<Acao>()
