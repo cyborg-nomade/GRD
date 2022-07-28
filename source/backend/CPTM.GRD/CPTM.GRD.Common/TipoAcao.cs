@@ -6,5 +6,5 @@ public enum TipoAcao
     Comentario,
     Definicao,
     ParecerTecnico,
-    OutrosAssuntos,
+    OutrosAssuntos
 }

@@ -103,7 +103,7 @@ namespace CPTM.GRD.API.Controllers
             {
                 Aid = aid,
                 Status = status,
-                Uid = responsavel.Id,
+                Uid = responsavel.Id
             });
         }
 

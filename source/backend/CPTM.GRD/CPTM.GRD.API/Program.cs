@@ -51,7 +51,7 @@ builder.Services.AddSwaggerGen(c =>
                 },
                 Scheme = "oauth2",
                 Name = "Bearer",
-                In = ParameterLocation.Header,
+                In = ParameterLocation.Header
             },
             new List<string>()
         }
@@ -60,7 +60,7 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "CPTM - Sistema de Gestão de Reuniões de Diretoria - API",
+        Title = "CPTM - Sistema de Gestão de Reuniões de Diretoria - API"
     });
 });
 

@@ -8,5 +8,5 @@ public enum AccessLevel
     Diretor,
     Grg,
     SysAdmin,
-    ResponsavelAcao,
+    ResponsavelAcao
 }

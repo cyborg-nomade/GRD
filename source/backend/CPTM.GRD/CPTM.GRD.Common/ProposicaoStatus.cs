@@ -16,5 +16,5 @@ public enum ProposicaoStatus
     AprovadaRdAguardandoAjustes,
     SuspensaRdAguardandoAjustes,
     AprovadaRdAjustesRealizados,
-    SuspensaRdAjustesRealizados,
+    SuspensaRdAjustesRealizados
 }

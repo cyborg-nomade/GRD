@@ -5,5 +5,5 @@ public enum AcaoStatus
     EmAndamento,
     EmAcompanhamento,
     Concluida,
-    EncerradaSemConclusao,
+    EncerradaSemConclusao
 }
