@@ -13,10 +13,10 @@ namespace CPTM.GRD.Infrastructure;
 public static class InfrastructureServicesRegistration
 {
     public static IServiceCollection ConfigureInfrastructureServices(this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration, string environmentContentRootPath)
     {
         services.Configure<EmailServiceSettings>(configuration.GetSection("EmailServiceSettings"));
-        services.Configure<FileManagerServiceSettings>(configuration.GetSection("FileManagerServiceSettings"));
+        services.Configure<FileManagerServiceSettings>((settings) => settings.HomeDir = environmentContentRootPath);
         services.Configure<AuthenticationServiceSettings>(configuration.GetSection("AuthenticationServiceSettings"));
 
         services.AddTransient<IEmailService, EmailService>();

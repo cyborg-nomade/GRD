@@ -9,6 +9,7 @@ namespace CPTM.GRD.Infrastructure.FileManagement;
 public class FileManagerService : IFileManagerService
 {
     private readonly string _appFilesDirPath;
+    private const string AppFilesDir = "AppFiles";
 
     private FileManagerServiceSettings FileManagerServiceSettings { get; }
 
@@ -16,7 +17,7 @@ public class FileManagerService : IFileManagerService
     {
         FileManagerServiceSettings = fileOptions.Value;
         _appFilesDirPath =
-            Path.Combine(FileManagerServiceSettings.HomeDir, FileManagerServiceSettings.AppFilesDir);
+            Path.Combine(FileManagerServiceSettings.HomeDir, AppFilesDir);
         Directory.CreateDirectory(_appFilesDirPath);
     }
 

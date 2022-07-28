@@ -30,7 +30,7 @@ namespace CPTM.GRD.Persistence;
 public static class PersistenceServicesRegistration
 {
     public static IServiceCollection ConfigurePersistenceServices(this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration, string environmentContentRootPath)
     {
         services.AddDbContext<GrdContext>(options =>
             options.UseOracle(configuration.GetConnectionString("GrdContextConnStr")));
@@ -56,9 +56,8 @@ public static class PersistenceServicesRegistration
         services.AddScoped<IProposicaoStrictSequenceControl, ProposicaoStrictSequenceControl>();
         services.AddScoped<IReuniaoStrictSequenceControl, ReuniaoStrictSequenceControl>();
 
-        services.Configure<StrictSequenceControlServiceSettings>(
-            configuration.GetSection("StrictSequenceControlServiceSettings"));
-
+        services.Configure<StrictSequenceControlServiceSettings>(settings =>
+            settings.HomeDir = environmentContentRootPath);
 
         services.AddScoped<IViewUsuarioRepository, ViewUsuarioRepository>();
 
