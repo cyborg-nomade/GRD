@@ -171,26 +171,6 @@
     -   _auth_: grg, sysAdmin
     -   _inputs_: reuniao id
     -   _outputs_: reuniao
--   **POST /api/reunioes/**
-    -   creates a new reuniao in the system
-    -   _auth_: grg, sysAdmin
-    -   _inputs_: reuniao (in req body)
-    -   _outputs_: status message + registered reuniao
--   **POST /api/reunioes/:rid:/**
-    -   edits an existing reuniao
-    -   _auth_: grg, sysAdmin
-    -   _inputs_: reuniao id + reuniao (in req body)
-    -   _outputs_: status message + edited reuniao
--   **POST /api/reunioes/:rid:/remove**
-    -   removes an existing reuniao
-    -   _auth_: creator, sysAdmin
-    -   _inputs_: reuniao id
-    -   _outputs_: status message + removed reuniao
--   **POST /api/reunioes/:rid:/realizada/**
-    -   changes reuniao status to "Realizada"
-    -   _auth_: grg, sysAdmin
-    -   _inputs_: reuniao id
-    -   _outputs_: status message + edited reuniao
 -   **GET /api/reunioes/:rid:/pauta-previa/**
     -   emits a reuniao's pauta previa, according to model.
     -   _auth_: grg, sysAdmin
@@ -221,21 +201,36 @@
     -   _auth_: grg, sysAdmin
     -   _inputs_: reuniao id
     -   _outputs_: status message + reuniao + ata file
--   **PUT /api/proposicoes/:pid:/reuniao/:rid:/add**
+-   **POST /api/reunioes/**
+    -   creates a new reuniao in the system
+    -   _auth_: grg, sysAdmin
+    -   _inputs_: reuniao (in req body)
+    -   _outputs_: status message + registered reuniao
+-   **PUT /api/reunioes/:rid:/**
+    -   edits an existing reuniao
+    -   _auth_: grg, sysAdmin
+    -   _inputs_: reuniao id + reuniao (in req body)
+    -   _outputs_: status message + edited reuniao
+-   **PUT /api/reunioes/:rid:/proposicao/:pid:/add**
     -   add a proposicao to a reuniao
     -   _auth_: grg, sysAdmin
     -   _inputs_: proposicao id + reuniao id
     -   _outputs_: status message + proposicao + reuniao
--   **PUT /api/proposicoes/:pid:/reuniao/:rid:/remove**
+-   **DELETE /api/reunioes/:rid:/proposicao/:pid:/**
     -   removes a proposicao from a reuniao
     -   _auth_: grg, sysAdmin
     -   _inputs_: proposicao id + reuniao id
     -   _outputs_: status message + proposicao + reuniao
--   **DELETE /api/acoes/:aid:/reuniao/:rid**
+-   **DELETE /api/reunioes/:rid:/acao/:aid**
     -   removes an acao from a reuniao (except initial)
     -   _auth_: responsavel acao (to add andamentos), grg, sysAdmin
     -   _inputs_: acao id + reuniao id
     -   _outputs_: status message + edited acao
+-   **DELETE /api/reunioes/:rid:/**
+    -   removes an existing reuniao
+    -   _auth_: creator, sysAdmin
+    -   _inputs_: reuniao id
+    -   _outputs_: status message + removed reuniao
 
 # 5. acoes controller
 

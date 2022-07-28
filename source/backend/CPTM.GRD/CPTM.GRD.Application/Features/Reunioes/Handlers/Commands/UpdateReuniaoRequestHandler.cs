@@ -73,8 +73,8 @@ public class UpdateReuniaoRequestHandler : IRequestHandler<UpdateReuniaoRequest,
             throw new ValidationException(reuniaoDtoValidationResult);
         }
 
-        var savedReuniao = await _reuniaoRepository.Get(request.UpdateReuniaoDto.Id);
-        if (savedReuniao == null) throw new NotFoundException(nameof(savedReuniao), request.UpdateReuniaoDto.Id);
+        var savedReuniao = await _reuniaoRepository.Get(request.Rid);
+        if (savedReuniao == null) throw new NotFoundException(nameof(savedReuniao), request.Rid);
 
         var responsavel = await _userRepository.Get(request.Uid);
         if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
