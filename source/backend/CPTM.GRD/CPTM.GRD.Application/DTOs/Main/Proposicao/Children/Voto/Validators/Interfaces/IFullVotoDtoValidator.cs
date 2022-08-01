@@ -6,12 +6,12 @@ namespace CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto.Validators.Int
 
 public class IFullVotoDtoValidator : AbstractValidator<IFullVotoDto>
 {
-    public IFullVotoDtoValidator(IVotoRepository votoRepository)
+  public IFullVotoDtoValidator(IVotoRepository votoRepository)
+  {
+    RuleFor(p => p.Id).NotNull().NotEmpty().GreaterThan(0).MustAsync(async (id, token) =>
     {
-        RuleFor(p => p.Id).NotNull().NotEmpty().GreaterThan(0).MustAsync(async (id, token) =>
-        {
-            var votoExists = await votoRepository.Exists(id);
-            return !votoExists;
-        });
-    }
+      var votoExists = await votoRepository.Exists(id);
+      return votoExists;
+    });
+  }
 }
