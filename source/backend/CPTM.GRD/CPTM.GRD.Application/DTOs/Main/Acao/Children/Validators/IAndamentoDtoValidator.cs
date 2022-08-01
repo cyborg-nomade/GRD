@@ -8,11 +8,11 @@ namespace CPTM.GRD.Application.DTOs.Main.Acao.Children.Validators;
 
 public class IAndamentoDtoValidator : AbstractValidator<IAndamentoDto>
 {
-    public IAndamentoDtoValidator(IAuthenticationService authenticationService, IUserRepository userRepository)
-    {
-        RuleFor(p => p.User).NotNull().NotEmpty()
-            .SetValidator(new UserDtoValidator(authenticationService, userRepository));
-        RuleFor(p => p.Status).NotNull().NotEmpty().IsInEnum();
-        RuleFor(p => p.Descricao).NotNull().NotEmpty();
-    }
+  public IAndamentoDtoValidator(IAuthenticationService authenticationService, IUserRepository userRepository)
+  {
+    RuleFor(p => p.User).NotNull().NotEmpty()
+        .SetValidator(new UserDtoValidator(authenticationService, userRepository));
+    RuleFor(p => p.Status).NotNull().IsInEnum();
+    RuleFor(p => p.Descricao).NotNull().NotEmpty();
+  }
 }

@@ -15,9 +15,9 @@ public static class MockAuthenticationService
 
         var mockService = new Mock<IAuthenticationService>();
 
-        mockService.Setup(s => s.GetUsuarioAD("urielf")).ReturnsAsync(mockUsuarioAd);
+        mockService.Setup(s => s.GetUsuarioAD(It.IsAny<string>())).ReturnsAsync(mockUsuarioAd);
 
-        mockService.Setup(s => s.ExistsAd("urielf")).ReturnsAsync(true);
+        mockService.Setup(s => s.ExistsAd(It.IsAny<string>())).ReturnsAsync(true);
 
         return mockService;
     }

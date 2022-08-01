@@ -18,7 +18,7 @@ public class IGroupDtoValidator : AbstractValidator<IGroupDto>
         RuleFor(p => p.Diretoria).NotNull().NotEmpty().MaximumLength(100);
         RuleFor(p => p.SiglaDiretoria).NotNull().NotEmpty().MaximumLength(4);
         RuleFor(p => p.Diretoria).NotNull().NotEmpty().MaximumLength(100);
-        RuleFor(p => p.Relator).NotNull().NotEmpty()
-            .SetValidator(new UserDtoValidator(authenticationService, userRepository));
+        //RuleFor(p => p.Relator).NotNull().NotEmpty()
+        //    .SetValidator(new UserDtoValidator(authenticationService, userRepository));
     }
 }

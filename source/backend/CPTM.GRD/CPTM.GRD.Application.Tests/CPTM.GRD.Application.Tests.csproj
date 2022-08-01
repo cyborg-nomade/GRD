@@ -25,9 +25,9 @@
 
   <ItemGroup>
     <Folder Include="Mocks\Infrastructure\" />
+    <Folder Include="Mocks\Persistence\AccessControl\" />
     <Folder Include="Mocks\Util\" />
-    <Folder Include="Mocks\Persistence\" />
-    <Folder Include="Tests\" />
+    <Folder Include="Tests\AccessControl\Queries\" />
   </ItemGroup>
 
   <ItemGroup>
