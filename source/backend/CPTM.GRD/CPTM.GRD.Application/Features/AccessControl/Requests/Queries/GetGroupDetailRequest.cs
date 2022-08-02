@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
 
-public class GetGroupDetailRequest : IRequest<GroupDto>
+public class GetGroupDetailRequest : BasicRequest, IRequest<GroupDto>
 {
     public int Gid { get; set; }
 }

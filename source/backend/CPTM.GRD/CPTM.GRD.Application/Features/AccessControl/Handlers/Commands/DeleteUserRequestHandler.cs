@@ -23,14 +23,14 @@ public class DeleteUserRequestHandler : IRequestHandler<DeleteUserRequest, Unit>
     {
         _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Gerente);
 
-        var userExists = await _userRepository.Exists(request.Uid);
+        var user = await _userRepository.Get(request.Uid);
 
-        if (!userExists)
+        if (user == null)
         {
-            throw new NotFoundException("Usuário", userExists);
+            throw new NotFoundException("Usuário", nameof(user));
         }
 
-        var user = await _userRepository.Get(request.Uid);
+        await _authenticationService.AuthorizeByGroups(request.RequestUser, user.AreasAcesso);
 
         await _userRepository.Delete(request.Uid);
         return Unit.Value;

@@ -29,14 +29,21 @@ public class AuthenticationService : IAuthenticationService
     private readonly JwtSettings _jwtSettings;
     private readonly IViewUsuarioRepository _viewUsuarioRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IGroupRepository _groupRepository;
     private readonly IMapper _mapper;
 
-    public AuthenticationService(IOptions<AuthenticationServiceSettings> authOptions, IOptions<JwtSettings> jwtSettings,
-        IViewUsuarioRepository viewUsuarioRepository, IUserRepository userRepository, IMapper mapper)
+    public AuthenticationService(
+        IOptions<AuthenticationServiceSettings> authOptions,
+        IOptions<JwtSettings> jwtSettings,
+        IViewUsuarioRepository viewUsuarioRepository,
+        IUserRepository userRepository,
+        IGroupRepository groupRepository,
+        IMapper mapper)
     {
         _jwtSettings = jwtSettings.Value;
         _viewUsuarioRepository = viewUsuarioRepository;
         _userRepository = userRepository;
+        _groupRepository = groupRepository;
         _mapper = mapper;
         AuthenticationServiceSettings = authOptions.Value;
     }
@@ -138,15 +145,28 @@ public class AuthenticationService : IAuthenticationService
 
     public bool AuthorizeByMinLevel(ClaimsPrincipal requestUser, AccessLevel accessLevel)
     {
-        var claimsList = requestUser.Claims.ToList();
+        var tokenClaims = GetTokenClaims(requestUser);
 
-        var tokenAccessLevel = Enum.Parse<AccessLevel>(
-            claimsList.Find(p => p.Type == CustomClaimTypes.AccessLevel)?.Value ??
-            throw new InvalidOperationException());
-
-        if (tokenAccessLevel >= accessLevel)
+        if (tokenClaims.NivelAcesso >= accessLevel)
         {
             return true;
+        }
+
+        throw new BadRequestException("Recurso não encontrado!");
+    }
+
+    public async Task<bool> AuthorizeByGroups(ClaimsPrincipal requestUser, ICollection<Group> areasAcesso)
+    {
+        var tokenClaims = GetTokenClaims(requestUser);
+
+        foreach (var group in areasAcesso)
+        {
+            var superordinateGroups = await _groupRepository.GetSuperordinateGroups(group.Id);
+            var superordinateGroupNames = superordinateGroups.Select(g => g.Sigla);
+            if (superordinateGroupNames.Intersect(tokenClaims.GruposAcesso).Any())
+            {
+                return true;
+            }
         }
 
         throw new BadRequestException("Recurso não encontrado!");
@@ -177,5 +197,23 @@ public class AuthenticationService : IAuthenticationService
         }
 
         throw response.ErrorException!;
+    }
+
+    private static TokenClaims GetTokenClaims(ClaimsPrincipal requestUser)
+    {
+        var claimsList = requestUser.Claims.ToList();
+
+        var uid = int.Parse(claimsList.Find(p => p.Type == CustomClaimTypes.AccessLevel)?.Value ??
+                            throw new InvalidOperationException());
+        var accessLevel = Enum.Parse<AccessLevel>(
+            claimsList.Find(p => p.Type == CustomClaimTypes.AccessLevel)?.Value ??
+            throw new InvalidOperationException());
+        var accessGroups = claimsList.Where(p => p.Type == CustomClaimTypes.AccessGroups).Select(p => p.Value).ToList();
+        return new TokenClaims
+        {
+            Uid = uid,
+            NivelAcesso = accessLevel,
+            GruposAcesso = accessGroups
+        };
     }
 }

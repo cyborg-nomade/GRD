@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
 
-public class GetByLevelUsersListRequest : IRequest<List<UserDto>>
+public class GetByLevelUsersListRequest : BasicRequest, IRequest<List<UserDto>>
 {
     public AccessLevel Level { get; set; }
 }

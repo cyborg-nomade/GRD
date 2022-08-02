@@ -3,6 +3,6 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
 
-public class GetAllGroupsListRequest : IRequest<List<GroupDto>>
+public class GetAllGroupsListRequest : BasicRequest, IRequest<List<GroupDto>>
 {
 }

@@ -27,6 +27,14 @@ namespace CPTM.GRD.API.Controllers
             return await _mediator.Send(new GetAllGroupsListRequest());
         }
 
+        // GET api/groups/user/:uid:/
+
+        [HttpGet("user/{uid:int}")]
+        public async Task<List<GroupDto>> GetByUser(int uid)
+        {
+            return await _mediator.Send(new GetByUserGroupsListRequest() { Uid = uid });
+        }
+
         // GET api/groups/:gid:
         [HttpGet("{gid:int}")]
         public async Task<GroupDto> Get(int gid)
