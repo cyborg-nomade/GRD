@@ -5,5 +5,5 @@ namespace CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
 
 public class GetByGroupUsersListRequest : BasicRequest, IRequest<List<UserDto>>
 {
-    public int Gid { get; set; }
+    public int Gid { get; init; }
 }

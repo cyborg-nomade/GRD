@@ -5,6 +5,6 @@ namespace CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 
 public class GrgApproveAjustesRdProposicaoRequest : IRequest<ProposicaoDto>
 {
-    public int Pid { get; set; }
-    public int Uid { get; set; }
+    public int Pid { get; init; }
+    public int Uid { get; init; }
 }

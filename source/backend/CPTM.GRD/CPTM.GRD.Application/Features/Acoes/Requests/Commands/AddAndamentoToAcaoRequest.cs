@@ -6,6 +6,6 @@ namespace CPTM.GRD.Application.Features.Acoes.Requests.Commands;
 
 public class AddAndamentoToAcaoRequest : IRequest<AcaoDto>
 {
-    public int Aid { get; set; }
-    public AndamentoDto AndamentoDto { get; set; } = new AndamentoDto();
+    public int Aid { get; init; }
+    public AndamentoDto AndamentoDto { get; init; } = new AndamentoDto();
 }

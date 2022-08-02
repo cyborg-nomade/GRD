@@ -6,5 +6,5 @@ namespace CPTM.GRD.Application.Features.AccessControl.Requests.Commands;
 
 public class LoginUserRequest : IRequest<AuthResponse>
 {
-    public AuthUser AuthUser { get; set; } = new AuthUser();
+    public AuthUser AuthUser { get; init; } = new AuthUser();
 }

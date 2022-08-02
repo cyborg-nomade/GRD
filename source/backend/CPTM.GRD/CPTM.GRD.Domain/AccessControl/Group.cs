@@ -2,13 +2,13 @@
 
 public class Group
 {
-    public int Id { get; set; }
-    public string Sigla { get; set; } = string.Empty;
-    public string Nome { get; set; } = string.Empty;
-    public string SiglaGerencia { get; set; } = string.Empty;
-    public string Gerencia { get; set; } = string.Empty;
-    public string SiglaDiretoria { get; set; } = string.Empty;
-    public string Diretoria { get; set; } = string.Empty;
+    public int Id { get; init; }
+    public string Sigla { get; init; } = string.Empty;
+    public string Nome { get; init; } = string.Empty;
+    public string SiglaGerencia { get; init; } = string.Empty;
+    public string Gerencia { get; init; } = string.Empty;
+    public string SiglaDiretoria { get; init; } = string.Empty;
+    public string Diretoria { get; init; } = string.Empty;
 
     public bool CheckIsDiretoria()
     {

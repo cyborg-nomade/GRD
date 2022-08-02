@@ -6,5 +6,5 @@ namespace CPTM.GRD.Application.Features.Reunioes.Requests.Queries;
 
 public class GetByStatusReunioesListRequest : IRequest<List<ReuniaoListDto>>
 {
-    public ReuniaoStatus Status { get; set; }
+    public ReuniaoStatus Status { get; init; }
 }

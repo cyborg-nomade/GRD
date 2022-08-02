@@ -5,5 +5,5 @@ namespace CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 
 public class CreateProposicaoRequest : IRequest<ProposicaoDto>
 {
-    public CreateProposicaoDto CreateProposicaoDto { get; set; } = new CreateProposicaoDto();
+    public CreateProposicaoDto CreateProposicaoDto { get; init; } = new CreateProposicaoDto();
 }

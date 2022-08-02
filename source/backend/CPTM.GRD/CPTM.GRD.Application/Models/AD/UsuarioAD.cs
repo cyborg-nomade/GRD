@@ -42,7 +42,7 @@ public class UsuarioAD
 
     public string NomeExibicao { get; set; } = string.Empty;
 
-    public string Nome { get; set; } = string.Empty;
+    public string Nome { get; init; } = string.Empty;
 
     public string NomePrimeiro { get; set; } = string.Empty;
 

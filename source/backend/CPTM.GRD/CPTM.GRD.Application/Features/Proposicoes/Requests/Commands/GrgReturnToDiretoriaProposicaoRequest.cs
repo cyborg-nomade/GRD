@@ -5,7 +5,7 @@ namespace CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 
 public class GrgReturnToDiretoriaProposicaoRequest : IRequest<ProposicaoDto>
 {
-    public int Pid { get; set; }
-    public int Uid { get; set; }
-    public string MotivoReprovacao { get; set; } = string.Empty;
+    public int Pid { get; init; }
+    public int Uid { get; init; }
+    public string MotivoReprovacao { get; init; } = string.Empty;
 }

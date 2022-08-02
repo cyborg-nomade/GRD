@@ -5,7 +5,7 @@ namespace CPTM.GRD.Application.Features.Acoes.Requests.Commands;
 
 public class CreateAcaoRequest : IRequest<AcaoDto>
 {
-    public CreateAcaoDto CreateAcaoDto { get; set; } = new CreateAcaoDto();
-    public int Rid { get; set; }
-    public int Uid { get; set; }
+    public CreateAcaoDto CreateAcaoDto { get; init; } = new CreateAcaoDto();
+    public int Rid { get; init; }
+    public int Uid { get; init; }
 }

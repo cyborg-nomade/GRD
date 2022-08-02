@@ -6,5 +6,5 @@ namespace CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
 
 public class GetByLevelUsersListRequest : BasicRequest, IRequest<List<UserDto>>
 {
-    public AccessLevel Level { get; set; }
+    public AccessLevel Level { get; init; }
 }

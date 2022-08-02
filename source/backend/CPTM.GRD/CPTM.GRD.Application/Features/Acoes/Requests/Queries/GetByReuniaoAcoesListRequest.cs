@@ -5,5 +5,5 @@ namespace CPTM.GRD.Application.Features.Acoes.Requests.Queries;
 
 public class GetByReuniaoAcoesListRequest : IRequest<List<AcaoListDto>>
 {
-    public int Rid { get; set; }
+    public int Rid { get; init; }
 }

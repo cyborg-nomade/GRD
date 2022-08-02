@@ -5,5 +5,5 @@ namespace CPTM.GRD.Application.Features.Proposicoes.Requests.Queries;
 
 public class GetByUserProposicoesListRequest : IRequest<List<ProposicaoListDto>>
 {
-    public int Uid { get; set; }
+    public int Uid { get; init; }
 }
