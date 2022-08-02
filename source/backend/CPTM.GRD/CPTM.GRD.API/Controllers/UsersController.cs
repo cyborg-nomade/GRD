@@ -4,6 +4,7 @@ using CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
 using CPTM.GRD.Application.Responses;
 using CPTM.GRD.Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -34,6 +35,7 @@ namespace CPTM.GRD.API.Controllers
 
         // GET: api/users/
         [HttpGet]
+        [Authorize]
         public async Task<List<UserDto>> Get()
         {
             return await _mediator.Send(new GetAllUsersListRequest());
@@ -41,6 +43,7 @@ namespace CPTM.GRD.API.Controllers
 
         // GET: api/users/level/:level:/
         [HttpGet("level/{level}")]
+        [Authorize]
         public async Task<List<UserDto>> GetByLevel(AccessLevel level)
         {
             return await _mediator.Send(new GetByLevelUsersListRequest() { Level = level });
@@ -48,6 +51,7 @@ namespace CPTM.GRD.API.Controllers
 
         // GET /api/users/group/:gid:/
         [HttpGet("group/{gid:int}")]
+        [Authorize]
         public async Task<List<UserDto>> GetByGroup(int gid)
         {
             return await _mediator.Send(new GetByGroupUsersListRequest() { Gid = gid });
@@ -55,6 +59,7 @@ namespace CPTM.GRD.API.Controllers
 
         // GET /api/users/level/:level:/group/:gid:/
         [HttpGet("level/{level}/group/{gid:int}")]
+        [Authorize]
         public async Task<List<UserDto>> GetByLevelAndGroup(AccessLevel level, int gid)
         {
             return await _mediator.Send(new GetByGroupAndLevelUsersListRequest() { Level = level, Gid = gid });
@@ -62,6 +67,7 @@ namespace CPTM.GRD.API.Controllers
 
         // GET /api/users/:uid:/
         [HttpGet("{uid:int}")]
+        [Authorize]
         public async Task<UserDto> Get(int uid)
         {
             return await _mediator.Send(new GetUserDetailRequest() { Uid = uid });
@@ -69,6 +75,7 @@ namespace CPTM.GRD.API.Controllers
 
         // POST /api/users/
         [HttpPost]
+        [Authorize]
         public async Task<UserDto> Post([FromBody] CreateUserDto createUserDto)
         {
             return await _mediator.Send(new CreateUserRequest() { CreateUserDto = createUserDto });
@@ -76,6 +83,7 @@ namespace CPTM.GRD.API.Controllers
 
         // PUT /api/users/:uid:/
         [HttpPut("{uid:int}")]
+        [Authorize]
         public async Task<UserDto> Put(int uid, [FromBody] UpdateUserDto updateUserDto)
         {
             return await _mediator.Send(new UpdateUserRequest() { UpdateUserDto = updateUserDto });
@@ -83,6 +91,7 @@ namespace CPTM.GRD.API.Controllers
 
         // DELETE /api/users/:uid:/
         [HttpDelete("{uid:int}")]
+        [Authorize]
         public async Task<Unit> Delete(int uid)
         {
             return await _mediator.Send(new DeleteUserRequest() { Uid = uid });

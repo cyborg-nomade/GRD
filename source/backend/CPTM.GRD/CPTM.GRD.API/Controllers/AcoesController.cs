@@ -6,6 +6,7 @@ using CPTM.GRD.Application.Features.Acoes.Requests.Commands;
 using CPTM.GRD.Application.Features.Acoes.Requests.Queries;
 using CPTM.GRD.Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,6 +15,7 @@ namespace CPTM.GRD.API.Controllers
 {
     [Route("api/acoes")]
     [ApiController]
+    [Authorize]
     public class AcoesController : ControllerBase
     {
         private readonly IMediator _mediator;

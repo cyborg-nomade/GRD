@@ -4,6 +4,7 @@ using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Queries;
 using CPTM.GRD.Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,6 +13,7 @@ namespace CPTM.GRD.API.Controllers
 {
     [Route("api/proposicoes")]
     [ApiController]
+    [Authorize]
     public class ProposicoesController : ControllerBase
     {
         private readonly IMediator _mediator;

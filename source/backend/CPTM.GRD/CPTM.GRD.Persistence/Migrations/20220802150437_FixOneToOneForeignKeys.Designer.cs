@@ -3,6 +3,7 @@ using System;
 using CPTM.GRD.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 
@@ -11,9 +12,10 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace CPTM.GRD.Persistence.Migrations
 {
     [DbContext(typeof(GrdContext))]
-    partial class GrdContextModelSnapshot : ModelSnapshot
+    [Migration("20220802150437_FixOneToOneForeignKeys")]
+    partial class FixOneToOneForeignKeys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,42 +24,6 @@ namespace CPTM.GRD.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.HasSequence("SEQ_ACOES")
-                .IncrementsBy(10);
-
-            modelBuilder.HasSequence("SEQ_ANDAMENTOS")
-                .IncrementsBy(10);
-
-            modelBuilder.HasSequence("SEQ_GROUPS")
-                .IncrementsBy(10);
-
-            modelBuilder.HasSequence("SEQ_LOGS_ACAO")
-                .IncrementsBy(10);
-
-            modelBuilder.HasSequence("SEQ_LOGS_PROPOSICAO")
-                .IncrementsBy(10);
-
-            modelBuilder.HasSequence("SEQ_LOGS_REUNIAO")
-                .IncrementsBy(10);
-
-            modelBuilder.HasSequence("SEQ_PARTICIPANTES")
-                .IncrementsBy(10);
-
-            modelBuilder.HasSequence("SEQ_PROPOSICOES")
-                .IncrementsBy(10);
-
-            modelBuilder.HasSequence("SEQ_RESOLUCOES")
-                .IncrementsBy(10);
-
-            modelBuilder.HasSequence("SEQ_REUNIOES")
-                .IncrementsBy(10);
-
-            modelBuilder.HasSequence("SEQ_USERS")
-                .IncrementsBy(10);
-
-            modelBuilder.HasSequence("SEQ_VOTOS")
-                .IncrementsBy(10);
 
             modelBuilder.Entity("AcaoReuniao", b =>
                 {
@@ -80,7 +46,7 @@ namespace CPTM.GRD.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "SEQ_GROUPS");
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Diretoria")
                         .IsRequired()
@@ -125,7 +91,7 @@ namespace CPTM.GRD.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "SEQ_USERS");
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -158,7 +124,7 @@ namespace CPTM.GRD.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "SEQ_ACOES");
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("AlertaVencimento")
                         .HasColumnType("NUMBER(10)");
@@ -223,7 +189,7 @@ namespace CPTM.GRD.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "SEQ_ANDAMENTOS");
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int?>("AcaoId")
                         .HasColumnType("NUMBER(10)");
@@ -265,7 +231,7 @@ namespace CPTM.GRD.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "SEQ_LOGS_ACAO");
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("AcaoId")
                         .IsRequired()
@@ -303,7 +269,7 @@ namespace CPTM.GRD.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "SEQ_LOGS_PROPOSICAO");
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("Data")
                         .HasColumnType("TIMESTAMP(7)");
@@ -341,7 +307,7 @@ namespace CPTM.GRD.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "SEQ_LOGS_REUNIAO");
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("Data")
                         .HasColumnType("TIMESTAMP(7)");
@@ -379,7 +345,7 @@ namespace CPTM.GRD.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "SEQ_RESOLUCOES");
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("AssinaturaResolucao")
                         .IsRequired()
@@ -412,7 +378,7 @@ namespace CPTM.GRD.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "SEQ_VOTOS");
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ParticipanteId")
                         .HasColumnType("NUMBER(10)");
@@ -439,7 +405,7 @@ namespace CPTM.GRD.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "SEQ_PROPOSICOES");
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("AjustesRd")
                         .IsRequired()
@@ -677,7 +643,7 @@ namespace CPTM.GRD.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "SEQ_PARTICIPANTES");
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("DiretoriaAreaId")
                         .HasColumnType("NUMBER(10)");
@@ -720,7 +686,7 @@ namespace CPTM.GRD.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "SEQ_REUNIOES");
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("AtaFilePath")
                         .IsRequired()

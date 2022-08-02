@@ -21,7 +21,7 @@ public class ViewEstruturaRepository : IViewEstruturaRepository
             (eg.NrNivel >= 1 && eg.NrNivel <= 4) &&
             (eg.DirSigla == sigla || eg.GgSigla == sigla || eg.GerSigla == sigla || eg.DepSigla == sigla));
         if (grupoEstrutura == null) throw new NotFoundException(nameof(grupoEstrutura), nameof(sigla));
-        var group = new Group()
+        var group = new Group
         {
             Nome = grupoEstrutura.TxNome ?? throw new InvalidOperationException(),
             Sigla = sigla,

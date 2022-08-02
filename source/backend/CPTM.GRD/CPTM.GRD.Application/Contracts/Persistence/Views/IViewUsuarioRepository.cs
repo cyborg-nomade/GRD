@@ -3,4 +3,6 @@
 public interface IViewUsuarioRepository
 {
     Task<int> GetCodigoCPU(string username);
+
+    Task<string?> GetCargoCPU(string username);
 }

@@ -18,4 +18,11 @@ public class ViewUsuarioRepository : IViewUsuarioRepository
             .Select(u => u.IdCodusuario)
             .SingleOrDefaultAsync();
     }
+
+    public async Task<string?> GetCargoCPU(string username)
+    {
+        return await _grdContext.GrdVwUsuarios.Where(u => u.TxUsername == username.ToUpper())
+            .Select(u => u.TxCargo)
+            .SingleOrDefaultAsync();
+    }
 }

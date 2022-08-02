@@ -10,6 +10,7 @@ using CPTM.GRD.Application.DTOs.AccessControl.User;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Models.AD;
 using CPTM.GRD.Application.Models.Settings;
+using CPTM.GRD.Application.Responses;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
 using Microsoft.Extensions.Options;
@@ -61,14 +62,20 @@ public class AuthenticationService : IAuthenticationService
     {
         var response = await SendRequest("obter-usuario", username);
         if (response.Content == null) throw new NotFoundException(nameof(response.Content), username);
-        return JsonConvert.DeserializeObject<UsuarioAD>(response.Content) ?? throw new InvalidOperationException();
+        var deserializedResponse = JObject.Parse(response.Content);
+        var usuario = deserializedResponse.GetValue("usuarioAd");
+        if (usuario == null) throw new NotFoundException(nameof(usuario), nameof(usuario));
+        return JsonConvert.DeserializeObject<UsuarioAD>(usuario.ToString()) ?? throw new InvalidOperationException();
     }
 
     public async Task<GrupoAD> GetGroupAd(string groupName)
     {
         var response = await SendRequest("obter-grupo", groupName);
         if (response.Content == null) throw new NotFoundException(nameof(response.Content), groupName);
-        return JsonConvert.DeserializeObject<GrupoAD>(response.Content) ?? throw new InvalidOperationException();
+        var deserializedResponse = JObject.Parse(response.Content);
+        var grupo = deserializedResponse.GetValue("grupoAd");
+        if (grupo == null) throw new NotFoundException(nameof(grupo), nameof(grupo));
+        return JsonConvert.DeserializeObject<GrupoAD>(grupo.ToString()) ?? throw new InvalidOperationException();
     }
 
     public async Task<bool> IsGerente(string username)
@@ -85,7 +92,18 @@ public class AuthenticationService : IAuthenticationService
         return gerentesGrupo.Membros.Contains(userAd.NomeDistinto);
     }
 
-    public string GenerateToken(User user)
+    public async Task<bool> IsGrgMember(string username)
+    {
+        var userAd = await GetUsuarioAd(username);
+        return userAd.Departamento.ToUpper() == "GRG";
+    }
+
+    public bool IsSysAdmin(string username)
+    {
+        return username.ToUpper() == "URIELF";
+    }
+
+    public AuthResponse GenerateToken(User user)
     {
         var areaClaims = user.AreasAcesso.Select(group => new Claim(CustomClaimTypes.AccessGroups, group.Sigla))
             .ToList();
@@ -110,7 +128,11 @@ public class AuthenticationService : IAuthenticationService
             expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
             signingCredentials: signingCredentials);
         var tokenString = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-        return tokenString;
+        return new AuthResponse()
+        {
+            ExpirationDate = DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
+            Token = tokenString,
+        };
     }
 
     private async Task<RestResponse> SendRequest(string endpoint, string username = "", AuthUser? user = null)
@@ -118,9 +140,10 @@ public class AuthenticationService : IAuthenticationService
         ServicePointManager.ServerCertificateValidationCallback +=
             (sender, certificate, chain, sslPolicyErrors) => true;
 
-        var authClient = new RestClient(AuthenticationServiceSettings.AbiUrl + endpoint + username);
+        var authClient = new RestClient(AuthenticationServiceSettings.AbiUrl);
 
-        var authRequest = new RestRequest();
+        var authResource = endpoint + "/" + username;
+        var authRequest = new RestRequest(authResource);
         authRequest.AddHeader("Content-Type", "application/json");
         if (user != null)
         {

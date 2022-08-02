@@ -1,6 +1,7 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl.Group;
 using CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,6 +10,7 @@ namespace CPTM.GRD.API.Controllers
 {
     [Route("api/groups")]
     [ApiController]
+    [Authorize]
     public class GroupsController : ControllerBase
     {
         private readonly IMediator _mediator;
