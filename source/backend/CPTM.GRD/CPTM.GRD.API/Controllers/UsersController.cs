@@ -38,7 +38,10 @@ namespace CPTM.GRD.API.Controllers
         [Authorize]
         public async Task<List<UserDto>> Get()
         {
-            return await _mediator.Send(new GetAllUsersListRequest());
+            return await _mediator.Send(new GetAllUsersListRequest()
+            {
+                RequestUser = User,
+            });
         }
 
         // GET: api/users/level/:level:/
@@ -46,7 +49,11 @@ namespace CPTM.GRD.API.Controllers
         [Authorize]
         public async Task<List<UserDto>> GetByLevel(AccessLevel level)
         {
-            return await _mediator.Send(new GetByLevelUsersListRequest() { Level = level });
+            return await _mediator.Send(new GetByLevelUsersListRequest()
+            {
+                RequestUser = User,
+                Level = level
+            });
         }
 
         // GET /api/users/group/:gid:/
@@ -54,7 +61,11 @@ namespace CPTM.GRD.API.Controllers
         [Authorize]
         public async Task<List<UserDto>> GetByGroup(int gid)
         {
-            return await _mediator.Send(new GetByGroupUsersListRequest() { Gid = gid });
+            return await _mediator.Send(new GetByGroupUsersListRequest()
+            {
+                RequestUser = User,
+                Gid = gid
+            });
         }
 
         // GET /api/users/level/:level:/group/:gid:/
@@ -62,7 +73,12 @@ namespace CPTM.GRD.API.Controllers
         [Authorize]
         public async Task<List<UserDto>> GetByLevelAndGroup(AccessLevel level, int gid)
         {
-            return await _mediator.Send(new GetByGroupAndLevelUsersListRequest() { Level = level, Gid = gid });
+            return await _mediator.Send(new GetByGroupAndLevelUsersListRequest()
+            {
+                RequestUser = User,
+                Level = level,
+                Gid = gid
+            });
         }
 
         // GET /api/users/:uid:/
@@ -70,7 +86,11 @@ namespace CPTM.GRD.API.Controllers
         [Authorize]
         public async Task<UserDto> Get(int uid)
         {
-            return await _mediator.Send(new GetUserDetailRequest() { Uid = uid });
+            return await _mediator.Send(new GetUserDetailRequest()
+            {
+                RequestUser = User,
+                Uid = uid
+            });
         }
 
         // POST /api/users/
@@ -78,7 +98,11 @@ namespace CPTM.GRD.API.Controllers
         [Authorize]
         public async Task<UserDto> Post([FromBody] CreateUserDto createUserDto)
         {
-            return await _mediator.Send(new CreateUserRequest() { CreateUserDto = createUserDto });
+            return await _mediator.Send(new CreateUserRequest()
+            {
+                RequestUser = User,
+                CreateUserDto = createUserDto
+            });
         }
 
         // PUT /api/users/:uid:/
@@ -86,7 +110,11 @@ namespace CPTM.GRD.API.Controllers
         [Authorize]
         public async Task<UserDto> Put(int uid, [FromBody] UpdateUserDto updateUserDto)
         {
-            return await _mediator.Send(new UpdateUserRequest() { UpdateUserDto = updateUserDto });
+            return await _mediator.Send(new UpdateUserRequest()
+            {
+                RequestUser = User,
+                UpdateUserDto = updateUserDto
+            });
         }
 
         // DELETE /api/users/:uid:/
@@ -94,7 +122,11 @@ namespace CPTM.GRD.API.Controllers
         [Authorize]
         public async Task<Unit> Delete(int uid)
         {
-            return await _mediator.Send(new DeleteUserRequest() { Uid = uid });
+            return await _mediator.Send(new DeleteUserRequest()
+            {
+                RequestUser = User,
+                Uid = uid
+            });
         }
     }
 }

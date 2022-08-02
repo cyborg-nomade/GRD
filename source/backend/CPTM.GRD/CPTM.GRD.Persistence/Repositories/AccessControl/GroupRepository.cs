@@ -65,6 +65,9 @@ public class GroupRepository : GenericRepository<Group>, IGroupRepository
             returnGroups.AddRange(superordinateGroups);
         }
 
+        var grg = await GetOrAddBySigla("GRG");
+        returnGroups.Add(grg);
+
         return returnGroups;
     }
 

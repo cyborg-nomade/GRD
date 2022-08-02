@@ -30,7 +30,7 @@ public class DeleteUserRequestHandler : IRequestHandler<DeleteUserRequest, Unit>
             throw new NotFoundException("Usuário", nameof(user));
         }
 
-        await _authenticationService.AuthorizeByGroups(request.RequestUser, user.AreasAcesso);
+        await _authenticationService.AuthorizeByMinGroups(request.RequestUser, user.AreasAcesso);
 
         await _userRepository.Delete(request.Uid);
         return Unit.Value;

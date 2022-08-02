@@ -24,7 +24,10 @@ namespace CPTM.GRD.API.Controllers
         [HttpGet]
         public async Task<List<GroupDto>> Get()
         {
-            return await _mediator.Send(new GetAllGroupsListRequest());
+            return await _mediator.Send(new GetAllGroupsListRequest()
+            {
+                RequestUser = User
+            });
         }
 
         // GET api/groups/user/:uid:/
@@ -32,14 +35,22 @@ namespace CPTM.GRD.API.Controllers
         [HttpGet("user/{uid:int}")]
         public async Task<List<GroupDto>> GetByUser(int uid)
         {
-            return await _mediator.Send(new GetByUserGroupsListRequest() { Uid = uid });
+            return await _mediator.Send(new GetByUserGroupsListRequest()
+            {
+                RequestUser = User,
+                Uid = uid
+            });
         }
 
         // GET api/groups/:gid:
         [HttpGet("{gid:int}")]
         public async Task<GroupDto> Get(int gid)
         {
-            return await _mediator.Send(new GetGroupDetailRequest() { Gid = gid });
+            return await _mediator.Send(new GetGroupDetailRequest()
+            {
+                RequestUser = User,
+                Gid = gid
+            });
         }
     }
 }

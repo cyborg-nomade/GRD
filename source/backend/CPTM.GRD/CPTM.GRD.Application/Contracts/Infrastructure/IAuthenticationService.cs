@@ -19,5 +19,8 @@ public interface IAuthenticationService
     bool IsSysAdmin(string username);
     AuthResponse GenerateToken(User user);
     bool AuthorizeByMinLevel(ClaimsPrincipal requestUser, AccessLevel accessLevel);
-    Task<bool> AuthorizeByGroups(ClaimsPrincipal requestUser, ICollection<Group> areasAcesso);
+    Task<bool> AuthorizeByMinGroups(ClaimsPrincipal requestUser, IEnumerable<Group> areasAcesso);
+    Task<bool> AuthorizeByMinGroups(ClaimsPrincipal requestUser, int gid);
+    Task<bool> AuthorizeByMinLevelAndGroup(ClaimsPrincipal requestUser, int gid, AccessLevel accessLevel);
+    Task<bool> AuthorizeByMinLevelAndGroup(ClaimsPrincipal requestUser, int uid);
 }

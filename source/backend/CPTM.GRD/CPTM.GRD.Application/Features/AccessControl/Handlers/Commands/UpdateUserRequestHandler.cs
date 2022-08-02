@@ -39,7 +39,7 @@ public class UpdateUserRequestHandler : IRequestHandler<UpdateUserRequest, UserD
         var savedUser = await _userRepository.Get(request.UpdateUserDto.Id);
         if (savedUser == null) throw new NotFoundException(nameof(savedUser), nameof(savedUser));
 
-        await _authenticationService.AuthorizeByGroups(request.RequestUser, savedUser.AreasAcesso);
+        await _authenticationService.AuthorizeByMinGroups(request.RequestUser, savedUser.AreasAcesso);
 
         _mapper.Map(request.UpdateUserDto, savedUser);
         var updatedUser = await _userRepository.Update(savedUser);

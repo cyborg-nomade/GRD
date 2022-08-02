@@ -111,6 +111,65 @@ public class AuthenticationService : IAuthenticationService
         return username.ToUpper() == "URIELF";
     }
 
+    public bool AuthorizeByMinLevel(ClaimsPrincipal requestUser, AccessLevel accessLevel)
+    {
+        var tokenClaims = GetTokenClaims(requestUser);
+
+        if (tokenClaims.NivelAcesso < accessLevel) throw new BadRequestException("Recurso não encontrado!");
+
+        return true;
+    }
+
+    public async Task<bool> AuthorizeByMinGroups(ClaimsPrincipal requestUser, IEnumerable<Group> areasAcesso)
+    {
+        var result = false;
+        foreach (var group in areasAcesso)
+        {
+            try
+            {
+                result = await AuthorizeByMinGroups(requestUser, group.Id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                result = result || false;
+            }
+        }
+
+        return result ? result : throw new BadRequestException("Recurso não encontrado!");
+    }
+
+    public async Task<bool> AuthorizeByMinGroups(ClaimsPrincipal requestUser, int gid)
+    {
+        var tokenClaims = GetTokenClaims(requestUser);
+
+        var superordinateGroups = await _groupRepository.GetSuperordinateGroups(gid);
+        var superordinateGroupNames = superordinateGroups.Select(g => g.Sigla);
+        if (!superordinateGroupNames.Intersect(tokenClaims.GruposAcesso).Any())
+            throw new BadRequestException("Recurso não encontrado!");
+
+        return true;
+    }
+
+    public async Task<bool> AuthorizeByMinLevelAndGroup(ClaimsPrincipal requestUser, int gid, AccessLevel accessLevel)
+    {
+        AuthorizeByMinLevel(requestUser, accessLevel);
+        await AuthorizeByMinGroups(requestUser, gid);
+
+        return true;
+    }
+
+    public async Task<bool> AuthorizeByMinLevelAndGroup(ClaimsPrincipal requestUser, int uid)
+    {
+        var queriedUser = await _userRepository.Get(uid);
+        if (queriedUser == null) throw new NotFoundException(nameof(queriedUser), nameof(queriedUser));
+
+        AuthorizeByMinLevel(requestUser, queriedUser.NivelAcesso);
+        await AuthorizeByMinGroups(requestUser, queriedUser.AreasAcesso);
+
+        return true;
+    }
+
     public AuthResponse GenerateToken(User user)
     {
         var areaClaims = user.AreasAcesso.Select(group => new Claim(CustomClaimTypes.AccessGroups, group.Sigla))
@@ -143,33 +202,22 @@ public class AuthenticationService : IAuthenticationService
         };
     }
 
-    public bool AuthorizeByMinLevel(ClaimsPrincipal requestUser, AccessLevel accessLevel)
+    private static TokenClaims GetTokenClaims(ClaimsPrincipal requestUser)
     {
-        var tokenClaims = GetTokenClaims(requestUser);
+        var claimsList = requestUser.Claims.ToList();
 
-        if (tokenClaims.NivelAcesso >= accessLevel)
+        var uid = int.Parse(claimsList.Find(p => p.Type == CustomClaimTypes.AccessLevel)?.Value ??
+                            throw new InvalidOperationException());
+        var accessLevel = Enum.Parse<AccessLevel>(
+            claimsList.Find(p => p.Type == CustomClaimTypes.AccessLevel)?.Value ??
+            throw new InvalidOperationException());
+        var accessGroups = claimsList.Where(p => p.Type == CustomClaimTypes.AccessGroups).Select(p => p.Value).ToList();
+        return new TokenClaims
         {
-            return true;
-        }
-
-        throw new BadRequestException("Recurso não encontrado!");
-    }
-
-    public async Task<bool> AuthorizeByGroups(ClaimsPrincipal requestUser, ICollection<Group> areasAcesso)
-    {
-        var tokenClaims = GetTokenClaims(requestUser);
-
-        foreach (var group in areasAcesso)
-        {
-            var superordinateGroups = await _groupRepository.GetSuperordinateGroups(group.Id);
-            var superordinateGroupNames = superordinateGroups.Select(g => g.Sigla);
-            if (superordinateGroupNames.Intersect(tokenClaims.GruposAcesso).Any())
-            {
-                return true;
-            }
-        }
-
-        throw new BadRequestException("Recurso não encontrado!");
+            Uid = uid,
+            NivelAcesso = accessLevel,
+            GruposAcesso = accessGroups
+        };
     }
 
     private async Task<RestResponse> SendRequest(string endpoint, string username = "", AuthUser? user = null)
@@ -197,23 +245,5 @@ public class AuthenticationService : IAuthenticationService
         }
 
         throw response.ErrorException!;
-    }
-
-    private static TokenClaims GetTokenClaims(ClaimsPrincipal requestUser)
-    {
-        var claimsList = requestUser.Claims.ToList();
-
-        var uid = int.Parse(claimsList.Find(p => p.Type == CustomClaimTypes.AccessLevel)?.Value ??
-                            throw new InvalidOperationException());
-        var accessLevel = Enum.Parse<AccessLevel>(
-            claimsList.Find(p => p.Type == CustomClaimTypes.AccessLevel)?.Value ??
-            throw new InvalidOperationException());
-        var accessGroups = claimsList.Where(p => p.Type == CustomClaimTypes.AccessGroups).Select(p => p.Value).ToList();
-        return new TokenClaims
-        {
-            Uid = uid,
-            NivelAcesso = accessLevel,
-            GruposAcesso = accessGroups
-        };
     }
 }
