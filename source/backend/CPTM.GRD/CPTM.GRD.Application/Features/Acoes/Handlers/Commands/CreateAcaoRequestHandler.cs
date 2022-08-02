@@ -6,6 +6,7 @@ using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.DTOs.Main.Acao.Validators;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Acoes.Requests.Commands;
+using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Acoes;
 using MediatR;
 using static CPTM.GRD.Application.Models.EmailSubjectsAndMessages;
@@ -39,6 +40,8 @@ public class CreateAcaoRequestHandler : IRequestHandler<CreateAcaoRequest, AcaoD
 
     public async Task<AcaoDto> Handle(CreateAcaoRequest request, CancellationToken cancellationToken)
     {
+        _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Grg);
+
         var acaoDtoValidator = new CreateAcaoDtoValidator(_groupRepository, _authenticationService, _userRepository);
         var acaoDtoValidationResult = await acaoDtoValidator.ValidateAsync(request.CreateAcaoDto, cancellationToken);
         if (!acaoDtoValidationResult.IsValid)

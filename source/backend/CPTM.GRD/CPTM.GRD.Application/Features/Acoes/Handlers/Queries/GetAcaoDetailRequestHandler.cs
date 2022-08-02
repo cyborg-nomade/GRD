@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.Acoes;
 using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.Exceptions;
@@ -10,11 +11,16 @@ namespace CPTM.GRD.Application.Features.Acoes.Handlers.Queries;
 public class GetAcaoDetailRequestHandler : IRequestHandler<GetAcaoDetailRequest, AcaoDto>
 {
     private readonly IAcaoRepository _acaoRepository;
+    private readonly IAuthenticationService _authenticationService;
     private readonly IMapper _mapper;
 
-    public GetAcaoDetailRequestHandler(IAcaoRepository acaoRepository, IMapper mapper)
+    public GetAcaoDetailRequestHandler(
+        IAcaoRepository acaoRepository,
+        IAuthenticationService authenticationService,
+        IMapper mapper)
     {
         _acaoRepository = acaoRepository;
+        _authenticationService = authenticationService;
         _mapper = mapper;
     }
 
@@ -22,6 +28,9 @@ public class GetAcaoDetailRequestHandler : IRequestHandler<GetAcaoDetailRequest,
     {
         var acao = await _acaoRepository.Get(request.Aid);
         if (acao == null) throw new NotFoundException(nameof(acao), request.Aid);
+
+        await _authenticationService.AuthorizeByMinLevelAndGroup(request.RequestUser, acao.Responsavel.Id);
+
         return _mapper.Map<AcaoDto>(acao);
     }
 }

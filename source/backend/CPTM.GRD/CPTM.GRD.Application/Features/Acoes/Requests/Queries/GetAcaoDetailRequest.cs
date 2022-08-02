@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Acoes.Requests.Queries;
 
-public class GetAcaoDetailRequest : IRequest<AcaoDto>
+public class GetAcaoDetailRequest : BasicRequest, IRequest<AcaoDto>
 {
     public int Aid { get; init; }
 }

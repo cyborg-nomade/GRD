@@ -7,6 +7,7 @@ using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.DTOs.Main.Acao.Validators;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Acoes.Requests.Commands;
+using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Acoes;
 using MediatR;
 
@@ -39,6 +40,8 @@ public class UpdateAcaoRequestHandler : IRequestHandler<UpdateAcaoRequest, AcaoD
 
     public async Task<AcaoDto> Handle(UpdateAcaoRequest request, CancellationToken cancellationToken)
     {
+        _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Grg);
+
         var acaoDtoValidator =
             new UpdateAcaoDtoValidator(_groupRepository, _authenticationService, _userRepository, _acaoRepository);
         var acaoDtoValidationResult = await acaoDtoValidator.ValidateAsync(request.UpdateAcaoDto, cancellationToken);
@@ -50,11 +53,15 @@ public class UpdateAcaoRequestHandler : IRequestHandler<UpdateAcaoRequest, AcaoD
         var savedAcao = await _acaoRepository.Get(request.Aid);
         if (savedAcao == null) throw new NotFoundException(nameof(savedAcao), request.Aid);
 
-        var responsavel = await _userRepository.Get(request.Uid);
-        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
+        var claims = _authenticationService.GetTokenClaims(request.RequestUser);
+
+        var responsavel = await _userRepository.Get(claims.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
 
         savedAcao.OnUpdate(
-            _differentiator.GetDifferenceString<Acao>(savedAcao, _mapper.Map<Acao>(request.UpdateAcaoDto)),
+            _differentiator.GetDifferenceString<Acao>(
+                savedAcao,
+                _mapper.Map<Acao>(request.UpdateAcaoDto)),
             responsavel);
 
         _mapper.Map(request.UpdateAcaoDto, savedAcao);

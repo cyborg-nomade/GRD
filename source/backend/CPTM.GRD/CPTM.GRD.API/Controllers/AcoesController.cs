@@ -29,21 +29,32 @@ namespace CPTM.GRD.API.Controllers
         [HttpGet]
         public async Task<List<AcaoListDto>> Get()
         {
-            return await _mediator.Send(new GetAllAcoesListRequest());
+            return await _mediator.Send(new GetAllAcoesListRequest()
+            {
+                RequestUser = User
+            });
         }
 
         // GET /api/acoes/reuniao/:rid:/
         [HttpGet("reuniao/{rid:int}")]
         public async Task<List<AcaoListDto>> GetByReuniao(int rid)
         {
-            return await _mediator.Send(new GetByReuniaoAcoesListRequest() { Rid = rid });
+            return await _mediator.Send(new GetByReuniaoAcoesListRequest()
+            {
+                RequestUser = User,
+                Rid = rid
+            });
         }
 
         // GET api/acoes/:aid:/
         [HttpGet("{aid:int}")]
         public async Task<AcaoDto> Get(int aid)
         {
-            return await _mediator.Send(new GetAcaoDetailRequest() { Aid = aid });
+            return await _mediator.Send(new GetAcaoDetailRequest()
+            {
+                RequestUser = User,
+                Aid = aid
+            });
         }
 
         // POST api/acoes/reuniao/:rid:/
@@ -63,12 +74,11 @@ namespace CPTM.GRD.API.Controllers
         [HttpPut("{aid:int}")]
         public async Task<AcaoDto> Put(int aid, [FromBody] UpdateAcaoDto updateAcaoDto)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new UpdateAcaoRequest()
             {
+                RequestUser = User,
                 Aid = aid,
-                UpdateAcaoDto = updateAcaoDto,
-                Uid = responsavel.Id
+                UpdateAcaoDto = updateAcaoDto
             });
         }
 
@@ -87,12 +97,11 @@ namespace CPTM.GRD.API.Controllers
         [HttpPut("{aid:int}/reuniao/{rid:int}/add")]
         public async Task<AddAcaoToReuniaoDto> FollowUp(int aid, int rid)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new FollowUpAcaoRequest()
             {
+                RequestUser = User,
                 Aid = aid,
-                Rid = rid,
-                Uid = responsavel.Id
+                Rid = rid
             });
         }
 
@@ -100,12 +109,11 @@ namespace CPTM.GRD.API.Controllers
         [HttpPut("{aid:int}/finish/{status}")]
         public async Task<AcaoDto> Finish(int aid, AcaoStatus status)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new FinishAcaoRequest()
             {
+                RequestUser = User,
                 Aid = aid,
-                Status = status,
-                Uid = responsavel.Id
+                Status = status
             });
         }
 
@@ -113,11 +121,10 @@ namespace CPTM.GRD.API.Controllers
         [HttpDelete("{aid:int}")]
         public async Task<Unit> Delete(int aid)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new DeleteAcaoRequest()
             {
-                Aid = aid,
-                Uid = responsavel.Id
+                RequestUser = User,
+                Aid = aid
             });
         }
     }

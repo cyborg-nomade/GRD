@@ -170,6 +170,18 @@ public class AuthenticationService : IAuthenticationService
         return true;
     }
 
+    public bool AuthorizeByExactUser(ClaimsPrincipal requestUser, User queriedUser)
+    {
+        var tokenClaims = GetTokenClaims(requestUser);
+
+        if (tokenClaims.Uid == queriedUser.Id)
+        {
+            return true;
+        }
+
+        throw new BadRequestException("Recurso não encontrado");
+    }
+
     public AuthResponse GenerateToken(User user)
     {
         var areaClaims = user.AreasAcesso.Select(group => new Claim(CustomClaimTypes.AccessGroups, group.Sigla))
@@ -202,7 +214,7 @@ public class AuthenticationService : IAuthenticationService
         };
     }
 
-    private static TokenClaims GetTokenClaims(ClaimsPrincipal requestUser)
+    public TokenClaims GetTokenClaims(ClaimsPrincipal requestUser)
     {
         var claimsList = requestUser.Claims.ToList();
 
