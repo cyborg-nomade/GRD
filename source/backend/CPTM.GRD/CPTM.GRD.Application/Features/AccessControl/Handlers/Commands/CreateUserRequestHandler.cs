@@ -5,6 +5,7 @@ using CPTM.GRD.Application.DTOs.AccessControl.User;
 using CPTM.GRD.Application.DTOs.AccessControl.User.Validators;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.AccessControl.Requests.Commands;
+using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
 using MediatR;
 using static CPTM.GRD.Application.Models.EmailSubjectsAndMessages;
@@ -29,6 +30,8 @@ public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, UserD
 
     public async Task<UserDto> Handle(CreateUserRequest request, CancellationToken cancellationToken)
     {
+        _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Gerente);
+
         var validator = new CreateUserDtoValidator(_authenticationService, _userRepository);
         var validationResult = await validator.ValidateAsync(request.CreateUserDto, cancellationToken);
 
@@ -39,7 +42,9 @@ public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, UserD
 
         var user = _mapper.Map<User>(request.CreateUserDto);
         var addedUser = await _userRepository.Add(user);
+
         await _emailService.SendEmail(new List<User>() { user }, UserCreationSubject, UserCreationMessage);
+
         return _mapper.Map<UserDto>(addedUser);
     }
 }

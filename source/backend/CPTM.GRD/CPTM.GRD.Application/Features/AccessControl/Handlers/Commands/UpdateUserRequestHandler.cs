@@ -5,6 +5,7 @@ using CPTM.GRD.Application.DTOs.AccessControl.User;
 using CPTM.GRD.Application.DTOs.AccessControl.User.Validators;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.AccessControl.Requests.Commands;
+using CPTM.GRD.Common;
 using MediatR;
 
 namespace CPTM.GRD.Application.Features.AccessControl.Handlers.Commands;
@@ -25,6 +26,8 @@ public class UpdateUserRequestHandler : IRequestHandler<UpdateUserRequest, UserD
 
     public async Task<UserDto> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
     {
+        _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Grg);
+
         var validator = new UpdateUserDtoValidator(_authenticationService, _userRepository);
         var validationResult = await validator.ValidateAsync(request.UpdateUserDto, cancellationToken);
 

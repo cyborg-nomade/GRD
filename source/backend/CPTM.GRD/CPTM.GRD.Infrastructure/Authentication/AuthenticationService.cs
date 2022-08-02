@@ -8,6 +8,7 @@ using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Views;
 using CPTM.GRD.Application.DTOs.AccessControl.User;
 using CPTM.GRD.Application.Exceptions;
+using CPTM.GRD.Application.Models;
 using CPTM.GRD.Application.Models.AD;
 using CPTM.GRD.Application.Models.Settings;
 using CPTM.GRD.Application.Responses;
@@ -133,6 +134,22 @@ public class AuthenticationService : IAuthenticationService
             ExpirationDate = DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
             Token = tokenString,
         };
+    }
+
+    public bool AuthorizeByMinLevel(ClaimsPrincipal requestUser, AccessLevel accessLevel)
+    {
+        var claimsList = requestUser.Claims.ToList();
+
+        var tokenAccessLevel = Enum.Parse<AccessLevel>(
+            claimsList.Find(p => p.Type == CustomClaimTypes.AccessLevel)?.Value ??
+            throw new InvalidOperationException());
+
+        if (tokenAccessLevel >= accessLevel)
+        {
+            return true;
+        }
+
+        throw new BadRequestException("Recurso não encontrado!");
     }
 
     private async Task<RestResponse> SendRequest(string endpoint, string username = "", AuthUser? user = null)
