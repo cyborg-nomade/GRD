@@ -1,5 +1,6 @@
 ﻿using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Exceptions;
+using CPTM.GRD.Application.Models.AD;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
 using Microsoft.EntityFrameworkCore;
@@ -9,10 +10,12 @@ namespace CPTM.GRD.Persistence.Repositories.AccessControl;
 public class UserRepository : GenericRepository<User>, IUserRepository
 {
     private readonly GrdContext _grdContext;
+    private readonly IGroupRepository _groupRepository;
 
-    public UserRepository(GrdContext grdContext) : base(grdContext)
+    public UserRepository(GrdContext grdContext, IGroupRepository groupRepository) : base(grdContext)
     {
         _grdContext = grdContext;
+        _groupRepository = groupRepository;
     }
 
     public async Task<IReadOnlyList<User>> GetByLevel(AccessLevel level)
@@ -40,5 +43,22 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         var user = await _grdContext.Users.Where(u => u.UsernameAd == username).SingleOrDefaultAsync();
         if (user == null) throw new NotFoundException(nameof(user), nameof(user));
         return user;
+    }
+
+    public async Task<User> AddFromUsuarioAd(UsuarioAD usuarioAd, AccessLevel accessLevel)
+    {
+        var newUser = new User()
+        {
+            UsernameAd = usuarioAd.Login,
+            Nome = usuarioAd.Nome,
+            Email = usuarioAd.Email,
+            Funcao = usuarioAd.Titulo,
+            NivelAcesso = accessLevel,
+            AreasAcesso = new List<Group>()
+            {
+                await _groupRepository.GetOrAddBySigla(usuarioAd.Departamento)
+            }
+        };
+        return await Add(newUser);
     }
 }

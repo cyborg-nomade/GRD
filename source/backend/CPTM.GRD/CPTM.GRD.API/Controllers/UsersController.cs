@@ -1,6 +1,7 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl.User;
 using CPTM.GRD.Application.Features.AccessControl.Requests.Commands;
 using CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
+using CPTM.GRD.Application.Responses;
 using CPTM.GRD.Common;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -22,9 +23,12 @@ namespace CPTM.GRD.API.Controllers
 
         // POST: api/users/login
         [HttpPost("login")]
-        public object Login([FromBody] AuthUser authUser)
+        public async Task<AuthResponse> Login([FromBody] AuthUser authUser)
         {
-            return new object();
+            return await _mediator.Send(new LoginUserRequest()
+            {
+                AuthUser = authUser
+            });
         }
 
 

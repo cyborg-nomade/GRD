@@ -1,4 +1,4 @@
-﻿namespace CPTM.GRD.Application.Models;
+﻿namespace CPTM.GRD.Application.Models.AD;
 
 public class UsuarioAD
 {

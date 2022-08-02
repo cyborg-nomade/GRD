@@ -1,9 +1,7 @@
 ﻿using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
-using CPTM.GRD.Application.DTOs.AccessControl.User;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
-using MediatR;
 using Moq;
 
 namespace CPTM.GRD.Application.Tests.Mocks.Persistence.AccessControl;

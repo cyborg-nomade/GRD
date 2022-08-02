@@ -61,6 +61,7 @@ public static class PersistenceServicesRegistration
 
 
         services.AddScoped<IViewUsuarioRepository, ViewUsuarioRepository>();
+        services.AddScoped<IViewEstruturaRepository, ViewEstruturaRepository>();
 
 
         return services;

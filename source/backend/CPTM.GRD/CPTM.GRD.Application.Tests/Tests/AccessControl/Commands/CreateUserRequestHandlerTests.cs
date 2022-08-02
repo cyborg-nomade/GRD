@@ -9,7 +9,6 @@ using CPTM.GRD.Application.Profiles;
 using CPTM.GRD.Application.Tests.Mocks.Infrastructure;
 using CPTM.GRD.Application.Tests.Mocks.Persistence.AccessControl;
 using CPTM.GRD.Common;
-using CPTM.GRD.Domain.AccessControl;
 using Moq;
 using Shouldly;
 

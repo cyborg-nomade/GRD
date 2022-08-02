@@ -199,7 +199,7 @@ public class EmailService : IEmailService
         var destinatarios = receivers.Select(r => r.Email).ToList();
         destinatarios.Add(EmailServiceSettings.GrgMail);
         var destinatariosWithoutDuplicates = destinatarios.Distinct().ToList();
-        var senderUsuarioAd = await _authenticationService.GetUsuarioAD(EmailServiceSettings.SenderUsernameAd);
+        var senderUsuarioAd = await _authenticationService.GetUsuarioAd(EmailServiceSettings.SenderUsernameAd);
         var args = new EmailArgs()
         {
             Assunto = assunto,
