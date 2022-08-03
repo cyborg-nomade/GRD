@@ -7,5 +7,4 @@ public class UpdateProposicaoRequest : BasicRequest, IRequest<ProposicaoDto>
 {
     public int Pid { get; init; }
     public UpdateProposicaoDto UpdateProposicaoDto { get; init; } = new UpdateProposicaoDto();
-    public int Uid { get; init; }
 }

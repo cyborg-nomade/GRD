@@ -6,6 +6,7 @@ using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto.Validators;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
+using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Proposicoes.Children;
 using MediatR;
 
@@ -21,8 +22,11 @@ public class
     private readonly IGroupRepository _groupRepository;
     private readonly IAuthenticationService _authenticationService;
 
-    public AddDiretorVoteToProposicaoRequestHandler(IProposicaoRepository proposicaoRepository,
-        IUserRepository userRepository, IMapper mapper, IGroupRepository groupRepository,
+    public AddDiretorVoteToProposicaoRequestHandler(
+        IProposicaoRepository proposicaoRepository,
+        IUserRepository userRepository,
+        IMapper mapper,
+        IGroupRepository groupRepository,
         IAuthenticationService authenticationService)
     {
         _proposicaoRepository = proposicaoRepository;
@@ -35,6 +39,8 @@ public class
     public async Task<ProposicaoDto> Handle(AddDiretorVoteToProposicaoRequest request,
         CancellationToken cancellationToken)
     {
+        _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Diretor);
+
         var proposicao = await _proposicaoRepository.Get(request.Pid);
         if (proposicao == null) throw new NotFoundException(nameof(proposicao), request.Pid);
 

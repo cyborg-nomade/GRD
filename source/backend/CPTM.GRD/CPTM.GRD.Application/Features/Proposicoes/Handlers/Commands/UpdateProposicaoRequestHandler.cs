@@ -8,6 +8,7 @@ using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
+using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Proposicoes;
 using MediatR;
 using static CPTM.GRD.Application.Models.EmailSubjectsAndMessages;
@@ -47,6 +48,8 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
 
     public async Task<ProposicaoDto> Handle(UpdateProposicaoRequest request, CancellationToken cancellationToken)
     {
+        _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Sub);
+
         var proposicaoDtoValidator = new UpdateProposicaoDtoValidator(_groupRepository, _authenticationService,
             _userRepository, _proposicaoRepository, _proposicaoStrictSequence);
         var proposicaoDtoValidationResult =
@@ -60,8 +63,13 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
         var savedProposicao = await _proposicaoRepository.Get(request.Pid);
         if (savedProposicao == null)
             throw new NotFoundException(nameof(savedProposicao), request.Pid);
-        var responsavel = await _userRepository.Get(request.Uid);
-        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
+
+        await _authenticationService.AuthorizeByMinGroups(request.RequestUser, savedProposicao.AreaSolicitante.Id);
+
+        var claims = _authenticationService.GetTokenClaims(request.RequestUser);
+
+        var responsavel = await _userRepository.Get(claims.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
 
         savedProposicao.OnUpdate(responsavel,
             _differentiator.GetDifferenceString<Proposicao>(savedProposicao,

@@ -7,6 +7,7 @@ using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
+using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Proposicoes;
 using MediatR;
 using static CPTM.GRD.Application.Models.EmailSubjectsAndMessages;
@@ -43,6 +44,11 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
 
     public async Task<ProposicaoDto> Handle(CreateProposicaoRequest request, CancellationToken cancellationToken)
     {
+        _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Sub);
+        await _authenticationService.AuthorizeByExactUser(request.RequestUser, request.CreateProposicaoDto.Criador.Id);
+        await _authenticationService.AuthorizeByMinGroups(request.RequestUser,
+            request.CreateProposicaoDto.AreaSolicitante.Id);
+
         var proposicaoDtoValidator =
             new CreateProposicaoDtoValidator(_groupRepository, _authenticationService, _userRepository);
         var proposicaoDtoValidationResult =

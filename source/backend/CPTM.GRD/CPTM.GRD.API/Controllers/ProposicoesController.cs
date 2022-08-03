@@ -27,7 +27,10 @@ namespace CPTM.GRD.API.Controllers
         [HttpGet]
         public async Task<List<ProposicaoListDto>> Get()
         {
-            return await _mediator.Send(new GetAllProposicoesListRequest());
+            return await _mediator.Send(new GetAllProposicoesListRequest()
+            {
+                RequestUser = User,
+            });
         }
 
         // GET /api/proposicoes/user/:uid:/
@@ -36,6 +39,7 @@ namespace CPTM.GRD.API.Controllers
         {
             return await _mediator.Send(new GetByUserProposicoesListRequest()
             {
+                RequestUser = User,
                 Uid = uid
             });
         }
@@ -46,6 +50,7 @@ namespace CPTM.GRD.API.Controllers
         {
             return await _mediator.Send(new GetByGroupProposicoesListRequest()
             {
+                RequestUser = User,
                 Gid = gid
             });
         }
@@ -56,6 +61,7 @@ namespace CPTM.GRD.API.Controllers
         {
             return await _mediator.Send(new GetByStatusProposicoesListRequest()
             {
+                RequestUser = User,
                 Arquivada = arquivada,
                 Status = status
             });
@@ -67,6 +73,7 @@ namespace CPTM.GRD.API.Controllers
         {
             return await _mediator.Send(new GetByUserAndStatusProposicoesListRequest()
             {
+                RequestUser = User,
                 Arquivada = arquivada,
                 Status = status,
                 Uid = uid
@@ -79,6 +86,7 @@ namespace CPTM.GRD.API.Controllers
         {
             return await _mediator.Send(new GetByGroupAndStatusProposicoesListRequest()
             {
+                RequestUser = User,
                 Arquivada = arquivada,
                 Status = status,
                 Gid = gid
@@ -91,6 +99,7 @@ namespace CPTM.GRD.API.Controllers
         {
             return await _mediator.Send(new GetByReuniaoProposicoesListRequest()
             {
+                RequestUser = User,
                 Rid = rid
             });
         }
@@ -101,6 +110,7 @@ namespace CPTM.GRD.API.Controllers
         {
             return await _mediator.Send(new GetByReuniaoPreviaProposicoesListRequest()
             {
+                RequestUser = User,
                 Rid = rid
             });
         }
@@ -111,6 +121,7 @@ namespace CPTM.GRD.API.Controllers
         {
             return await _mediator.Send(new GetProposicaoDetailRequest()
             {
+                RequestUser = User,
                 Pid = pid
             });
         }
@@ -121,6 +132,7 @@ namespace CPTM.GRD.API.Controllers
         {
             return await _mediator.Send(new CreateProposicaoRequest()
             {
+                RequestUser = User,
                 CreateProposicaoDto = createProposicaoDto
             });
         }
@@ -129,11 +141,10 @@ namespace CPTM.GRD.API.Controllers
         [HttpPut("{pid:int}")]
         public async Task<ProposicaoDto> Put(int pid, [FromBody] UpdateProposicaoDto updateProposicaoDto)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new UpdateProposicaoRequest()
             {
+                RequestUser = User,
                 Pid = pid,
-                Uid = responsavel.Id,
                 UpdateProposicaoDto = updateProposicaoDto
             });
         }
@@ -142,11 +153,10 @@ namespace CPTM.GRD.API.Controllers
         [HttpPut("{pid:int}/send-diretoria-approval")]
         public async Task<ProposicaoDto> SendDiretoriaApproval(int pid)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new SendToDiretoriaProposicaoRequest()
             {
-                Pid = pid,
-                Uid = responsavel.Id
+                RequestUser = User,
+                Pid = pid
             });
         }
 
@@ -154,11 +164,10 @@ namespace CPTM.GRD.API.Controllers
         [HttpPut("{pid:int}/diretoria-approve")]
         public async Task<ProposicaoDto> DiretoriaApprove(int pid)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new DiretoriaResponsavelApproveProposicaoRequest()
             {
-                Pid = pid,
-                Uid = responsavel.Id
+                RequestUser = User,
+                Pid = pid
             });
         }
 
@@ -166,10 +175,9 @@ namespace CPTM.GRD.API.Controllers
         [HttpPut("{pid:int}/diretoria-repprove")]
         public async Task<ProposicaoDto> DiretoriaRepprove(int pid, [FromBody] string motivoReprovacao)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new DiretoriaResponsavelRepproveProposicaoRequest()
             {
-                Uid = responsavel.Id,
+                RequestUser = User,
                 MotivoReprovacao = motivoReprovacao,
                 Pid = pid
             });
@@ -179,10 +187,9 @@ namespace CPTM.GRD.API.Controllers
         [HttpPut("{pid:int}/return-to-diretoria")]
         public async Task<ProposicaoDto> ReturnToDiretoria(int pid, [FromBody] string motivoReprovacao)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new GrgReturnToDiretoriaProposicaoRequest()
             {
-                Uid = responsavel.Id,
+                RequestUser = User,
                 MotivoReprovacao = motivoReprovacao,
                 Pid = pid
             });
@@ -192,11 +199,10 @@ namespace CPTM.GRD.API.Controllers
         [HttpPut("{pid:int}/return-to-grg")]
         public async Task<ProposicaoDto> ReturnToGrg(int pid)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new DiretoriaReturnToGrgAfterAjustesRdProposicaoRequest()
             {
-                Pid = pid,
-                Uid = responsavel.Id
+                RequestUser = User,
+                Pid = pid
             });
         }
 
@@ -204,11 +210,10 @@ namespace CPTM.GRD.API.Controllers
         [HttpPut("{pid:int}/fixes-done")]
         public async Task<ProposicaoDto> FixesDone(int pid)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new GrgApproveAjustesRdProposicaoRequest()
             {
-                Pid = pid,
-                Uid = responsavel.Id
+                RequestUser = User,
+                Pid = pid
             });
         }
 
@@ -219,6 +224,7 @@ namespace CPTM.GRD.API.Controllers
         {
             return await _mediator.Send(new AddDiretorVoteToProposicaoRequest()
             {
+                RequestUser = User,
                 Pid = pid,
                 VotesWithAjustes = voteWithAjustes
             });
@@ -228,12 +234,11 @@ namespace CPTM.GRD.API.Controllers
         [HttpPut("{pid:int}/annotate-previa")]
         public async Task<ProposicaoDto> AnnotatePrevia(int pid, [FromBody] string annotation)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new AnnotateInPreviaProposicaoRequest()
             {
+                RequestUser = User,
                 Anotacao = annotation,
-                Pid = pid,
-                Uid = responsavel.Id
+                Pid = pid
             });
         }
 
@@ -243,6 +248,7 @@ namespace CPTM.GRD.API.Controllers
         {
             return await _mediator.Send(new DeleteProposicaoRequest()
             {
+                RequestUser = User,
                 Pid = pid
             });
         }
