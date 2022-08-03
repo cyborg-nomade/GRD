@@ -120,6 +120,23 @@ public class AuthenticationService : IAuthenticationService
         return true;
     }
 
+    public async Task<bool> AuthorizeByMinGroups(ClaimsPrincipal requestUser, int gid)
+    {
+        var tokenClaims = GetTokenClaims(requestUser);
+
+        if (tokenClaims.NivelAcesso == AccessLevel.SysAdmin)
+        {
+            return true;
+        }
+
+        var superordinateGroups = await _groupRepository.GetSuperordinateGroups(gid);
+        var superordinateGroupNames = superordinateGroups.Select(g => g.Sigla);
+        if (!superordinateGroupNames.Intersect(tokenClaims.GruposAcesso).Any())
+            throw new BadRequestException("Recurso não encontrado!");
+
+        return true;
+    }
+
     public async Task<bool> AuthorizeByMinGroups(ClaimsPrincipal requestUser, IEnumerable<Group> areasAcesso)
     {
         var result = false;
@@ -137,18 +154,6 @@ public class AuthenticationService : IAuthenticationService
         }
 
         return result ? result : throw new BadRequestException("Recurso não encontrado!");
-    }
-
-    public async Task<bool> AuthorizeByMinGroups(ClaimsPrincipal requestUser, int gid)
-    {
-        var tokenClaims = GetTokenClaims(requestUser);
-
-        var superordinateGroups = await _groupRepository.GetSuperordinateGroups(gid);
-        var superordinateGroupNames = superordinateGroups.Select(g => g.Sigla);
-        if (!superordinateGroupNames.Intersect(tokenClaims.GruposAcesso).Any())
-            throw new BadRequestException("Recurso não encontrado!");
-
-        return true;
     }
 
     public async Task<bool> AuthorizeByMinLevelAndGroup(ClaimsPrincipal requestUser, int gid, AccessLevel accessLevel)
@@ -173,6 +178,11 @@ public class AuthenticationService : IAuthenticationService
     public bool AuthorizeByExactUser(ClaimsPrincipal requestUser, User queriedUser)
     {
         var tokenClaims = GetTokenClaims(requestUser);
+
+        if (tokenClaims.NivelAcesso == AccessLevel.SysAdmin)
+        {
+            return true;
+        }
 
         if (tokenClaims.Uid == queriedUser.Id)
         {
