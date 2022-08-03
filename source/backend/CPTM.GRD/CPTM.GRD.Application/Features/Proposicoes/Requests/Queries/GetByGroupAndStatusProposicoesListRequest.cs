@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Proposicoes.Requests.Queries;
 
-public class GetByGroupAndStatusProposicoesListRequest : IRequest<List<ProposicaoListDto>>
+public class GetByGroupAndStatusProposicoesListRequest : BasicRequest, IRequest<List<ProposicaoListDto>>
 {
     public int Gid { get; init; }
     public ProposicaoStatus Status { get; init; }

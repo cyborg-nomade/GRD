@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 
-public class AddDiretorVoteToProposicaoRequest : IRequest<ProposicaoDto>
+public class AddDiretorVoteToProposicaoRequest : BasicRequest, IRequest<ProposicaoDto>
 {
     public int Pid { get; init; }
 

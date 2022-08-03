@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 
-public class DiretoriaResponsavelRepproveProposicaoRequest : IRequest<ProposicaoDto>
+public class DiretoriaResponsavelRepproveProposicaoRequest : BasicRequest, IRequest<ProposicaoDto>
 {
     public int Pid { get; init; }
     public int Uid { get; init; }

@@ -3,7 +3,6 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Proposicoes.Requests.Queries;
 
-public class GetAllProposicoesListRequest : IRequest<List<ProposicaoListDto>>
+public class GetAllProposicoesListRequest : BasicRequest, IRequest<List<ProposicaoListDto>>
 {
-
 }
