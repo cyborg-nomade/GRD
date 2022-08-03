@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 
-public class CreateRelatorioDeliberativoReuniaoRequest : IRequest<ReuniaoDto>
+public class CreateRelatorioDeliberativoReuniaoRequest : BasicRequest, IRequest<ReuniaoDto>
 {
     public int Rid { get; init; }
     public int Uid { get; init; }

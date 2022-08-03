@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 
-public class CreatePautaDefinitivaReuniaoRequest : IRequest<ReuniaoDto>
+public class CreatePautaDefinitivaReuniaoRequest : BasicRequest, IRequest<ReuniaoDto>
 {
     public int Rid { get; init; }
     public int Uid { get; init; }
