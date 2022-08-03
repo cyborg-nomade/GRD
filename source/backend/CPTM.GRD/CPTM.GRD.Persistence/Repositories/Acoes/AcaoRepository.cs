@@ -18,6 +18,13 @@ public class AcaoRepository : GenericRepository<Acao>, IAcaoRepository
     {
         var reuniao = await _grdContext.Reunioes.FindAsync(rid);
         if (reuniao == null) throw new NotFoundException(nameof(reuniao), rid);
-        return await _grdContext.Acoes.Where(a => a.Reunioes.Contains(reuniao)).ToListAsync();
+        return await _grdContext.Acoes.Where(a => a.Reunioes.Select(r => r.Id).Contains(reuniao.Id)).ToListAsync();
+    }
+
+    public async Task<IReadOnlyList<Acao>> GetByResponsavel(int uid)
+    {
+        var user = await _grdContext.Users.FindAsync(uid);
+        if (user == null) throw new NotFoundException(nameof(user), nameof(user));
+        return await _grdContext.Acoes.Where(a => a.Responsavel.Id == user.Id).ToListAsync();
     }
 }

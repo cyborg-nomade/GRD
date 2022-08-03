@@ -46,6 +46,17 @@ namespace CPTM.GRD.API.Controllers
             });
         }
 
+        // GET /api/acoes/responsavel/:uid:/
+        [HttpGet("responsavel/{uid:int}")]
+        public async Task<List<AcaoListDto>> GetByResponsavel(int uid)
+        {
+            return await _mediator.Send(new GetByResponsavelAcoesListRequest()
+            {
+                RequestUser = User,
+                Reid = uid
+            });
+        }
+
         // GET api/acoes/:aid:/
         [HttpGet("{aid:int}")]
         public async Task<AcaoDto> Get(int aid)

@@ -182,6 +182,14 @@ public class AuthenticationService : IAuthenticationService
         throw new BadRequestException("Recurso não encontrado");
     }
 
+    public async Task<bool> AuthorizeByExactUser(ClaimsPrincipal requestUser, int uid)
+    {
+        var user = await _userRepository.Get(uid);
+        if (user == null) throw new NotFoundException(nameof(user), nameof(user));
+        AuthorizeByExactUser(requestUser, user);
+        return true;
+    }
+
     public AuthResponse GenerateToken(User user)
     {
         var areaClaims = user.AreasAcesso.Select(group => new Claim(CustomClaimTypes.AccessGroups, group.Sigla))

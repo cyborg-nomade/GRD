@@ -26,4 +26,5 @@ public interface IAuthenticationService
     Task<bool> AuthorizeByMinLevelAndGroup(ClaimsPrincipal requestUser, int gid, AccessLevel accessLevel);
     Task<bool> AuthorizeByMinLevelAndGroup(ClaimsPrincipal requestUser, int uid);
     bool AuthorizeByExactUser(ClaimsPrincipal requestUser, User queriedUser);
+    Task<bool> AuthorizeByExactUser(ClaimsPrincipal requestUser, int uid);
 }
