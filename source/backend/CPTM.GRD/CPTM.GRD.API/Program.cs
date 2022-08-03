@@ -1,3 +1,4 @@
+using CPTM.GRD.API.Middleware;
 using CPTM.GRD.Application;
 using CPTM.GRD.Infrastructure;
 using CPTM.GRD.Persistence;
@@ -71,6 +72,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseAuthentication();
 
