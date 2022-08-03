@@ -37,7 +37,7 @@ public class GroupRepository : GenericRepository<Group>, IGroupRepository
             returnGroups.AddRange(subordinateGroups);
         }
 
-        return returnGroups;
+        return returnGroups.Distinct().ToList();
     }
 
     public async Task<IReadOnlyList<Group>> GetSuperordinateGroups(int gid)
@@ -52,9 +52,9 @@ public class GroupRepository : GenericRepository<Group>, IGroupRepository
         }
         else if (mainGroup.CheckIsGerencia())
         {
-            var subordinateGroups =
+            var superordinateGroups =
                 await _grdContext.Groups.Where(g => g.Sigla == mainGroup.SiglaDiretoria).ToListAsync();
-            returnGroups.AddRange(subordinateGroups);
+            returnGroups.AddRange(superordinateGroups);
         }
         else
         {
@@ -68,7 +68,7 @@ public class GroupRepository : GenericRepository<Group>, IGroupRepository
         var grg = await GetOrAddBySigla("GRG");
         returnGroups.Add(grg);
 
-        return returnGroups;
+        return returnGroups.Distinct().ToList();
     }
 
     public async Task<IReadOnlyList<Group>> GetByUser(int uid)

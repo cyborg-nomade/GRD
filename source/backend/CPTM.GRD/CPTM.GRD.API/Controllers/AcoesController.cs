@@ -2,6 +2,7 @@
 using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.DTOs.Main.Acao.Children;
 using CPTM.GRD.Application.DTOs.Main.Mixed;
+using CPTM.GRD.Application.Features.Acoes.Handlers.Queries;
 using CPTM.GRD.Application.Features.Acoes.Requests.Commands;
 using CPTM.GRD.Application.Features.Acoes.Requests.Queries;
 using CPTM.GRD.Common;
@@ -54,6 +55,17 @@ namespace CPTM.GRD.API.Controllers
             {
                 RequestUser = User,
                 Reid = uid
+            });
+        }
+
+        // GET /api/acoes/subordinados/:suid:/
+        [HttpGet("subordinados/{suid:int}")]
+        public async Task<List<AcaoListDto>> GetFromSubordinados(int suid)
+        {
+            return await _mediator.Send(new GetSubordinadoAcoesListRequest()
+            {
+                RequestUser = User,
+                Suid = suid
             });
         }
 
