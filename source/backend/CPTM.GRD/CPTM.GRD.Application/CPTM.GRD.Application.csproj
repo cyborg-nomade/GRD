@@ -13,8 +13,6 @@
     <Folder Include="Features\AccessControl\Handlers\Commands\" />
     <Folder Include="Features\AccessControl\Requests\Queries\" />
     <Folder Include="Features\Acoes\Handlers\Commands\" />
-    <Folder Include="Features\Acoes\Handlers\Queries\" />
-    <Folder Include="Features\Acoes\Requests\Queries\" />
     <Folder Include="Features\Reunioes\Handlers\Queries\" />
     <Folder Include="Features\Reunioes\Requests\Queries\" />
     <Folder Include="Exceptions\" />

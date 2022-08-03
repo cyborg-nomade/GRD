@@ -2,10 +2,10 @@
 using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.Acoes;
 using CPTM.GRD.Application.DTOs.Main.Acao;
-using CPTM.GRD.Application.Features.Acoes.Handlers.Queries;
+using CPTM.GRD.Application.Features.Acoes.Requests.Queries;
 using MediatR;
 
-namespace CPTM.GRD.Application.Features.Acoes.Handlers.Commands;
+namespace CPTM.GRD.Application.Features.Acoes.Handlers.Queries;
 
 public class GetSubordinadoAcoesListRequestHandler : IRequestHandler<GetSubordinadoAcoesListRequest, List<AcaoListDto>>
 {
