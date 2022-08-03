@@ -1,9 +1,9 @@
 ﻿using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Acoes;
-using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Domain.AccessControl;
 using CPTM.GRD.Domain.Acoes;
+using CPTM.GRD.Persistence.Repositories.AccessControl;
 using Microsoft.EntityFrameworkCore;
 
 namespace CPTM.GRD.Persistence.Repositories.Acoes;
@@ -11,20 +11,15 @@ namespace CPTM.GRD.Persistence.Repositories.Acoes;
 public class AcaoRepository : GenericRepository<Acao>, IAcaoRepository
 {
     private readonly GrdContext _grdContext;
-    private readonly IReuniaoRepository _reuniaoRepository;
     private readonly IUserRepository _userRepository;
     private readonly IGroupRepository _groupRepository;
 
-    public AcaoRepository(GrdContext grdContext,
-        IReuniaoRepository reuniaoRepository,
-        IUserRepository userRepository,
-        IGroupRepository groupRepository
+    public AcaoRepository(GrdContext grdContext
     ) : base(grdContext)
     {
         _grdContext = grdContext;
-        _reuniaoRepository = reuniaoRepository;
-        _userRepository = userRepository;
-        _groupRepository = groupRepository;
+        _userRepository = new UserRepository(grdContext);
+        _groupRepository = new GroupRepository(grdContext);
     }
 
     public async Task<IReadOnlyList<Acao>> GetByReuniao(int rid)

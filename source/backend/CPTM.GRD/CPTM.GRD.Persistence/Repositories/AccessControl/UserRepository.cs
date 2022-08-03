@@ -4,6 +4,7 @@ using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Models.AD;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
+using CPTM.GRD.Persistence.Repositories.Views;
 using Microsoft.EntityFrameworkCore;
 
 namespace CPTM.GRD.Persistence.Repositories.AccessControl;
@@ -14,13 +15,11 @@ public class UserRepository : GenericRepository<User>, IUserRepository
     private readonly IGroupRepository _groupRepository;
     private readonly IViewUsuarioRepository _viewUsuarioRepository;
 
-    public UserRepository(GrdContext grdContext,
-        IGroupRepository groupRepository,
-        IViewUsuarioRepository viewUsuarioRepository) : base(grdContext)
+    public UserRepository(GrdContext grdContext) : base(grdContext)
     {
         _grdContext = grdContext;
-        _groupRepository = groupRepository;
-        _viewUsuarioRepository = viewUsuarioRepository;
+        _groupRepository = new GroupRepository(grdContext);
+        _viewUsuarioRepository = new ViewUsuarioRepository(grdContext);
     }
 
     public async Task<IReadOnlyList<User>> GetByLevel(AccessLevel level)
@@ -30,16 +29,13 @@ public class UserRepository : GenericRepository<User>, IUserRepository
 
     public async Task<IReadOnlyList<User>> GetByGroup(int gid)
     {
-        var group = await _grdContext.Groups.FindAsync(gid);
-        if (group == null) throw new NotFoundException(nameof(group), gid);
-        return await _grdContext.Users.Where(u => u.AreasAcesso.Contains(group)).ToListAsync();
+        return await _grdContext.Users.Where(u => u.AreasAcesso.Select(g => g.Id).Contains(gid)).ToListAsync();
     }
 
     public async Task<IReadOnlyList<User>> GetByGroupAndLevel(int gid, AccessLevel level)
     {
-        var group = await _grdContext.Groups.FindAsync(gid);
-        if (group == null) throw new NotFoundException(nameof(group), gid);
-        return await _grdContext.Users.Where(u => u.AreasAcesso.Contains(group) && u.NivelAcesso == level)
+        return await _grdContext.Users
+            .Where(u => u.AreasAcesso.Select(g => g.Id).Contains(gid) && u.NivelAcesso == level)
             .ToListAsync();
     }
 

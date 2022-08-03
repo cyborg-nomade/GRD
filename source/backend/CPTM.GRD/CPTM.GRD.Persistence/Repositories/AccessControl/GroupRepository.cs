@@ -2,6 +2,7 @@
 using CPTM.GRD.Application.Contracts.Persistence.Views;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Domain.AccessControl;
+using CPTM.GRD.Persistence.Repositories.Views;
 using Microsoft.EntityFrameworkCore;
 
 namespace CPTM.GRD.Persistence.Repositories.AccessControl;
@@ -11,10 +12,10 @@ public class GroupRepository : GenericRepository<Group>, IGroupRepository
     private readonly GrdContext _grdContext;
     private readonly IViewEstruturaRepository _viewEstruturaRepository;
 
-    public GroupRepository(GrdContext grdContext, IViewEstruturaRepository viewEstruturaRepository) : base(grdContext)
+    public GroupRepository(GrdContext grdContext) : base(grdContext)
     {
         _grdContext = grdContext;
-        _viewEstruturaRepository = viewEstruturaRepository;
+        _viewEstruturaRepository = new ViewEstruturaRepository(grdContext);
     }
 
     public async Task<IReadOnlyList<Group>> GetSubordinateGroups(int gid)

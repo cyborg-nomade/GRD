@@ -3,6 +3,7 @@ using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Proposicoes;
+using CPTM.GRD.Persistence.Repositories.AccessControl;
 using Microsoft.EntityFrameworkCore;
 
 namespace CPTM.GRD.Persistence.Repositories.Proposicoes;
@@ -12,10 +13,10 @@ public class ProposicaoRepository : GenericRepository<Proposicao>, IProposicaoRe
     private readonly GrdContext _grdContext;
     private readonly IGroupRepository _groupRepository;
 
-    public ProposicaoRepository(GrdContext grdContext, IGroupRepository groupRepository) : base(grdContext)
+    public ProposicaoRepository(GrdContext grdContext) : base(grdContext)
     {
         _grdContext = grdContext;
-        _groupRepository = groupRepository;
+        _groupRepository = new GroupRepository(grdContext);
     }
 
     public async Task<IReadOnlyList<Proposicao>> GetByStatus(ProposicaoStatus status, bool arquivada)
@@ -25,16 +26,17 @@ public class ProposicaoRepository : GenericRepository<Proposicao>, IProposicaoRe
 
     public async Task<IReadOnlyList<Proposicao>> GetByUser(int uid)
     {
-        var user = await _grdContext.Users.FindAsync(uid);
-        if (user == null) throw new NotFoundException(nameof(user), uid);
-        return await _grdContext.Proposicoes.Where(p => p.Criador == user).ToListAsync();
+        return await _grdContext.Proposicoes.Where(p => p.Criador.Id == uid).ToListAsync();
     }
 
     public async Task<IReadOnlyList<Proposicao>> GetByGroup(int gid)
     {
         var groupWithSubordinates = await _groupRepository.GetSubordinateGroups(gid);
 
-        return await _grdContext.Proposicoes.Where(p => groupWithSubordinates.Contains(p.AreaSolicitante))
+        return await _grdContext.Proposicoes
+            .Where(p => groupWithSubordinates
+                .Select(g => g.Id)
+                .Contains(p.AreaSolicitante.Id))
             .ToListAsync();
     }
 
@@ -57,16 +59,18 @@ public class ProposicaoRepository : GenericRepository<Proposicao>, IProposicaoRe
 
     public async Task<IReadOnlyList<Proposicao>> GetByReuniao(int rid)
     {
-        var reuniao = await _grdContext.Reunioes.FindAsync(rid);
-        if (reuniao == null) throw new NotFoundException(nameof(reuniao), rid);
-        return await _grdContext.Proposicoes.Where(p => p.Reuniao == reuniao).ToListAsync();
+        return await _grdContext.Proposicoes.Where(p => p.Reuniao.Id == rid).ToListAsync();
     }
 
     public async Task<IReadOnlyList<Proposicao>> GetByReuniaoPrevia(int rid)
     {
         var reuniao = await _grdContext.Reunioes.FindAsync(rid);
         if (reuniao == null) throw new NotFoundException(nameof(reuniao), rid);
-        return await _grdContext.Proposicoes.Where(p => p.Reuniao == reuniao && reuniao.ProposicoesPrevia.Contains(p))
+        return await _grdContext.Proposicoes
+            .Where(p => p.Reuniao.Id == rid &&
+                        reuniao.ProposicoesPrevia
+                            .Select(p2 => p2.Id)
+                            .Contains(p.Id))
             .ToListAsync();
     }
 }
