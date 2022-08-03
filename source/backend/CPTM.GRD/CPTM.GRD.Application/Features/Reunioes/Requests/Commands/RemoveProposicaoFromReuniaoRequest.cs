@@ -7,5 +7,4 @@ public class RemoveProposicaoFromReuniaoRequest : BasicRequest, IRequest<AddProp
 {
     public int Rid { get; init; }
     public int Pid { get; init; }
-    public int Uid { get; init; }
 }

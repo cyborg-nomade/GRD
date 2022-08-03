@@ -11,6 +11,7 @@ using CPTM.GRD.Application.DTOs.Main.Reuniao;
 using CPTM.GRD.Application.DTOs.Main.Reuniao.Validators;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
+using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Reunioes;
 using MediatR;
 
@@ -30,11 +31,17 @@ public class CreateReuniaoRequestHandler : IRequestHandler<CreateReuniaoRequest,
     private readonly IProposicaoRepository _proposicaoRepository;
     private readonly IProposicaoStrictSequenceControl _proposicaoStrictSequence;
 
-    public CreateReuniaoRequestHandler(IReuniaoRepository reuniaoRepository, IUserRepository userRepository,
+    public CreateReuniaoRequestHandler(
+        IReuniaoRepository reuniaoRepository,
+        IUserRepository userRepository,
         IMapper mapper,
-        IReuniaoStrictSequenceControl reuniaoSequenceControl, IGroupRepository groupRepository,
-        IAuthenticationService authenticationService, IAcaoRepository acaoRepository, IVotoRepository votoRepository,
-        IParticipanteRepository participanteRepository, IProposicaoRepository proposicaoRepository,
+        IReuniaoStrictSequenceControl reuniaoSequenceControl,
+        IGroupRepository groupRepository,
+        IAuthenticationService authenticationService,
+        IAcaoRepository acaoRepository,
+        IVotoRepository votoRepository,
+        IParticipanteRepository participanteRepository,
+        IProposicaoRepository proposicaoRepository,
         IProposicaoStrictSequenceControl proposicaoStrictSequence)
     {
         _reuniaoRepository = reuniaoRepository;
@@ -52,6 +59,8 @@ public class CreateReuniaoRequestHandler : IRequestHandler<CreateReuniaoRequest,
 
     public async Task<ReuniaoDto> Handle(CreateReuniaoRequest request, CancellationToken cancellationToken)
     {
+        _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Grg);
+
         var reuniaoDtoValidator = new CreateReuniaoDtoValidator(_groupRepository, _authenticationService,
             _userRepository,
             _acaoRepository, _votoRepository, _participanteRepository, _reuniaoRepository, _reuniaoSequenceControl,
@@ -66,8 +75,10 @@ public class CreateReuniaoRequestHandler : IRequestHandler<CreateReuniaoRequest,
         var reuniao = _mapper.Map<Reuniao>(request.CreateReuniaoDto);
         reuniao.NumeroReuniao = await _reuniaoSequenceControl.GetNextNumeroReuniao();
 
-        var responsavel = await _userRepository.Get(request.Uid);
-        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
+        var claims = _authenticationService.GetTokenClaims(request.RequestUser);
+
+        var responsavel = await _userRepository.Get(claims.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
 
         reuniao.OnSave(responsavel);
 

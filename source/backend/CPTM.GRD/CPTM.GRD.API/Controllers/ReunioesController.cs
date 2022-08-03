@@ -29,7 +29,10 @@ namespace CPTM.GRD.API.Controllers
         [HttpGet]
         public async Task<List<ReuniaoListDto>> Get()
         {
-            return await _mediator.Send(new GetAllReunioesListRequest());
+            return await _mediator.Send(new GetAllReunioesListRequest()
+            {
+                RequestUser = User
+            });
         }
 
         // GET /api/reunioes/status/:status:/
@@ -38,6 +41,7 @@ namespace CPTM.GRD.API.Controllers
         {
             return await _mediator.Send(new GetByStatusReunioesListRequest()
             {
+                RequestUser = User,
                 Status = status
             });
         }
@@ -46,25 +50,31 @@ namespace CPTM.GRD.API.Controllers
         [HttpGet("{rid:int}")]
         public async Task<ReuniaoDto> Get(int rid)
         {
-            return await _mediator.Send(new GetReuniaoDetailRequest());
+            return await _mediator.Send(new GetReuniaoDetailRequest()
+            {
+                RequestUser = User,
+                Rid = rid
+            });
         }
 
         // GET /api/reunioes/:rid:/pauta-previa/
         [HttpGet("{rid:int}/pauta-previa")]
         public async Task<ReuniaoDto> GetPautaPreviaFile(int rid)
         {
-            return await _mediator.Send(new CreatePautaPreviaReuniaoRequest());
+            return await _mediator.Send(new CreatePautaPreviaReuniaoRequest()
+            {
+                RequestUser = User
+            });
         }
 
         // GET /api/reunioes/:rid:/memoria-previa/
         [HttpGet("{rid:int}/memoria-previa")]
         public async Task<ReuniaoDto> GetMemoriaPreviaFile(int rid)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new CreateMemoriaPreviaReuniaoRequest()
             {
-                Rid = rid,
-                Uid = responsavel.Id
+                RequestUser = User,
+                Rid = rid
             });
         }
 
@@ -72,11 +82,10 @@ namespace CPTM.GRD.API.Controllers
         [HttpGet("{rid:int}/pauta-definitiva")]
         public async Task<ReuniaoDto> GetPautaDefinitivaFile(int rid)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new CreatePautaDefinitivaReuniaoRequest()
             {
-                Rid = rid,
-                Uid = responsavel.Id
+                RequestUser = User,
+                Rid = rid
             });
         }
 
@@ -84,11 +93,10 @@ namespace CPTM.GRD.API.Controllers
         [HttpGet("{rid:int}/relatorio-deliberativo")]
         public async Task<ReuniaoDto> GetRelatorioDeliberativoFile(int rid)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new CreateRelatorioDeliberativoReuniaoRequest()
             {
-                Rid = rid,
-                Uid = responsavel.Id
+                RequestUser = User,
+                Rid = rid
             });
         }
 
@@ -96,12 +104,11 @@ namespace CPTM.GRD.API.Controllers
         [HttpGet("{rid:int}/proposicao/{pid:int}/resolucao-diretoria")]
         public async Task<ProposicaoDto> GetResolucaoDiretoriaFile(int rid, int pid)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new CreateResolucaoDiretoriaProposicaoReuniaoRequest()
             {
+                RequestUser = User,
                 Pid = pid,
-                Rid = rid,
-                Uid = responsavel.Id
+                Rid = rid
             });
         }
 
@@ -109,11 +116,10 @@ namespace CPTM.GRD.API.Controllers
         [HttpGet("{rid:int}/ata")]
         public async Task<ReuniaoDto> GetAtaFile(int rid)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new CreateAtaReuniaoRequest()
             {
-                Rid = rid,
-                Uid = responsavel.Id
+                RequestUser = User,
+                Rid = rid
             });
         }
 
@@ -121,11 +127,10 @@ namespace CPTM.GRD.API.Controllers
         [HttpPost]
         public async Task<ReuniaoDto> Post([FromBody] CreateReuniaoDto createReuniaoDto)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new CreateReuniaoRequest()
             {
-                CreateReuniaoDto = createReuniaoDto,
-                Uid = responsavel.Id
+                RequestUser = User,
+                CreateReuniaoDto = createReuniaoDto
             });
         }
 
@@ -133,12 +138,11 @@ namespace CPTM.GRD.API.Controllers
         [HttpPut("{rid:int}")]
         public async Task<ReuniaoDto> Put(int rid, [FromBody] UpdateReuniaoDto updateReuniaoDto)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new UpdateReuniaoRequest()
             {
+                RequestUser = User,
                 Rid = rid,
-                UpdateReuniaoDto = updateReuniaoDto,
-                Uid = responsavel.Id
+                UpdateReuniaoDto = updateReuniaoDto
             });
         }
 
@@ -146,12 +150,11 @@ namespace CPTM.GRD.API.Controllers
         [HttpPut("{rid:int}/proposicao/{pid:int}/add")]
         public async Task<AddProposicaoToReuniaoDto> AddProposicao(int rid, int pid)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new AddProposicaoToReuniaoRequest()
             {
+                RequestUser = User,
                 Pid = pid,
-                Rid = rid,
-                Uid = responsavel.Id
+                Rid = rid
             });
         }
 
@@ -159,12 +162,11 @@ namespace CPTM.GRD.API.Controllers
         [HttpDelete("{rid:int}/proposicao/{pid:int}")]
         public async Task<AddProposicaoToReuniaoDto> RemoveProposicao(int rid, int pid)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new RemoveProposicaoFromReuniaoRequest()
             {
+                RequestUser = User,
                 Pid = pid,
-                Rid = rid,
-                Uid = responsavel.Id
+                Rid = rid
             });
         }
 
@@ -172,12 +174,11 @@ namespace CPTM.GRD.API.Controllers
         [HttpDelete("{rid:int}/acao/{aid:int}")]
         public async Task<AddAcaoToReuniaoDto> RemoveAcao(int rid, int aid)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new RemoveAcaoFromReuniaoRequest()
             {
+                RequestUser = User,
                 Aid = aid,
-                Rid = rid,
-                Uid = responsavel.Id
+                Rid = rid
             });
         }
 
@@ -185,11 +186,10 @@ namespace CPTM.GRD.API.Controllers
         [HttpDelete("{rid:int}")]
         public async Task<Unit> Delete(int rid)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new DeleteReuniaoRequest()
             {
-                Rid = rid,
-                Uid = responsavel.Id
+                RequestUser = User,
+                Rid = rid
             });
         }
     }

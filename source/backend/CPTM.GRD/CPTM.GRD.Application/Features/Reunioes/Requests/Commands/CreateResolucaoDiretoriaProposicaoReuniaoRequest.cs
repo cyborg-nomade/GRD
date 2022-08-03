@@ -7,5 +7,4 @@ public class CreateResolucaoDiretoriaProposicaoReuniaoRequest : BasicRequest, IR
 {
     public int Rid { get; init; }
     public int Pid { get; init; }
-    public int Uid { get; init; }
 }

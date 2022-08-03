@@ -7,5 +7,4 @@ public class AddProposicaoToReuniaoRequest : BasicRequest, IRequest<AddProposica
 {
     public int Pid { get; init; }
     public int Rid { get; init; }
-    public int Uid { get; init; }
 }

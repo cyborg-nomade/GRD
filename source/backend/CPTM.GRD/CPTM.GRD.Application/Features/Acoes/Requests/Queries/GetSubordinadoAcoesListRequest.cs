@@ -5,5 +5,5 @@ namespace CPTM.GRD.Application.Features.Acoes.Requests.Queries;
 
 public class GetSubordinadoAcoesListRequest : BasicRequest, IRequest<List<AcaoListDto>>
 {
-    public int Suid { get; set; }
+    public int Suid { get; init; }
 }

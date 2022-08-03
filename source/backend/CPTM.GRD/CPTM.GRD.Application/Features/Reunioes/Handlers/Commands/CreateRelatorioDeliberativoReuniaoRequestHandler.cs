@@ -20,29 +20,36 @@ public class
     private readonly IMapper _mapper;
     private readonly IFileManagerService _fileManagerService;
     private readonly IEmailService _emailService;
+    private readonly IAuthenticationService _authenticationService;
 
     public CreateRelatorioDeliberativoReuniaoRequestHandler(
         IReuniaoRepository reuniaoRepository,
         IUserRepository userRepository,
         IMapper mapper,
         IFileManagerService fileManagerService,
-        IEmailService emailService)
+        IEmailService emailService,
+        IAuthenticationService authenticationService)
     {
         _reuniaoRepository = reuniaoRepository;
         _userRepository = userRepository;
         _mapper = mapper;
         _fileManagerService = fileManagerService;
         _emailService = emailService;
+        _authenticationService = authenticationService;
     }
 
     public async Task<ReuniaoDto> Handle(CreateRelatorioDeliberativoReuniaoRequest request,
         CancellationToken cancellationToken)
     {
+        _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Grg);
+
         var reuniao = await _reuniaoRepository.Get(request.Rid);
         if (reuniao == null) throw new NotFoundException(nameof(reuniao), request.Rid);
 
-        var responsavel = await _userRepository.Get(request.Uid);
-        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
+        var claims = _authenticationService.GetTokenClaims(request.RequestUser);
+
+        var responsavel = await _userRepository.Get(claims.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
 
         reuniao.OnEmitRelatorioDeliberativo(responsavel,
             await _fileManagerService.CreateRelatorioDeliberativo(reuniao));

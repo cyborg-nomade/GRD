@@ -7,5 +7,4 @@ public class RemoveAcaoFromReuniaoRequest : BasicRequest, IRequest<AddAcaoToReun
 {
     public int Aid { get; init; }
     public int Rid { get; init; }
-    public int Uid { get; init; }
 }

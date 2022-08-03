@@ -7,5 +7,4 @@ public class UpdateReuniaoRequest : BasicRequest, IRequest<ReuniaoDto>
 {
     public int Rid { get; init; }
     public UpdateReuniaoDto UpdateReuniaoDto { get; init; } = new UpdateReuniaoDto();
-    public int Uid { get; init; }
 }

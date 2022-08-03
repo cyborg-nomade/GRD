@@ -12,6 +12,7 @@ using CPTM.GRD.Application.DTOs.Main.Reuniao;
 using CPTM.GRD.Application.DTOs.Main.Reuniao.Validators;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
+using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Reunioes;
 using MediatR;
 
@@ -62,6 +63,8 @@ public class UpdateReuniaoRequestHandler : IRequestHandler<UpdateReuniaoRequest,
 
     public async Task<ReuniaoDto> Handle(UpdateReuniaoRequest request, CancellationToken cancellationToken)
     {
+        _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Grg);
+
         var reuniaoDtoValidator = new UpdateReuniaoDtoValidator(_groupRepository, _authenticationService,
             _userRepository,
             _acaoRepository, _votoRepository, _participanteRepository, _reuniaoRepository, _reuniaoStrictSequence,
@@ -76,8 +79,10 @@ public class UpdateReuniaoRequestHandler : IRequestHandler<UpdateReuniaoRequest,
         var savedReuniao = await _reuniaoRepository.Get(request.Rid);
         if (savedReuniao == null) throw new NotFoundException(nameof(savedReuniao), request.Rid);
 
-        var responsavel = await _userRepository.Get(request.Uid);
-        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
+        var claims = _authenticationService.GetTokenClaims(request.RequestUser);
+
+        var responsavel = await _userRepository.Get(claims.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
 
         savedReuniao.OnUpdate(responsavel, _differentiator.GetDifferenceString<Reuniao>(
             savedReuniao,

@@ -6,6 +6,7 @@ using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
+using CPTM.GRD.Common;
 using MediatR;
 
 namespace CPTM.GRD.Application.Features.Reunioes.Handlers.Commands;
@@ -20,6 +21,7 @@ public class
     private readonly IMapper _mapper;
     private readonly IFileManagerService _fileManagerService;
     private readonly IEmailService _emailService;
+    private readonly IAuthenticationService _authenticationService;
 
     public CreateResolucaoDiretoriaProposicaoReuniaoRequestHandler(
         IReuniaoRepository reuniaoRepository,
@@ -27,7 +29,8 @@ public class
         IUserRepository userRepository,
         IMapper mapper,
         IFileManagerService fileManagerService,
-        IEmailService emailService)
+        IEmailService emailService,
+        IAuthenticationService authenticationService)
     {
         _reuniaoRepository = reuniaoRepository;
         _proposicaoRepository = proposicaoRepository;
@@ -35,19 +38,24 @@ public class
         _mapper = mapper;
         _fileManagerService = fileManagerService;
         _emailService = emailService;
+        _authenticationService = authenticationService;
     }
 
     public async Task<ProposicaoDto> Handle(CreateResolucaoDiretoriaProposicaoReuniaoRequest request,
         CancellationToken cancellationToken)
     {
+        _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Grg);
+
         var proposicao = await _proposicaoRepository.Get(request.Pid);
         if (proposicao == null) throw new NotFoundException(nameof(proposicao), request.Pid);
 
         var reuniao = await _reuniaoRepository.Get(request.Rid);
         if (reuniao == null) throw new NotFoundException(nameof(reuniao), request.Rid);
 
-        var responsavel = await _userRepository.Get(request.Uid);
-        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
+        var claims = _authenticationService.GetTokenClaims(request.RequestUser);
+
+        var responsavel = await _userRepository.Get(claims.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
 
         reuniao.OnEmitProposicaoResolucaoDiretoria(request.Pid, responsavel,
             await _fileManagerService.CreateResolucaoDiretoria(reuniao, proposicao));
