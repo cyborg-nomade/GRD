@@ -29,7 +29,7 @@ public class GetAcaoDetailRequestHandler : IRequestHandler<GetAcaoDetailRequest,
         var acao = await _acaoRepository.Get(request.Aid);
         if (acao == null) throw new NotFoundException(nameof(acao), request.Aid);
 
-        await _authenticationService.AuthorizeByMinLevelAndGroup(request.RequestUser, acao.Responsavel.Id);
+        await _authenticationService.AuthorizeByUserLevelAndGroup(request.RequestUser, acao.Responsavel.Id);
 
         return _mapper.Map<AcaoDto>(acao);
     }

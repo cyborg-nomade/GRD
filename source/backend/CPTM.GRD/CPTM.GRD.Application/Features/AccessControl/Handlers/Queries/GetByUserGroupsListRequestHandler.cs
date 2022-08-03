@@ -25,7 +25,7 @@ public class GetByUserGroupsListRequestHandler : IRequestHandler<GetByUserGroups
 
     public async Task<List<GroupDto>> Handle(GetByUserGroupsListRequest request, CancellationToken cancellationToken)
     {
-        await _authenticationService.AuthorizeByMinLevelAndGroup(request.RequestUser, request.Uid);
+        await _authenticationService.AuthorizeByUserLevelAndGroup(request.RequestUser, request.Uid);
         var groups = await _groupRepository.GetByUser(request.Uid);
         return _mapper.Map<List<GroupDto>>(groups);
     }

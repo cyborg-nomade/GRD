@@ -164,9 +164,9 @@ public class AuthenticationService : IAuthenticationService
         return true;
     }
 
-    public async Task<bool> AuthorizeByMinLevelAndGroup(ClaimsPrincipal requestUser, int uid)
+    public async Task<bool> AuthorizeByUserLevelAndGroup(ClaimsPrincipal requestUser, int quid)
     {
-        var queriedUser = await _userRepository.Get(uid);
+        var queriedUser = await _userRepository.Get(quid);
         if (queriedUser == null) throw new NotFoundException(nameof(queriedUser), nameof(queriedUser));
 
         AuthorizeByMinLevel(requestUser, queriedUser.NivelAcesso);

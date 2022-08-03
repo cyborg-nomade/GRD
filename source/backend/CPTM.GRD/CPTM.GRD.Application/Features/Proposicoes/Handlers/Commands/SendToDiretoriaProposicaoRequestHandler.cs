@@ -32,7 +32,7 @@ public class SendToDiretoriaProposicaoRequestHandler : IRequestHandler<SendToDir
     public async Task<ProposicaoDto> Handle(SendToDiretoriaProposicaoRequest request,
         CancellationToken cancellationToken)
     {
-        _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Sub);
+        _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Gerente);
 
         var proposicao = await _proposicaoRepository.Get(request.Pid);
         if (proposicao == null) throw new NotFoundException(nameof(proposicao), request.Pid);

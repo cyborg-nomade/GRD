@@ -26,7 +26,7 @@ public class GetUserDetailRequestHandler : IRequestHandler<GetUserDetailRequest,
 
     public async Task<UserDto> Handle(GetUserDetailRequest request, CancellationToken cancellationToken)
     {
-        await _authenticationService.AuthorizeByMinLevelAndGroup(request.RequestUser, request.Uid);
+        await _authenticationService.AuthorizeByUserLevelAndGroup(request.RequestUser, request.Uid);
         var user = await _userRepository.Get(request.Uid);
         if (user == null) throw new NotFoundException(nameof(user), request.Uid);
         return _mapper.Map<UserDto>(user);
