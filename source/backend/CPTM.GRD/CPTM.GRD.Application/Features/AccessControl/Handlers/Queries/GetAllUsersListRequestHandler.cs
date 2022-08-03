@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Infrastructure;
-using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
+using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.DTOs.AccessControl.User;
 using CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
 using CPTM.GRD.Common;
@@ -10,16 +10,16 @@ namespace CPTM.GRD.Application.Features.AccessControl.Handlers.Queries;
 
 public class GetAllUsersListRequestHandler : IRequestHandler<GetAllUsersListRequest, List<UserDto>>
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IAuthenticationService _authenticationService;
     private readonly IMapper _mapper;
 
     public GetAllUsersListRequestHandler(
-        IUserRepository userRepository,
+        IUnitOfWork unitOfWork,
         IAuthenticationService authenticationService,
         IMapper mapper)
     {
-        _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
         _authenticationService = authenticationService;
         _mapper = mapper;
     }
@@ -27,7 +27,7 @@ public class GetAllUsersListRequestHandler : IRequestHandler<GetAllUsersListRequ
     public async Task<List<UserDto>> Handle(GetAllUsersListRequest request, CancellationToken cancellationToken)
     {
         _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Grg);
-        var users = await _userRepository.GetAll();
+        var users = await _unitOfWork.UserRepository.GetAll();
         return _mapper.Map<List<UserDto>>(users);
     }
 }

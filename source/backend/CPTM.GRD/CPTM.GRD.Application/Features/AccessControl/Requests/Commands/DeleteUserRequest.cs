@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using MediatR;
+﻿using MediatR;
 
 namespace CPTM.GRD.Application.Features.AccessControl.Requests.Commands;
 

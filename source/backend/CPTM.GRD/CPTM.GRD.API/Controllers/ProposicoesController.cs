@@ -1,5 +1,4 @@
-﻿using CPTM.GRD.Application.DTOs.AccessControl.User;
-using CPTM.GRD.Application.DTOs.Main.Proposicao;
+﻿using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Queries;
 using CPTM.GRD.Common;

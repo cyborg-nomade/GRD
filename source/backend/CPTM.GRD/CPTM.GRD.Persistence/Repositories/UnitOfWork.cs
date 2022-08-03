@@ -47,7 +47,7 @@ public class UnitOfWork : IUnitOfWork
 
     public IGroupRepository GroupRepository => _groupRepository ?? new GroupRepository(_grdContext);
 
-    public IAcaoRepository AcoesRepository => _acoesRepository ?? new AcaoRepository(_grdContext);
+    public IAcaoRepository AcaoRepository => _acoesRepository ?? new AcaoRepository(_grdContext);
 
     public IAndamentoRepository AndamentoRepository => _andamentoRepository ?? new AndamentoRepository(_grdContext);
 

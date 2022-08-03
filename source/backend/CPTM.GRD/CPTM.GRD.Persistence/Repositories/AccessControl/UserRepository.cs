@@ -1,6 +1,5 @@
 ﻿using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Views;
-using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Models.AD;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;

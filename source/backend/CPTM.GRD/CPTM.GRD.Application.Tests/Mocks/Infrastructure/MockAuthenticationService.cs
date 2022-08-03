@@ -1,5 +1,4 @@
 ﻿using CPTM.GRD.Application.Contracts.Infrastructure;
-using CPTM.GRD.Application.Models;
 using CPTM.GRD.Application.Models.AD;
 using Moq;
 

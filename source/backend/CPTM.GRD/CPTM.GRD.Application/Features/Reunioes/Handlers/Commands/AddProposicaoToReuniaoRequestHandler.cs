@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Infrastructure;
-using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
-using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
-using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
+using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.DTOs.Main.Mixed;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
@@ -17,24 +15,18 @@ namespace CPTM.GRD.Application.Features.Reunioes.Handlers.Commands;
 public class
     AddProposicaoToReuniaoRequestHandler : IRequestHandler<AddProposicaoToReuniaoRequest, AddProposicaoToReuniaoDto>
 {
-    private readonly IProposicaoRepository _proposicaoRepository;
-    private readonly IReuniaoRepository _reuniaoRepository;
-    private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IEmailService _emailService;
     private readonly IAuthenticationService _authenticationService;
 
     public AddProposicaoToReuniaoRequestHandler(
-        IProposicaoRepository proposicaoRepository,
-        IReuniaoRepository reuniaoRepository,
-        IUserRepository userRepository,
+        IUnitOfWork unitOfWork,
         IMapper mapper,
         IEmailService emailService,
         IAuthenticationService authenticationService)
     {
-        _proposicaoRepository = proposicaoRepository;
-        _reuniaoRepository = reuniaoRepository;
-        _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
         _mapper = mapper;
         _emailService = emailService;
         _authenticationService = authenticationService;
@@ -45,20 +37,21 @@ public class
     {
         _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Grg);
 
-        var proposicao = await _proposicaoRepository.Get(request.Pid);
+        var proposicao = await _unitOfWork.ProposicaoRepository.Get(request.Pid);
         if (proposicao == null) throw new NotFoundException(nameof(proposicao), request.Pid);
 
-        var reuniao = await _reuniaoRepository.Get(request.Rid);
+        var reuniao = await _unitOfWork.ReuniaoRepository.Get(request.Rid);
         if (reuniao == null) throw new NotFoundException(nameof(reuniao), request.Rid);
 
         var claims = _authenticationService.GetTokenClaims(request.RequestUser);
 
-        var responsavel = await _userRepository.Get(claims.Uid);
+        var responsavel = await _unitOfWork.UserRepository.Get(claims.Uid);
         if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
 
         reuniao.AddProposicao(proposicao, responsavel);
 
-        var updatedReuniao = await _reuniaoRepository.Update(reuniao);
+        var updatedReuniao = await _unitOfWork.ReuniaoRepository.Update(reuniao);
+        await _unitOfWork.Save();
 
         await _emailService.SendEmail(proposicao, ProposicaoAddToReuniaoSubject,
             ProposicaoAddToReuniaoMessage(proposicao, reuniao));

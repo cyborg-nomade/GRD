@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Infrastructure;
-using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
-using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
+using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
@@ -16,29 +15,23 @@ namespace CPTM.GRD.Application.Features.Proposicoes.Handlers.Commands;
 
 public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRequest, ProposicaoDto>
 {
-    private readonly IProposicaoRepository _proposicaoRepository;
-    private readonly IGroupRepository _groupRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IAuthenticationService _authenticationService;
     private readonly IMapper _mapper;
     private readonly IProposicaoStrictSequenceControl _sequenceControl;
-    private readonly IUserRepository _userRepository;
     private readonly IEmailService _emailService;
 
     public CreateProposicaoRequestHandler(
-        IProposicaoRepository proposicaoRepository,
-        IGroupRepository groupRepository,
+        IUnitOfWork unitOfWork,
         IAuthenticationService authenticationService,
         IMapper mapper,
         IProposicaoStrictSequenceControl sequenceControl,
-        IUserRepository userRepository,
         IEmailService emailService)
     {
-        _proposicaoRepository = proposicaoRepository;
-        _groupRepository = groupRepository;
+        _unitOfWork = unitOfWork;
         _authenticationService = authenticationService;
         _mapper = mapper;
         _sequenceControl = sequenceControl;
-        _userRepository = userRepository;
         _emailService = emailService;
     }
 
@@ -50,7 +43,8 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
             request.CreateProposicaoDto.AreaSolicitante.Id);
 
         var proposicaoDtoValidator =
-            new CreateProposicaoDtoValidator(_groupRepository, _authenticationService, _userRepository);
+            new CreateProposicaoDtoValidator(_unitOfWork.GroupRepository, _authenticationService,
+                _unitOfWork.UserRepository);
         var proposicaoDtoValidationResult =
             await proposicaoDtoValidator.ValidateAsync(request.CreateProposicaoDto, cancellationToken);
         if (!proposicaoDtoValidationResult.IsValid)
@@ -62,7 +56,8 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
         proposicao.IdPrd = await _sequenceControl.GetNextIdPrd();
         proposicao.OnSaveProposicao();
 
-        var addedProposicao = await _proposicaoRepository.Add(proposicao);
+        var addedProposicao = await _unitOfWork.ProposicaoRepository.Add(proposicao);
+        await _unitOfWork.Save();
 
         await _emailService.SendEmail(proposicao, ProposicaoCreationSubject, ProposicaoCreationMessage(proposicao));
 

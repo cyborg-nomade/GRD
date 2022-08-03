@@ -15,7 +15,7 @@ public interface IUnitOfWork : IDisposable
     IUserRepository UserRepository { get; }
     IGroupRepository GroupRepository { get; }
 
-    IAcaoRepository AcoesRepository { get; }
+    IAcaoRepository AcaoRepository { get; }
     IAndamentoRepository AndamentoRepository { get; }
 
     IProposicaoRepository ProposicaoRepository { get; }

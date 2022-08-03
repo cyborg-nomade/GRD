@@ -39,6 +39,8 @@ public static class PersistenceServicesRegistration
             settings.HomeDir = environmentContentRootPath);
 
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+
         services.AddScoped<IGroupRepository, GroupRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
 

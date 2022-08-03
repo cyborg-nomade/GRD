@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Infrastructure;
-using CPTM.GRD.Application.Contracts.Persistence.Acoes;
+using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.Features.Acoes.Requests.Queries;
 using MediatR;
@@ -9,16 +9,16 @@ namespace CPTM.GRD.Application.Features.Acoes.Handlers.Queries;
 
 public class GetSubordinadoAcoesListRequestHandler : IRequestHandler<GetSubordinadoAcoesListRequest, List<AcaoListDto>>
 {
-    private readonly IAcaoRepository _acaoRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IAuthenticationService _authenticationService;
     private readonly IMapper _mapper;
 
     public GetSubordinadoAcoesListRequestHandler(
-        IAcaoRepository acaoRepository,
+        IUnitOfWork unitOfWork,
         IAuthenticationService authenticationService,
         IMapper mapper)
     {
-        _acaoRepository = acaoRepository;
+        _unitOfWork = unitOfWork;
         _authenticationService = authenticationService;
         _mapper = mapper;
     }
@@ -27,7 +27,7 @@ public class GetSubordinadoAcoesListRequestHandler : IRequestHandler<GetSubordin
         CancellationToken cancellationToken)
     {
         await _authenticationService.AuthorizeByExactUser(request.RequestUser, request.Suid);
-        var acoes = await _acaoRepository.GetFromSubordinados(request.Suid);
+        var acoes = await _unitOfWork.AcaoRepository.GetFromSubordinados(request.Suid);
         return _mapper.Map<List<AcaoListDto>>(acoes);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Infrastructure;
-using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
-using CPTM.GRD.Application.Contracts.Persistence.Acoes;
+using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.Contracts.Util;
 using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.DTOs.Main.Acao.Validators;
@@ -15,25 +14,19 @@ namespace CPTM.GRD.Application.Features.Acoes.Handlers.Commands;
 
 public class UpdateAcaoRequestHandler : IRequestHandler<UpdateAcaoRequest, AcaoDto>
 {
-    private readonly IAcaoRepository _acaoRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    private readonly IUserRepository _userRepository;
-    private readonly IGroupRepository _groupRepository;
     private readonly IAuthenticationService _authenticationService;
     private readonly IDifferentiator _differentiator;
 
     public UpdateAcaoRequestHandler(
-        IAcaoRepository acaoRepository,
+        IUnitOfWork unitOfWork,
         IMapper mapper,
-        IUserRepository userRepository,
-        IGroupRepository groupRepository,
         IAuthenticationService authenticationService,
         IDifferentiator differentiator)
     {
-        _acaoRepository = acaoRepository;
+        _unitOfWork = unitOfWork;
         _mapper = mapper;
-        _userRepository = userRepository;
-        _groupRepository = groupRepository;
         _authenticationService = authenticationService;
         _differentiator = differentiator;
     }
@@ -43,19 +36,20 @@ public class UpdateAcaoRequestHandler : IRequestHandler<UpdateAcaoRequest, AcaoD
         _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Grg);
 
         var acaoDtoValidator =
-            new UpdateAcaoDtoValidator(_groupRepository, _authenticationService, _userRepository, _acaoRepository);
+            new UpdateAcaoDtoValidator(_unitOfWork.GroupRepository, _authenticationService, _unitOfWork.UserRepository,
+                _unitOfWork.AcaoRepository);
         var acaoDtoValidationResult = await acaoDtoValidator.ValidateAsync(request.UpdateAcaoDto, cancellationToken);
         if (!acaoDtoValidationResult.IsValid)
         {
             throw new ValidationException(acaoDtoValidationResult);
         }
 
-        var savedAcao = await _acaoRepository.Get(request.Aid);
+        var savedAcao = await _unitOfWork.AcaoRepository.Get(request.Aid);
         if (savedAcao == null) throw new NotFoundException(nameof(savedAcao), request.Aid);
 
         var claims = _authenticationService.GetTokenClaims(request.RequestUser);
 
-        var responsavel = await _userRepository.Get(claims.Uid);
+        var responsavel = await _unitOfWork.UserRepository.Get(claims.Uid);
         if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
 
         savedAcao.OnUpdate(
@@ -65,7 +59,8 @@ public class UpdateAcaoRequestHandler : IRequestHandler<UpdateAcaoRequest, AcaoD
             responsavel);
 
         _mapper.Map(request.UpdateAcaoDto, savedAcao);
-        var updatedAcao = await _acaoRepository.Update(savedAcao);
+        var updatedAcao = await _unitOfWork.AcaoRepository.Update(savedAcao);
+        await _unitOfWork.Save();
 
         return _mapper.Map<AcaoDto>(updatedAcao);
     }

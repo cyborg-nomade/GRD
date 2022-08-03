@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Infrastructure;
-using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
-using CPTM.GRD.Application.Contracts.Persistence.Acoes;
+using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Acoes.Requests.Commands;
@@ -12,21 +11,17 @@ namespace CPTM.GRD.Application.Features.Acoes.Handlers.Commands;
 
 public class FinishAcaoRequestHandler : IRequestHandler<FinishAcaoRequest, AcaoDto>
 {
-    private readonly IAcaoRepository _acaoRepository;
-    private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
-
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IAuthenticationService _authenticationService;
 
     public FinishAcaoRequestHandler(
-        IAcaoRepository acaoRepository,
-        IUserRepository userRepository,
+        IUnitOfWork unitOfWork,
         IAuthenticationService authenticationService,
         IMapper mapper
     )
     {
-        _acaoRepository = acaoRepository;
-        _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
         _authenticationService = authenticationService;
         _mapper = mapper;
     }
@@ -35,17 +30,18 @@ public class FinishAcaoRequestHandler : IRequestHandler<FinishAcaoRequest, AcaoD
     {
         _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Grg);
 
-        var acao = await _acaoRepository.Get(request.Aid);
+        var acao = await _unitOfWork.AcaoRepository.Get(request.Aid);
         if (acao == null) throw new NotFoundException(nameof(acao), request.Aid);
 
         var claims = _authenticationService.GetTokenClaims(request.RequestUser);
 
-        var responsavel = await _userRepository.Get(claims.Uid);
+        var responsavel = await _unitOfWork.UserRepository.Get(claims.Uid);
         if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
 
         acao.Finish(request.Status, responsavel);
 
-        var updatedAcao = await _acaoRepository.Update(acao);
+        var updatedAcao = await _unitOfWork.AcaoRepository.Update(acao);
+        await _unitOfWork.Save();
 
         return _mapper.Map<AcaoDto>(updatedAcao);
     }

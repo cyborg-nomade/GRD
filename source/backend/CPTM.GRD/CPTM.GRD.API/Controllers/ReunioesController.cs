@@ -1,5 +1,4 @@
-﻿using CPTM.GRD.Application.DTOs.AccessControl.User;
-using CPTM.GRD.Application.DTOs.Main.Mixed;
+﻿using CPTM.GRD.Application.DTOs.Main.Mixed;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;

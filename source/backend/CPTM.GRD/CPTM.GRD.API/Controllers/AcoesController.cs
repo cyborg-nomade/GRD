@@ -2,7 +2,6 @@
 using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.DTOs.Main.Acao.Children;
 using CPTM.GRD.Application.DTOs.Main.Mixed;
-using CPTM.GRD.Application.Features.Acoes.Handlers.Queries;
 using CPTM.GRD.Application.Features.Acoes.Requests.Commands;
 using CPTM.GRD.Application.Features.Acoes.Requests.Queries;
 using CPTM.GRD.Common;

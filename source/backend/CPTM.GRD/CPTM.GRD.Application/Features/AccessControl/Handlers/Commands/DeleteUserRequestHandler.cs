@@ -1,5 +1,5 @@
 ﻿using CPTM.GRD.Application.Contracts.Infrastructure;
-using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
+using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.AccessControl.Requests.Commands;
 using CPTM.GRD.Common;
@@ -9,13 +9,14 @@ namespace CPTM.GRD.Application.Features.AccessControl.Handlers.Commands;
 
 public class DeleteUserRequestHandler : IRequestHandler<DeleteUserRequest, Unit>
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IAuthenticationService _authenticationService;
 
-    public DeleteUserRequestHandler(IUserRepository userRepository,
+    public DeleteUserRequestHandler(
+        IUnitOfWork unitOfWork,
         IAuthenticationService authenticationService)
     {
-        _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
         _authenticationService = authenticationService;
     }
 
@@ -23,7 +24,7 @@ public class DeleteUserRequestHandler : IRequestHandler<DeleteUserRequest, Unit>
     {
         _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Gerente);
 
-        var user = await _userRepository.Get(request.Uid);
+        var user = await _unitOfWork.UserRepository.Get(request.Uid);
 
         if (user == null)
         {
@@ -32,7 +33,9 @@ public class DeleteUserRequestHandler : IRequestHandler<DeleteUserRequest, Unit>
 
         await _authenticationService.AuthorizeByMinGroups(request.RequestUser, user.AreasAcesso);
 
-        await _userRepository.Delete(request.Uid);
+        await _unitOfWork.UserRepository.Delete(request.Uid);
+        await _unitOfWork.Save();
+
         return Unit.Value;
     }
 }
