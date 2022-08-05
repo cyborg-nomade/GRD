@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
+using CPTM.GRD.Application.Models;
 using CPTM.GRD.Application.Responses;
 using CPTM.GRD.Common;
 using Newtonsoft.Json;
@@ -34,6 +35,8 @@ createProposicaoRequest.AddHeader("Authorization", "Bearer " + token);
 
 var proposicaoToCreate = new CreateProposicaoDto()
 {
+    Criador = user!,
+    Area = user!.AreasAcesso.First(),
     Titulo = "Teste",
     DescricaoProposicao = "teste1",
     PossuiParecerJuridico = false,
@@ -73,12 +76,11 @@ var proposicaoToCreate = new CreateProposicaoDto()
 
 createProposicaoRequest.AddBody(JsonConvert.SerializeObject(proposicaoToCreate));
 
-
 try
 {
-    var createProposicaoResponse = await client.ExecuteAsync(createProposicaoRequest);
+    var createProposicaoResponse = await client.ExecuteAsync<ProposicaoDto>(createProposicaoRequest);
 
-    Console.WriteLine(createProposicaoResponse.Content);
+    Console.WriteLine(createProposicaoResponse.Data);
 }
 catch (Exception e)
 {

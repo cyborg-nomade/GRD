@@ -30,4 +30,30 @@ public class ReuniaoDto : IBaseReuniaoDto, IFullReuniaoDto, IAutoPropertiesReuni
     public string PautaDefinitivaFilePath { get; set; } = string.Empty;
     public string RelatorioDeliberativoFilePath { get; set; } = string.Empty;
     public string AtaFilePath { get; set; } = string.Empty;
+
+    public override string ToString()
+    {
+        return @$"{nameof(Data)}: {Data}, 
+{nameof(Horario)}: {Horario}, 
+{nameof(DataPrevia)}: {DataPrevia}, 
+{nameof(HorarioPrevia)}: {HorarioPrevia}, 
+{nameof(Local)}: {Local}, 
+{nameof(TipoReuniao)}: {TipoReuniao}, 
+{nameof(Proposicoes)}: {Proposicoes}, 
+{nameof(ProposicoesPrevia)}: {ProposicoesPrevia}, 
+{nameof(Participantes)}: {Participantes}, 
+{nameof(ParticipantesPrevia)}: {ParticipantesPrevia}, 
+{nameof(Acoes)}: {Acoes}, 
+{nameof(Comunicado)}: {Comunicado}, 
+{nameof(OutrasObservacoes)}: {OutrasObservacoes}, 
+{nameof(MensagemEMail)}: {MensagemEMail}, 
+{nameof(Id)}: {Id}, 
+{nameof(NumeroReuniao)}: {NumeroReuniao}, 
+{nameof(Status)}: {Status}, 
+{nameof(PautaPreviaFilePath)}: {PautaPreviaFilePath}, 
+{nameof(MemoriaPreviaFilePath)}: {MemoriaPreviaFilePath}, 
+{nameof(PautaDefinitivaFilePath)}: {PautaDefinitivaFilePath}, 
+{nameof(RelatorioDeliberativoFilePath)}: {RelatorioDeliberativoFilePath}, 
+{nameof(AtaFilePath)}: {AtaFilePath}";
+    }
 }

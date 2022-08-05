@@ -2,6 +2,7 @@
 using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Views;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Models;
 using CPTM.GRD.Application.Models.Settings;
 using CPTM.GRD.Common;
@@ -165,7 +166,9 @@ public class EmailService : IEmailService
 
     private static IEnumerable<User> GetDestinatariosFromReuniao(Reuniao reuniao)
     {
-        var destinatariosReuniao = reuniao.Participantes.Select(p => p.User).ToList();
+        var destinatariosReuniao =
+            (reuniao.Participantes ?? throw new NotFoundException(nameof(reuniao.Participantes), reuniao))
+            .Select(p => p.User).ToList();
         return destinatariosReuniao;
     }
 

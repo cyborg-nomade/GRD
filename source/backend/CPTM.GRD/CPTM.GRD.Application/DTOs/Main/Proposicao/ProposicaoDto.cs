@@ -65,4 +65,72 @@ public class ProposicaoDto : IBaseProposicaoDto, IFullProposicaoDto, IOwnerPrope
     public ICollection<string> OutrosFilePath { get; set; } = new HashSet<string>();
     public string? ResolucaoDiretoriaFilePath { get; set; } = string.Empty;
     public int? Seq { get; set; }
+
+    public override string ToString()
+    {
+        return @$"
+{nameof(Id)}: {Id}, 
+{nameof(IdPrd)}: {IdPrd}, 
+{nameof(Status)}: {Status}, 
+{nameof(Arquivada)}: {Arquivada}, 
+{nameof(Criador)}: (
+    {Criador}
+), 
+{nameof(Area)}: (
+    {Area}
+), 
+{nameof(Titulo)}: {Titulo}, 
+{nameof(Objeto)}: {Objeto}, 
+{nameof(DescricaoProposicao)}: {DescricaoProposicao}, 
+{nameof(PossuiParecerJuridico)}: {PossuiParecerJuridico}, 
+{nameof(ResumoGeralResolucao)}: {ResumoGeralResolucao}, 
+{nameof(ObservacoesCustos)}: {ObservacoesCustos}, 
+{nameof(CompetenciasConformeNormas)}: {CompetenciasConformeNormas}, 
+{nameof(DataBaseValor)}: {DataBaseValor}, 
+{nameof(Moeda)}: {Moeda}, 
+{nameof(ValorOriginalContrato)}: {ValorOriginalContrato}, 
+{nameof(ValorTotalProposicao)}: {ValorTotalProposicao}, 
+{nameof(ReceitaDespesa)}: {ReceitaDespesa}, 
+{nameof(NumeroContrato)}: {NumeroContrato}, 
+{nameof(Termo)}: {Termo}, 
+{nameof(Fornecedor)}: {Fornecedor}, 
+{nameof(ValorAtualContrato)}: {ValorAtualContrato}, 
+{nameof(NumeroReservaVerba)}: {NumeroReservaVerba}, 
+{nameof(ValorReservaVerba)}: {ValorReservaVerba}, 
+{nameof(InicioVigenciaReserva)}: {InicioVigenciaReserva}, 
+{nameof(FimVigenciaReserva)}: {FimVigenciaReserva}, 
+{nameof(NumeroProposicao)}: {NumeroProposicao}, 
+{nameof(ProtoloExpediente)}: {ProtoloExpediente}, 
+{nameof(NumeroProcessoLicit)}: {NumeroProcessoLicit}, 
+{nameof(OutrasObservacoes)}: {OutrasObservacoes}, 
+{nameof(Reuniao)}: {Reuniao}, 
+{nameof(AnotacoesPrevia)}: {AnotacoesPrevia}, 
+{nameof(VotosRd)}: [
+        {string.Join(",", VotosRd ?? new List<VotoDto>())}
+    ], 
+{nameof(MotivoRetornoDiretoria)}: {MotivoRetornoDiretoria}, 
+{nameof(MotivoRetornoGrg)}: {MotivoRetornoGrg}, 
+{nameof(MotivoRetornoRd)}: {MotivoRetornoRd}, 
+{nameof(Deliberacao)}: {Deliberacao}, 
+{nameof(IsExtraPauta)}: {IsExtraPauta}, 
+{nameof(NumeroConselho)}: {NumeroConselho}, 
+{nameof(SinteseProcessoFilePath)}: {SinteseProcessoFilePath}, 
+{nameof(NotaTecnicaFilePath)}: {NotaTecnicaFilePath}, 
+{nameof(PrdFilePath)}: {PrdFilePath}, 
+{nameof(ParecerJuridicoFilePath)}: {ParecerJuridicoFilePath}, 
+{nameof(TrFilePath)}: {TrFilePath}, 
+{nameof(RelatorioTecnicoFilePath)}: {RelatorioTecnicoFilePath}, 
+{nameof(PlanilhaQuantFilePath)}: {PlanilhaQuantFilePath}, 
+{nameof(EditalFilePath)}: {EditalFilePath}, 
+{nameof(ReservaVerbaFilePath)}: {ReservaVerbaFilePath}, 
+{nameof(ScFilePath)}: {ScFilePath}, 
+{nameof(RavFilePath)}: {RavFilePath}, 
+{nameof(CronogramaFisFinFilePath)}: {CronogramaFisFinFilePath}, 
+{nameof(PcaFilePath)}: {PcaFilePath}, 
+{nameof(OutrosFilePath)}: [
+    {string.Join(",", OutrosFilePath)}
+    ], 
+{nameof(ResolucaoDiretoriaFilePath)}: {ResolucaoDiretoriaFilePath}, 
+{nameof(Seq)}: {Seq}";
+    }
 }

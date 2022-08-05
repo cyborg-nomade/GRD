@@ -15,6 +15,12 @@ public class GroupDto : IGroupDto
     public override string ToString()
     {
         return
-            $"{nameof(Id)}: {Id},\n{nameof(Sigla)}: {Sigla},\n{nameof(Nome)}: {Nome},\n{nameof(SiglaGerencia)}: {SiglaGerencia},\n{nameof(Gerencia)}: {Gerencia},\n{nameof(SiglaDiretoria)}: {SiglaDiretoria},\n{nameof(Diretoria)}: {Diretoria}";
+            @$"{nameof(Id)}: {Id},
+{nameof(Sigla)}: {Sigla},
+{nameof(Nome)}: {Nome},
+{nameof(SiglaGerencia)}: {SiglaGerencia},
+{nameof(Gerencia)}: {Gerencia},
+{nameof(SiglaDiretoria)}: {SiglaDiretoria},
+{nameof(Diretoria)}: {Diretoria}";
     }
 }

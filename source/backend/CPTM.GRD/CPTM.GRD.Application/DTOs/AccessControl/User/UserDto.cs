@@ -16,6 +16,13 @@ public class UserDto : IBaseUserDto, IFullUserDto, IUsernameAdUserDto
     public override string ToString()
     {
         return
-            $"{nameof(Id)}: {Id},\n{nameof(Nome)}: {Nome},\n{nameof(UsernameAd)}: {UsernameAd},\n{nameof(NivelAcesso)}: {NivelAcesso},\n{nameof(AreasAcesso)}: [\n{string.Join(",", AreasAcesso)}\n],\n{nameof(Funcao)}: {Funcao}";
+            @$"{nameof(Id)}: {Id},
+{nameof(Nome)}: {Nome},
+{nameof(UsernameAd)}: {UsernameAd},
+{nameof(NivelAcesso)}: {NivelAcesso},
+{nameof(AreasAcesso)}: [
+        {string.Join(",", AreasAcesso)}
+    ],
+{nameof(Funcao)}: {Funcao}";
     }
 }

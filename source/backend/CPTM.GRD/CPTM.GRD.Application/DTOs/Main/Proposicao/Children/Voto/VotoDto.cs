@@ -9,4 +9,11 @@ public class VotoDto : IBaseVotoDto, IFullVotoDto
     public int Id { get; set; }
     public ParticipanteDto Participante { get; set; } = new ParticipanteDto();
     public TipoVotoRd VotoRd { get; set; }
+
+    public override string ToString()
+    {
+        return @$"{nameof(Id)}: {Id}, 
+{nameof(Participante)}: {Participante}, 
+{nameof(VotoRd)}: {VotoRd}";
+    }
 }
