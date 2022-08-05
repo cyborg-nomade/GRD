@@ -25,6 +25,6 @@ END;
 /
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES (N'20220727183521_ExistingViewsAndConfiguration', N'6.0.7')
+VALUES (N'20220804220222_ExistingViewsAndModel', N'6.0.7')
 /
 

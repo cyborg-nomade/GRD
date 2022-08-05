@@ -36,7 +36,7 @@ public class ProposicaoRepository : GenericRepository<Proposicao>, IProposicaoRe
         return await _grdContext.Proposicoes
             .Where(p => groupWithSubordinates
                 .Select(g => g.Id)
-                .Contains(p.AreaSolicitante.Id))
+                .Contains(p.Area.Id))
             .ToListAsync();
     }
 
@@ -53,7 +53,7 @@ public class ProposicaoRepository : GenericRepository<Proposicao>, IProposicaoRe
         var groupWithSubordinates = await _groupRepository.GetSubordinateGroups(gid);
 
         return await _grdContext.Proposicoes.Where(p =>
-                groupWithSubordinates.Contains(p.AreaSolicitante) && p.Status == status && p.Arquivada == arquivada)
+                groupWithSubordinates.Contains(p.Area) && p.Status == status && p.Arquivada == arquivada)
             .ToListAsync();
     }
 

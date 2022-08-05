@@ -25,7 +25,7 @@ public static class EmailSubjectsAndMessages
         "Prezado,\n\n Você recebeu acesso ao sistema GRD. Acesse o sistema com seu login de rede na URL http://grd.cptm.info/. \n\n Atenciosamente, GRG";
 
     public static string ProposicaoCreationMessage(Proposicao proposicao) =>
-        $"Prezados,\n\n A área {proposicao.AreaSolicitante.Sigla} criou a Proposição IDPRD {proposicao.IdPrd}, com a seguinte descrição: {proposicao.DescricaoProposicao}.\n Para verificar, acesse o sistema GRD com seu login de rede na URL http://grd.cptm.info/. \n\n Atenciosamente, GRG";
+        $"Prezados,\n\n A área {proposicao.Area.Sigla} criou a Proposição IDPRD {proposicao.IdPrd}, com a seguinte descrição: {proposicao.DescricaoProposicao}.\n Para verificar, acesse o sistema GRD com seu login de rede na URL http://grd.cptm.info/. \n\n Atenciosamente, GRG";
 
     public static string ProposicaoUpdateMessage(Proposicao proposicao, User responsavel) =>
         $"Prezados,\n\n A Proposição IDPRD {proposicao.IdPrd} foi alterada por {responsavel.Nome} ({responsavel.Email}), e agora tem seguinte descrição: {proposicao.DescricaoProposicao}.\n Para verificar as demais alterações, acesse o sistema GRD com seu login de rede na URL http://grd.cptm.info/. \n\n Atenciosamente, GRG";

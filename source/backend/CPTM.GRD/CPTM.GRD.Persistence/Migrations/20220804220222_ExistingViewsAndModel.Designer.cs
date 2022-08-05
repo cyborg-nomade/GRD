@@ -12,8 +12,8 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace CPTM.GRD.Persistence.Migrations
 {
     [DbContext(typeof(GrdContext))]
-    [Migration("20220727183521_ExistingViewsAndConfiguration")]
-    partial class ExistingViewsAndConfiguration
+    [Migration("20220804220222_ExistingViewsAndModel")]
+    partial class ExistingViewsAndModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -9,6 +9,7 @@ public class Group
     public string Gerencia { get; init; } = string.Empty;
     public string SiglaDiretoria { get; init; } = string.Empty;
     public string Diretoria { get; init; } = string.Empty;
+    public ICollection<User> Users { get; set; } = new List<User>();
 
     public bool CheckIsDiretoria()
     {

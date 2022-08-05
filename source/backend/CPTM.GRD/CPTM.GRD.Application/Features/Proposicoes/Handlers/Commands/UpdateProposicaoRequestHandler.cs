@@ -58,7 +58,7 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
         if (savedProposicao == null)
             throw new NotFoundException(nameof(savedProposicao), request.Pid);
 
-        await _authenticationService.AuthorizeByMinGroups(request.RequestUser, savedProposicao.AreaSolicitante.Id);
+        await _authenticationService.AuthorizeByMinGroups(request.RequestUser, savedProposicao.Area.Id);
 
         var claims = _authenticationService.GetTokenClaims(request.RequestUser);
 

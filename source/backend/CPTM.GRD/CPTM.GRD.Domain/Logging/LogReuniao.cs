@@ -8,10 +8,10 @@ public class LogReuniao
 {
     public int Id { get; set; }
     public TipoLogReuniao Tipo { get; set; }
-    public string ReuniaoId { get; set; }
+    public string ReuniaoRef { get; set; }
     public string Diferenca { get; set; }
     public DateTime Data { get; set; }
-    public User UsuarioResp { get; set; }
+    public User Resp { get; set; }
 
     private LogReuniao()
     {
@@ -21,8 +21,8 @@ public class LogReuniao
     {
         Data = DateTime.Now;
         Tipo = tipoLogReuniao;
-        ReuniaoId = $@"Número Reunião: {reuniao.NumeroReuniao}";
+        ReuniaoRef = $@"Número Reunião: {reuniao.NumeroReuniao}";
         Diferenca = diferenca;
-        UsuarioResp = responsavel;
+        Resp = responsavel;
     }
 }

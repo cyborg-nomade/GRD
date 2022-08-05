@@ -171,7 +171,7 @@ public class EmailService : IEmailService
 
     private async Task<List<User>> GetDestinatariosFromProposicao(Proposicao proposicao)
     {
-        var destinarioGroups = await _groupRepository.GetSuperordinateGroups(proposicao.AreaSolicitante.Id);
+        var destinarioGroups = await _groupRepository.GetSuperordinateGroups(proposicao.Area.Id);
         var destinatarios = new List<User>();
         foreach (var group in destinarioGroups)
         {

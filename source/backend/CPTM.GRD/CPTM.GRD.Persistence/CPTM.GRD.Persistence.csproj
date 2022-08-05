@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Migrations\" />
     <Folder Include="Repositories\AccessControl\" />
     <Folder Include="Repositories\Acoes\Children\" />
     <Folder Include="Repositories\Logging\" />

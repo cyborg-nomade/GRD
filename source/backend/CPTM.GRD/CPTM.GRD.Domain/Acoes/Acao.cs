@@ -24,9 +24,9 @@ public class Acao
     public DateTime PrazoFinal { get; set; }
     public int DiasParaVencimento { get; set; }
     public TipoAlertaVencimento AlertaVencimento { get; set; }
-    public ICollection<Andamento> Andamentos { get; set; } = new List<Andamento>();
+    public ICollection<Andamento>? Andamentos { get; set; } = new List<Andamento>();
     public ICollection<Reuniao> Reunioes { get; set; } = new List<Reuniao>();
-    public ICollection<LogAcao> Logs { get; set; } = new List<LogAcao>();
+    public ICollection<LogAcao>? Logs { get; set; } = new List<LogAcao>();
 
     private Acao GenerateAcaoLog(TipoLogAcao tipoLogAcao, string diferenca, User responsavel)
     {

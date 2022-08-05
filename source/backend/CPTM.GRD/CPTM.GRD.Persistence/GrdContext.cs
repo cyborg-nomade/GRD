@@ -57,183 +57,304 @@ namespace CPTM.GRD.Persistence
             modelBuilder.HasDefaultSchema("GRD");
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(GrdContext).Assembly);
 
+            #region access control tables config
+
+            #region user table config
+
             modelBuilder.Entity<User>().ToTable("GRD_USERS");
+
             modelBuilder.Entity<User>().Property(u => u.Id).UseHiLo("SEQ_USERS");
+
             modelBuilder.Entity<User>().Property(u => u.UsernameAd).HasMaxLength(250);
+
             modelBuilder.Entity<User>()
-                .HasMany<Group>(u => u.AreasAcesso)
-                .WithOne()
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Users_Group");
+                .HasMany(u => u.AreasAcesso)
+                .WithMany(g => g.Users)
+                .UsingEntity<Dictionary<string, object>>(
+                    "GRD_USER_GROUP",
+                    j => j
+                        .HasOne<Group>()
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .HasConstraintName("FK_UserGroup_GroupId")
+                        .OnDelete(DeleteBehavior.SetNull),
+                    j => j
+                        .HasOne<User>()
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_UserGroup_UserId")
+                        .OnDelete(DeleteBehavior.ClientSetNull));
+
             modelBuilder.Entity<User>().Navigation(u => u.AreasAcesso).AutoInclude();
 
+            #endregion
+
+            #region group table config
+
             modelBuilder.Entity<Group>().ToTable("GRD_GROUPS");
+
             modelBuilder.Entity<Group>().Property(g => g.Id).UseHiLo("SEQ_GROUPS");
+
             modelBuilder.Entity<Group>().Property(g => g.Sigla).HasMaxLength(250);
             modelBuilder.Entity<Group>().Property(g => g.SiglaDiretoria).HasMaxLength(250);
             modelBuilder.Entity<Group>().Property(g => g.SiglaGerencia).HasMaxLength(250);
 
+            #endregion
+
+            #endregion
+
+            #region main tables config
+
+            #region acao tables config
+
             modelBuilder.Entity<Acao>().ToTable("GRD_ACOES");
+
             modelBuilder.Entity<Acao>().Property(a => a.Id).UseHiLo("SEQ_ACOES");
+
             modelBuilder.Entity<Acao>()
-                .HasMany<Andamento>(a => a.Andamentos)
+                .HasMany(a => a.Andamentos)
                 .WithOne()
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Acoes_Andamento");
-            modelBuilder.Entity<Acao>().Navigation(a => a.Andamentos).AutoInclude();
             modelBuilder.Entity<Acao>()
-                .HasOne<Group>(a => a.DiretoriaRes)
-                .WithOne()
-                .HasForeignKey("Acao", "DiretoriaResId")
+                .HasOne(a => a.DiretoriaRes)
+                .WithMany()
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Acoes_Group");
+            modelBuilder.Entity<Acao>()
+                .HasOne(a => a.Responsavel)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Acoes_User");
+
+            modelBuilder.Entity<Acao>().Navigation(a => a.Andamentos).AutoInclude();
             modelBuilder.Entity<Acao>().Navigation(a => a.DiretoriaRes).AutoInclude();
-            //modelBuilder.Entity<Acao>().Navigation(a => a.Logs).AutoInclude();
+            modelBuilder.Entity<Acao>().Navigation(a => a.Responsavel).AutoInclude();
+
+            #region acao children tables config
+
             modelBuilder.Entity<Andamento>().ToTable("GRD_ANDAMENTOS");
+
             modelBuilder.Entity<Andamento>().Property(a => a.Id).UseHiLo("SEQ_ANDAMENTOS");
+
             modelBuilder.Entity<Andamento>()
-                .HasOne<User>(an => an.User)
-                .WithOne()
-                .HasForeignKey("Andamento", "UserId")
+                .HasOne(an => an.User)
+                .WithMany()
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Andamentos_Users");
+
             modelBuilder.Entity<Andamento>().Navigation(an => an.User).AutoInclude();
+
             modelBuilder.Entity<Andamento>()
                 .Property(p => p.AnexosFilePaths)
                 .HasConversion(new ValueConverter<ICollection<string>, string>(
                     v => JsonConvert.SerializeObject(v),
                     v => JsonConvert.DeserializeObject<ICollection<string>>(v) ?? new List<string>()));
 
+            #endregion
+
+            #endregion
+
+            #region proposicao tables config
+
             modelBuilder.Entity<Proposicao>().ToTable("GRD_PROPOSICOES");
+
             modelBuilder.Entity<Proposicao>().Property(p => p.Id).UseHiLo("SEQ_PROPOSICOES");
+
             modelBuilder.Entity<Proposicao>()
-                .HasMany<Voto>(p => p.VotosRd)
+                .HasMany(p => p.VotosRd)
                 .WithOne()
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Proposicoes_Voto");
-            modelBuilder.Entity<Proposicao>().Navigation(p => p.VotosRd).AutoInclude();
             modelBuilder.Entity<Proposicao>()
-                .HasOne<Group>(p => p.AreaSolicitante)
-                .WithOne()
-                .HasForeignKey("Proposicao", "AreaSolicitanteId")
+                .HasOne(p => p.Area)
+                .WithMany()
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Proposicoes_Group");
-            modelBuilder.Entity<Proposicao>().Navigation(p => p.AreaSolicitante).AutoInclude();
             modelBuilder.Entity<Proposicao>()
-                .HasOne<User>(p => p.Criador)
-                .WithOne()
-                .HasForeignKey("Proposicao", "CriadorId")
+                .HasOne(p => p.Criador)
+                .WithMany()
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Proposicoes_User");
+
+            modelBuilder.Entity<Proposicao>().Navigation(p => p.VotosRd).AutoInclude();
+            modelBuilder.Entity<Proposicao>().Navigation(p => p.Area).AutoInclude();
             modelBuilder.Entity<Proposicao>().Navigation(p => p.Criador).AutoInclude();
-            //modelBuilder.Entity<Proposicao>().HasOne<Resolucao>(p => p.Resolucao);
-            //modelBuilder.Entity<Proposicao>().Navigation(p => p.Resolucao).AutoInclude();
-            //modelBuilder.Entity<Proposicao>().Navigation(p => p.Logs).AutoInclude();
+
             modelBuilder.Entity<Proposicao>()
                 .Property(p => p.OutrosFilePath)
-                .HasConversion(new ValueConverter<ICollection<string>, string>(
+                .HasConversion(new ValueConverter<ICollection<string>?, string>(
                     v => JsonConvert.SerializeObject(v),
                     v => JsonConvert.DeserializeObject<ICollection<string>>(v) ?? new List<string>()));
+
+            #region proposicao children tables config
+
             modelBuilder.Entity<Resolucao>().ToTable("GRD_RESOLUCOES");
-            modelBuilder.Entity<Resolucao>().Property(r => r.Id).UseHiLo("SEQ_RESOLUCOES");
             modelBuilder.Entity<Voto>().ToTable("GRD_VOTOS");
+
+            modelBuilder.Entity<Resolucao>().Property(r => r.Id).UseHiLo("SEQ_RESOLUCOES");
             modelBuilder.Entity<Voto>().Property(v => v.Id).UseHiLo("SEQ_VOTOS");
+
             modelBuilder.Entity<Voto>()
-                .HasOne<Participante>(v => v.Participante)
-                .WithOne()
-                .HasForeignKey("Voto", "ParticipanteId")
+                .HasOne(v => v.Participante)
+                .WithMany()
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Votos_Participante");
+                .HasConstraintName("FK_Votos_Part");
+
             modelBuilder.Entity<Voto>().Navigation(v => v.Participante).AutoInclude();
 
+            #endregion
+
+            #endregion
+
+            #region reuniao tables config
+
             modelBuilder.Entity<Reuniao>().ToTable("GRD_REUNIOES");
+
             modelBuilder.Entity<Reuniao>().Property(r => r.Id).UseHiLo("SEQ_REUNIOES");
+
             modelBuilder.Entity<Reuniao>()
-                .HasMany<Proposicao>(r => r.Proposicoes)
+                .HasMany(r => r.Proposicoes)
                 .WithOne(p => p.Reuniao)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Reunioes_Proposicao");
-            modelBuilder.Entity<Reuniao>().Navigation(r => r.Proposicoes).AutoInclude();
+                .HasConstraintName("FK_Reunioes_Prop");
             modelBuilder.Entity<Reuniao>()
-                .HasMany<Proposicao>(r => r.ProposicoesPrevia)
+                .HasMany(r => r.ProposicoesPrevia)
                 .WithOne()
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Reunioes_ProposicaoPrev");
-            modelBuilder.Entity<Reuniao>().Navigation(r => r.ProposicoesPrevia).AutoInclude();
+                .HasConstraintName("FK_Reunioes_PropPrev");
             modelBuilder.Entity<Reuniao>()
-                .HasMany<Participante>(r => r.Participantes)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_Reunioes_Participante");
-            modelBuilder.Entity<Reuniao>().Navigation(r => r.Participantes).AutoInclude();
+                .HasMany(r => r.Participantes)
+                .WithMany(pa => pa.Reunioes)
+                .UsingEntity<Dictionary<string, object>>(
+                    "GRD_PART_REUNIAO",
+                    j => j
+                        .HasOne<Participante>()
+                        .WithMany()
+                        .HasForeignKey("PartId")
+                        .HasConstraintName("FK_PartReuniao_PartId")
+                        .OnDelete(DeleteBehavior.SetNull),
+                    j => j
+                        .HasOne<Reuniao>()
+                        .WithMany()
+                        .HasForeignKey("ReuniaoId")
+                        .HasConstraintName("FK_PartReuniao_ReuniaoId")
+                        .OnDelete(DeleteBehavior.ClientSetNull));
             modelBuilder.Entity<Reuniao>()
-                .HasMany<Participante>(r => r.ParticipantesPrevia)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_Reunioes_ParticipantePrev");
-            modelBuilder.Entity<Reuniao>().Navigation(r => r.ParticipantesPrevia).AutoInclude();
+                .HasMany(r => r.ParticipantesPrevia)
+                .WithMany(pa => pa.Previas)
+                .UsingEntity<Dictionary<string, object>>(
+                    "GRD_PARTPREV_REUNIAO",
+                    j => j
+                        .HasOne<Participante>()
+                        .WithMany()
+                        .HasForeignKey("PartId")
+                        .HasConstraintName("FK_PartPrevReuniao_PartId")
+                        .OnDelete(DeleteBehavior.SetNull),
+                    j => j
+                        .HasOne<Reuniao>()
+                        .WithMany()
+                        .HasForeignKey("ReuId")
+                        .HasConstraintName("FK_PartPrevReuniao_ReuId")
+                        .OnDelete(DeleteBehavior.ClientSetNull));
             modelBuilder.Entity<Reuniao>()
-                .HasMany<Acao>(r => r.Acoes)
+                .HasMany(r => r.Acoes)
                 .WithMany(a => a.Reunioes)
-                .UsingEntity(j => j.ToTable("ReuniaoAcao"));
+                .UsingEntity<Dictionary<string, object>>(
+                    "GRD_ACAO_REUNIAO",
+                    j => j
+                        .HasOne<Acao>()
+                        .WithMany()
+                        .HasForeignKey("AcaoId")
+                        .HasConstraintName("FK_AcaoReuniao_AcaoId")
+                        .OnDelete(DeleteBehavior.SetNull),
+                    j => j
+                        .HasOne<Reuniao>()
+                        .WithMany()
+                        .HasForeignKey("ReuniaoId")
+                        .HasConstraintName("FK_AcaoReuniao_ReuniaoId")
+                        .OnDelete(DeleteBehavior.ClientSetNull));
+
+            modelBuilder.Entity<Reuniao>().Navigation(r => r.Proposicoes).AutoInclude();
+            modelBuilder.Entity<Reuniao>().Navigation(r => r.ProposicoesPrevia).AutoInclude();
+            modelBuilder.Entity<Reuniao>().Navigation(r => r.Participantes).AutoInclude();
+            modelBuilder.Entity<Reuniao>().Navigation(r => r.ParticipantesPrevia).AutoInclude();
             modelBuilder.Entity<Reuniao>().Navigation(r => r.Acoes).AutoInclude();
-            //modelBuilder.Entity<Reuniao>().Navigation(r => r.Logs).AutoInclude();
+
+            #region reuniao children tables config
+
             modelBuilder.Entity<Participante>().ToTable("GRD_PARTICIPANTES");
+
             modelBuilder.Entity<Participante>().Property(p => p.Id).UseHiLo("SEQ_PARTICIPANTES");
+
             modelBuilder.Entity<Participante>()
-                .HasOne<User>(p => p.User)
+                .HasOne(p => p.User)
                 .WithOne()
                 .HasForeignKey("Participante", "UserId")
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Participantes_User");
-            modelBuilder.Entity<Participante>().Navigation(p => p.User).AutoInclude();
+                .HasConstraintName("FK_Part_User");
             modelBuilder.Entity<Participante>()
-                .HasOne<Group>(p => p.DiretoriaArea)
-                .WithOne()
-                .HasForeignKey("Participante", "DiretoriaAreaId")
+                .HasOne(p => p.Area)
+                .WithMany()
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Participantes_Group");
-            modelBuilder.Entity<Participante>().Navigation(p => p.DiretoriaArea).AutoInclude();
+                .HasConstraintName("FK_Part_Group");
+
+            modelBuilder.Entity<Participante>().Navigation(p => p.User).AutoInclude();
+            modelBuilder.Entity<Participante>().Navigation(p => p.Area).AutoInclude();
+
+            #endregion
+
+            #endregion
+
+            #endregion
+
+            #region log tables config
 
             modelBuilder.Entity<LogAcao>().ToTable("GRD_LOGS_ACAO");
             modelBuilder.Entity<LogAcao>().Property(l => l.Id).UseHiLo("SEQ_LOGS_ACAO");
             modelBuilder.Entity<LogAcao>()
                 .HasOne<Acao>()
                 .WithMany(a => a.Logs)
+                .HasForeignKey("AcaoId")
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_LogsAcao_Acao");
+                .HasConstraintName("FK_LogsA_Acao");
             modelBuilder.Entity<LogAcao>()
-                .HasOne<User>(l => l.UsuarioResp)
-                .WithOne()
-                .HasForeignKey("LogAcao", "UsuarioRespId")
+                .HasOne(l => l.Resp)
+                .WithMany()
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_LogsAcao_User");
+                .HasConstraintName("FK_LogsA_User");
+
             modelBuilder.Entity<LogProposicao>().ToTable("GRD_LOGS_PROPOSICAO");
             modelBuilder.Entity<LogProposicao>().Property(l => l.Id).UseHiLo("SEQ_LOGS_PROPOSICAO");
             modelBuilder.Entity<LogProposicao>()
                 .HasOne<Proposicao>()
-                .WithMany(a => a.Logs)
+                .WithMany(p => p.Logs)
+                .HasForeignKey("PropId")
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_LogsProposicao_Proposicao");
+                .HasConstraintName("FK_LogsP_Proposicao");
             modelBuilder.Entity<LogProposicao>()
-                .HasOne<User>(l => l.UsuarioResp)
-                .WithOne()
-                .HasForeignKey("LogProposicao", "UsuarioRespId")
+                .HasOne(l => l.Resp)
+                .WithMany()
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_LogsProposicao_User");
+                .HasConstraintName("FK_LogsP_User");
+
             modelBuilder.Entity<LogReuniao>().ToTable("GRD_LOGS_REUNIAO");
             modelBuilder.Entity<LogReuniao>().Property(l => l.Id).UseHiLo("SEQ_LOGS_REUNIAO");
             modelBuilder.Entity<LogReuniao>()
                 .HasOne<Reuniao>()
-                .WithMany(a => a.Logs)
+                .WithMany(r => r.Logs)
+                .HasForeignKey("ReuniaoId")
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_LogsReuniao_Reuniao");
+                .HasConstraintName("FK_LogsR_Reuniao");
             modelBuilder.Entity<LogReuniao>()
-                .HasOne<User>(l => l.UsuarioResp)
-                .WithOne()
-                .HasForeignKey("LogReuniao", "UsuarioRespId")
+                .HasOne(l => l.Resp)
+                .WithMany()
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_LogsReuniao_User");
+                .HasConstraintName("FK_LogsR_User");
+
+            #endregion
+
+            #region existing model config
 
             modelBuilder.Entity<GrdConfiguracao>(entity =>
             {
@@ -717,6 +838,8 @@ namespace CPTM.GRD.Persistence
                     .HasPrecision(8)
                     .HasColumnName("ID_CODUSUARIO");
             });
+
+            #endregion
 
             OnModelCreatingPartial(modelBuilder);
         }

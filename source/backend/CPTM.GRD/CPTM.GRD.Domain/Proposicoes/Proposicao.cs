@@ -14,7 +14,7 @@ public class Proposicao
     public ProposicaoStatus Status { get; set; }
     public bool Arquivada { get; set; }
     public User Criador { get; set; } = new User();
-    public Group AreaSolicitante { get; set; } = new Group();
+    public Group Area { get; set; } = new Group();
     public string Titulo { get; set; } = string.Empty;
     public ObjetoProposicao Objeto { get; set; }
     public string DescricaoProposicao { get; set; } = string.Empty;
@@ -39,13 +39,13 @@ public class Proposicao
     public string ProtoloExpediente { get; set; } = string.Empty;
     public string NumeroProcessoLicit { get; set; } = string.Empty;
     public string? OutrasObservacoes { get; set; }
-    public Reuniao Reuniao { get; set; } = new Reuniao();
-    public string AnotacoesPrevia { get; set; } = string.Empty;
-    public List<Voto> VotosRd { get; set; } = new List<Voto>();
-    public string AjustesRd { get; set; } = string.Empty;
-    public string MotivoRetornoGrg { get; set; } = string.Empty;
-    public string MotivoRetornoDiretoriaResp { get; set; } = string.Empty;
-    public string Deliberacao { get; set; } = string.Empty;
+    public Reuniao? Reuniao { get; set; }
+    public string? AnotacoesPrevia { get; set; }
+    public List<Voto>? VotosRd { get; set; } = new List<Voto>();
+    public string? AjustesRd { get; set; }
+    public string? MotivoRetornoGrg { get; set; }
+    public string? MotivoRetornoDiretoriaResp { get; set; }
+    public string? Deliberacao { get; set; }
 
     public ICollection<LogProposicao> Logs { get; set; } = new List<LogProposicao>();
 
@@ -65,13 +65,13 @@ public class Proposicao
     public string RavFilePath { get; set; } = string.Empty;
     public string CronogramaFisFinFilePath { get; set; } = string.Empty;
     public string PcaFilePath { get; set; } = string.Empty;
-    public ICollection<string> OutrosFilePath { get; set; } = new HashSet<string>();
-    public string ResolucaoDiretoriaFilePath { get; set; } = string.Empty;
-    public string AreaAtual { get; set; } = string.Empty;
-    public string DescricaoFluxo { get; set; } = string.Empty;
-    public string TempoPrevPerm { get; set; } = string.Empty;
-    public string DescProxPasso { get; set; } = string.Empty;
-    public string TempoPermProx { get; set; } = string.Empty;
+    public ICollection<string>? OutrosFilePath { get; set; } = new HashSet<string>();
+    public string? ResolucaoDiretoriaFilePath { get; set; } = string.Empty;
+    public string? AreaAtual { get; set; } = string.Empty;
+    public string? DescricaoFluxo { get; set; } = string.Empty;
+    public string? TempoPrevPerm { get; set; } = string.Empty;
+    public string? DescProxPasso { get; set; } = string.Empty;
+    public string? TempoPermProx { get; set; } = string.Empty;
     public int? Seq { get; set; }
 
     private Proposicao GenerateProposicaoLog(TipoLogProposicao tipoLogProposicao, User responsavel, string diferenca)
@@ -87,8 +87,11 @@ public class Proposicao
         return this;
     }
 
-    public Proposicao OnSaveProposicao()
+    public Proposicao OnSaveProposicao(int idprd, User criador)
     {
+        IdPrd = idprd;
+        Criador = criador;
+        Area = criador.AreasAcesso.First();
         GenerateProposicaoLog(TipoLogProposicao.Criacao, Criador, "Salvamento inicial");
         return this;
     }
