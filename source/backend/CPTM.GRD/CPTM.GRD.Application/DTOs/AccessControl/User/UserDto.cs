@@ -12,4 +12,10 @@ public class UserDto : IBaseUserDto, IFullUserDto, IUsernameAdUserDto
     public AccessLevel NivelAcesso { get; set; }
     public ICollection<GroupDto> AreasAcesso { get; set; } = new List<GroupDto>();
     public string Funcao { get; set; } = string.Empty;
+
+    public override string ToString()
+    {
+        return
+            $"{nameof(Id)}: {Id},\n{nameof(Nome)}: {Nome},\n{nameof(UsernameAd)}: {UsernameAd},\n{nameof(NivelAcesso)}: {NivelAcesso},\n{nameof(AreasAcesso)}: [\n{string.Join(",", AreasAcesso)}\n],\n{nameof(Funcao)}: {Funcao}";
+    }
 }
