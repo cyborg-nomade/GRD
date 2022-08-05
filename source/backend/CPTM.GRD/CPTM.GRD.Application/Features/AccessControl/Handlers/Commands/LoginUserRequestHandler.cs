@@ -63,6 +63,8 @@ public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, AuthRes
             if (loggedUser == null) throw new NotFoundException(nameof(loggedUser), request.AuthUser.Username);
         }
 
+        await _unitOfWork.Save();
+
         var authResponse = _authenticationService.GenerateToken(loggedUser);
 
         return new AuthResponse()
