@@ -87,11 +87,11 @@ public class Proposicao
         return this;
     }
 
-    public Proposicao OnSaveProposicao(int idprd, User criador)
+    public Proposicao OnSaveProposicao(int idprd, User criador, Group areaSolicitante)
     {
         IdPrd = idprd;
         Criador = criador;
-        Area = criador.AreasAcesso.First();
+        Area = areaSolicitante;
         GenerateProposicaoLog(TipoLogProposicao.Criacao, Criador, "Salvamento inicial");
         return this;
     }

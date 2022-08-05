@@ -40,7 +40,7 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
         _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Sub);
         await _authenticationService.AuthorizeByExactUser(request.RequestUser, request.CreateProposicaoDto.Criador.Id);
         await _authenticationService.AuthorizeByMinGroups(request.RequestUser,
-            request.CreateProposicaoDto.AreaSolicitante.Id);
+            request.CreateProposicaoDto.Area.Id);
 
         var proposicaoDtoValidator =
             new CreateProposicaoDtoValidator(_unitOfWork.GroupRepository, _authenticationService,
@@ -53,8 +53,14 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
         }
 
         var proposicao = _mapper.Map<Proposicao>(request.CreateProposicaoDto);
-        proposicao.IdPrd = await _sequenceControl.GetNextIdPrd();
-        proposicao.OnSaveProposicao();
+        var idPrd = await _sequenceControl.GetNextIdPrd();
+        var criador = await _unitOfWork.UserRepository.Get(proposicao.Criador.Id);
+        if (criador == null) throw new NotFoundException(nameof(criador), request.CreateProposicaoDto.Criador);
+        var areaSolicitante = await _unitOfWork.GroupRepository.Get(proposicao.Area.Id);
+        if (areaSolicitante == null)
+            throw new NotFoundException(nameof(areaSolicitante), request.CreateProposicaoDto.Area);
+
+        proposicao.OnSaveProposicao(idPrd, criador, areaSolicitante);
 
         var addedProposicao = await _unitOfWork.ProposicaoRepository.Add(proposicao);
         await _unitOfWork.Save();

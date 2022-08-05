@@ -1,6 +1,5 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl.Group;
 using CPTM.GRD.Application.DTOs.AccessControl.User;
-using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Resolucao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Interfaces;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
@@ -16,7 +15,7 @@ public class ProposicaoDto : IBaseProposicaoDto, IFullProposicaoDto, IOwnerPrope
     public ProposicaoStatus Status { get; set; }
     public bool Arquivada { get; set; }
     public UserDto Criador { get; set; } = new UserDto();
-    public GroupDto AreaSolicitante { get; set; } = new GroupDto();
+    public GroupDto Area { get; set; } = new GroupDto();
     public string Titulo { get; set; } = string.Empty;
     public ObjetoProposicao Objeto { get; set; }
     public string DescricaoProposicao { get; set; } = string.Empty;
@@ -41,14 +40,13 @@ public class ProposicaoDto : IBaseProposicaoDto, IFullProposicaoDto, IOwnerPrope
     public string ProtoloExpediente { get; set; } = string.Empty;
     public string NumeroProcessoLicit { get; set; } = string.Empty;
     public string? OutrasObservacoes { get; set; }
-    public ReuniaoDto Reuniao { get; set; } = new ReuniaoDto();
-    public string AnotacoesPrevia { get; set; } = string.Empty;
-    public List<VotoDto> VotosRd { get; set; } = new List<VotoDto>();
-    public string MotivoRetornoDiretoria { get; set; } = string.Empty;
-    public string MotivoRetornoGrg { get; set; } = string.Empty;
-    public string MotivoRetornoRd { get; set; } = string.Empty;
-    public string Deliberacao { get; set; } = string.Empty;
-    public ResolucaoDto Resolucao { get; set; } = new ResolucaoDto();
+    public ReuniaoDto? Reuniao { get; set; } = new ReuniaoDto();
+    public string? AnotacoesPrevia { get; set; } = string.Empty;
+    public List<VotoDto>? VotosRd { get; set; } = new List<VotoDto>();
+    public string? MotivoRetornoDiretoria { get; set; } = string.Empty;
+    public string? MotivoRetornoGrg { get; set; } = string.Empty;
+    public string? MotivoRetornoRd { get; set; } = string.Empty;
+    public string? Deliberacao { get; set; } = string.Empty;
     public bool IsExtraPauta { get; set; }
     public string? NumeroConselho { get; set; }
     public string SinteseProcessoFilePath { get; set; } = string.Empty;
@@ -65,6 +63,6 @@ public class ProposicaoDto : IBaseProposicaoDto, IFullProposicaoDto, IOwnerPrope
     public string CronogramaFisFinFilePath { get; set; } = string.Empty;
     public string PcaFilePath { get; set; } = string.Empty;
     public ICollection<string> OutrosFilePath { get; set; } = new HashSet<string>();
-    public string ResolucaoDiretoriaFilePath { get; set; } = string.Empty;
+    public string? ResolucaoDiretoriaFilePath { get; set; } = string.Empty;
     public int? Seq { get; set; }
 }
