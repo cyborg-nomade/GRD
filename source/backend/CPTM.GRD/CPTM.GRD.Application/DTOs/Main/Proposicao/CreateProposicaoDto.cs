@@ -8,7 +8,7 @@ namespace CPTM.GRD.Application.DTOs.Main.Proposicao;
 public class CreateProposicaoDto : IBaseProposicaoDto, IOwnerPropertiesProposicaoDto
 {
     public UserDto Criador { get; set; } = new UserDto();
-    public GroupDto AreaSolicitante { get; set; } = new GroupDto();
+    public GroupDto Area { get; set; } = new GroupDto();
     public string Titulo { get; set; } = string.Empty;
     public ObjetoProposicao Objeto { get; set; }
     public string DescricaoProposicao { get; set; } = string.Empty;

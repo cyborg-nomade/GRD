@@ -6,5 +6,5 @@ namespace CPTM.GRD.Application.DTOs.Main.Proposicao.Interfaces;
 public interface IOwnerPropertiesProposicaoDto
 {
     public UserDto Criador { get; set; }
-    public GroupDto AreaSolicitante { get; set; }
+    public GroupDto Area { get; set; }
 }
