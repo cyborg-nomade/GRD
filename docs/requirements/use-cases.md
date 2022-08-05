@@ -1,6 +1,6 @@
 # use cases
 
-## 001. user logs in
+## 001. user logs in - (API OK)
 
 -   **_primary actor_**: user (any level or group)
 -   **_other actors_**: none
