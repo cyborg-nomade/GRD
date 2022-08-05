@@ -37,15 +37,29 @@ public class ExceptionMiddleware
 
         switch (exception)
         {
-            case BadRequestException:
+            case BadRequestException badRequestException:
                 statusCode = HttpStatusCode.BadRequest;
+                result = JsonConvert.SerializeObject(new ErrorDetails
+                {
+                    ErrorMessage = badRequestException.Message,
+                    ErrorType = "Bad Request"
+                });
                 break;
             case ValidationException validationException:
                 statusCode = HttpStatusCode.BadRequest;
-                result = JsonConvert.SerializeObject(validationException.Errors);
+                result = JsonConvert.SerializeObject(new ErrorDetails
+                {
+                    ErrorMessage = JsonConvert.SerializeObject(validationException.Errors),
+                    ErrorType = "Validation Error"
+                });
                 break;
-            case NotFoundException:
+            case NotFoundException notFoundException:
                 statusCode = HttpStatusCode.NotFound;
+                result = JsonConvert.SerializeObject(new ErrorDetails
+                {
+                    ErrorMessage = notFoundException.Message,
+                    ErrorType = "Not Found"
+                });
                 break;
         }
 

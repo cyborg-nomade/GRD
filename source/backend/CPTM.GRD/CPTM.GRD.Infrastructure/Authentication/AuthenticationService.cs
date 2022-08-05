@@ -236,7 +236,7 @@ public class AuthenticationService : IAuthenticationService
     {
         var claimsList = requestUser.Claims.ToList();
 
-        var uid = int.Parse(claimsList.Find(p => p.Type == CustomClaimTypes.AccessLevel)?.Value ??
+        var uid = int.Parse(claimsList.Find(p => p.Type == CustomClaimTypes.Uid)?.Value ??
                             throw new InvalidOperationException());
         var accessLevel = Enum.Parse<AccessLevel>(
             claimsList.Find(p => p.Type == CustomClaimTypes.AccessLevel)?.Value ??

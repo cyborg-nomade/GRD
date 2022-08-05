@@ -34,7 +34,7 @@ builder.Services.AddSwaggerGen(c =>
         Description = @"Autorização com cabeçalho JWT utilizando o esquema de Bearer. 
                       Entre 'Bearer' [espaço] e seu token no campo de texto abaixo.
                       Exemplo: 'Bearer 12345abcdef'",
-        Name = "Autorização",
+        Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer"
@@ -78,7 +78,7 @@ app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthentication();
 
 app.UseSwagger();
-app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CPTM.GRD.API v1"));
+app.UseSwaggerUI(c => c.SwaggerEndpoint("./v1/swagger.json", "CPTM.GRD.API v1"));
 
 app.UseHttpsRedirection();
 
