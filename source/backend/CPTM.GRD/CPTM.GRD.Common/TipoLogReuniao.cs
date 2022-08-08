@@ -16,5 +16,5 @@ public enum TipoLogReuniao
     EmissaoRelatorioDeliberativo,
     EmissaoAta,
     InclusaoAcao,
-    Arquivamento,
+    Arquivamento
 }

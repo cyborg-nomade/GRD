@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Infrastructure;
-using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
-using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
+using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
-using CPTM.GRD.Domain.AccessControl;
+using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Proposicoes;
 using MediatR;
 using static CPTM.GRD.Application.Models.EmailSubjectsAndMessages;
@@ -16,36 +15,36 @@ namespace CPTM.GRD.Application.Features.Proposicoes.Handlers.Commands;
 
 public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRequest, ProposicaoDto>
 {
-    private readonly IProposicaoRepository _proposicaoRepository;
-    private readonly IGroupRepository _groupRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IAuthenticationService _authenticationService;
     private readonly IMapper _mapper;
     private readonly IProposicaoStrictSequenceControl _sequenceControl;
-    private readonly IUserRepository _userRepository;
     private readonly IEmailService _emailService;
 
     public CreateProposicaoRequestHandler(
-        IProposicaoRepository proposicaoRepository,
-        IGroupRepository groupRepository,
+        IUnitOfWork unitOfWork,
         IAuthenticationService authenticationService,
         IMapper mapper,
         IProposicaoStrictSequenceControl sequenceControl,
-        IUserRepository userRepository,
         IEmailService emailService)
     {
-        _proposicaoRepository = proposicaoRepository;
-        _groupRepository = groupRepository;
+        _unitOfWork = unitOfWork;
         _authenticationService = authenticationService;
         _mapper = mapper;
         _sequenceControl = sequenceControl;
-        _userRepository = userRepository;
         _emailService = emailService;
     }
 
     public async Task<ProposicaoDto> Handle(CreateProposicaoRequest request, CancellationToken cancellationToken)
     {
+        _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Sub);
+        await _authenticationService.AuthorizeByExactUser(request.RequestUser, request.CreateProposicaoDto.Criador.Id);
+        await _authenticationService.AuthorizeByMinGroups(request.RequestUser,
+            request.CreateProposicaoDto.Area.Id);
+
         var proposicaoDtoValidator =
-            new CreateProposicaoDtoValidator(_groupRepository, _authenticationService, _userRepository);
+            new CreateProposicaoDtoValidator(_unitOfWork.GroupRepository, _authenticationService,
+                _unitOfWork.UserRepository);
         var proposicaoDtoValidationResult =
             await proposicaoDtoValidator.ValidateAsync(request.CreateProposicaoDto, cancellationToken);
         if (!proposicaoDtoValidationResult.IsValid)
@@ -54,10 +53,17 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
         }
 
         var proposicao = _mapper.Map<Proposicao>(request.CreateProposicaoDto);
-        proposicao.IdPrd = await _sequenceControl.GetNextIdPrd();
-        proposicao.OnSaveProposicao();
+        var idPrd = await _sequenceControl.GetNextIdPrd();
+        var criador = await _unitOfWork.UserRepository.Get(proposicao.Criador.Id);
+        if (criador == null) throw new NotFoundException(nameof(criador), request.CreateProposicaoDto.Criador);
+        var areaSolicitante = await _unitOfWork.GroupRepository.Get(proposicao.Area.Id);
+        if (areaSolicitante == null)
+            throw new NotFoundException(nameof(areaSolicitante), request.CreateProposicaoDto.Area);
 
-        var addedProposicao = await _proposicaoRepository.Add(proposicao);
+        proposicao.OnSaveProposicao(idPrd, criador, areaSolicitante);
+
+        var addedProposicao = await _unitOfWork.ProposicaoRepository.Add(proposicao);
+        await _unitOfWork.Save();
 
         await _emailService.SendEmail(proposicao, ProposicaoCreationSubject, ProposicaoCreationMessage(proposicao));
 

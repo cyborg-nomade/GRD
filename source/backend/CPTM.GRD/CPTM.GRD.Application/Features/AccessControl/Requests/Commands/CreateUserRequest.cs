@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.AccessControl.Requests.Commands;
 
-public class CreateUserRequest : IRequest<UserDto>
+public class CreateUserRequest : BasicRequest, IRequest<UserDto>
 {
-    public CreateUserDto CreateUserDto { get; set; } = new CreateUserDto();
+    public CreateUserDto CreateUserDto { get; init; } = new CreateUserDto();
 }

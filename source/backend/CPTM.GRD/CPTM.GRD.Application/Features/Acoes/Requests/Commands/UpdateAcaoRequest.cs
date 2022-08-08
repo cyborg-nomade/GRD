@@ -3,8 +3,8 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Acoes.Requests.Commands;
 
-public class UpdateAcaoRequest : IRequest<AcaoDto>
+public class UpdateAcaoRequest : BasicRequest, IRequest<AcaoDto>
 {
-    public UpdateAcaoDto UpdateAcaoDto { get; set; } = new UpdateAcaoDto();
-    public int Uid { get; set; }
+    public int Aid { get; init; }
+    public UpdateAcaoDto UpdateAcaoDto { get; init; } = new UpdateAcaoDto();
 }

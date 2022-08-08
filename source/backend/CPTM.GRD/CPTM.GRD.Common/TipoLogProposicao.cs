@@ -19,5 +19,5 @@ public enum TipoLogProposicao
     EmissaoResolucaoDiretoria,
     EnvioAjustesRd,
     AjustesRdok,
-    Arquivamento,
+    Arquivamento
 }

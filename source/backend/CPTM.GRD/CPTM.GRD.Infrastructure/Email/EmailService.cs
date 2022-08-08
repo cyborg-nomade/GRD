@@ -2,7 +2,9 @@
 using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Views;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Models;
+using CPTM.GRD.Application.Models.Settings;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
 using CPTM.GRD.Domain.Acoes;
@@ -15,21 +17,25 @@ namespace CPTM.GRD.Infrastructure.Email;
 
 public class EmailService : IEmailService
 {
-    private const string AbiUrl = "http://localhost:7000/ABI/api/email/";
-    private const string GrgEmail = "uriel.fiori@cptm.sp.gov.br"; //TODO: change later to proper email
-    private EmailSettings EmailSettings { get; }
+    private EmailServiceSettings EmailServiceSettings { get; }
 
     private readonly IViewUsuarioRepository _viewUsuarioRepository;
     private readonly IGroupRepository _groupRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IAuthenticationService _authenticationService;
 
-    public EmailService(IOptions<EmailSettings> emailOptions,
-        IViewUsuarioRepository viewUsuarioRepository, IGroupRepository groupRepository, IUserRepository userRepository)
+    public EmailService(
+        IOptions<EmailServiceSettings> emailOptions,
+        IViewUsuarioRepository viewUsuarioRepository,
+        IGroupRepository groupRepository,
+        IUserRepository userRepository,
+        IAuthenticationService authenticationService)
     {
         _viewUsuarioRepository = viewUsuarioRepository;
         _groupRepository = groupRepository;
         _userRepository = userRepository;
-        EmailSettings = emailOptions.Value;
+        _authenticationService = authenticationService;
+        EmailServiceSettings = emailOptions.Value;
     }
 
     public async Task<bool> SendEmail(IEnumerable<User> receivers, string assunto, string mensagem)
@@ -133,12 +139,12 @@ public class EmailService : IEmailService
         return await Send(args);
     }
 
-    private static async Task<bool> Send(EmailArgs args)
+    private async Task<bool> Send(EmailArgs args)
     {
         ServicePointManager.ServerCertificateValidationCallback +=
             (sender, certificate, chain, sslPolicyErrors) => true;
 
-        var emailClient = new RestClient(AbiUrl + "enviar");
+        var emailClient = new RestClient(EmailServiceSettings.AbiUrl + "enviar");
 
 
         var emailRequest = new RestRequest
@@ -160,13 +166,15 @@ public class EmailService : IEmailService
 
     private static IEnumerable<User> GetDestinatariosFromReuniao(Reuniao reuniao)
     {
-        var destinatariosReuniao = reuniao.Participantes.Select(p => p.User).ToList();
+        var destinatariosReuniao =
+            (reuniao.Participantes ?? throw new NotFoundException(nameof(reuniao.Participantes), reuniao))
+            .Select(p => p.User).ToList();
         return destinatariosReuniao;
     }
 
     private async Task<List<User>> GetDestinatariosFromProposicao(Proposicao proposicao)
     {
-        var destinarioGroups = await _groupRepository.GetSuperordinateGroups(proposicao.AreaSolicitante.Id);
+        var destinarioGroups = await _groupRepository.GetSuperordinateGroups(proposicao.Area.Id);
         var destinatarios = new List<User>();
         foreach (var group in destinarioGroups)
         {
@@ -192,18 +200,19 @@ public class EmailService : IEmailService
         Dictionary<string, byte[]>? anexos = null)
     {
         var destinatarios = receivers.Select(r => r.Email).ToList();
-        destinatarios.Add(GrgEmail);
+        destinatarios.Add(EmailServiceSettings.GrgMail);
         var destinatariosWithoutDuplicates = destinatarios.Distinct().ToList();
+        var senderUsuarioAd = await _authenticationService.GetUsuarioAd(EmailServiceSettings.SenderUsernameAd);
         var args = new EmailArgs()
         {
             Assunto = assunto,
             Destinatarios = destinatariosWithoutDuplicates,
             EnviarEm = DateTime.Now,
-            IdUsuarioCpu = await _viewUsuarioRepository.GetCodigoCPU(EmailSettings.Sender.UsernameAd),
+            IdUsuarioCpu = await _viewUsuarioRepository.GetCodigoCPU(EmailServiceSettings.SenderUsernameAd),
             Mensagem = mensagem,
             MensagemErro = "Houve um erro no envio do e-mail!",
-            RementeNome = EmailSettings.Sender.Nome,
-            RemetenteEmail = EmailSettings.Sender.Email,
+            RementeNome = senderUsuarioAd.Nome,
+            RemetenteEmail = senderUsuarioAd.Email,
             SistemaSigla = "GRD",
             Anexos = anexos
         };

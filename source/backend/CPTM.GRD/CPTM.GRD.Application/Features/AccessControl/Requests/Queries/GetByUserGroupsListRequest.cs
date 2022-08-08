@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
 
-public class GetByUserGroupsListRequest : IRequest<List<GroupDto>>
+public class GetByUserGroupsListRequest : BasicRequest, IRequest<List<GroupDto>>
 {
-    public int Uid { get; set; }
+    public int Uid { get; init; }
 }

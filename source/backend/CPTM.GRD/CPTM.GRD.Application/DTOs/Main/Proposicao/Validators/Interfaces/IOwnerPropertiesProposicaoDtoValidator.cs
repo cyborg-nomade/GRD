@@ -14,7 +14,7 @@ public class IOwnerPropertiesProposicaoDtoValidator : AbstractValidator<IOwnerPr
     {
         RuleFor(p => p.Criador).NotNull().NotEmpty()
             .SetValidator(new UserDtoValidator(authenticationService, userRepository));
-        RuleFor(p => p.AreaSolicitante).NotNull().NotEmpty()
+        RuleFor(p => p.Area).NotNull().NotEmpty()
             .SetValidator(new GroupDtoValidator(groupRepository, authenticationService, userRepository));
     }
 }

@@ -7,5 +7,5 @@ public enum TipoLogAcao
     InclusaoAndamento,
     RemocaoDeReuniao,
     Finalizacao,
-    Remocao,
+    Remocao
 }

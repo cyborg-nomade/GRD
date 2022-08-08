@@ -34,12 +34,12 @@
     -   _auth_: gerente (for sub level and its own groups), diretor (for diretor level and its own groups), grg, sysAdmin
     -   _inputs_: user (in req body)
     -   _outputs_: success msg + registered user with id
--   **POST /api/users/:uid:/**
+-   **PUT /api/users/:uid:/**
     -   edits a user in the system
     -   _auth_: grg, sysAdmin
     -   _inputs_: user id + edited user (in req body)
     -   _outputs_: success msg + edited user
--   **POST /api/users/:uid:/delete**
+-   **DELETE /api/users/:uid:/**
     -   creates a new user in the system
     -   _auth_: gerente (for sub level), diretor (for diretor level), grg, sysAdmin
     -   _inputs_: user id
@@ -69,17 +69,17 @@
     -   _auth_: gerente (for its own group), assessor-diretoria (for the subordinate groups of its own), diretor (for its subordinate groups), grg, sysAdmin
     -   _inputs_: user id + status
     -   _outputs_: list of proposicoes
--   **GET /api/proposicoes/status/:status:/**
+-   **GET /api/proposicoes/status/:status:/:arquivada:/**
     -   gets all proposicoes by status
     -   _auth_: grg, sysAdmin
     -   _inputs_: status
     -   _outputs_: list of proposicoes
--   **GET /api/proposicoes/user/:uid:/status/:status:/**
+-   **GET /api/proposicoes/user/:uid:/status/:status:/:arquivada:/**
     -   gets all proposicoes by user and status
     -   _auth_: sub (for itself), gerente (for its subs), grg, sysAdmin
     -   _inputs_: user id + status
     -   _outputs_: list of proposicoes
--   **GET /api/proposicoes/group/:gid:/status/:status:/**
+-   **GET /api/proposicoes/group/:gid:/status/:status:/:arquivada:/**
     -   gets all proposicoes by group and status
     -   _auth_: gerente (for its own group), assessor-diretoria (for the subordinate groups of its own), diretor (for its subordinate groups), grg, sysAdmin
     -   _inputs_: group id + status
@@ -104,61 +104,56 @@
     -   _auth_: sub, gerente, assessor-diretoria, diretor, grg, sysAdmin
     -   _inputs_: proposicao (in req body)
     -   _outputs_: status message + registered proposicao with id
--   **POST /api/proposicoes/:pid:**
+-   **PUT /api/proposicoes/:pid:/**
     -   edits a proposicao in the system
     -   _auth_: sub, gerente, assessor-diretoria, diretor, grg, sysAdmin
     -   _inputs_: proposicao id + proposicao (in req body)
     -   _outputs_: status message + edited proposicao
--   **POST /api/proposicoes/:pid:/remove**
-    -   removes a proposicao in the system
-    -   _auth_: creator if status === 0 or 1.1, grg, sysAdmin
-    -   _inputs_: proposicao id + proposicao (in req body)
-    -   _outputs_: status message + edited proposicao
--   **POST /api/proposicoes/:pid:/send-diretoria-approval/**
+-   **PUT /api/proposicoes/:pid:/send-diretoria-approval/**
     -   send a proposicao to diretoria-approval
     -   _auth_: sub, gerente, grg, sysAdmin
     -   _inputs_: proposicao id
     -   _outputs_: status message + proposicao sent to approval
--   **POST /api/proposicoes/:pid:/diretoria-approve/**
+-   **PUT /api/proposicoes/:pid:/diretoria-approve/**
     -   diretoria-approves a proposicao
     -   _auth_: assessor-diretoria, diretor, grg, sysAdmin
     -   _inputs_: proposicao id
     -   _outputs_: status message + proposicao approved
--   **POST /api/proposicoes/:pid:/diretoria-repprove/**
+-   **PUT /api/proposicoes/:pid:/diretoria-repprove/**
     -   diretoria-repproves a proposicao
     -   _auth_: assessor-diretoria, diretor, grg, sysAdmin
     -   _inputs_: proposicao id
     -   _outputs_: status message + proposicao repproved
--   **POST /api/proposicoes/:pid:/return-to-diretoria/**
+-   **PUT /api/proposicoes/:pid:/return-to-diretoria/**
     -   returns a proposicao to diretoria responsável
     -   _auth_: grg, sysAdmin
     -   _inputs_: proposicao id
     -   _outputs_: status message + proposicao sent to diretoria
--   **POST /api/proposicoes/:pid:/return-to-grg/**
+-   **PUT /api/proposicoes/:pid:/return-to-grg/**
     -   returns a proposicao to grg after fixes have been made
     -   _auth_: sub, gerente, assessor-diretoria, diretor, grg, sysAdmin
     -   _inputs_: proposicao id + proposicao (in req body)
     -   _outputs_: status message + proposicao sent to grg
--   **POST /api/proposicoes/:pid:/fixes-done/**
+-   **PUT /api/proposicoes/:pid:/fixes-done/**
     -   marks proposicao as having its fixes done
     -   _auth_: grg, sysAdmin
     -   _inputs_: proposicao id + proposicao (in req body)
     -   _outputs_: status message + proposicao
--   **POST /api/proposicoes/:pid:/rd-deliberate/diretor/:did:/**
-    -   rd-deliberates a proposicao for a given diretor with a given vote
+-   **PUT /api/proposicoes/:pid:/rd-deliberate/**
+    -   rd-deliberates a proposicao for a list of diretores with their votes
     -   _auth_: diretor (for itself), grg (for members of meeting), sysAdmin
-    -   _inputs_: proposicao id + diretor user id + diretor vote (in req body)
-    -   _outputs_: status message + proposicao approved
--   **POST /api/proposicoes/:pid:/reuniao/:rid:/add**
-    -   add a proposicao to a reuniao
-    -   _auth_: grg, sysAdmin
-    -   _inputs_: proposicao id + reuniao id
-    -   _outputs_: status message + proposicao + reuniao
--   **POST /api/proposicoes/:pid:/reuniao/:rid:/remove**
-    -   removes a proposicao from a reuniao
-    -   _auth_: grg, sysAdmin
-    -   _inputs_: proposicao id + reuniao id
-    -   _outputs_: status message + proposicao + reuniao
+    -   _inputs_: proposicao id + list of diretor votes (in req body)
+    -   _outputs_: status message + proposicao deliberated
+-   **PUT /api/proposicoes/:pid:/annotate-previa/**
+    -   annotates a proposicao during a reuniao previa
+    -   _auth_: participante previa (for itself), grg (for members of previa), sysAdmin
+    -   _inputs_: proposicao id + annotation (in req body)
+    -   _outputs_: status message + proposicao annotated
+-   **DELETE /api/proposicoes/:pid:/**
+    -   removes a proposicao in the system
+    -   _auth_: creator if status === 0 or 1.1, grg, sysAdmin
+    -   _inputs_: proposicao id + proposicao (in req body)
+    -   _outputs_: status message + edited proposicao
 
 # 4. reunioes controller
 
@@ -176,26 +171,6 @@
     -   _auth_: grg, sysAdmin
     -   _inputs_: reuniao id
     -   _outputs_: reuniao
--   **POST /api/reunioes/**
-    -   creates a new reuniao in the system
-    -   _auth_: grg, sysAdmin
-    -   _inputs_: reuniao (in req body)
-    -   _outputs_: status message + registered reuniao
--   **POST /api/reunioes/:rid:/**
-    -   edits an existing reuniao
-    -   _auth_: grg, sysAdmin
-    -   _inputs_: reuniao id + reuniao (in req body)
-    -   _outputs_: status message + edited reuniao
--   **POST /api/reunioes/:rid:/remove**
-    -   removes an existing reuniao
-    -   _auth_: creator, sysAdmin
-    -   _inputs_: reuniao id
-    -   _outputs_: status message + removed reuniao
--   **POST /api/reunioes/:rid:/realizada/**
-    -   changes reuniao status to "Realizada"
-    -   _auth_: grg, sysAdmin
-    -   _inputs_: reuniao id
-    -   _outputs_: status message + edited reuniao
 -   **GET /api/reunioes/:rid:/pauta-previa/**
     -   emits a reuniao's pauta previa, according to model.
     -   _auth_: grg, sysAdmin
@@ -226,6 +201,36 @@
     -   _auth_: grg, sysAdmin
     -   _inputs_: reuniao id
     -   _outputs_: status message + reuniao + ata file
+-   **POST /api/reunioes/**
+    -   creates a new reuniao in the system
+    -   _auth_: grg, sysAdmin
+    -   _inputs_: reuniao (in req body)
+    -   _outputs_: status message + registered reuniao
+-   **PUT /api/reunioes/:rid:/**
+    -   edits an existing reuniao
+    -   _auth_: grg, sysAdmin
+    -   _inputs_: reuniao id + reuniao (in req body)
+    -   _outputs_: status message + edited reuniao
+-   **PUT /api/reunioes/:rid:/proposicao/:pid:/add**
+    -   add a proposicao to a reuniao
+    -   _auth_: grg, sysAdmin
+    -   _inputs_: proposicao id + reuniao id
+    -   _outputs_: status message + proposicao + reuniao
+-   **DELETE /api/reunioes/:rid:/proposicao/:pid:/**
+    -   removes a proposicao from a reuniao
+    -   _auth_: grg, sysAdmin
+    -   _inputs_: proposicao id + reuniao id
+    -   _outputs_: status message + proposicao + reuniao
+-   **DELETE /api/reunioes/:rid:/acao/:aid**
+    -   removes an acao from a reuniao (except initial)
+    -   _auth_: responsavel acao (to add andamentos), grg, sysAdmin
+    -   _inputs_: acao id + reuniao id
+    -   _outputs_: status message + edited acao
+-   **DELETE /api/reunioes/:rid:/**
+    -   removes an existing reuniao
+    -   _auth_: creator, sysAdmin
+    -   _inputs_: reuniao id
+    -   _outputs_: status message + removed reuniao
 
 # 5. acoes controller
 
@@ -243,35 +248,35 @@
     -   _auth_: grg, sysAdmin
     -   _inputs_: acao id
     -   _outputs_: acao
--   **POST /api/acoes/**
+-   **POST /api/acoes/reuniao/:rid:**
     -   creates a new acao in the system
     -   _auth_: grg, sysAdmin
-    -   _inputs_: acao (in req body)
+    -   _inputs_: reuniao id (where acao was created) + acao (in req body)
     -   _outputs_: status message + registered acao
--   **POST /api/acoes/:aid:**
+-   **PUT /api/acoes/:aid:**
     -   edits an existing acao
     -   _auth_: responsavel acao (to add andamentos), grg, sysAdmin
     -   _inputs_: acao id + acao (in req body)
     -   _outputs_: status message + edited acao
--   **POST /api/acoes/:aid:/remove**
-    -   removes an existing acao
-    -   _auth_: responsavel acao (to add andamentos), grg, sysAdmin
-    -   _inputs_: acao id
-    -   _outputs_: status message
 -   **POST /api/acoes/:aid:/add-andamento**
     -   add an andamento to an existing acao
     -   _auth_: responsavel acao (to add andamentos), grg, sysAdmin
     -   _inputs_: acao id + andamento (in req body)
     -   _outputs_: status message + edited acao
--   **POST /api/acoes/:aid:/reuniao/:rid/add**
+-   **PUT /api/acoes/:aid:/reuniao/:rid/add**
     -   add an acao to an existing reuniao for follow up actions
     -   _auth_: responsavel acao (to add andamentos), grg, sysAdmin
     -   _inputs_: acao id + reuniao id
     -   _outputs_: status message + edited acao + reuniao
--   **POST /api/acoes/:aid:/reuniao/:rid/remove**
-    -   removes an acao from a reuniao (except initial)
+-   **PUT /api/acoes/:aid:/finish/:status:/**
+    -   finishes an acao, with a certain status
+    -   _auth_: grg, sysAdmin
+    -   _inputs_: acao id + final status
+    -   _outputs_: status message + finished acao
+-   **DELETE /api/acoes/:aid:/**
+    -   removes an existing acao
     -   _auth_: responsavel acao (to add andamentos), grg, sysAdmin
-    -   _inputs_: acao id + reuniao id
-    -   _outputs_: status message + edited acao
+    -   _inputs_: acao id
+    -   _outputs_: status message
 
 # 6. utilities controller

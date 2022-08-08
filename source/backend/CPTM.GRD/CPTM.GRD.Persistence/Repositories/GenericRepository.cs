@@ -20,21 +20,19 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     public async Task<T?> Get(int id)
     {
-        return await _grdContext.Set<T>().FindAsync(id);
+        return await _grdContext.FindAsync<T>(id);
     }
 
     public async Task<T> Add(T entity)
     {
         await _grdContext.AddAsync(entity);
-        await _grdContext.SaveChangesAsync();
         return entity;
     }
 
-    public async Task<T> Update(T entity)
+    public Task<T> Update(T entity)
     {
         _grdContext.Set<T>().Update(entity);
-        await _grdContext.SaveChangesAsync();
-        return entity;
+        return Task.FromResult(entity);
     }
 
     public async Task Delete(int id)
@@ -42,7 +40,6 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         var entity = await _grdContext.FindAsync<T>(id);
         if (entity == null) throw new NotFoundException(nameof(entity), id);
         _grdContext.Set<T>().Remove(entity);
-        await _grdContext.SaveChangesAsync();
     }
 
     public async Task<bool> Exists(int id)

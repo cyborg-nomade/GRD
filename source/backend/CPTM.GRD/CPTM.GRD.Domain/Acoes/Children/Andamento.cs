@@ -6,7 +6,7 @@ namespace CPTM.GRD.Domain.Acoes.Children;
 public class Andamento
 {
     public int Id { get; set; }
-    public DateOnly Data { get; set; }
+    public DateTime Data { get; set; }
     public User User { get; set; } = new User();
     public string NomeResponsavel { get; set; }
     public AndamentoStatus Status { get; set; }
@@ -16,6 +16,6 @@ public class Andamento
     public Andamento()
     {
         NomeResponsavel = User.Nome;
-        Data = DateOnly.FromDateTime(DateTime.Now);
+        Data = DateTime.Now;
     }
 }

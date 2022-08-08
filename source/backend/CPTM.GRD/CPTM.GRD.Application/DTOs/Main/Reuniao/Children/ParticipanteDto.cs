@@ -11,4 +11,13 @@ public class ParticipanteDto : IBaseParticipanteDto, IFullParticipanteDto
     public GroupDto DiretoriaArea { get; set; } = new GroupDto();
     public string Nome { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+
+    public override string ToString()
+    {
+        return @$"{nameof(Id)}: {Id}, 
+{nameof(User)}: {User}, 
+{nameof(DiretoriaArea)}: {DiretoriaArea}, 
+{nameof(Nome)}: {Nome}, 
+{nameof(Email)}: {Email}";
+    }
 }

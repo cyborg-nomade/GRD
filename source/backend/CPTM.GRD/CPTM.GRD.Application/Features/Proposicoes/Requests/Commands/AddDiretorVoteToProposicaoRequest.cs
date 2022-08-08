@@ -3,10 +3,10 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 
-public class AddDiretorVoteToProposicaoRequest : IRequest<ProposicaoDto>
+public class AddDiretorVoteToProposicaoRequest : BasicRequest, IRequest<ProposicaoDto>
 {
-    public int Pid { get; set; }
+    public int Pid { get; init; }
 
-    public List<VoteWithAjustesProposicaoDto> VotesWithAjustes { get; set; } =
+    public List<VoteWithAjustesProposicaoDto> VotesWithAjustes { get; init; } =
         new List<VoteWithAjustesProposicaoDto>();
 }

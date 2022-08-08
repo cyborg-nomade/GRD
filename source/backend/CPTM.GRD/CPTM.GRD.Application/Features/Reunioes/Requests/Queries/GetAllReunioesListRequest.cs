@@ -3,6 +3,6 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Reunioes.Requests.Queries;
 
-public class GetAllReunioesListRequest : IRequest<List<ReuniaoListDto>>
+public class GetAllReunioesListRequest : BasicRequest, IRequest<List<ReuniaoListDto>>
 {
 }

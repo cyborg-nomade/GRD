@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Infrastructure;
-using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
-using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
+using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
 using CPTM.GRD.Application.Contracts.Util;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
+using CPTM.GRD.Common;
 using CPTM.GRD.Domain.Proposicoes;
 using MediatR;
 using static CPTM.GRD.Application.Models.EmailSubjectsAndMessages;
@@ -16,29 +16,23 @@ namespace CPTM.GRD.Application.Features.Proposicoes.Handlers.Commands;
 
 public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRequest, ProposicaoDto>
 {
-    private readonly IProposicaoRepository _proposicaoRepository;
-    private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    private readonly IGroupRepository _groupRepository;
     private readonly IAuthenticationService _authenticationService;
     private readonly IProposicaoStrictSequenceControl _proposicaoStrictSequence;
     private readonly IEmailService _emailService;
     private readonly IDifferentiator _differentiator;
 
     public UpdateProposicaoRequestHandler(
-        IProposicaoRepository proposicaoRepository,
-        IUserRepository userRepository,
+        IUnitOfWork unitOfWork,
         IMapper mapper,
-        IGroupRepository groupRepository,
         IAuthenticationService authenticationService,
         IProposicaoStrictSequenceControl proposicaoStrictSequence,
         IEmailService emailService,
         IDifferentiator differentiator)
     {
-        _proposicaoRepository = proposicaoRepository;
-        _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
         _mapper = mapper;
-        _groupRepository = groupRepository;
         _authenticationService = authenticationService;
         _proposicaoStrictSequence = proposicaoStrictSequence;
         _emailService = emailService;
@@ -47,8 +41,11 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
 
     public async Task<ProposicaoDto> Handle(UpdateProposicaoRequest request, CancellationToken cancellationToken)
     {
-        var proposicaoDtoValidator = new UpdateProposicaoDtoValidator(_groupRepository, _authenticationService,
-            _userRepository, _proposicaoRepository, _proposicaoStrictSequence);
+        _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Sub);
+
+        var proposicaoDtoValidator = new UpdateProposicaoDtoValidator(_unitOfWork.GroupRepository,
+            _authenticationService,
+            _unitOfWork.UserRepository, _unitOfWork.ProposicaoRepository, _proposicaoStrictSequence);
         var proposicaoDtoValidationResult =
             await proposicaoDtoValidator.ValidateAsync(request.UpdateProposicaoDto, cancellationToken);
 
@@ -57,18 +54,24 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
             throw new ValidationException(proposicaoDtoValidationResult);
         }
 
-        var savedProposicao = await _proposicaoRepository.Get(request.UpdateProposicaoDto.Id);
+        var savedProposicao = await _unitOfWork.ProposicaoRepository.Get(request.Pid);
         if (savedProposicao == null)
-            throw new NotFoundException(nameof(savedProposicao), request.UpdateProposicaoDto.Id);
-        var responsavel = await _userRepository.Get(request.Uid);
-        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
+            throw new NotFoundException(nameof(savedProposicao), request.Pid);
+
+        await _authenticationService.AuthorizeByMinGroups(request.RequestUser, savedProposicao.Area.Id);
+
+        var claims = _authenticationService.GetTokenClaims(request.RequestUser);
+
+        var responsavel = await _unitOfWork.UserRepository.Get(claims.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
 
         savedProposicao.OnUpdate(responsavel,
             _differentiator.GetDifferenceString<Proposicao>(savedProposicao,
                 _mapper.Map<Proposicao>(request.UpdateProposicaoDto)));
 
         _mapper.Map(request.UpdateProposicaoDto, savedProposicao);
-        var updatedProposicao = await _proposicaoRepository.Update(savedProposicao);
+        var updatedProposicao = await _unitOfWork.ProposicaoRepository.Update(savedProposicao);
+        await _unitOfWork.Save();
 
         await _emailService.SendEmail(updatedProposicao, ProposicaoUpdateSubject,
             ProposicaoUpdateMessage(updatedProposicao, responsavel));

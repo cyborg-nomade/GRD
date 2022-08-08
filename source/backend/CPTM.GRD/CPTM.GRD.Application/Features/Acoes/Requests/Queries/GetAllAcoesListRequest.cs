@@ -3,6 +3,6 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Acoes.Requests.Queries;
 
-public class GetAllAcoesListRequest : IRequest<List<AcaoListDto>>
+public class GetAllAcoesListRequest : BasicRequest, IRequest<List<AcaoListDto>>
 {
 }

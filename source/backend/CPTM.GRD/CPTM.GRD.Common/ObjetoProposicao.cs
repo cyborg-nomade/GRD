@@ -24,5 +24,5 @@ public enum ObjetoProposicao
     RenovacaoTpu,
     RetiRetificacaoRd,
     TermoPermissaoUso,
-    ViagemExterior,
+    ViagemExterior
 }

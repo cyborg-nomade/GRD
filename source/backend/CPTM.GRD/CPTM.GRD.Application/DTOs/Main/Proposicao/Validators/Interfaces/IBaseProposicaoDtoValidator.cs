@@ -11,9 +11,9 @@ public class IBaseProposicaoDtoValidator : AbstractValidator<IBaseProposicaoDto>
         IUserRepository userRepository)
     {
         RuleFor(p => p.Titulo).NotNull().NotEmpty().MaximumLength(250);
-        RuleFor(p => p.Objeto).NotNull().NotEmpty().IsInEnum();
+        RuleFor(p => p.Objeto).NotNull().IsInEnum();
         RuleFor(p => p.DescricaoProposicao).NotNull().NotEmpty();
-        RuleFor(p => p.PossuiParecerJuridico).NotNull().NotEmpty();
+        RuleFor(p => p.PossuiParecerJuridico).NotNull();
         RuleFor(p => p.ResumoGeralResolucao).NotNull().NotEmpty();
         RuleFor(p => p.ObservacoesCustos).NotNull().NotEmpty();
         RuleFor(p => p.CompetenciasConformeNormas).NotNull().NotEmpty();
@@ -21,7 +21,7 @@ public class IBaseProposicaoDtoValidator : AbstractValidator<IBaseProposicaoDto>
         RuleFor(p => p.Moeda).NotNull().NotEmpty().MaximumLength(15);
         RuleFor(p => p.ValorOriginalContrato).NotNull().NotEmpty();
         RuleFor(p => p.ValorTotalProposicao).NotNull().NotEmpty();
-        RuleFor(p => p.ReceitaDespesa).NotNull().NotEmpty().IsInEnum();
+        RuleFor(p => p.ReceitaDespesa).NotNull().IsInEnum();
 
         // TODO: RULES DEPENDING ON OBJETO
         RuleFor(p => p.NumeroContrato).NotNull().NotEmpty().MaximumLength(15);

@@ -11,7 +11,7 @@ public class IUsernameAdUserDtoValidator : AbstractValidator<IUsernameAdUserDto>
         RuleFor(p => p.UsernameAd).NotNull().NotEmpty().MaximumLength(50).MustAsync(async (username, token) =>
         {
             var usernameExists = await authenticationService.ExistsAd(username);
-            return !usernameExists;
+            return usernameExists;
         });
     }
 }

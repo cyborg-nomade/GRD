@@ -3,8 +3,8 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 
-public class UpdateProposicaoRequest : IRequest<ProposicaoDto>
+public class UpdateProposicaoRequest : BasicRequest, IRequest<ProposicaoDto>
 {
-    public UpdateProposicaoDto UpdateProposicaoDto { get; set; } = new UpdateProposicaoDto();
-    public int Uid { get; set; }
+    public int Pid { get; init; }
+    public UpdateProposicaoDto UpdateProposicaoDto { get; init; } = new UpdateProposicaoDto();
 }

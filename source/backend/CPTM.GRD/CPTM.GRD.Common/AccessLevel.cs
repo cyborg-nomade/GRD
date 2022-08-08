@@ -2,11 +2,11 @@
 
 public enum AccessLevel
 {
+    ResponsavelAcao,
     Sub,
     Gerente,
     AssessorDiretoria,
     Diretor,
     Grg,
-    SysAdmin,
-    ResponsavelAcao,
+    SysAdmin
 }

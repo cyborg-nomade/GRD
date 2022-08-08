@@ -8,11 +8,11 @@ namespace CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto.Validators.Int
 
 public class IBaseVotoDtoValidator : AbstractValidator<IBaseVotoDto>
 {
-    public IBaseVotoDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
-        IUserRepository userRepository)
-    {
-        RuleFor(p => p.Participante).NotNull().NotEmpty()
-            .SetValidator(new IBaseParticipanteDtoValidator(groupRepository, authenticationService, userRepository));
-        RuleFor(p => p.VotoRd).NotNull().NotEmpty().IsInEnum();
-    }
+  public IBaseVotoDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
+      IUserRepository userRepository)
+  {
+    RuleFor(p => p.Participante).NotNull().NotEmpty()
+        .SetValidator(new IBaseParticipanteDtoValidator(groupRepository, authenticationService, userRepository));
+    RuleFor(p => p.VotoRd).NotNull().IsInEnum();
+  }
 }

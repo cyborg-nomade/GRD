@@ -8,7 +8,7 @@ namespace CPTM.GRD.Application.DTOs.Main.Proposicao;
 public class CreateProposicaoDto : IBaseProposicaoDto, IOwnerPropertiesProposicaoDto
 {
     public UserDto Criador { get; set; } = new UserDto();
-    public GroupDto AreaSolicitante { get; set; } = new GroupDto();
+    public GroupDto Area { get; set; } = new GroupDto();
     public string Titulo { get; set; } = string.Empty;
     public ObjetoProposicao Objeto { get; set; }
     public string DescricaoProposicao { get; set; } = string.Empty;
@@ -16,7 +16,7 @@ public class CreateProposicaoDto : IBaseProposicaoDto, IOwnerPropertiesProposica
     public string ResumoGeralResolucao { get; set; } = string.Empty;
     public string ObservacoesCustos { get; set; } = string.Empty;
     public string CompetenciasConformeNormas { get; set; } = string.Empty;
-    public DateOnly DataBaseValor { get; set; }
+    public DateTime DataBaseValor { get; set; }
     public string Moeda { get; set; } = string.Empty;
     public float ValorOriginalContrato { get; set; }
     public float ValorTotalProposicao { get; set; }
@@ -27,8 +27,8 @@ public class CreateProposicaoDto : IBaseProposicaoDto, IOwnerPropertiesProposica
     public float ValorAtualContrato { get; set; }
     public string NumeroReservaVerba { get; set; } = string.Empty;
     public float ValorReservaVerba { get; set; }
-    public DateOnly InicioVigenciaReserva { get; set; }
-    public DateOnly FimVigenciaReserva { get; set; }
+    public DateTime InicioVigenciaReserva { get; set; }
+    public DateTime FimVigenciaReserva { get; set; }
     public string NumeroProposicao { get; set; } = string.Empty;
     public string ProtoloExpediente { get; set; } = string.Empty;
     public string NumeroProcessoLicit { get; set; } = string.Empty;

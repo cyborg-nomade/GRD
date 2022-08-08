@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.Reunioes.Requests.Queries;
 
-public class GetByStatusReunioesListRequest : IRequest<List<ReuniaoListDto>>
+public class GetByStatusReunioesListRequest : BasicRequest, IRequest<List<ReuniaoListDto>>
 {
-    public ReuniaoStatus Status { get; set; }
+    public ReuniaoStatus Status { get; init; }
 }

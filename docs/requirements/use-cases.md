@@ -1,6 +1,6 @@
 # use cases
 
-## 001. user logs in
+## 001. user logs in - (API OK)
 
 -   **_primary actor_**: user (any level or group)
 -   **_other actors_**: none
@@ -31,7 +31,7 @@
 -   **_side effects_**:
     -   creates the user data object, if the user is allowed to access the system but isn't registered yet;
 
-## 002. user creates proposicao
+## 002. user creates proposicao (API OK)
 
 -   **_primary actor_**: user (any level or group)
 -   **_other actors_**: gerente or diretor (of proposicao owner group)

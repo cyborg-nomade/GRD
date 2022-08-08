@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
 
-public class GetUserDetailRequest : IRequest<UserDto>
+public class GetUserDetailRequest : BasicRequest, IRequest<UserDto>
 {
-    public int Uid { get; set; }
+    public int Uid { get; init; }
 }

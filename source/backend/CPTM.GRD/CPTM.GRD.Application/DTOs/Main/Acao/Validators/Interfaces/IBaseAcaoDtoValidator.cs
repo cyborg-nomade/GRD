@@ -9,21 +9,21 @@ namespace CPTM.GRD.Application.DTOs.Main.Acao.Validators.Interfaces;
 
 public class IBaseAcaoDtoValidator : AbstractValidator<IBaseAcaoDto>
 {
-    public IBaseAcaoDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
-        IUserRepository userRepository)
-    {
-        RuleFor(p => p.Tipo).NotNull().NotEmpty().IsInEnum();
-        RuleFor(p => p.DiretoriaRes).NotNull().NotEmpty()
-            .SetValidator(new GroupDtoValidator(groupRepository, authenticationService, userRepository));
-        RuleFor(p => p.Definicao).NotNull().NotEmpty();
-        RuleFor(p => p.Periodicidade).NotNull().NotEmpty().IsInEnum();
-        RuleFor(p => p.PrazoInicial).NotNull().NotEmpty().LessThanOrEqualTo(p => p.PrazoFinal)
-            .GreaterThanOrEqualTo(DateOnly.FromDateTime(DateTime.Now));
-        RuleFor(p => p.Responsavel).NotNull().NotEmpty()
-            .SetValidator(new UserDtoValidator(authenticationService, userRepository));
-        RuleFor(p => p.EmailDiretor).NotNull().NotEmpty().EmailAddress();
-        RuleFor(p => p.PrazoFinal).NotNull().NotEmpty().GreaterThanOrEqualTo(p => p.PrazoInicial)
-            .GreaterThanOrEqualTo(DateOnly.FromDateTime(DateTime.Now));
-        RuleFor(p => p.AlertaVencimento).NotNull().NotEmpty().IsInEnum();
-    }
+  public IBaseAcaoDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
+      IUserRepository userRepository)
+  {
+    RuleFor(p => p.Tipo).NotNull().IsInEnum();
+    RuleFor(p => p.DiretoriaRes).NotNull().NotEmpty()
+        .SetValidator(new GroupDtoValidator(groupRepository, authenticationService, userRepository));
+    RuleFor(p => p.Definicao).NotNull().NotEmpty();
+    RuleFor(p => p.Periodicidade).NotNull().IsInEnum();
+    RuleFor(p => p.PrazoInicial).NotNull().NotEmpty().LessThanOrEqualTo(p => p.PrazoFinal)
+        .GreaterThanOrEqualTo(DateTime.Now);
+    RuleFor(p => p.Responsavel).NotNull().NotEmpty()
+        .SetValidator(new UserDtoValidator(authenticationService, userRepository));
+    RuleFor(p => p.EmailDiretor).NotNull().NotEmpty().EmailAddress();
+    RuleFor(p => p.PrazoFinal).NotNull().NotEmpty().GreaterThanOrEqualTo(p => p.PrazoInicial)
+        .GreaterThanOrEqualTo(DateTime.Now);
+    RuleFor(p => p.AlertaVencimento).NotNull().IsInEnum();
+  }
 }

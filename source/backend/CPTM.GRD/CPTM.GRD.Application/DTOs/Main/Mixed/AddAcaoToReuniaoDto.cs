@@ -5,6 +5,6 @@ namespace CPTM.GRD.Application.DTOs.Main.Mixed;
 
 public class AddAcaoToReuniaoDto
 {
-    public AcaoDto AcaoDto { get; set; } = new AcaoDto();
-    public ReuniaoDto ReuniaoDto { get; set; } = new ReuniaoDto();
+    public AcaoDto AcaoDto { get; init; } = new AcaoDto();
+    public ReuniaoDto ReuniaoDto { get; init; } = new ReuniaoDto();
 }

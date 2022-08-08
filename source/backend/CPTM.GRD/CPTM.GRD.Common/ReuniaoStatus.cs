@@ -7,5 +7,5 @@ public enum ReuniaoStatus
     Previa,
     Pauta,
     Realizada,
-    Arquivada,
+    Arquivada
 }

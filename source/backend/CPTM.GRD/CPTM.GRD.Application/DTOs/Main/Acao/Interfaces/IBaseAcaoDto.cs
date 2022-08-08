@@ -10,11 +10,11 @@ public interface IBaseAcaoDto
     public GroupDto DiretoriaRes { get; set; }
     public string Definicao { get; set; }
     public TipoPeriodicidadeAcao Periodicidade { get; set; }
-    public DateOnly PrazoInicial { get; set; }
+    public DateTime PrazoInicial { get; set; }
     public UserDto Responsavel { get; set; }
     public string EmailDiretor { get; set; }
     public string? NumeroContrato { get; set; }
     public string? Fornecedor { get; set; }
-    public DateOnly PrazoFinal { get; set; }
+    public DateTime PrazoFinal { get; set; }
     public TipoAlertaVencimento AlertaVencimento { get; set; }
 }

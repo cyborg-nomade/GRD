@@ -1,4 +1,6 @@
 ﻿using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
+using CPTM.GRD.Application.Models.Settings;
+using Microsoft.Extensions.Options;
 
 namespace CPTM.GRD.Persistence.Repositories.StrictSequenceControl;
 
@@ -9,9 +11,9 @@ public class ReuniaoStrictSequenceControl : IReuniaoStrictSequenceControl
     private const int InitialValue = 0;
     private readonly string _controlFilePath;
 
-    public ReuniaoStrictSequenceControl(string homeDir)
+    public ReuniaoStrictSequenceControl(IOptions<StrictSequenceControlServiceSettings> strictSequenceOptions)
     {
-        var controlFileDirPath = Path.Combine(homeDir, ControlFilesDir);
+        var controlFileDirPath = Path.Combine(strictSequenceOptions.Value.HomeDir, ControlFilesDir);
         Directory.CreateDirectory(controlFileDirPath);
 
         _controlFilePath = Path.Combine(controlFileDirPath, ControlFileName);

@@ -1,6 +1,4 @@
-﻿using CPTM.GRD.Application.DTOs.AccessControl.User;
-
-namespace CPTM.GRD.Application.DTOs.AccessControl.Group.Interfaces;
+﻿namespace CPTM.GRD.Application.DTOs.AccessControl.Group.Interfaces;
 
 public interface IGroupDto
 {
@@ -10,5 +8,4 @@ public interface IGroupDto
     public string Gerencia { get; set; }
     public string SiglaDiretoria { get; set; }
     public string Diretoria { get; set; }
-    public UserDto Relator { get; set; }
 }
