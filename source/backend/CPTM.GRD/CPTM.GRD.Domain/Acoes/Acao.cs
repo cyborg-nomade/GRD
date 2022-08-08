@@ -28,9 +28,14 @@ public class Acao
     public ICollection<Reuniao> Reunioes { get; set; } = new List<Reuniao>();
     public ICollection<LogAcao>? Logs { get; set; } = new List<LogAcao>();
 
+    public Acao()
+    {
+        CalculateDiasParaVencimento();
+    }
+
     private Acao GenerateAcaoLog(TipoLogAcao tipoLogAcao, string diferenca, User responsavel)
     {
-        Logs.Add(new LogAcao(this, tipoLogAcao, diferenca, responsavel));
+        Logs?.Add(new LogAcao(this, tipoLogAcao, diferenca, responsavel));
         return this;
     }
 
