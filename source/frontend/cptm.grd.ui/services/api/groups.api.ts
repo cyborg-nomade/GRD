@@ -1,7 +1,5 @@
 import axios from "axios";
-import { AuthUser, GroupDto, UserDto } from "../../models/access-control.model";
-import { AccessLevel } from "../../models/common.model";
-import { AuthResponse } from "../../models/responses.model";
+import { GroupDto } from "../../models/access-control.model";
 import { ApiCore, ApiCoreOptions } from "./utilities/core.util";
 import { handleError, handleResponse } from "./utilities/response.util";
 

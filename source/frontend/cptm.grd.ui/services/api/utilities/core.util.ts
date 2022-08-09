@@ -12,11 +12,11 @@ export type ApiCoreOptions = {
     url: string;
 };
 
-export class ApiCore<T> {
-    getAll!: () => Promise<T[]>;
+export class ApiCore<T, ListT = T, CreateT = T, UpdateT = T> {
+    getAll!: () => Promise<ListT[]>;
     getSingle!: (id: number) => Promise<T>;
-    post!: (model: object) => Promise<T>;
-    put!: (model: object) => Promise<T>;
+    post!: (model: CreateT) => Promise<T>;
+    put!: (id: number, model: UpdateT) => Promise<T>;
     remove!: (id: number) => Promise<void>;
 
     constructor(options: ApiCoreOptions) {
@@ -30,11 +30,13 @@ export class ApiCore<T> {
         }
 
         if (options.post) {
-            this.post = <T>(model: T) => apiProvider.post(options.url, model);
+            this.post = <CreateT>(model: CreateT) =>
+                apiProvider.post(options.url, model);
         }
 
         if (options.put) {
-            this.put = <T>(model: T) => apiProvider.put(options.url, model);
+            this.put = <UpdateT>(id: number, model: UpdateT) =>
+                apiProvider.put(options.url, id, model);
         }
 
         if (options.remove) {

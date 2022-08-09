@@ -21,7 +21,7 @@ const getSingle = async (resource: string, id: number) => {
     }
 };
 
-const post = async <T>(resource: string, model: T) => {
+const post = async <CreateT>(resource: string, model: CreateT) => {
     try {
         const response = await axios.post(`${BASE_URL}/${resource}`, model);
         return handleResponse(response);
@@ -30,9 +30,12 @@ const post = async <T>(resource: string, model: T) => {
     }
 };
 
-const put = async <T>(resource: string, model: T) => {
+const put = async <UpdateT>(resource: string, id: number, model: UpdateT) => {
     try {
-        const response = await axios.put(`${BASE_URL}/${resource}`, model);
+        const response = await axios.put(
+            `${BASE_URL}/${resource}/${id}`,
+            model
+        );
         return handleResponse(response);
     } catch (error) {
         return handleError(error);

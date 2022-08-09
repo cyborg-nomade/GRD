@@ -1,5 +1,10 @@
 import axios from "axios";
-import { AuthUser, UserDto } from "../../models/access-control.model";
+import {
+    AuthUser,
+    CreateUserDto,
+    UpdateUserDto,
+    UserDto,
+} from "../../models/access-control.model";
 import { AccessLevel } from "../../models/common.model";
 import { AuthResponse } from "../../models/responses.model";
 import { ApiCore, ApiCoreOptions } from "./utilities/core.util";
@@ -22,7 +27,7 @@ const usersApiOptions: ApiCoreOptions = {
     url,
 };
 
-class UsersApi extends ApiCore<UserDto> {
+class UsersApi extends ApiCore<UserDto, UserDto, CreateUserDto, UpdateUserDto> {
     login!: (user: AuthUser) => Promise<AuthResponse>;
     getByLevel!: (level: AccessLevel) => Promise<UserDto[]>;
     getByGroup!: (gid: number) => Promise<UserDto[]>;
