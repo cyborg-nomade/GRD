@@ -1,5 +1,4 @@
 import axios from "axios";
-import { GroupDto } from "../../models/access-control.model";
 import {
     AcaoDto,
     AcaoListDto,
