@@ -21,7 +21,7 @@ const getSingle = async (resource: string, id: number) => {
     }
 };
 
-const post = async (resource: string, model: object) => {
+const post = async <T>(resource: string, model: T) => {
     try {
         const response = await axios.post(`${BASE_URL}/${resource}`, model);
         return handleResponse(response);
@@ -30,7 +30,7 @@ const post = async (resource: string, model: object) => {
     }
 };
 
-const put = async (resource: string, model: object) => {
+const put = async <T>(resource: string, model: T) => {
     try {
         const response = await axios.put(`${BASE_URL}/${resource}`, model);
         return handleResponse(response);

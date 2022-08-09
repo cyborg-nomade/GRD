@@ -12,12 +12,12 @@ export type ApiCoreOptions = {
     url: string;
 };
 
-export class ApiCore {
-    getAll!: () => Promise<object[]>;
-    getSingle!: (id: number) => Promise<object>;
-    post!: (model: object) => Promise<object>;
-    put!: (model: object) => Promise<object>;
-    remove!: (id: number) => Promise<any>;
+export class ApiCore<T> {
+    getAll!: () => Promise<T[]>;
+    getSingle!: (id: number) => Promise<T>;
+    post!: (model: object) => Promise<T>;
+    put!: (model: object) => Promise<T>;
+    remove!: (id: number) => Promise<void>;
 
     constructor(options: ApiCoreOptions) {
         if (options.getAll) {
@@ -30,11 +30,11 @@ export class ApiCore {
         }
 
         if (options.post) {
-            this.post = (model: object) => apiProvider.post(options.url, model);
+            this.post = <T>(model: T) => apiProvider.post(options.url, model);
         }
 
         if (options.put) {
-            this.put = (model: object) => apiProvider.put(options.url, model);
+            this.put = <T>(model: T) => apiProvider.put(options.url, model);
         }
 
         if (options.remove) {
