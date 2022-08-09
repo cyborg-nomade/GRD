@@ -2,7 +2,7 @@
 
 import { apiProvider } from "./provider.util";
 
-type ApiCoreOptions = {
+export type ApiCoreOptions = {
     getAll: any;
     getSingle: any;
     post: any;
@@ -21,33 +21,24 @@ export class ApiCore {
 
     constructor(options: ApiCoreOptions) {
         if (options.getAll) {
-            this.getAll = () => {
-                return apiProvider.getAll(options.url);
-            };
+            this.getAll = () => apiProvider.getAll(options.url);
         }
 
         if (options.getSingle) {
-            this.getSingle = (id: number) => {
-                return apiProvider.getSingle(options.url, id);
-            };
+            this.getSingle = (id: number) =>
+                apiProvider.getSingle(options.url, id);
         }
 
         if (options.post) {
-            this.post = (model: object) => {
-                return apiProvider.post(options.url, model);
-            };
+            this.post = (model: object) => apiProvider.post(options.url, model);
         }
 
         if (options.put) {
-            this.put = (model: object) => {
-                return apiProvider.put(options.url, model);
-            };
+            this.put = (model: object) => apiProvider.put(options.url, model);
         }
 
         if (options.remove) {
-            this.remove = (id: number) => {
-                return apiProvider.remove(options.url, id);
-            };
+            this.remove = (id: number) => apiProvider.remove(options.url, id);
         }
     }
 }
