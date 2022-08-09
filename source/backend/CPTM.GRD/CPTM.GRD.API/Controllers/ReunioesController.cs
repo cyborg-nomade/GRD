@@ -62,7 +62,8 @@ namespace CPTM.GRD.API.Controllers
         {
             return await _mediator.Send(new CreatePautaPreviaReuniaoRequest()
             {
-                RequestUser = User
+                RequestUser = User,
+                Rid = rid
             });
         }
 

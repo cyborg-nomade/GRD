@@ -1,13 +1,5 @@
 import axios from "axios";
-import {
-    AcaoDto,
-    AcaoListDto,
-    CreateAcaoDto,
-    UpdateAcaoDto,
-} from "../../models/acoes/acao.model";
-import { AndamentoDto } from "../../models/acoes/children/andamento.model";
-import { AcaoStatus, ProposicaoStatus } from "../../models/common.model";
-import { AddAcaoToReuniaoDto } from "../../models/mixed.model";
+import { ProposicaoStatus } from "../../models/common.model";
 import {
     CreateProposicaoDto,
     ProposicaoDto,
