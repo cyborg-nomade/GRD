@@ -12,10 +12,8 @@ public class IBaseParticipanteDtoValidator : AbstractValidator<IBaseParticipante
     public IBaseParticipanteDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
         IUserRepository userRepository)
     {
-        RuleFor(p => p.User).NotNull().NotEmpty()
-            .SetValidator(new UserDtoValidator(authenticationService, userRepository));
-        RuleFor(p => p.DiretoriaArea).NotNull().NotEmpty()
-            .SetValidator(new DiretoriaGroupDtoValidator(groupRepository, authenticationService, userRepository));
+        RuleFor(p => p.Area).NotNull().NotEmpty()
+            .SetValidator(new GroupDtoValidator(groupRepository, authenticationService, userRepository));
         RuleFor(p => p.Nome).NotNull().NotEmpty().MaximumLength(50);
         RuleFor(p => p.Email).NotNull().NotEmpty().EmailAddress();
     }

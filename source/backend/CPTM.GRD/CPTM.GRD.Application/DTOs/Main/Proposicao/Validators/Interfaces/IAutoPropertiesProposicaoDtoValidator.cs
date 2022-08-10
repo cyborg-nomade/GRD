@@ -24,11 +24,6 @@ public class IAutoPropertiesProposicaoDtoValidator : AbstractValidator<IAutoProp
     {
         RuleFor(p => p.Status).NotNull().IsInEnum();
         RuleFor(p => p.Arquivada).NotNull().NotEmpty();
-        RuleFor(p => p.Reuniao).NotNull().NotEmpty()
-            .SetValidator(new ReuniaoDtoValidator(groupRepository, authenticationService, userRepository,
-                acaoRepository, votoRepository, participanteRepository, reuniaoRepository, reuniaoStrictSequence,
-                proposicaoRepository, proposicaoStrictSequence))
-            .When(p => p.Status >= ProposicaoStatus.InclusaEmReuniao);
         RuleFor(p => p.AnotacoesPrevia).NotNull()
             .When(p => p.Status >= ProposicaoStatus.EmPautaDefinitiva);
         RuleForEach(p => p.VotosRd).NotNull()
