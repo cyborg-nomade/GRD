@@ -10,7 +10,13 @@ import {
     UpdateProposicaoDto,
 } from "../models/proposicoes/proposicao.model";
 import { AuthResponse } from "../models/responses.model";
+import {
+    CreateParticipanteDto,
+    ParticipanteDto,
+} from "../models/reunioes/children/participante.model";
+import { CreateReuniaoDto, ReuniaoDto } from "../models/reunioes/reuniao.model";
 import ProposicoesApi from "../services/api/proposicoes.api";
+import ReunioesApi from "../services/api/reunioes.api";
 import UsersApi from "../services/api/users.api";
 import styles from "../styles/Home.module.css";
 
@@ -21,9 +27,11 @@ const Home: NextPage = () => {
     const [createdProposicao, setCreatedProposicao] = useState(
         new ProposicaoDto()
     );
+    const [createdReuniao, setCreatedReuniao] = useState(new ReuniaoDto());
 
     const usersAPI = new UsersApi();
     const proposicaoAPI = new ProposicoesApi();
+    const reuniaoAPI = new ReunioesApi();
 
     const loginHandler = async () => {
         const authUser = new AuthUser();
@@ -136,6 +144,19 @@ const Home: NextPage = () => {
         console.log(proposicaoRepproved);
     };
 
+    const postReuniaoHandler = async () => {
+        const reuniao = new CreateReuniaoDto();
+        reuniao.data = new Date("2022-08-12");
+        reuniao.horario = new Date("2022-08-12");
+        reuniao.dataPrevia = new Date("2022-08-11");
+        reuniao.horarioPrevia = new Date("2022-08-11");
+        reuniao.local = "teste";
+
+        var createdReuniao = await reuniaoAPI.post(token, reuniao);
+        console.log(createdReuniao);
+        setCreatedReuniao(createdReuniao);
+    };
+
     return (
         <div className={styles.container}>
             <Head>
@@ -194,7 +215,7 @@ const Home: NextPage = () => {
                 <div className={styles.grid}>
                     <a className={styles.card} onClick={diretorApprovesHandler}>
                         <h2>Diretor Aprova Proposição &rarr;</h2>
-                        <p>UC #005</p>
+                        <p>UC #006</p>
                     </a>
                 </div>
 
@@ -204,7 +225,14 @@ const Home: NextPage = () => {
                         onClick={diretorRepprovesHandler}
                     >
                         <h2>Diretor Reprova Proposição &rarr;</h2>
-                        <p>UC #005</p>
+                        <p>UC #006</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a className={styles.card} onClick={postReuniaoHandler}>
+                        <h2>Criar Reunião &rarr;</h2>
+                        <p>UC #014</p>
                     </a>
                 </div>
             </main>
