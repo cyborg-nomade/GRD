@@ -110,6 +110,19 @@ const Home: NextPage = () => {
         console.log("it worked?");
     };
 
+    const sendToApprovalHandler = async () => {
+        const proposicaoSentToApproval =
+            await proposicaoAPI.sendDiretoriaApproval(
+                token,
+                createdProposicao.id
+            );
+        console.log(proposicaoSentToApproval);
+    };
+
+    const diretorApprovesHandler = () => {};
+
+    const diretorRepprovesHandler = () => {};
+
     return (
         <div className={styles.container}>
             <Head>
@@ -155,6 +168,27 @@ const Home: NextPage = () => {
                     >
                         <h2>Remover Proposição &rarr;</h2>
                         <p>UC #004</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a className={styles.card} onClick={sendToApprovalHandler}>
+                        <h2>Enviar Proposição para Aprovação &rarr;</h2>
+                        <p>UC #005</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a className={styles.card} onClick={sendToApprovalHandler}>
+                        <h2>Diretor Aprova Proposição &rarr;</h2>
+                        <p>UC #005</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a className={styles.card} onClick={sendToApprovalHandler}>
+                        <h2>Diretor Reprova Proposição &rarr;</h2>
+                        <p>UC #005</p>
                     </a>
                 </div>
             </main>

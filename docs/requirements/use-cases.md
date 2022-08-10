@@ -65,7 +65,7 @@
             -   send to diretor of proposicao owner group;
     -   system creates a change log for the actions
 
-## 003. user edits proposicao
+## 003. user edits proposicao (API OK)
 
 -   **_primary actor_**: user (any level or group)
 -   **_other actors_**: gerente (of the owner group), assessor-diretoria (of the owner group), diretor (of the owner group), grg members
@@ -107,7 +107,7 @@
             -   sends to grg members, proposicao owner group's gerente, diretor and other assesores-diretoria, and to proposicao creator;
     -   system creates a change log for the actions
 
-## 004. creator removes proposicao
+## 004. creator removes proposicao (API OK)
 
 -   **_primary actor_**: user in proposicao's owner group
 -   **_other actors_**: gerente (of the owner group), assessor-diretoria (of the owner group), diretor (of the owner group)
@@ -145,7 +145,7 @@
             -   sends proposicao owner group's gerente and assesores-diretoria, and to proposicao creator;
     -   system creates a change log for the actions
 
-## 005. gerente sends proposicao to approval
+## 005. gerente sends proposicao to approval (API OK)
 
 -   **_primary actor_**: gerente
 -   **_other actors_**: assessor-diretoria (of the owner group), diretor (of the owner group)
