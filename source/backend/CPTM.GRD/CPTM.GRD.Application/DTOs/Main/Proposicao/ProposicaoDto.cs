@@ -37,7 +37,7 @@ public class ProposicaoDto : IBaseProposicaoDto, IFullProposicaoDto, IOwnerPrope
     public DateTime InicioVigenciaReserva { get; set; }
     public DateTime FimVigenciaReserva { get; set; }
     public string NumeroProposicao { get; set; } = string.Empty;
-    public string ProtoloExpediente { get; set; } = string.Empty;
+    public string ProtocoloExpediente { get; set; } = string.Empty;
     public string NumeroProcessoLicit { get; set; } = string.Empty;
     public string? OutrasObservacoes { get; set; }
     public ReuniaoDto? Reuniao { get; set; } = new ReuniaoDto();
@@ -100,7 +100,7 @@ public class ProposicaoDto : IBaseProposicaoDto, IFullProposicaoDto, IOwnerPrope
 {nameof(InicioVigenciaReserva)}: {InicioVigenciaReserva}, 
 {nameof(FimVigenciaReserva)}: {FimVigenciaReserva}, 
 {nameof(NumeroProposicao)}: {NumeroProposicao}, 
-{nameof(ProtoloExpediente)}: {ProtoloExpediente}, 
+{nameof(ProtocoloExpediente)}: {ProtocoloExpediente}, 
 {nameof(NumeroProcessoLicit)}: {NumeroProcessoLicit}, 
 {nameof(OutrasObservacoes)}: {OutrasObservacoes}, 
 {nameof(Reuniao)}: {Reuniao}, 

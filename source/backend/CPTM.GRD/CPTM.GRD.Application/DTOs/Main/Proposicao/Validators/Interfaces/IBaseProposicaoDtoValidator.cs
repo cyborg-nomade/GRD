@@ -35,7 +35,7 @@ public class IBaseProposicaoDtoValidator : AbstractValidator<IBaseProposicaoDto>
         // END
 
         RuleFor(p => p.NumeroProposicao).NotNull().NotEmpty().MaximumLength(15);
-        RuleFor(p => p.ProtoloExpediente).NotNull().NotEmpty().MaximumLength(15);
+        RuleFor(p => p.ProtocoloExpediente).NotNull().NotEmpty().MaximumLength(15);
 
         // ALSO DEPENDS ON OBJETO
         RuleFor(p => p.NumeroProcessoLicit).NotNull().NotEmpty().MaximumLength(15);

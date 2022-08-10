@@ -25,7 +25,7 @@ public interface IBaseProposicaoDto
     public DateTime InicioVigenciaReserva { get; set; }
     public DateTime FimVigenciaReserva { get; set; }
     public string NumeroProposicao { get; set; }
-    public string ProtoloExpediente { get; set; }
+    public string ProtocoloExpediente { get; set; }
     public string NumeroProcessoLicit { get; set; }
     public string? OutrasObservacoes { get; set; }
     public string? NumeroConselho { get; set; }

@@ -30,7 +30,7 @@ public class CreateProposicaoDto : IBaseProposicaoDto, IOwnerPropertiesProposica
     public DateTime InicioVigenciaReserva { get; set; }
     public DateTime FimVigenciaReserva { get; set; }
     public string NumeroProposicao { get; set; } = string.Empty;
-    public string ProtoloExpediente { get; set; } = string.Empty;
+    public string ProtocoloExpediente { get; set; } = string.Empty;
     public string NumeroProcessoLicit { get; set; } = string.Empty;
     public string? OutrasObservacoes { get; set; }
     public string? NumeroConselho { get; set; }
