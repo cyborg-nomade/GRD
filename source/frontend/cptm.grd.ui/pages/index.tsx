@@ -105,6 +105,11 @@ const Home: NextPage = () => {
         console.log(updatedProposicao);
     };
 
+    const removeProposicaoHandler = async () => {
+        await proposicaoAPI.remove(token, createdProposicao.id);
+        console.log("it worked?");
+    };
+
     return (
         <div className={styles.container}>
             <Head>
@@ -140,6 +145,16 @@ const Home: NextPage = () => {
                     <a className={styles.card} onClick={editProposicaoHandler}>
                         <h2>Editar Proposição &rarr;</h2>
                         <p>UC #003</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a
+                        className={styles.card}
+                        onClick={removeProposicaoHandler}
+                    >
+                        <h2>Remover Proposição &rarr;</h2>
+                        <p>UC #004</p>
                     </a>
                 </div>
             </main>
