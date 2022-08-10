@@ -33,41 +33,54 @@ class ProposicoesApi extends ApiCore<
     CreateProposicaoDto,
     UpdateProposicaoDto
 > {
-    getByUser!: (uid: number) => Promise<ProposicaoListDto[]>;
-    getByGroup!: (gid: number) => Promise<ProposicaoListDto[]>;
+    getByUser!: (token: string, uid: number) => Promise<ProposicaoListDto[]>;
+    getByGroup!: (token: string, gid: number) => Promise<ProposicaoListDto[]>;
     getByStatus!: (
+        token: string,
         status: ProposicaoStatus,
         arquivada: boolean
     ) => Promise<ProposicaoListDto[]>;
     getByUserAndStatus!: (
+        token: string,
         uid: number,
         status: ProposicaoStatus,
         arquivada: boolean
     ) => Promise<ProposicaoListDto[]>;
     getByGroupAndStatus!: (
+        token: string,
         gid: number,
         status: ProposicaoStatus,
         arquivada: boolean
     ) => Promise<ProposicaoListDto[]>;
-    getByReuniao!: (rid: number) => Promise<ProposicaoListDto[]>;
-    getByReuniaoPrevia!: (rid: number) => Promise<ProposicaoListDto[]>;
-    sendDiretoriaApproval!: (pid: number) => Promise<ProposicaoDto>;
-    diretoriaApprove!: (pid: number) => Promise<ProposicaoDto>;
+    getByReuniao!: (token: string, rid: number) => Promise<ProposicaoListDto[]>;
+    getByReuniaoPrevia!: (
+        token: string,
+        rid: number
+    ) => Promise<ProposicaoListDto[]>;
+    sendDiretoriaApproval!: (
+        token: string,
+        pid: number
+    ) => Promise<ProposicaoDto>;
+    diretoriaApprove!: (token: string, pid: number) => Promise<ProposicaoDto>;
     diretoriaRepprove!: (
+        token: string,
         pid: number,
         motivoReprovacao: string
     ) => Promise<ProposicaoDto>;
     returnToDiretoria!: (
+        token: string,
         pid: number,
         motivoReprovacao: string
     ) => Promise<ProposicaoDto>;
-    returnToGrg!: (pid: number) => Promise<ProposicaoDto>;
-    fixesDone!: (pid: number) => Promise<ProposicaoDto>;
+    returnToGrg!: (token: string, pid: number) => Promise<ProposicaoDto>;
+    fixesDone!: (token: string, pid: number) => Promise<ProposicaoDto>;
     rdDeliberateDiretor!: (
+        token: string,
         pid: number,
         votesWithAjustes: VoteWithAjustesProposicaoDto
     ) => Promise<ProposicaoDto>;
     annotatePrevia!: (
+        token: string,
         pid: number,
         annotation: string
     ) => Promise<ProposicaoDto>;
@@ -75,10 +88,13 @@ class ProposicoesApi extends ApiCore<
     constructor() {
         super(proposicoesApiOptions);
 
-        this.getByUser = async (uid: number) => {
+        this.getByUser = async (token: string, uid: number) => {
             try {
                 const response = await axios.get(
-                    `${BASE_URL}/${url}/user/${uid}`
+                    `${BASE_URL}/${url}/user/${uid}`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -86,10 +102,13 @@ class ProposicoesApi extends ApiCore<
             }
         };
 
-        this.getByGroup = async (gid: number) => {
+        this.getByGroup = async (token: string, gid: number) => {
             try {
                 const response = await axios.get(
-                    `${BASE_URL}/${url}/group/${gid}`
+                    `${BASE_URL}/${url}/group/${gid}`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -97,12 +116,16 @@ class ProposicoesApi extends ApiCore<
             }
         };
         this.getByStatus = async (
+            token: string,
             status: ProposicaoStatus,
             arquivada: boolean
         ) => {
             try {
                 const response = await axios.get(
-                    `${BASE_URL}/${url}/status/${status}/${arquivada}`
+                    `${BASE_URL}/${url}/status/${status}/${arquivada}`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -111,13 +134,17 @@ class ProposicoesApi extends ApiCore<
         };
 
         this.getByUserAndStatus = async (
+            token: string,
             uid: number,
             status: ProposicaoStatus,
             arquivada: boolean
         ) => {
             try {
                 const response = await axios.get(
-                    `${BASE_URL}/${url}/user/${uid}/status/${status}/${arquivada}`
+                    `${BASE_URL}/${url}/user/${uid}/status/${status}/${arquivada}`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -126,13 +153,17 @@ class ProposicoesApi extends ApiCore<
         };
 
         this.getByGroupAndStatus = async (
+            token: string,
             gid: number,
             status: ProposicaoStatus,
             arquivada: boolean
         ) => {
             try {
                 const response = await axios.get(
-                    `${BASE_URL}/${url}/group/${gid}/status/${status}/${arquivada}`
+                    `${BASE_URL}/${url}/group/${gid}/status/${status}/${arquivada}`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -140,10 +171,13 @@ class ProposicoesApi extends ApiCore<
             }
         };
 
-        this.getByReuniao = async (rid: number) => {
+        this.getByReuniao = async (token: string, rid: number) => {
             try {
                 const response = await axios.get(
-                    `${BASE_URL}/${url}/reuniao/${rid}`
+                    `${BASE_URL}/${url}/reuniao/${rid}`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -151,10 +185,13 @@ class ProposicoesApi extends ApiCore<
             }
         };
 
-        this.getByReuniaoPrevia = async (rid: number) => {
+        this.getByReuniaoPrevia = async (token: string, rid: number) => {
             try {
                 const response = await axios.get(
-                    `${BASE_URL}/${url}/reuniao/${rid}`
+                    `${BASE_URL}/${url}/reuniao/${rid}`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -162,10 +199,14 @@ class ProposicoesApi extends ApiCore<
             }
         };
 
-        this.sendDiretoriaApproval = async (pid: number) => {
+        this.sendDiretoriaApproval = async (token: string, pid: number) => {
             try {
                 const response = await axios.put(
-                    `${BASE_URL}/${url}/${pid}/send-diretoria-approval`
+                    `${BASE_URL}/${url}/${pid}/send-diretoria-approval`,
+                    {},
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -173,10 +214,14 @@ class ProposicoesApi extends ApiCore<
             }
         };
 
-        this.diretoriaApprove = async (pid: number) => {
+        this.diretoriaApprove = async (token: string, pid: number) => {
             try {
                 const response = await axios.put(
-                    `${BASE_URL}/${url}/${pid}/diretoria-approve`
+                    `${BASE_URL}/${url}/${pid}/diretoria-approve`,
+                    {},
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -185,13 +230,17 @@ class ProposicoesApi extends ApiCore<
         };
 
         this.diretoriaRepprove = async (
+            token: string,
             pid: number,
             motivoReprovacao: string
         ) => {
             try {
                 const response = await axios.put(
                     `${BASE_URL}/${url}/${pid}/diretoria-repprove`,
-                    motivoReprovacao
+                    motivoReprovacao,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -200,13 +249,17 @@ class ProposicoesApi extends ApiCore<
         };
 
         this.returnToDiretoria = async (
+            token: string,
             pid: number,
             motivoReprovacao: string
         ) => {
             try {
                 const response = await axios.put(
                     `${BASE_URL}/${url}/${pid}/return-to-diretoria`,
-                    motivoReprovacao
+                    motivoReprovacao,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -214,10 +267,14 @@ class ProposicoesApi extends ApiCore<
             }
         };
 
-        this.returnToGrg = async (pid: number) => {
+        this.returnToGrg = async (token: string, pid: number) => {
             try {
                 const response = await axios.put(
-                    `${BASE_URL}/${url}/${pid}/return-to-grg`
+                    `${BASE_URL}/${url}/${pid}/return-to-grg`,
+                    {},
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -225,10 +282,14 @@ class ProposicoesApi extends ApiCore<
             }
         };
 
-        this.fixesDone = async (pid: number) => {
+        this.fixesDone = async (token: string, pid: number) => {
             try {
                 const response = await axios.put(
-                    `${BASE_URL}/${url}/${pid}/fixes-done`
+                    `${BASE_URL}/${url}/${pid}/fixes-done`,
+                    {},
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -237,6 +298,7 @@ class ProposicoesApi extends ApiCore<
         };
 
         this.rdDeliberateDiretor = async (
+            token: string,
             pid: number,
             votesWithAjustes: VoteWithAjustesProposicaoDto
         ) => {
@@ -251,7 +313,11 @@ class ProposicoesApi extends ApiCore<
             }
         };
 
-        this.annotatePrevia = async (pid: number, annotation: string) => {
+        this.annotatePrevia = async (
+            token: string,
+            pid: number,
+            annotation: string
+        ) => {
             try {
                 const response = await axios.put(
                     `${BASE_URL}/${url}/${pid}/annotate-previa`,

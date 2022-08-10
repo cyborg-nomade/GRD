@@ -34,27 +34,43 @@ class AcoesApi extends ApiCore<
     CreateAcaoDto,
     UpdateAcaoDto
 > {
-    getByReuniao!: (rid: number) => Promise<AcaoListDto[]>;
-    getByResponsavel!: (uid: number) => Promise<AcaoListDto[]>;
-    getFromSubordinados!: (suid: number) => Promise<AcaoListDto[]>;
+    getByReuniao!: (token: string, rid: number) => Promise<AcaoListDto[]>;
+    getByResponsavel!: (token: string, uid: number) => Promise<AcaoListDto[]>;
+    getFromSubordinados!: (
+        token: string,
+        suid: number
+    ) => Promise<AcaoListDto[]>;
     postToReuniao!: (
+        token: string,
         rid: number,
         createAcaoDto: CreateAcaoDto
     ) => Promise<AcaoDto>;
     addAndamento!: (
+        token: string,
         aid: number,
         andamentoDto: AndamentoDto
     ) => Promise<AcaoDto>;
-    followUp!: (aid: number, rid: number) => Promise<AddAcaoToReuniaoDto>;
-    finish!: (aid: number, status: AcaoStatus) => Promise<AcaoDto>;
+    followUp!: (
+        token: string,
+        aid: number,
+        rid: number
+    ) => Promise<AddAcaoToReuniaoDto>;
+    finish!: (
+        token: string,
+        aid: number,
+        status: AcaoStatus
+    ) => Promise<AcaoDto>;
 
     constructor() {
         super(acoesApiOptions);
 
-        this.getByReuniao = async (rid: number) => {
+        this.getByReuniao = async (token: string, rid: number) => {
             try {
                 const response = await axios.get(
-                    `${BASE_URL}/${url}/reuniao/${rid}`
+                    `${BASE_URL}/${url}/reuniao/${rid}`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -62,10 +78,13 @@ class AcoesApi extends ApiCore<
             }
         };
 
-        this.getByResponsavel = async (uid: number) => {
+        this.getByResponsavel = async (token: string, uid: number) => {
             try {
                 const response = await axios.get(
-                    `${BASE_URL}/${url}/responsavel/${uid}`
+                    `${BASE_URL}/${url}/responsavel/${uid}`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -73,10 +92,13 @@ class AcoesApi extends ApiCore<
             }
         };
 
-        this.getFromSubordinados = async (suid: number) => {
+        this.getFromSubordinados = async (token: string, suid: number) => {
             try {
                 const response = await axios.get(
-                    `${BASE_URL}/${url}/subordinados/${suid}`
+                    `${BASE_URL}/${url}/subordinados/${suid}`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -85,13 +107,17 @@ class AcoesApi extends ApiCore<
         };
 
         this.postToReuniao = async (
+            token: string,
             rid: number,
             createAcaoDto: CreateAcaoDto
         ) => {
             try {
                 const response = await axios.post(
                     `${BASE_URL}/${url}/reuniao/${rid}`,
-                    createAcaoDto
+                    createAcaoDto,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -99,11 +125,18 @@ class AcoesApi extends ApiCore<
             }
         };
 
-        this.addAndamento = async (aid: number, andamentoDto: AndamentoDto) => {
+        this.addAndamento = async (
+            token: string,
+            aid: number,
+            andamentoDto: AndamentoDto
+        ) => {
             try {
                 const response = await axios.post(
                     `${BASE_URL}/${url}/${aid}/add-andamento`,
-                    andamentoDto
+                    andamentoDto,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -111,10 +144,14 @@ class AcoesApi extends ApiCore<
             }
         };
 
-        this.followUp = async (aid: number, rid: number) => {
+        this.followUp = async (token: string, aid: number, rid: number) => {
             try {
                 const response = await axios.put(
-                    `${BASE_URL}/${url}/${aid}/reuniao/${rid}/add`
+                    `${BASE_URL}/${url}/${aid}/reuniao/${rid}/add`,
+                    {},
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -122,10 +159,18 @@ class AcoesApi extends ApiCore<
             }
         };
 
-        this.finish = async (aid: number, status: AcaoStatus) => {
+        this.finish = async (
+            token: string,
+            aid: number,
+            status: AcaoStatus
+        ) => {
             try {
                 const response = await axios.put(
-                    `${BASE_URL}/${url}/${aid}/finish/${status}`
+                    `${BASE_URL}/${url}/${aid}/finish/${status}`,
+                    {},
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {

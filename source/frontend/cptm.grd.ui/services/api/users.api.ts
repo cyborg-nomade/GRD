@@ -29,9 +29,10 @@ const usersApiOptions: ApiCoreOptions = {
 
 class UsersApi extends ApiCore<UserDto, UserDto, CreateUserDto, UpdateUserDto> {
     login!: (user: AuthUser) => Promise<AuthResponse>;
-    getByLevel!: (level: AccessLevel) => Promise<UserDto[]>;
-    getByGroup!: (gid: number) => Promise<UserDto[]>;
+    getByLevel!: (token: string, level: AccessLevel) => Promise<UserDto[]>;
+    getByGroup!: (token: string, gid: number) => Promise<UserDto[]>;
     getByLevelAndGroup!: (
+        token: string,
         level: AccessLevel,
         gid: number
     ) => Promise<UserDto[]>;
@@ -51,10 +52,13 @@ class UsersApi extends ApiCore<UserDto, UserDto, CreateUserDto, UpdateUserDto> {
             }
         };
 
-        this.getByLevel = async (level: AccessLevel) => {
+        this.getByLevel = async (token: string, level: AccessLevel) => {
             try {
                 const response = await axios.get(
-                    `${BASE_URL}/${url}/level/${level}`
+                    `${BASE_URL}/${url}/level/${level}`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -62,10 +66,13 @@ class UsersApi extends ApiCore<UserDto, UserDto, CreateUserDto, UpdateUserDto> {
             }
         };
 
-        this.getByGroup = async (gid: number) => {
+        this.getByGroup = async (token: string, gid: number) => {
             try {
                 const response = await axios.get(
-                    `${BASE_URL}/${url}/group/${gid}`
+                    `${BASE_URL}/${url}/group/${gid}`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -73,10 +80,17 @@ class UsersApi extends ApiCore<UserDto, UserDto, CreateUserDto, UpdateUserDto> {
             }
         };
 
-        this.getByLevelAndGroup = async (level: AccessLevel, gid: number) => {
+        this.getByLevelAndGroup = async (
+            token: string,
+            level: AccessLevel,
+            gid: number
+        ) => {
             try {
                 const response = await axios.get(
-                    `${BASE_URL}/${url}/level/${level}/group/${gid}`
+                    `${BASE_URL}/${url}/level/${level}/group/${gid}`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {

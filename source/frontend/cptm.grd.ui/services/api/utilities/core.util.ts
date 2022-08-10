@@ -13,34 +13,36 @@ export type ApiCoreOptions = {
 };
 
 export class ApiCore<T, ListT = T, CreateT = T, UpdateT = T> {
-    getAll!: () => Promise<ListT[]>;
-    getSingle!: (id: number) => Promise<T>;
-    post!: (model: CreateT) => Promise<T>;
-    put!: (id: number, model: UpdateT) => Promise<T>;
-    remove!: (id: number) => Promise<void>;
+    getAll!: (token: string) => Promise<ListT[]>;
+    getSingle!: (token: string, id: number) => Promise<T>;
+    post!: (token: string, model: CreateT) => Promise<T>;
+    put!: (token: string, id: number, model: UpdateT) => Promise<T>;
+    remove!: (token: string, id: number) => Promise<void>;
 
     constructor(options: ApiCoreOptions) {
         if (options.getAll) {
-            this.getAll = () => apiProvider.getAll(options.url);
+            this.getAll = (token: string) =>
+                apiProvider.getAll(token, options.url);
         }
 
         if (options.getSingle) {
-            this.getSingle = (id: number) =>
-                apiProvider.getSingle(options.url, id);
+            this.getSingle = (token: string, id: number) =>
+                apiProvider.getSingle(token, options.url, id);
         }
 
         if (options.post) {
-            this.post = <CreateT>(model: CreateT) =>
-                apiProvider.post(options.url, model);
+            this.post = <CreateT>(token: string, model: CreateT) =>
+                apiProvider.post(token, options.url, model);
         }
 
         if (options.put) {
-            this.put = <UpdateT>(id: number, model: UpdateT) =>
-                apiProvider.put(options.url, id, model);
+            this.put = <UpdateT>(token: string, id: number, model: UpdateT) =>
+                apiProvider.put(token, options.url, id, model);
         }
 
         if (options.remove) {
-            this.remove = (id: number) => apiProvider.remove(options.url, id);
+            this.remove = (token: string, id: number) =>
+                apiProvider.remove(token, options.url, id);
         }
     }
 }

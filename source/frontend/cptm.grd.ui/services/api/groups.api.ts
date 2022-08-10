@@ -21,15 +21,18 @@ const groupsApiOptions: ApiCoreOptions = {
 };
 
 class GroupsApi extends ApiCore<GroupDto> {
-    getByUser!: (uid: number) => Promise<GroupDto[]>;
+    getByUser!: (token: string, uid: number) => Promise<GroupDto[]>;
 
     constructor() {
         super(groupsApiOptions);
 
-        this.getByUser = async (uid: number) => {
+        this.getByUser = async (token: string, uid: number) => {
             try {
                 const response = await axios.get(
-                    `${BASE_URL}/${url}/user/${uid}`
+                    `${BASE_URL}/${url}/user/${uid}`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {

@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
-import { AuthUser } from "../models/access-control.model";
+import { AuthUser, GroupDto, UserDto } from "../models/access-control.model";
 import { CreateProposicaoDto } from "../models/proposicoes/proposicao.model";
 import { AuthResponse } from "../models/responses.model";
 import UsersApi from "../services/api/users.api";
@@ -10,6 +10,8 @@ import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
     const [token, setToken] = useState("");
+    const [currentUser, setCurrentUser] = useState(new UserDto());
+    const [currentArea, setCurrentArea] = useState(new GroupDto());
     const usersAPI = new UsersApi();
 
     const loginHandler = async () => {
@@ -20,6 +22,8 @@ const Home: NextPage = () => {
         const authResponse: AuthResponse = await usersAPI.login(authUser);
         console.log(authResponse);
         setToken(authResponse.token);
+        setCurrentUser(authResponse.user);
+        setCurrentArea(authResponse.user.areasAcesso[0]);
     };
 
     const postProposicaoHandler = () => {

@@ -3,7 +3,7 @@ import { handleError, handleResponse } from "./response.util";
 
 const BASE_URL = process.env.NEXT_PUBLIC_CONNSTR;
 
-const getAll = async (resource: string) => {
+const getAll = async (resource: string, token: string) => {
     try {
         const response = await axios.get(`${BASE_URL}/${resource}`);
         return handleResponse(response);
@@ -12,29 +12,45 @@ const getAll = async (resource: string) => {
     }
 };
 
-const getSingle = async (resource: string, id: number) => {
+const getSingle = async (resource: string, token: string, id: number) => {
     try {
-        const response = await axios.get(`${BASE_URL}/${resource}/${id}`);
+        const response = await axios.get(`${BASE_URL}/${resource}/${id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
         return handleResponse(response);
     } catch (error) {
         return handleError(error);
     }
 };
 
-const post = async <CreateT>(resource: string, model: CreateT) => {
+const post = async <CreateT>(
+    resource: string,
+    token: string,
+    model: CreateT
+) => {
     try {
-        const response = await axios.post(`${BASE_URL}/${resource}`, model);
+        const response = await axios.post(`${BASE_URL}/${resource}`, model, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
         return handleResponse(response);
     } catch (error) {
         return handleError(error);
     }
 };
 
-const put = async <UpdateT>(resource: string, id: number, model: UpdateT) => {
+const put = async <UpdateT>(
+    resource: string,
+    token: string,
+    id: number,
+    model: UpdateT
+) => {
     try {
         const response = await axios.put(
             `${BASE_URL}/${resource}/${id}`,
-            model
+            model,
+            {
+                headers: { Authorization: `Bearer ${token}` },
+            }
         );
         return handleResponse(response);
     } catch (error) {
@@ -42,9 +58,11 @@ const put = async <UpdateT>(resource: string, id: number, model: UpdateT) => {
     }
 };
 
-const remove = async (resource: string, id: number) => {
+const remove = async (resource: string, token: string, id: number) => {
     try {
-        const response = await axios.delete(`${BASE_URL}/${resource}/${id}`);
+        const response = await axios.delete(`${BASE_URL}/${resource}/${id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
         return handleResponse(response);
     } catch (error) {
         return handleError(error);
