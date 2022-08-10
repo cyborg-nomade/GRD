@@ -3,7 +3,7 @@ import { GroupDto } from "../../models/access-control.model";
 import { ApiCore, ApiCoreOptions } from "./utilities/core.util";
 import { handleError, handleResponse } from "./utilities/response.util";
 
-const BASE_URL = process.env.REACT_APP_CONNSTR;
+const BASE_URL = process.env.NEXT_PUBLIC_CONNSTR;
 
 const url = "groups";
 const plural = "groups";

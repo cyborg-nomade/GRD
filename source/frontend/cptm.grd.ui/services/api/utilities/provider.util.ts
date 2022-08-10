@@ -1,7 +1,7 @@
 import axios from "axios";
 import { handleError, handleResponse } from "./response.util";
 
-const BASE_URL = process.env.REACT_APP_CONNSTR;
+const BASE_URL = process.env.NEXT_PUBLIC_CONNSTR;
 
 const getAll = async (resource: string) => {
     try {
