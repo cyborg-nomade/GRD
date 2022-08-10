@@ -12,7 +12,7 @@ builder.Services.ConfigureApplicationServices();
 builder.Services.ConfigurePersistenceServices(builder.Configuration, builder.Environment.ContentRootPath);
 builder.Services.ConfigureInfrastructureServices(builder.Configuration, builder.Environment.ContentRootPath);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddCors(options =>
 {

@@ -180,7 +180,7 @@
     -   system sends an email to user, confirming action, and to proposicao owner group's diretor and assessores-diretoria;
     -   system creates a change log for the actions
 
-## 006. diretor (or assessor-diretoria) approves/repproves proposicao
+## 006. diretor (or assessor-diretoria) approves/repproves proposicao (API OK)
 
 -   **_primary actor_**: diretor or assessor-diretoria
 -   **_other actors_**: proposicao creator, gerente (of the owner group), grg members

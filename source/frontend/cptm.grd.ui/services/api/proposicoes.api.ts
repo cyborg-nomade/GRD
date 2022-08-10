@@ -239,7 +239,10 @@ class ProposicoesApi extends ApiCore<
                     `${BASE_URL}/${url}/${pid}/diretoria-repprove`,
                     motivoReprovacao,
                     {
-                        headers: { Authorization: `Bearer ${token}` },
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
                     }
                 );
                 return handleResponse(response);
@@ -258,7 +261,10 @@ class ProposicoesApi extends ApiCore<
                     `${BASE_URL}/${url}/${pid}/return-to-diretoria`,
                     motivoReprovacao,
                     {
-                        headers: { Authorization: `Bearer ${token}` },
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
                     }
                 );
                 return handleResponse(response);
@@ -305,7 +311,10 @@ class ProposicoesApi extends ApiCore<
             try {
                 const response = await axios.put(
                     `${BASE_URL}/${url}/${pid}/rd-deliberate`,
-                    votesWithAjustes
+                    votesWithAjustes,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {
@@ -321,7 +330,13 @@ class ProposicoesApi extends ApiCore<
             try {
                 const response = await axios.put(
                     `${BASE_URL}/${url}/${pid}/annotate-previa`,
-                    annotation
+                    annotation,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
                 );
                 return handleResponse(response);
             } catch (error) {

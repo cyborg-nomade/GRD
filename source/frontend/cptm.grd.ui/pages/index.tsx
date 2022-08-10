@@ -119,9 +119,22 @@ const Home: NextPage = () => {
         console.log(proposicaoSentToApproval);
     };
 
-    const diretorApprovesHandler = () => {};
+    const diretorApprovesHandler = async () => {
+        const proposicaoApproved = await proposicaoAPI.diretoriaApprove(
+            token,
+            createdProposicao.id
+        );
+        console.log(proposicaoApproved);
+    };
 
-    const diretorRepprovesHandler = () => {};
+    const diretorRepprovesHandler = async () => {
+        const proposicaoRepproved = await proposicaoAPI.diretoriaRepprove(
+            token,
+            createdProposicao.id,
+            "teste motivo"
+        );
+        console.log(proposicaoRepproved);
+    };
 
     return (
         <div className={styles.container}>
@@ -179,14 +192,17 @@ const Home: NextPage = () => {
                 </div>
 
                 <div className={styles.grid}>
-                    <a className={styles.card} onClick={sendToApprovalHandler}>
+                    <a className={styles.card} onClick={diretorApprovesHandler}>
                         <h2>Diretor Aprova Proposição &rarr;</h2>
                         <p>UC #005</p>
                     </a>
                 </div>
 
                 <div className={styles.grid}>
-                    <a className={styles.card} onClick={sendToApprovalHandler}>
+                    <a
+                        className={styles.card}
+                        onClick={diretorRepprovesHandler}
+                    >
                         <h2>Diretor Reprova Proposição &rarr;</h2>
                         <p>UC #005</p>
                     </a>

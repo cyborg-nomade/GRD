@@ -11,7 +11,7 @@ public interface IAutoPropertiesProposicaoDto
     public ReuniaoDto? Reuniao { get; set; }
     public string? AnotacoesPrevia { get; set; }
     public List<VotoDto>? VotosRd { get; set; }
-    public string? MotivoRetornoDiretoria { get; set; }
+    public string? MotivoRetornoDiretoriaResp { get; set; }
     public string? MotivoRetornoGrg { get; set; }
     public string? MotivoRetornoRd { get; set; }
     public string? Deliberacao { get; set; }

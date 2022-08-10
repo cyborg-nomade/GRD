@@ -43,7 +43,7 @@ public class ProposicaoDto : IBaseProposicaoDto, IFullProposicaoDto, IOwnerPrope
     public ReuniaoDto? Reuniao { get; set; } = new ReuniaoDto();
     public string? AnotacoesPrevia { get; set; } = string.Empty;
     public List<VotoDto>? VotosRd { get; set; } = new List<VotoDto>();
-    public string? MotivoRetornoDiretoria { get; set; } = string.Empty;
+    public string? MotivoRetornoDiretoriaResp { get; set; } = string.Empty;
     public string? MotivoRetornoGrg { get; set; } = string.Empty;
     public string? MotivoRetornoRd { get; set; } = string.Empty;
     public string? Deliberacao { get; set; } = string.Empty;
@@ -108,7 +108,7 @@ public class ProposicaoDto : IBaseProposicaoDto, IFullProposicaoDto, IOwnerPrope
 {nameof(VotosRd)}: [
         {string.Join(",", VotosRd ?? new List<VotoDto>())}
     ], 
-{nameof(MotivoRetornoDiretoria)}: {MotivoRetornoDiretoria}, 
+{nameof(MotivoRetornoDiretoriaResp)}: {MotivoRetornoDiretoriaResp}, 
 {nameof(MotivoRetornoGrg)}: {MotivoRetornoGrg}, 
 {nameof(MotivoRetornoRd)}: {MotivoRetornoRd}, 
 {nameof(Deliberacao)}: {Deliberacao}, 

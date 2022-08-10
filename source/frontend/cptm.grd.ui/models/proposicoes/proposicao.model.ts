@@ -13,7 +13,7 @@ interface IAutoPropertiesProposicaoDto {
     reuniao?: ReuniaoDto;
     anotacoesPrevia?: string;
     votosRd: VotoDto[];
-    motivoRetornoDiretoria?: string;
+    motivoRetornoDiretoriaResp?: string;
     motivoRetornoGrg?: string;
     motivoRetornoRd?: string;
     deliberacao?: string;
@@ -219,7 +219,7 @@ export class ProposicaoDto
     reuniao?: ReuniaoDto | undefined;
     anotacoesPrevia?: string | undefined;
     votosRd!: VotoDto[];
-    motivoRetornoDiretoria?: string | undefined;
+    motivoRetornoDiretoriaResp?: string | undefined;
     motivoRetornoGrg?: string | undefined;
     motivoRetornoRd?: string | undefined;
     deliberacao?: string | undefined;
