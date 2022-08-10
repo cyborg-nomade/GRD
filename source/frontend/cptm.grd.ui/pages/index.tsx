@@ -7,6 +7,7 @@ import { ObjetoProposicao } from "../models/common.model";
 import {
     CreateProposicaoDto,
     ProposicaoDto,
+    UpdateProposicaoDto,
 } from "../models/proposicoes/proposicao.model";
 import { AuthResponse } from "../models/responses.model";
 import ProposicoesApi from "../services/api/proposicoes.api";
@@ -17,6 +18,9 @@ const Home: NextPage = () => {
     const [token, setToken] = useState("");
     const [currentUser, setCurrentUser] = useState(new UserDto());
     const [currentArea, setCurrentArea] = useState(new GroupDto());
+    const [createdProposicao, setCreatedProposicao] = useState(
+        new ProposicaoDto()
+    );
 
     const usersAPI = new UsersApi();
     const proposicaoAPI = new ProposicoesApi();
@@ -78,6 +82,27 @@ const Home: NextPage = () => {
             proposicao
         );
         console.log(proposicaoReturn);
+        setCreatedProposicao(proposicaoReturn);
+    };
+
+    const editProposicaoHandler = async () => {
+        const gottenProposicao = await proposicaoAPI.getSingle(
+            token,
+            createdProposicao.id
+        );
+        console.log(gottenProposicao);
+
+        let proposicaoWithChanges = new UpdateProposicaoDto();
+        proposicaoWithChanges = { ...gottenProposicao };
+        proposicaoWithChanges.titulo = "teste update";
+        console.log(proposicaoWithChanges);
+
+        const updatedProposicao = await proposicaoAPI.put(
+            token,
+            createdProposicao.id,
+            proposicaoWithChanges
+        );
+        console.log(updatedProposicao);
     };
 
     return (
@@ -108,6 +133,13 @@ const Home: NextPage = () => {
                     <a className={styles.card} onClick={postProposicaoHandler}>
                         <h2>Criar Proposição &rarr;</h2>
                         <p>UC #002</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a className={styles.card} onClick={editProposicaoHandler}>
+                        <h2>Editar Proposição &rarr;</h2>
+                        <p>UC #003</p>
                     </a>
                 </div>
             </main>

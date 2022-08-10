@@ -36,6 +36,6 @@ public class ProposicaoStrictSequenceControl : IProposicaoStrictSequenceControl
     {
         var fileLines = await File.ReadAllLinesAsync(_controlFilePath);
         var currentValue = int.Parse(fileLines[0]);
-        return idprd < currentValue;
+        return idprd <= currentValue;
     }
 }
