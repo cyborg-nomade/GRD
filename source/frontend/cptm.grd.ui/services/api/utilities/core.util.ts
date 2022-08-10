@@ -22,27 +22,27 @@ export class ApiCore<T, ListT = T, CreateT = T, UpdateT = T> {
     constructor(options: ApiCoreOptions) {
         if (options.getAll) {
             this.getAll = (token: string) =>
-                apiProvider.getAll(token, options.url);
+                apiProvider.getAll(options.url, token);
         }
 
         if (options.getSingle) {
             this.getSingle = (token: string, id: number) =>
-                apiProvider.getSingle(token, options.url, id);
+                apiProvider.getSingle(options.url, token, id);
         }
 
         if (options.post) {
             this.post = <CreateT>(token: string, model: CreateT) =>
-                apiProvider.post(token, options.url, model);
+                apiProvider.post(options.url, token, model);
         }
 
         if (options.put) {
             this.put = <UpdateT>(token: string, id: number, model: UpdateT) =>
-                apiProvider.put(token, options.url, id, model);
+                apiProvider.put(options.url, token, id, model);
         }
 
         if (options.remove) {
             this.remove = (token: string, id: number) =>
-                apiProvider.remove(token, options.url, id);
+                apiProvider.remove(options.url, token, id);
         }
     }
 }

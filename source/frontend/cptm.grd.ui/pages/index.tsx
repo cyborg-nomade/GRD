@@ -3,8 +3,13 @@ import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
 import { AuthUser, GroupDto, UserDto } from "../models/access-control.model";
-import { CreateProposicaoDto } from "../models/proposicoes/proposicao.model";
+import { ObjetoProposicao } from "../models/common.model";
+import {
+    CreateProposicaoDto,
+    ProposicaoDto,
+} from "../models/proposicoes/proposicao.model";
 import { AuthResponse } from "../models/responses.model";
+import ProposicoesApi from "../services/api/proposicoes.api";
 import UsersApi from "../services/api/users.api";
 import styles from "../styles/Home.module.css";
 
@@ -12,7 +17,9 @@ const Home: NextPage = () => {
     const [token, setToken] = useState("");
     const [currentUser, setCurrentUser] = useState(new UserDto());
     const [currentArea, setCurrentArea] = useState(new GroupDto());
+
     const usersAPI = new UsersApi();
+    const proposicaoAPI = new ProposicoesApi();
 
     const loginHandler = async () => {
         const authUser = new AuthUser();
@@ -26,8 +33,51 @@ const Home: NextPage = () => {
         setCurrentArea(authResponse.user.areasAcesso[0]);
     };
 
-    const postProposicaoHandler = () => {
+    const postProposicaoHandler = async () => {
         const proposicao = new CreateProposicaoDto();
+        proposicao.criador = currentUser;
+        proposicao.area = currentArea;
+        proposicao.titulo = "teste API";
+        proposicao.descricaoProposicao = "teste1";
+        proposicao.possuiParecerJuridico = false;
+        proposicao.resumoGeralResolucao = "teste1";
+        proposicao.observacoesCustos = "teste";
+        proposicao.competenciasConformeNormas = "teste";
+        proposicao.dataBaseValor = new Date();
+        proposicao.moeda = "real";
+        proposicao.valorOriginalContrato = 100;
+        proposicao.valorTotalProposicao = 100;
+        proposicao.numeroContrato = "100";
+        proposicao.termo = "teste";
+        proposicao.fornecedor = "fornecedor teste";
+        proposicao.valorAtualContrato = 100;
+        proposicao.numeroReservaVerba = "100";
+        proposicao.valorReservaVerba = 100;
+        proposicao.inicioVigenciaReserva = new Date();
+        proposicao.fimVigenciaReserva = new Date();
+        proposicao.numeroProposicao = "1000";
+        proposicao.protocoloExpediente = "1000f";
+        proposicao.numeroProcessoLicit = "1f1";
+        proposicao.cronogramaFisFinFilePath = "C:\\";
+        proposicao.editalFilePath = "C:\\";
+        proposicao.notaTecnicaFilePath = "C:\\";
+        proposicao.parecerJuridicoFilePath = "C:\\";
+        proposicao.pcaFilePath = "C:\\";
+        proposicao.planilhaQuantFilePath = "C:\\";
+        proposicao.prdFilePath = "C:\\";
+        proposicao.ravFilePath = "C:\\";
+        proposicao.relatorioTecnicoFilePath = "C:\\";
+        proposicao.reservaVerbaFilePath = "C:\\";
+        proposicao.scFilePath = "C:\\";
+        proposicao.sinteseProcessoFilePath = "C:\\";
+        proposicao.trFilePath = "C:\\";
+        proposicao.objeto = ObjetoProposicao.Aditamento;
+
+        const proposicaoReturn: ProposicaoDto = await proposicaoAPI.post(
+            token,
+            proposicao
+        );
+        console.log(proposicaoReturn);
     };
 
     return (
@@ -50,7 +100,14 @@ const Home: NextPage = () => {
                 <div className={styles.grid}>
                     <a className={styles.card} onClick={loginHandler}>
                         <h2>Login &rarr;</h2>
-                        <p>Faz login.</p>
+                        <p>UC #001</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a className={styles.card} onClick={postProposicaoHandler}>
+                        <h2>Criar Proposição &rarr;</h2>
+                        <p>UC #002</p>
                     </a>
                 </div>
             </main>

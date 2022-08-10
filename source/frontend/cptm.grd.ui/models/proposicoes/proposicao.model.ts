@@ -25,7 +25,7 @@ interface IBaseProposicaoDto {
     titulo: string;
     objeto: ObjetoProposicao;
     descricaoProposicao: string;
-    possuiPareceJuridico: boolean;
+    possuiParecerJuridico: boolean;
     resumoGeralResolucao: string;
     observacoesCustos: string;
     competenciasConformeNormas: string;
@@ -80,7 +80,7 @@ export class CreateProposicaoDto
     titulo!: string;
     objeto!: ObjetoProposicao;
     descricaoProposicao!: string;
-    possuiPareceJuridico!: boolean;
+    possuiParecerJuridico!: boolean;
     resumoGeralResolucao!: string;
     observacoesCustos!: string;
     competenciasConformeNormas!: string;
@@ -124,7 +124,7 @@ export class CreateProposicaoDto
         this.titulo = "";
         this.objeto = ObjetoProposicao.Aditamento;
         this.descricaoProposicao = "";
-        this.possuiPareceJuridico = false;
+        this.possuiParecerJuridico = false;
         this.resumoGeralResolucao = "";
         this.observacoesCustos = "";
         this.competenciasConformeNormas = "";
@@ -173,7 +173,7 @@ export class ProposicaoDto
     titulo!: string;
     objeto!: ObjetoProposicao;
     descricaoProposicao!: string;
-    possuiPareceJuridico!: boolean;
+    possuiParecerJuridico!: boolean;
     resumoGeralResolucao!: string;
     observacoesCustos!: string;
     competenciasConformeNormas!: string;
@@ -230,7 +230,7 @@ export class ProposicaoDto
         this.titulo = "";
         this.objeto = ObjetoProposicao.Aditamento;
         this.descricaoProposicao = "";
-        this.possuiPareceJuridico = false;
+        this.possuiParecerJuridico = false;
         this.resumoGeralResolucao = "";
         this.observacoesCustos = "";
         this.competenciasConformeNormas = "";
@@ -308,7 +308,7 @@ export class UpdateProposicaoDto
     titulo!: string;
     objeto!: ObjetoProposicao;
     descricaoProposicao!: string;
-    possuiPareceJuridico!: boolean;
+    possuiParecerJuridico!: boolean;
     resumoGeralResolucao!: string;
     observacoesCustos!: string;
     competenciasConformeNormas!: string;
@@ -352,7 +352,7 @@ export class UpdateProposicaoDto
         this.titulo = "";
         this.objeto = ObjetoProposicao.Aditamento;
         this.descricaoProposicao = "";
-        this.possuiPareceJuridico = false;
+        this.possuiParecerJuridico = false;
         this.resumoGeralResolucao = "";
         this.observacoesCustos = "";
         this.competenciasConformeNormas = "";
