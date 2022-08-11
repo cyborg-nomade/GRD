@@ -1,5 +1,6 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl.Group;
 using CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
+using CPTM.GRD.Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -51,6 +52,13 @@ namespace CPTM.GRD.API.Controllers
                 RequestUser = User,
                 Gid = gid
             });
+        }
+
+        // GET /api/groups/estrutura
+        [HttpGet("estrutura")]
+        public async Task<EstruturaResponse> GetEstrutura()
+        {
+            return await _mediator.Send(new GetEstruturaRequest());
         }
     }
 }

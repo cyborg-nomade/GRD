@@ -1,6 +1,8 @@
-﻿namespace CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
+﻿using CPTM.GRD.Application.Responses;
+using MediatR;
 
-public class GetEstruturaRequest
+namespace CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
+
+public class GetEstruturaRequest : IRequest<EstruturaResponse>
 {
-    // TODO: IMPLEMENT
 }

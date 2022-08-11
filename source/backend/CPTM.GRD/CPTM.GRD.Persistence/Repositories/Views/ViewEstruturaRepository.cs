@@ -1,5 +1,6 @@
 ﻿using CPTM.GRD.Application.Contracts.Persistence.Views;
 using CPTM.GRD.Application.Exceptions;
+using CPTM.GRD.Application.Responses;
 using CPTM.GRD.Domain.AccessControl;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,5 +32,69 @@ public class ViewEstruturaRepository : IViewEstruturaRepository
             SiglaGerencia = grupoEstrutura.GerSigla,
         };
         return group;
+    }
+
+    public async Task<EstruturaResponse> GetEstrutura()
+    {
+        var diretorias = await _grdContext.GrdVwEstruturasOrg
+            .Where(os =>
+                os.FlAtivo == 1 &&
+                os.CdTipoEstrutura == "DIR" &&
+                os.TxSigla != "CED" &&
+                os.TxSigla != "APOS" &&
+                os.TxSigla != "LICSVENC")
+            .Select(os => os.DirSigla)
+            .Distinct()
+            .OrderBy(s => s.Trim()
+                .ToLower())
+            .ToListAsync();
+        var gerenciasGerais = await _grdContext.GrdVwEstruturasOrg
+            .Where(os =>
+                os.FlAtivo == 1 &&
+                os.CdTipoEstrutura == "GG" &&
+                os.TxSigla != "CED" &&
+                os.TxSigla != "APOS" &&
+                os.TxSigla != "LICSVENC")
+            .OrderBy(os => os.DirSigla)
+            .Select(os => os.GgSigla)
+            .Distinct()
+            .OrderBy(s => s.Trim()
+                .ToLower())
+            .ToListAsync();
+        var gerencias = await _grdContext.GrdVwEstruturasOrg
+            .Where(os =>
+                os.FlAtivo == 1 &&
+                os.CdTipoEstrutura == "GER" &&
+                os.TxSigla != "CED" &&
+                os.TxSigla != "APOS" &&
+                os.TxSigla != "LICSVENC")
+            .OrderBy(os => os.DirSigla)
+            .Select(os => os.GerSigla)
+            .Distinct()
+            .OrderBy(s => s.Trim()
+                .ToLower())
+            .ToListAsync();
+        var departamentos = await _grdContext.GrdVwEstruturasOrg
+            .Where(os =>
+                os.FlAtivo == 1 &&
+                os.CdTipoEstrutura == "D" &&
+                os.TxSigla != "CED" &&
+                os.TxSigla != "APOS" &&
+                os.TxSigla != "LICSVENC")
+            .OrderBy(os => os.DirSigla)
+            .Select(os => os.DepSigla)
+            .Distinct()
+            .OrderBy(s => s.Trim()
+                .ToLower())
+            .ToListAsync();
+
+
+        return new EstruturaResponse()
+        {
+            Departamentos = departamentos,
+            Diretorias = diretorias,
+            Gerencias = gerencias,
+            GerenciasGerais = gerenciasGerais
+        };
     }
 }
