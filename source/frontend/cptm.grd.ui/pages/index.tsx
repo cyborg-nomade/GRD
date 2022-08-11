@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { AuthUser, GroupDto, UserDto } from "../models/access-control.model";
 import { ObjetoProposicao } from "../models/common.model";
+import { AddProposicaoToReuniaoDto } from "../models/mixed.model";
 import {
     CreateProposicaoDto,
     ProposicaoDto,
@@ -144,6 +145,17 @@ const Home: NextPage = () => {
         console.log(proposicaoRepproved);
     };
 
+    const grgAddsProposicaoToReuniaoHandler = async () => {
+        var response: AddProposicaoToReuniaoDto =
+            await reuniaoAPI.addProposicao(
+                token,
+                createdReuniao.id,
+                createdProposicao.id
+            );
+
+        console.log(response);
+    };
+
     const postReuniaoHandler = async () => {
         const reuniao = new CreateReuniaoDto();
         reuniao.data = new Date("2022-08-12");
@@ -226,6 +238,16 @@ const Home: NextPage = () => {
                     >
                         <h2>Diretor Reprova Proposição &rarr;</h2>
                         <p>UC #006</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a
+                        className={styles.card}
+                        onClick={grgAddsProposicaoToReuniaoHandler}
+                    >
+                        <h2>GRG adiciona Proposição a uma Reunião &rarr;</h2>
+                        <p>UC #007</p>
                     </a>
                 </div>
 

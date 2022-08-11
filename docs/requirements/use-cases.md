@@ -483,7 +483,7 @@
 -   **_data outputs_**: list of proposicoes
 -   **_side effects_**: none
 
-## 014. grg creates reuniao
+## 014. grg creates reuniao (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: other grg members
