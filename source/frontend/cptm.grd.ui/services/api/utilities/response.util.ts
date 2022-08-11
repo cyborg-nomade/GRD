@@ -11,8 +11,8 @@ export function handleResponse(response: any) {
 }
 
 export function handleError(error: any) {
-    if (error.data) {
-        return error.data;
+    if (error.response.data) {
+        return error.response.data;
     }
     return error;
 }
