@@ -77,7 +77,7 @@ class ProposicoesApi extends ApiCore<
     rdDeliberateDiretor!: (
         token: string,
         pid: number,
-        votesWithAjustes: VoteWithAjustesProposicaoDto
+        votesWithAjustes: VoteWithAjustesProposicaoDto[]
     ) => Promise<ProposicaoDto>;
     annotatePrevia!: (
         token: string,
@@ -306,7 +306,7 @@ class ProposicoesApi extends ApiCore<
         this.rdDeliberateDiretor = async (
             token: string,
             pid: number,
-            votesWithAjustes: VoteWithAjustesProposicaoDto
+            votesWithAjustes: VoteWithAjustesProposicaoDto[]
         ) => {
             try {
                 const response = await axios.put(
