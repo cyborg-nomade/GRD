@@ -8,7 +8,6 @@ using CPTM.GRD.Application.Contracts.Persistence.Reunioes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto.Validators;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Interfaces;
-using CPTM.GRD.Application.DTOs.Main.Reuniao.Validators;
 using CPTM.GRD.Common;
 using FluentValidation;
 

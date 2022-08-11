@@ -1,5 +1,4 @@
 ﻿using CPTM.GRD.Application.DTOs.Main.Acao;
-using CPTM.GRD.Application.DTOs.Main.Acao.Interfaces;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Reuniao.Children;
 using CPTM.GRD.Application.DTOs.Main.Reuniao.Interfaces;
@@ -7,7 +6,7 @@ using CPTM.GRD.Common;
 
 namespace CPTM.GRD.Application.DTOs.Main.Reuniao;
 
-public class CreateReuniaoDto : IBaseReuniaoDto
+public class CreateReuniaoDto : IBaseReuniaoDto, ICreateParticipanteReuniaoDto
 {
     public DateTime Data { get; set; }
     public DateTime Horario { get; set; }

@@ -22,5 +22,6 @@ public class CreateReuniaoDtoValidator : AbstractValidator<CreateReuniaoDto>
         Include(new IBaseReuniaoDtoValidator(groupRepository, authenticationService, userRepository, acaoRepository,
             votoRepository, participanteRepository, reuniaoRepository, reuniaoStrictSequence, proposicaoRepository,
             proposicaoStrictSequence));
+        Include(new ICreateParticipanteReuniaoDtoValidator(groupRepository, authenticationService, userRepository));
     }
 }

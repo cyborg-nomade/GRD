@@ -25,5 +25,7 @@ public class ReuniaoDtoValidator : AbstractValidator<ReuniaoDto>
 
         Include(new IFullReuniaoDtoValidator(reuniaoRepository, reuniaoStrictSequence));
         Include(new IAutoPropertiesReuniaoDtoValidator());
+        Include(new IParticipanteReuniaoDtoValidator(groupRepository, authenticationService, userRepository,
+            participanteRepository));
     }
 }

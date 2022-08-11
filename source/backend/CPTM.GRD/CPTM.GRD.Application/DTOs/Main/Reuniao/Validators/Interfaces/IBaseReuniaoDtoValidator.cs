@@ -8,7 +8,6 @@ using CPTM.GRD.Application.Contracts.Persistence.Reunioes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
 using CPTM.GRD.Application.DTOs.Main.Acao.Validators.Interfaces;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
-using CPTM.GRD.Application.DTOs.Main.Reuniao.Children.Validators.Interfaces;
 using CPTM.GRD.Application.DTOs.Main.Reuniao.Interfaces;
 using FluentValidation;
 
@@ -40,10 +39,6 @@ public class IBaseReuniaoDtoValidator : AbstractValidator<IBaseReuniaoDto>
             .SetValidator(new ProposicaoDtoValidator(groupRepository, authenticationService, userRepository,
                 acaoRepository, votoRepository, participanteRepository, reuniaoRepository, reuniaoStrictSequence,
                 proposicaoRepository, proposicaoStrictSequence));
-        RuleForEach(p => p.Participantes)
-            .SetValidator(new IBaseParticipanteDtoValidator(groupRepository, authenticationService, userRepository));
-        RuleForEach(p => p.ParticipantesPrevia)
-            .SetValidator(new IBaseParticipanteDtoValidator(groupRepository, authenticationService, userRepository));
         RuleForEach(p => p.Acoes)
             .SetValidator(new IBaseAcaoDtoValidator(groupRepository, authenticationService, userRepository));
     }

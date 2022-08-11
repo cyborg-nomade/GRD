@@ -1,7 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
-using CPTM.GRD.Application.Models;
 using CPTM.GRD.Application.Responses;
 using CPTM.GRD.Common;
 using Newtonsoft.Json;

@@ -1,16 +1,10 @@
 ﻿using AutoMapper;
 using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
-using CPTM.GRD.Application.DTOs.AccessControl.Group;
-using CPTM.GRD.Application.DTOs.AccessControl.User;
-using CPTM.GRD.Application.Features.AccessControl.Handlers.Commands;
-using CPTM.GRD.Application.Features.AccessControl.Requests.Commands;
 using CPTM.GRD.Application.Profiles;
 using CPTM.GRD.Application.Tests.Mocks.Infrastructure;
 using CPTM.GRD.Application.Tests.Mocks.Persistence.AccessControl;
-using CPTM.GRD.Common;
 using Moq;
-using Shouldly;
 
 namespace CPTM.GRD.Application.Tests.Tests.AccessControl.Commands;
 
