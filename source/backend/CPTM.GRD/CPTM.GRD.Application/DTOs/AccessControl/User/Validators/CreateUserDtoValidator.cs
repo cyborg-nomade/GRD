@@ -9,7 +9,6 @@ public class CreateUserDtoValidator : AbstractValidator<CreateUserDto>
 {
     public CreateUserDtoValidator(IAuthenticationService authenticationService, IUserRepository userRepository)
     {
-        Include(new IBaseUserDtoValidator(authenticationService, userRepository));
         Include(new IUsernameAdUserDtoValidator(authenticationService));
     }
 }

@@ -27,10 +27,8 @@ public class AuthenticationService : IAuthenticationService
 {
     private AuthenticationServiceSettings AuthenticationServiceSettings { get; }
     private readonly JwtSettings _jwtSettings;
-    private readonly IViewUsuarioRepository _viewUsuarioRepository;
     private readonly IUserRepository _userRepository;
     private readonly IGroupRepository _groupRepository;
-    private readonly IMapper _mapper;
 
     public AuthenticationService(
         IOptions<AuthenticationServiceSettings> authOptions,
@@ -41,10 +39,8 @@ public class AuthenticationService : IAuthenticationService
         IMapper mapper)
     {
         _jwtSettings = jwtSettings.Value;
-        _viewUsuarioRepository = viewUsuarioRepository;
         _userRepository = userRepository;
         _groupRepository = groupRepository;
-        _mapper = mapper;
         AuthenticationServiceSettings = authOptions.Value;
     }
 

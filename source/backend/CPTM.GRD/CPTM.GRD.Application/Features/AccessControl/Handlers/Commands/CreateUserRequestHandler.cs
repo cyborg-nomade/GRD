@@ -43,11 +43,11 @@ public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, UserD
             throw new ValidationException(validationResult);
         }
 
-        var user = _mapper.Map<User>(request.CreateUserDto);
-        var addedUser = await _unitOfWork.UserRepository.Add(user);
+        var userAd = await _authenticationService.GetUsuarioAd(request.CreateUserDto.UsernameAd);
+        var addedUser = await _unitOfWork.UserRepository.AddFromUsuarioAd(userAd, AccessLevel.Sub);
         await _unitOfWork.Save();
 
-        await _emailService.SendEmail(new List<User>() { user }, UserCreationSubject, UserCreationMessage);
+        await _emailService.SendEmail(new List<User>() { addedUser }, UserCreationSubject, UserCreationMessage);
 
         return _mapper.Map<UserDto>(addedUser);
     }
