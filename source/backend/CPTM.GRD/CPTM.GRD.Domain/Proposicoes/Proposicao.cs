@@ -104,6 +104,11 @@ public class Proposicao
 
     public Proposicao SendToDiretoriaResponsavelApproval(User responsavel)
     {
+        if (Status != ProposicaoStatus.EmPreenchimento)
+        {
+            throw new Exception("Proposição não pode ser encaminhada para aprovação. Status incorreto.");
+        }
+
         ChangeStatus(ProposicaoStatus.EmAprovacaoDiretoriaResp, TipoLogProposicao.EnvioAprovacaoDiretoria, responsavel);
         MotivoRetornoDiretoriaResp = string.Empty;
         MotivoRetornoGrg = string.Empty;
@@ -112,6 +117,11 @@ public class Proposicao
 
     public Proposicao DiretoriaResponsavelApproveProposicao(User responsavel)
     {
+        if (Status != ProposicaoStatus.EmAprovacaoDiretoriaResp)
+        {
+            throw new Exception("Proposição não está disponível para aprovação. Status incorreto.");
+        }
+
         ChangeStatus(ProposicaoStatus.DisponivelInclusaoPauta, TipoLogProposicao.AprovacaoDiretoria, responsavel);
         MotivoRetornoDiretoriaResp = string.Empty;
         MotivoRetornoGrg = string.Empty;
@@ -120,6 +130,11 @@ public class Proposicao
 
     public Proposicao DiretoriaResponsavelRepproveProposicao(User responsavel, string motivoRetorno)
     {
+        if (Status != ProposicaoStatus.EmAprovacaoDiretoriaResp)
+        {
+            throw new Exception("Proposição não está disponível para reprovação. Status incorreto.");
+        }
+
         ChangeStatus(ProposicaoStatus.ReprovadoDiretoriaResp, TipoLogProposicao.ReprovacaoDiretoria, responsavel);
         MotivoRetornoDiretoriaResp = motivoRetorno;
         return this;
@@ -127,6 +142,12 @@ public class Proposicao
 
     public Proposicao GrgReturnProposicaoToDiretoria(User responsavel, string motivoRetorno)
     {
+        if (Status != ProposicaoStatus.DisponivelInclusaoPauta)
+        {
+            throw new Exception(
+                "Proposição não está disponível para retorno à diretoria responsável. Status incorreto.");
+        }
+
         ChangeStatus(ProposicaoStatus.EmAprovacaoDiretoriaResp, TipoLogProposicao.GrgRetornaParaDiretoria, responsavel);
         MotivoRetornoGrg = motivoRetorno;
         return this;
@@ -134,15 +155,26 @@ public class Proposicao
 
     public Proposicao AddToReuniao(Reuniao reuniao, User responsavel)
     {
+        if (Status != ProposicaoStatus.DisponivelInclusaoPauta)
+        {
+            throw new Exception("Proposição não está disponível para inclusão em pauta. Status incorreto");
+        }
+
         GenerateProposicaoLog(TipoLogProposicao.InclusaoPauta, responsavel,
             $@"Inclusão na pauta da RD número {reuniao.NumeroReuniao}");
+
         Reuniao = reuniao;
-        Status = ProposicaoStatus.InclusaEmReuniao;
+        ChangeStatus(ProposicaoStatus.InclusaEmReuniao, TipoLogProposicao.InclusaoPauta, responsavel);
         return this;
     }
 
     public Proposicao RemoveFromReuniao(Reuniao reuniao, User responsavel)
     {
+        if (Status != ProposicaoStatus.InclusaEmReuniao)
+        {
+            throw new Exception("Proposição não está disponível para remoção da pauta. Status incorreto.");
+        }
+
         GenerateProposicaoLog(TipoLogProposicao.RemocaoPauta, responsavel,
             $@"Remoção da pauta da RD número {reuniao.NumeroReuniao}");
         Reuniao = new Reuniao();
@@ -152,12 +184,19 @@ public class Proposicao
 
     public Proposicao AnnotateProposicaoInPrevia(User responsavel, string anotacao)
     {
+        GenerateProposicaoLog(TipoLogProposicao.AnotacaoPrevia, responsavel,
+            $@"Anotação em prévia: {anotacao}");
         AnotacoesPrevia = anotacao;
         return this;
     }
 
     public Proposicao AddToPautaDefinitiva(User responsavel)
     {
+        if (Status != ProposicaoStatus.EmPautaPrevia)
+        {
+            throw new Exception("Proposição não está disponível para inclusão em pauta definitiva. Status incorreto.");
+        }
+
         ChangeStatus(ProposicaoStatus.EmPautaDefinitiva, TipoLogProposicao.Edicao, responsavel);
         return this;
     }
@@ -167,24 +206,29 @@ public class Proposicao
         GenerateProposicaoLog(LogProposicao.ConvertFromTipoVoto(vote.VotoRd), diretor,
             $@"Voto de Diretor {diretor.Nome} em RD: {vote.VotoRd}");
         AjustesRd += $"\n\n{ajustes}";
-        VotosRd.Add(vote);
+        VotosRd?.Add(vote);
         return this;
     }
 
     private bool CheckIfParticipanteVoted(Participante participante)
     {
-        return VotosRd.Any(v => v.Participante == participante);
+        return VotosRd != null && VotosRd.Any(v => v.Participante == participante);
     }
 
     private Voto GetParticipanteVoto(Participante participante)
     {
-        return VotosRd.SingleOrDefault(v => v.Participante == participante) ??
+        return VotosRd!.SingleOrDefault(v => v.Participante == participante) ??
                throw new InvalidOperationException("Não há votos para este participante");
     }
 
     public Proposicao CalculateNewProposicaoStatusFromVotes()
     {
-        if (Reuniao.Participantes.Count > VotosRd.Count)
+        if (Status != ProposicaoStatus.EmPautaDefinitiva)
+        {
+            throw new Exception("Proposição não está disponível para votação. Status incorreto.");
+        }
+
+        if (Reuniao?.Participantes?.Count > VotosRd?.Count)
         {
             // voting hasn't finished, status unchanged
             return this;
@@ -194,7 +238,7 @@ public class Proposicao
         var repprovedCount = 0;
         var suspensionCount = 0;
         var abstentionCount = 0;
-        foreach (var reuniaoParticipante in Reuniao.Participantes)
+        foreach (var reuniaoParticipante in Reuniao?.Participantes!)
         {
             if (CheckIfParticipanteVoted(reuniaoParticipante))
             {
@@ -219,25 +263,25 @@ public class Proposicao
             }
         }
 
-        if (abstentionCount == VotosRd.Count)
+        if (abstentionCount == VotosRd?.Count)
         {
             Status = ProposicaoStatus.SuspensaRd;
             return this;
         }
 
-        if (approvedCount > (VotosRd.Count - abstentionCount) / 2)
+        if (approvedCount > (VotosRd?.Count - abstentionCount) / 2)
         {
             Status = ProposicaoStatus.AprovadaRd;
             return this;
         }
 
-        if (repprovedCount > (VotosRd.Count - abstentionCount) / 2)
+        if (repprovedCount > (VotosRd?.Count - abstentionCount) / 2)
         {
             Status = ProposicaoStatus.ReprovadaRd;
             return this;
         }
 
-        if (suspensionCount > (VotosRd.Count - abstentionCount) / 2)
+        if (suspensionCount > (VotosRd?.Count - abstentionCount) / 2)
         {
             Status = ProposicaoStatus.SuspensaRd;
             return this;
@@ -367,7 +411,7 @@ public class Proposicao
                 break;
             case ProposicaoStatus.SuspensaRdAjustesRealizados:
                 ChangeStatus(ProposicaoStatus.DisponivelInclusaoPauta, TipoLogProposicao.AjustesRdok, responsavel);
-                if (Reuniao.NumeroReuniao != 0) RemoveFromReuniao(Reuniao, responsavel);
+                if (Reuniao?.NumeroReuniao != 0) RemoveFromReuniao(Reuniao!, responsavel);
                 break;
             case ProposicaoStatus.EmPreenchimento:
             case ProposicaoStatus.EmAprovacaoDiretoriaResp:

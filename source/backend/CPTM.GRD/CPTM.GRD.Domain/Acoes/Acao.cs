@@ -54,7 +54,6 @@ public class Acao
 
     internal Acao AddToReuniao(Reuniao reuniao, User responsavel)
     {
-        GenerateAcaoLog(TipoLogAcao.Criacao, "Salvamento inicial", responsavel);
         Reunioes.Add(reuniao);
         ChangeStatus(AcaoStatus.EmAndamento, TipoLogAcao.Criacao, responsavel);
         return this;
@@ -62,9 +61,12 @@ public class Acao
 
     internal Acao RemoveFromReuniao(Reuniao reuniao, User responsavel)
     {
-        GenerateAcaoLog(TipoLogAcao.RemocaoDeReuniao, $@"Remoção da pauta da RD número {reuniao.NumeroReuniao}",
-            responsavel);
-        Reunioes.Remove(reuniao);
+        if (!Reunioes.Remove(reuniao))
+        {
+            throw new Exception("Esta ação não está nesta reunião");
+        }
+
+        reuniao.RemoveAcao(this, responsavel);
         ChangeStatus(AcaoStatus.EmAndamento, TipoLogAcao.RemocaoDeReuniao, responsavel);
         return this;
     }
@@ -77,16 +79,16 @@ public class Acao
 
     public Acao AddAndamento(Andamento newAndamento)
     {
+        Andamentos?.Add(newAndamento);
         GenerateAcaoLog(TipoLogAcao.InclusaoAndamento, $@"Novo Andamento: {newAndamento.Descricao}", newAndamento.User);
-        Andamentos.Add(newAndamento);
         return this;
     }
 
     public Acao FollowUp(Reuniao reuniao, User responsavel)
     {
-        ChangeStatus(AcaoStatus.EmAcompanhamento, TipoLogAcao.Edicao, responsavel);
-        reuniao.FollowUpAcao(this);
         Reunioes.Add(reuniao);
+        reuniao.FollowUpAcao(this);
+        ChangeStatus(AcaoStatus.EmAcompanhamento, TipoLogAcao.Edicao, responsavel);
         return this;
     }
 
