@@ -3,7 +3,6 @@ using CPTM.GRD.Domain.AccessControl;
 using CPTM.GRD.Domain.Logging;
 using CPTM.GRD.Domain.Proposicoes.Children;
 using CPTM.GRD.Domain.Reunioes;
-using CPTM.GRD.Domain.Reunioes.Children;
 
 namespace CPTM.GRD.Domain.Proposicoes;
 
@@ -210,12 +209,12 @@ public class Proposicao
         return this;
     }
 
-    private bool CheckIfParticipanteVoted(Participante participante)
+    private bool CheckIfParticipanteVoted(User participante)
     {
         return VotosRd != null && VotosRd.Any(v => v.Participante == participante);
     }
 
-    private Voto GetParticipanteVoto(Participante participante)
+    private Voto GetParticipanteVoto(User participante)
     {
         return VotosRd!.SingleOrDefault(v => v.Participante == participante) ??
                throw new InvalidOperationException("Não há votos para este participante");

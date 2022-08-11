@@ -48,7 +48,8 @@ public class CreateMemoriaPreviaReuniaoRequestHandler : IRequestHandler<CreateMe
         var updatedReuniao = await _unitOfWork.ReuniaoRepository.Update(reuniao);
         await _unitOfWork.Save();
 
-        await _emailService.SendEmailWithFile(updatedReuniao.ParticipantesPrevia.Select(p => p.User), reuniao,
+        if (updatedReuniao.ParticipantesPrevia == null) throw new BadRequestException("Não há participantes na prévia");
+        await _emailService.SendEmailWithFile(updatedReuniao.ParticipantesPrevia, reuniao,
             TipoArquivo.MemoriaPrevia);
 
         return _mapper.Map<ReuniaoDto>(updatedReuniao);

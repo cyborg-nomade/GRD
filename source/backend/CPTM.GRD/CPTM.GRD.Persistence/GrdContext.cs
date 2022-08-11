@@ -5,7 +5,6 @@ using CPTM.GRD.Domain.Logging;
 using CPTM.GRD.Domain.Proposicoes;
 using CPTM.GRD.Domain.Proposicoes.Children;
 using CPTM.GRD.Domain.Reunioes;
-using CPTM.GRD.Domain.Reunioes.Children;
 using CPTM.GRD.Persistence.ConfigurationTables;
 using CPTM.GRD.Persistence.Views;
 using Microsoft.EntityFrameworkCore;
@@ -36,7 +35,6 @@ namespace CPTM.GRD.Persistence
         public virtual DbSet<Voto> Votos { get; set; } = null!;
 
         public virtual DbSet<Reuniao> Reunioes { get; set; } = null!;
-        public virtual DbSet<Participante> Participantes { get; set; } = null!;
 
         public virtual DbSet<LogAcao> LogsAcao { get; set; } = null!;
         public virtual DbSet<LogProposicao> LogsProposicao { get; set; } = null!;
@@ -51,6 +49,11 @@ namespace CPTM.GRD.Persistence
         public virtual DbSet<GrdVwFuncao> GrdVwFuncoes { get; set; } = null!;
         public virtual DbSet<GrdVwUsuario> GrdVwUsuarios { get; set; } = null!;
         public virtual DbSet<GrdVwUsuarioFoto> GrdVwUsuarioFotos { get; set; } = null!;
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.EnableSensitiveDataLogging();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -229,7 +232,7 @@ namespace CPTM.GRD.Persistence
                 .UsingEntity<Dictionary<string, object>>(
                     "GRD_PART_REUNIAO",
                     j => j
-                        .HasOne<Participante>()
+                        .HasOne<User>()
                         .WithMany()
                         .HasForeignKey("PartId")
                         .HasConstraintName("FK_PartReuniao_PartId")
@@ -246,7 +249,7 @@ namespace CPTM.GRD.Persistence
                 .UsingEntity<Dictionary<string, object>>(
                     "GRD_PARTPREV_REUNIAO",
                     j => j
-                        .HasOne<Participante>()
+                        .HasOne<User>()
                         .WithMany()
                         .HasForeignKey("PartId")
                         .HasConstraintName("FK_PartPrevReuniao_PartId")
@@ -280,29 +283,6 @@ namespace CPTM.GRD.Persistence
             modelBuilder.Entity<Reuniao>().Navigation(r => r.Participantes).AutoInclude();
             modelBuilder.Entity<Reuniao>().Navigation(r => r.ParticipantesPrevia).AutoInclude();
             modelBuilder.Entity<Reuniao>().Navigation(r => r.Acoes).AutoInclude();
-
-            #region reuniao children tables config
-
-            modelBuilder.Entity<Participante>().ToTable("GRD_PARTICIPANTES");
-
-            modelBuilder.Entity<Participante>().Property(p => p.Id).UseHiLo("SEQ_PARTICIPANTES");
-
-            modelBuilder.Entity<Participante>()
-                .HasOne(p => p.User)
-                .WithOne()
-                .HasForeignKey("Participante", "UserId")
-                .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("FK_Part_User");
-            modelBuilder.Entity<Participante>()
-                .HasOne(p => p.Area)
-                .WithMany()
-                .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("FK_Part_Group");
-
-            modelBuilder.Entity<Participante>().Navigation(p => p.User).AutoInclude();
-            modelBuilder.Entity<Participante>().Navigation(p => p.Area).AutoInclude();
-
-            #endregion
 
             #endregion
 

@@ -1,4 +1,5 @@
-﻿using CPTM.GRD.Application.DTOs.Main.Acao;
+﻿using CPTM.GRD.Application.DTOs.AccessControl.User;
+using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Common;
 
@@ -14,6 +15,8 @@ public interface IBaseReuniaoDto
     public TipoReuniao TipoReuniao { get; set; }
     public ICollection<ProposicaoDto> Proposicoes { get; set; }
     public ICollection<ProposicaoDto> ProposicoesPrevia { get; set; }
+    public ICollection<UserDto> Participantes { get; set; }
+    public ICollection<UserDto> ParticipantesPrevia { get; set; }
     public ICollection<AcaoDto> Acoes { get; set; }
     public string? Comunicado { get; set; }
     public string? OutrasObservacoes { get; set; }

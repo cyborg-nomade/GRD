@@ -27,6 +27,7 @@ public class CreateGroupRequestHandler : IRequestHandler<CreateGroupRequest, Gro
         _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.SysAdmin);
 
         var addedGroup = await _unitOfWork.GroupRepository.GetOrAddBySigla(request.Sigla);
+        await _unitOfWork.Save();
 
         return _mapper.Map<GroupDto>(addedGroup);
     }

@@ -1,10 +1,7 @@
 ﻿using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
-using CPTM.GRD.Application.Contracts.Persistence.Acoes;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes.Children;
-using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
-using CPTM.GRD.Application.Contracts.Persistence.Reunioes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
 using CPTM.GRD.Application.DTOs.Main.Acao.Validators.Interfaces;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Validators;
@@ -15,14 +12,12 @@ namespace CPTM.GRD.Application.DTOs.Main.Reuniao.Validators.Interfaces;
 
 public class IBaseReuniaoDtoValidator : AbstractValidator<IBaseReuniaoDto>
 {
-    public IBaseReuniaoDtoValidator(IGroupRepository groupRepository,
+    public IBaseReuniaoDtoValidator(
+        IGroupRepository groupRepository,
         IAuthenticationService authenticationService,
         IUserRepository userRepository,
-        IAcaoRepository acaoRepository,
         IVotoRepository votoRepository,
-        IParticipanteRepository participanteRepository,
-        IReuniaoRepository reuniaoRepository,
-        IReuniaoStrictSequenceControl reuniaoStrictSequence, IProposicaoRepository proposicaoRepository,
+        IProposicaoRepository proposicaoRepository,
         IProposicaoStrictSequenceControl proposicaoStrictSequence)
     {
         RuleFor(p => p.Data).NotNull().NotEmpty();
@@ -33,11 +28,11 @@ public class IBaseReuniaoDtoValidator : AbstractValidator<IBaseReuniaoDto>
         RuleFor(p => p.TipoReuniao).NotNull().IsInEnum();
         RuleForEach(p => p.Proposicoes)
             .SetValidator(new ProposicaoDtoValidator(groupRepository, authenticationService, userRepository,
-                acaoRepository, votoRepository, participanteRepository, reuniaoRepository, reuniaoStrictSequence,
+                votoRepository,
                 proposicaoRepository, proposicaoStrictSequence));
         RuleForEach(p => p.ProposicoesPrevia)
             .SetValidator(new ProposicaoDtoValidator(groupRepository, authenticationService, userRepository,
-                acaoRepository, votoRepository, participanteRepository, reuniaoRepository, reuniaoStrictSequence,
+                votoRepository,
                 proposicaoRepository, proposicaoStrictSequence));
         RuleForEach(p => p.Acoes)
             .SetValidator(new IBaseAcaoDtoValidator(groupRepository, authenticationService, userRepository));

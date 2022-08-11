@@ -28,8 +28,8 @@ public class ViewEstruturaRepository : IViewEstruturaRepository
             Sigla = sigla,
             Diretoria = grupoEstrutura.DirSigla ?? throw new InvalidOperationException(),
             SiglaDiretoria = grupoEstrutura.DirSigla,
-            Gerencia = grupoEstrutura.GerSigla ?? throw new InvalidOperationException(),
-            SiglaGerencia = grupoEstrutura.GerSigla,
+            Gerencia = grupoEstrutura.GerSigla ?? grupoEstrutura.DirSigla,
+            SiglaGerencia = grupoEstrutura.GerSigla ?? grupoEstrutura.DirSigla,
         };
         return group;
     }

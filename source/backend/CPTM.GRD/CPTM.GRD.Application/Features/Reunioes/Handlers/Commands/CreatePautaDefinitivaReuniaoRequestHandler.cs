@@ -50,7 +50,8 @@ public class
         var updatedReuniao = await _unitOfWork.ReuniaoRepository.Update(reuniao);
         await _unitOfWork.Save();
 
-        await _emailService.SendEmailWithFile(updatedReuniao.ParticipantesPrevia.Select(p => p.User), reuniao,
+        if (updatedReuniao.Participantes == null) throw new BadRequestException("Não há participantes na reunião");
+        await _emailService.SendEmailWithFile(updatedReuniao.Participantes, reuniao,
             TipoArquivo.PautaDefinitiva);
 
         return _mapper.Map<ReuniaoDto>(updatedReuniao);

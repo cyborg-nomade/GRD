@@ -168,7 +168,7 @@ public class EmailService : IEmailService
     {
         var destinatariosReuniao =
             (reuniao.Participantes ?? throw new NotFoundException(nameof(reuniao.Participantes), reuniao))
-            .Select(p => p.User).ToList();
+            .ToList();
         return destinatariosReuniao;
     }
 

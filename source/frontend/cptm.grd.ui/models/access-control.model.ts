@@ -52,18 +52,10 @@ export class AuthUser {
     }
 }
 
-export class CreateUserDto implements IBaseUserDto, IUsernameAdUserDto {
-    nome!: string;
-    nivelAcesso!: AccessLevel;
-    areasAcesso!: GroupDto[];
-    funcao!: string;
+export class CreateUserDto implements IUsernameAdUserDto {
     usernameAd!: string;
 
     constructor() {
-        this.nome = "";
-        this.nivelAcesso = AccessLevel.Sub;
-        this.areasAcesso = [new GroupDto()];
-        this.funcao = "";
         this.usernameAd = "";
     }
 }

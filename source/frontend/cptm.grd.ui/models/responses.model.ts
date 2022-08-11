@@ -11,3 +11,17 @@ export class AuthResponse {
         this.expirationDate = new Date();
     }
 }
+
+export class EstruturaResponse {
+    diretorias!: string[];
+    gerenciasGerais!: string[];
+    gerencias!: string[];
+    departamentos!: string[];
+
+    constructor() {
+        this.diretorias = [];
+        this.gerencias = [];
+        this.gerenciasGerais = [];
+        this.departamentos = [];
+    }
+}

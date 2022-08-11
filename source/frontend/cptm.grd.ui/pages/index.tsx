@@ -11,12 +11,13 @@ import {
     UpdateProposicaoDto,
     VoteWithAjustesProposicaoDto,
 } from "../models/proposicoes/proposicao.model";
-import { AuthResponse } from "../models/responses.model";
+import { AuthResponse, EstruturaResponse } from "../models/responses.model";
 import {
     CreateParticipanteDto,
     ParticipanteDto,
 } from "../models/reunioes/children/participante.model";
 import { CreateReuniaoDto, ReuniaoDto } from "../models/reunioes/reuniao.model";
+import GroupsApi from "../services/api/groups.api";
 import ProposicoesApi from "../services/api/proposicoes.api";
 import ReunioesApi from "../services/api/reunioes.api";
 import UsersApi from "../services/api/users.api";
@@ -30,8 +31,10 @@ const Home: NextPage = () => {
         new ProposicaoDto()
     );
     const [createdReuniao, setCreatedReuniao] = useState(new ReuniaoDto());
+    const [estrutura, setEstrutura] = useState(new EstruturaResponse());
 
     const usersAPI = new UsersApi();
+    const groupsAPI = new GroupsApi();
     const proposicaoAPI = new ProposicoesApi();
     const reuniaoAPI = new ReunioesApi();
 
@@ -192,20 +195,38 @@ const Home: NextPage = () => {
         reuniao.horarioPrevia = new Date("2022-08-11");
         reuniao.local = "teste";
 
+        const group1 = await groupsAPI.postWithSigla(
+            token,
+            estrutura.diretorias[0]
+        );
+        console.log(group1);
+
+        const group2 = await groupsAPI.postWithSigla(
+            token,
+            estrutura.diretorias[1]
+        );
+        console.log(group2);
+
+        const group3 = await groupsAPI.postWithSigla(
+            token,
+            estrutura.diretorias[2]
+        );
+        console.log(group3);
+
         const participante1 = new CreateParticipanteDto();
         participante1.nome = "dir1";
         participante1.email = "dir1@teste.com";
-        participante1.area = currentArea;
+        participante1.area = group1;
 
         const participante2 = new CreateParticipanteDto();
         participante2.nome = "dir2";
         participante2.email = "dir2@teste.com";
-        participante2.area = currentArea;
+        participante2.area = group2;
 
         const participante3 = new CreateParticipanteDto();
         participante3.nome = "dir3";
         participante3.email = "dir3@teste.com";
-        participante3.area = currentArea;
+        participante3.area = group3;
 
         reuniao.participantes.push(participante1, participante2, participante3);
 
@@ -221,6 +242,22 @@ const Home: NextPage = () => {
         );
         console.log(response);
         setCreatedReuniao(response);
+    };
+
+    const getEstruturaHandler = async () => {
+        const estrutura: EstruturaResponse = await groupsAPI.getEstrutura(
+            token
+        );
+        console.log(estrutura);
+        setEstrutura(estrutura);
+    };
+
+    const createGroupHandler = async () => {
+        const group3 = await groupsAPI.postWithSigla(
+            token,
+            estrutura.gerencias[2]
+        );
+        console.log(group3);
     };
 
     return (
@@ -329,6 +366,20 @@ const Home: NextPage = () => {
                     >
                         <h2>Emitir Pauta Prévia &rarr;</h2>
                         <p>UC #017</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a className={styles.card} onClick={getEstruturaHandler}>
+                        <h2>Obter Estrutura &rarr;</h2>
+                        <p>Utility</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a className={styles.card} onClick={createGroupHandler}>
+                        <h2>Criar Grupo &rarr;</h2>
+                        <p>Utility</p>
                     </a>
                 </div>
             </main>

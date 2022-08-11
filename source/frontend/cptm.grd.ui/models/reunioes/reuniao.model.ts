@@ -1,10 +1,6 @@
+import { UserDto } from "../access-control.model";
 import { ReuniaoStatus, TipoReuniao } from "../common.model";
 import { ProposicaoDto } from "../proposicoes/proposicao.model";
-import {
-    CreateParticipanteDto,
-    IBaseParticipanteDto,
-    ParticipanteDto,
-} from "./children/participante.model";
 import { AcaoDto, IBaseAcaoDto } from "./../acoes/acao.model";
 
 interface IAutoPropertiesReuniaoDto {
@@ -25,15 +21,12 @@ interface IBaseReuniaoDto {
     tipoReuniao: TipoReuniao;
     proposicoes: ProposicaoDto[];
     proposicoesPrevia: ProposicaoDto[];
+    participantes: UserDto[];
+    participantesPrevia: UserDto[];
     acoes: AcaoDto[];
     comunicado?: string;
     outrasObservacoes?: string;
     mensagemEmail?: string;
-}
-
-interface ICreateParticipanteReuniaoDto {
-    participantes: CreateParticipanteDto[];
-    participantesPrevia: CreateParticipanteDto[];
 }
 
 interface IFullReuniaoDto {
@@ -41,14 +34,7 @@ interface IFullReuniaoDto {
     numeroReuniao: number;
 }
 
-interface IParticipanteReuniaoDto {
-    participantes: ParticipanteDto[];
-    participantesPrevia: ParticipanteDto[];
-}
-
-export class CreateReuniaoDto
-    implements IBaseReuniaoDto, ICreateParticipanteReuniaoDto
-{
+export class CreateReuniaoDto implements IBaseReuniaoDto {
     data!: Date;
     horario!: Date;
     dataPrevia!: Date;
@@ -57,8 +43,8 @@ export class CreateReuniaoDto
     tipoReuniao!: TipoReuniao;
     proposicoes!: ProposicaoDto[];
     proposicoesPrevia!: ProposicaoDto[];
-    participantes!: CreateParticipanteDto[];
-    participantesPrevia!: CreateParticipanteDto[];
+    participantes!: UserDto[];
+    participantesPrevia!: UserDto[];
     acoes!: AcaoDto[];
     comunicado?: string | undefined;
     outrasObservacoes?: string | undefined;
@@ -80,11 +66,7 @@ export class CreateReuniaoDto
 }
 
 export class ReuniaoDto
-    implements
-        IBaseReuniaoDto,
-        IFullReuniaoDto,
-        IAutoPropertiesReuniaoDto,
-        IParticipanteReuniaoDto
+    implements IBaseReuniaoDto, IFullReuniaoDto, IAutoPropertiesReuniaoDto
 {
     data!: Date;
     horario!: Date;
@@ -94,8 +76,8 @@ export class ReuniaoDto
     tipoReuniao!: TipoReuniao;
     proposicoes!: ProposicaoDto[];
     proposicoesPrevia!: ProposicaoDto[];
-    participantes!: ParticipanteDto[];
-    participantesPrevia!: ParticipanteDto[];
+    participantes!: UserDto[];
+    participantesPrevia!: UserDto[];
     acoes!: AcaoDto[];
     comunicado?: string | undefined;
     outrasObservacoes?: string | undefined;
@@ -156,9 +138,7 @@ export class ReuniaoListDto {
     }
 }
 
-export class UpdateReuniaoDto
-    implements IBaseReuniaoDto, IFullReuniaoDto, IParticipanteReuniaoDto
-{
+export class UpdateReuniaoDto implements IBaseReuniaoDto, IFullReuniaoDto {
     data!: Date;
     horario!: Date;
     dataPrevia!: Date;
@@ -167,8 +147,8 @@ export class UpdateReuniaoDto
     tipoReuniao!: TipoReuniao;
     proposicoes!: ProposicaoDto[];
     proposicoesPrevia!: ProposicaoDto[];
-    participantes!: ParticipanteDto[];
-    participantesPrevia!: ParticipanteDto[];
+    participantes!: UserDto[];
+    participantesPrevia!: UserDto[];
     acoes!: AcaoDto[];
     comunicado?: string | undefined;
     outrasObservacoes?: string | undefined;

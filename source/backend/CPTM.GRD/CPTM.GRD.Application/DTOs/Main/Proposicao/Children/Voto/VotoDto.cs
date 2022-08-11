@@ -1,5 +1,5 @@
-﻿using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto.Interfaces;
-using CPTM.GRD.Application.DTOs.Main.Reuniao.Children;
+﻿using CPTM.GRD.Application.DTOs.AccessControl.User;
+using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto.Interfaces;
 using CPTM.GRD.Common;
 
 namespace CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto;
@@ -7,7 +7,7 @@ namespace CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto;
 public class VotoDto : IBaseVotoDto, IFullVotoDto
 {
     public int Id { get; set; }
-    public ParticipanteDto Participante { get; set; } = new ParticipanteDto();
+    public UserDto Participante { get; set; } = new UserDto();
     public TipoVotoRd VotoRd { get; set; }
 
     public override string ToString()

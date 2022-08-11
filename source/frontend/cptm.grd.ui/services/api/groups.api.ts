@@ -1,5 +1,6 @@
 import axios from "axios";
 import { GroupDto } from "../../models/access-control.model";
+import { EstruturaResponse } from "../../models/responses.model";
 import { ApiCore, ApiCoreOptions } from "./utilities/core.util";
 import { handleError, handleResponse } from "./utilities/response.util";
 
@@ -22,6 +23,8 @@ const groupsApiOptions: ApiCoreOptions = {
 
 class GroupsApi extends ApiCore<GroupDto> {
     getByUser!: (token: string, uid: number) => Promise<GroupDto[]>;
+    getEstrutura!: (token: string) => Promise<EstruturaResponse>;
+    postWithSigla!: (token: string, sigla: string) => Promise<GroupDto>;
 
     constructor() {
         super(groupsApiOptions);
@@ -34,6 +37,34 @@ class GroupsApi extends ApiCore<GroupDto> {
                         headers: { Authorization: `Bearer ${token}` },
                     }
                 );
+                return handleResponse(response);
+            } catch (error) {
+                return handleError(error);
+            }
+        };
+
+        this.getEstrutura = async (token: string) => {
+            try {
+                const response = await axios.get(
+                    `${BASE_URL}/${url}/estrutura`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
+                );
+                return handleResponse(response);
+            } catch (error) {
+                return handleError(error);
+            }
+        };
+
+        this.postWithSigla = async (token: string, sigla: string) => {
+            try {
+                const response = await axios.post(`${BASE_URL}/${url}`, sigla, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
                 return handleResponse(response);
             } catch (error) {
                 return handleError(error);

@@ -39,8 +39,7 @@ public class CreateReuniaoRequestHandler : IRequestHandler<CreateReuniaoRequest,
         _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Grg);
 
         var reuniaoDtoValidator = new CreateReuniaoDtoValidator(_unitOfWork.GroupRepository, _authenticationService,
-            _unitOfWork.UserRepository, _unitOfWork.AcaoRepository, _unitOfWork.VotoRepository,
-            _unitOfWork.ParticipanteRepository, _unitOfWork.ReuniaoRepository, _reuniaoSequenceControl,
+            _unitOfWork.UserRepository, _unitOfWork.VotoRepository,
             _unitOfWork.ProposicaoRepository, _proposicaoStrictSequence);
         var reuniaoDtoValidationResult =
             await reuniaoDtoValidator.ValidateAsync(request.CreateReuniaoDto, cancellationToken);
@@ -50,14 +49,13 @@ public class CreateReuniaoRequestHandler : IRequestHandler<CreateReuniaoRequest,
         }
 
         var reuniao = _mapper.Map<Reuniao>(request.CreateReuniaoDto);
-        reuniao.NumeroReuniao = await _reuniaoSequenceControl.GetNextNumeroReuniao();
+        var numeroReuniao = await _reuniaoSequenceControl.GetNextNumeroReuniao();
 
         var claims = _authenticationService.GetTokenClaims(request.RequestUser);
-
         var responsavel = await _unitOfWork.UserRepository.Get(claims.Uid);
         if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
 
-        reuniao.OnSave(responsavel);
+        reuniao.OnSave(numeroReuniao, responsavel);
 
         var addedReuniao = await _unitOfWork.ReuniaoRepository.Add(reuniao);
         await _unitOfWork.Save();

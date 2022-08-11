@@ -7,9 +7,9 @@ namespace CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto.Validators;
 
 public class CreateVotoDtoValidator : AbstractValidator<CreateVotoDto>
 {
-    public CreateVotoDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
+    public CreateVotoDtoValidator(IAuthenticationService authenticationService,
         IUserRepository userRepository)
     {
-        Include(new IBaseVotoDtoValidator(groupRepository, authenticationService, userRepository));
+        Include(new IBaseVotoDtoValidator(authenticationService, userRepository));
     }
 }

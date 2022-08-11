@@ -53,6 +53,7 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
         }
 
         var proposicao = _mapper.Map<Proposicao>(request.CreateProposicaoDto);
+
         var idPrd = await _sequenceControl.GetNextIdPrd();
         var criador = await _unitOfWork.UserRepository.Get(proposicao.Criador.Id);
         if (criador == null) throw new NotFoundException(nameof(criador), request.CreateProposicaoDto.Criador);

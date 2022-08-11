@@ -3,7 +3,6 @@ using CPTM.GRD.Domain.AccessControl;
 using CPTM.GRD.Domain.Acoes;
 using CPTM.GRD.Domain.Logging;
 using CPTM.GRD.Domain.Proposicoes;
-using CPTM.GRD.Domain.Reunioes.Children;
 
 namespace CPTM.GRD.Domain.Reunioes;
 
@@ -20,8 +19,8 @@ public class Reuniao
     public TipoReuniao TipoReuniao { get; set; }
     public ICollection<Proposicao>? Proposicoes { get; set; } = new List<Proposicao>();
     public ICollection<Proposicao>? ProposicoesPrevia { get; set; } = new List<Proposicao>();
-    public ICollection<Participante>? Participantes { get; set; } = new List<Participante>();
-    public ICollection<Participante>? ParticipantesPrevia { get; set; } = new List<Participante>();
+    public ICollection<User>? Participantes { get; set; } = new List<User>();
+    public ICollection<User>? ParticipantesPrevia { get; set; } = new List<User>();
     public ICollection<Acao>? Acoes { get; set; } = new List<Acao>();
     public string? Comunicado { get; set; }
     public string? OutrasObservacoes { get; set; }
@@ -46,8 +45,9 @@ public class Reuniao
         return this;
     }
 
-    public Reuniao OnSave(User responsavel)
+    public Reuniao OnSave(int numeroReuniao, User responsavel)
     {
+        NumeroReuniao = numeroReuniao;
         ChangeStatus(ReuniaoStatus.Registrada, TipoLogReuniao.Criacao, responsavel);
         return this;
     }

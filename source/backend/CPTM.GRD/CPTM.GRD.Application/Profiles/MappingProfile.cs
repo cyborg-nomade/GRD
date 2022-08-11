@@ -8,7 +8,6 @@ using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Resolucao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto;
 using CPTM.GRD.Application.DTOs.Main.Reuniao;
-using CPTM.GRD.Application.DTOs.Main.Reuniao.Children;
 using CPTM.GRD.Domain.AccessControl;
 using CPTM.GRD.Domain.Acoes;
 using CPTM.GRD.Domain.Acoes.Children;
@@ -16,7 +15,6 @@ using CPTM.GRD.Domain.Logging;
 using CPTM.GRD.Domain.Proposicoes;
 using CPTM.GRD.Domain.Proposicoes.Children;
 using CPTM.GRD.Domain.Reunioes;
-using CPTM.GRD.Domain.Reunioes.Children;
 
 namespace CPTM.GRD.Application.Profiles;
 
@@ -50,8 +48,6 @@ public class MappingProfile : Profile
         CreateMap<Reuniao, ReuniaoDto>().ReverseMap();
         CreateMap<Reuniao, CreateReuniaoDto>().ReverseMap();
         CreateMap<Reuniao, UpdateReuniaoDto>().ReverseMap();
-        CreateMap<Participante, ParticipanteDto>().ReverseMap();
-        CreateMap<Participante, CreateParticipanteDto>().ReverseMap();
 
         #endregion
 
