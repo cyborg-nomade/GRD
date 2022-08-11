@@ -2,7 +2,7 @@ import { GroupDto, UserDto } from "../../access-control.model";
 
 export interface IBaseParticipanteDto {
     user?: UserDto;
-    diretoriaArea: GroupDto;
+    area: GroupDto;
     nome: string;
     email: string;
 }
@@ -13,12 +13,12 @@ interface IFullParticipanteDto {
 
 export class CreateParticipanteDto implements IBaseParticipanteDto {
     user?: UserDto;
-    diretoriaArea!: GroupDto;
+    area!: GroupDto;
     nome!: string;
     email!: string;
 
     constructor() {
-        this.diretoriaArea = new GroupDto();
+        this.area = new GroupDto();
         this.nome = "";
         this.email = "";
     }
@@ -28,13 +28,13 @@ export class ParticipanteDto
     implements IBaseParticipanteDto, IFullParticipanteDto
 {
     user?: UserDto;
-    diretoriaArea!: GroupDto;
+    area!: GroupDto;
     nome!: string;
     email!: string;
     id!: number;
 
     constructor() {
-        this.diretoriaArea = new GroupDto();
+        this.area = new GroupDto();
         this.nome = "";
         this.email = "";
         this.id = 0;

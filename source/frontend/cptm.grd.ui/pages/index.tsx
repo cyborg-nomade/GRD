@@ -3,12 +3,13 @@ import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
 import { AuthUser, GroupDto, UserDto } from "../models/access-control.model";
-import { ObjetoProposicao } from "../models/common.model";
+import { ObjetoProposicao, TipoVotoRd } from "../models/common.model";
 import { AddProposicaoToReuniaoDto } from "../models/mixed.model";
 import {
     CreateProposicaoDto,
     ProposicaoDto,
     UpdateProposicaoDto,
+    VoteWithAjustesProposicaoDto,
 } from "../models/proposicoes/proposicao.model";
 import { AuthResponse } from "../models/responses.model";
 import {
@@ -112,37 +113,41 @@ const Home: NextPage = () => {
             proposicaoWithChanges
         );
         console.log(updatedProposicao);
+        setCreatedProposicao(updatedProposicao);
     };
 
     const removeProposicaoHandler = async () => {
         await proposicaoAPI.remove(token, createdProposicao.id);
         console.log("it worked?");
+        setCreatedProposicao(new ProposicaoDto());
     };
 
     const sendToApprovalHandler = async () => {
-        const proposicaoSentToApproval =
+        const proposicaoSentToApproval: ProposicaoDto =
             await proposicaoAPI.sendDiretoriaApproval(
                 token,
                 createdProposicao.id
             );
         console.log(proposicaoSentToApproval);
+        setCreatedProposicao(proposicaoSentToApproval);
     };
 
     const diretorApprovesHandler = async () => {
-        const proposicaoApproved = await proposicaoAPI.diretoriaApprove(
-            token,
-            createdProposicao.id
-        );
+        const proposicaoApproved: ProposicaoDto =
+            await proposicaoAPI.diretoriaApprove(token, createdProposicao.id);
         console.log(proposicaoApproved);
+        setCreatedProposicao(proposicaoApproved);
     };
 
     const diretorRepprovesHandler = async () => {
-        const proposicaoRepproved = await proposicaoAPI.diretoriaRepprove(
-            token,
-            createdProposicao.id,
-            "teste motivo"
-        );
+        const proposicaoRepproved: ProposicaoDto =
+            await proposicaoAPI.diretoriaRepprove(
+                token,
+                createdProposicao.id,
+                "teste motivo"
+            );
         console.log(proposicaoRepproved);
+        setCreatedProposicao(proposicaoRepproved);
     };
 
     const grgAddsProposicaoToReuniaoHandler = async () => {
@@ -156,6 +161,29 @@ const Home: NextPage = () => {
         console.log(response);
     };
 
+    const grgCoordinatesVoteHandler = async () => {
+        const voteWithAjustesdir1 = new VoteWithAjustesProposicaoDto();
+        voteWithAjustesdir1.votoDto.participante =
+            createdReuniao.participantes[0];
+        voteWithAjustesdir1.votoDto.votoRd = TipoVotoRd.Aprovacao;
+        const voteWithAjustesdir2 = new VoteWithAjustesProposicaoDto();
+        voteWithAjustesdir2.votoDto.participante =
+            createdReuniao.participantes[1];
+        voteWithAjustesdir2.votoDto.votoRd = TipoVotoRd.Aprovacao;
+        const voteWithAjustesdir3 = new VoteWithAjustesProposicaoDto();
+        voteWithAjustesdir3.votoDto.participante =
+            createdReuniao.participantes[3];
+        voteWithAjustesdir3.votoDto.votoRd = TipoVotoRd.Aprovacao;
+
+        const response: ProposicaoDto = await proposicaoAPI.rdDeliberateDiretor(
+            token,
+            createdProposicao.id,
+            [voteWithAjustesdir1, voteWithAjustesdir2, voteWithAjustesdir3]
+        );
+
+        console.log(response);
+    };
+
     const postReuniaoHandler = async () => {
         const reuniao = new CreateReuniaoDto();
         reuniao.data = new Date("2022-08-12");
@@ -164,9 +192,35 @@ const Home: NextPage = () => {
         reuniao.horarioPrevia = new Date("2022-08-11");
         reuniao.local = "teste";
 
+        const participante1 = new CreateParticipanteDto();
+        participante1.nome = "dir1";
+        participante1.email = "dir1@teste.com";
+        participante1.area = currentArea;
+
+        const participante2 = new CreateParticipanteDto();
+        participante2.nome = "dir2";
+        participante2.email = "dir2@teste.com";
+        participante2.area = currentArea;
+
+        const participante3 = new CreateParticipanteDto();
+        participante3.nome = "dir3";
+        participante3.email = "dir3@teste.com";
+        participante3.area = currentArea;
+
+        reuniao.participantes.push(participante1, participante2, participante3);
+
         var createdReuniao = await reuniaoAPI.post(token, reuniao);
         console.log(createdReuniao);
         setCreatedReuniao(createdReuniao);
+    };
+
+    const grgEmitsPautaPreviaHandler = async () => {
+        const response: ReuniaoDto = await reuniaoAPI.getPautaPreviaFile(
+            token,
+            createdReuniao.id
+        );
+        console.log(response);
+        setCreatedReuniao(response);
     };
 
     return (
@@ -252,9 +306,29 @@ const Home: NextPage = () => {
                 </div>
 
                 <div className={styles.grid}>
+                    <a
+                        className={styles.card}
+                        onClick={grgCoordinatesVoteHandler}
+                    >
+                        <h2>GRG coordena votos em reunião &rarr;</h2>
+                        <p>UC #008</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
                     <a className={styles.card} onClick={postReuniaoHandler}>
                         <h2>Criar Reunião &rarr;</h2>
                         <p>UC #014</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a
+                        className={styles.card}
+                        onClick={grgEmitsPautaPreviaHandler}
+                    >
+                        <h2>Emitir Pauta Prévia &rarr;</h2>
+                        <p>UC #017</p>
                     </a>
                 </div>
             </main>

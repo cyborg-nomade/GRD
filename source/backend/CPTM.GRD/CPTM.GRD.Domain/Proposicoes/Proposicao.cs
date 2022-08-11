@@ -201,12 +201,12 @@ public class Proposicao
         return this;
     }
 
-    public Proposicao AddDiretorVote(User diretor, Voto vote, string ajustes)
+    public Proposicao AddDiretorVote(User responsavel, Voto vote, string ajustes)
     {
-        GenerateProposicaoLog(LogProposicao.ConvertFromTipoVoto(vote.VotoRd), diretor,
-            $@"Voto de Diretor {diretor.Nome} em RD: {vote.VotoRd}");
-        AjustesRd += $"\n\n{ajustes}";
         VotosRd?.Add(vote);
+        AjustesRd += $"\n\n{ajustes}";
+        GenerateProposicaoLog(LogProposicao.ConvertFromTipoVoto(vote.VotoRd), responsavel,
+            $@"Voto de Diretor {vote.Participante.Nome} em RD: {vote.VotoRd}");
         return this;
     }
 

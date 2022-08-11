@@ -39,9 +39,8 @@ public class CreateReuniaoRequestHandler : IRequestHandler<CreateReuniaoRequest,
         _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Grg);
 
         var reuniaoDtoValidator = new CreateReuniaoDtoValidator(_unitOfWork.GroupRepository, _authenticationService,
-            _unitOfWork.UserRepository,
-            _unitOfWork.AcaoRepository, _unitOfWork.VotoRepository, _unitOfWork.ParticipanteRepository,
-            _unitOfWork.ReuniaoRepository, _reuniaoSequenceControl,
+            _unitOfWork.UserRepository, _unitOfWork.AcaoRepository, _unitOfWork.VotoRepository,
+            _unitOfWork.ParticipanteRepository, _unitOfWork.ReuniaoRepository, _reuniaoSequenceControl,
             _unitOfWork.ProposicaoRepository, _proposicaoStrictSequence);
         var reuniaoDtoValidationResult =
             await reuniaoDtoValidator.ValidateAsync(request.CreateReuniaoDto, cancellationToken);

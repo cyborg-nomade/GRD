@@ -216,7 +216,7 @@
         -   sends to grg members, if approved;
     -   system creates a change log for the actions
 
-## 007. grg includes proposicao in reuniao
+## 007. grg includes proposicao in reuniao (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: gerente (of the owner group), assessor-diretoria (of the owner group), diretor (of the owner group), other grg members
@@ -542,7 +542,7 @@
 -   **_side effects_**:
     -   system creates a change log for the actions
 
-## 016. grg add proposicao to reuniao
+## 016. grg add proposicao to reuniao (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: gerente (of the owner group), assessor-diretoria (of the owner group), diretor (of the owner group), other grg members

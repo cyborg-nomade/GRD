@@ -37,6 +37,11 @@ public class
         var proposicao = await _unitOfWork.ProposicaoRepository.Get(request.Pid);
         if (proposicao == null) throw new NotFoundException(nameof(proposicao), request.Pid);
 
+        var claims = _authenticationService.GetTokenClaims(request.RequestUser);
+
+        var responsavel = await _unitOfWork.UserRepository.Get(claims.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
+
         foreach (var voteWithAjustes in request.VotesWithAjustes)
         {
             var votoRdDtoValidator =
@@ -49,16 +54,10 @@ public class
                 throw new ValidationException(votoRdDtoValidationResult);
             }
 
-            var diretor = await _unitOfWork.UserRepository.Get(voteWithAjustes.VotoDto.Participante.User.Id);
-            if (diretor == null)
-                throw new NotFoundException(nameof(diretor), voteWithAjustes.VotoDto.Participante.User.Id);
-
             var votoRd = _mapper.Map<Voto>(voteWithAjustes.VotoDto);
+            var ajustes = voteWithAjustes.Ajustes;
 
-            var ajustes = voteWithAjustes.Ajustes ??
-                          throw new BadRequestException($"{nameof(voteWithAjustes.Ajustes)} não pode ser nulo");
-
-            proposicao.AddDiretorVote(diretor, votoRd, ajustes);
+            proposicao.AddDiretorVote(responsavel, votoRd, ajustes);
         }
 
         proposicao.CalculateNewProposicaoStatusFromVotes();
