@@ -1,6 +1,9 @@
-﻿namespace CPTM.GRD.Application.Features.AccessControl.Requests.Commands;
+﻿using CPTM.GRD.Application.DTOs.AccessControl.Group;
+using MediatR;
 
-public class CreateGroupRequest
+namespace CPTM.GRD.Application.Features.AccessControl.Requests.Commands;
+
+public class CreateGroupRequest : BasicRequest, IRequest<GroupDto>
 {
-    // TODO: IMPLEMENT
+    public string Sigla { get; set; } = string.Empty;
 }

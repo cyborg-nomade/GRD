@@ -1,4 +1,5 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl.Group;
+using CPTM.GRD.Application.Features.AccessControl.Requests.Commands;
 using CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
 using CPTM.GRD.Application.Responses;
 using MediatR;
@@ -59,6 +60,17 @@ namespace CPTM.GRD.API.Controllers
         public async Task<EstruturaResponse> GetEstrutura()
         {
             return await _mediator.Send(new GetEstruturaRequest());
+        }
+
+        // POST /api/groups/
+        [HttpPost]
+        public async Task<GroupDto> Post([FromBody] string sigla)
+        {
+            return await _mediator.Send(new CreateGroupRequest()
+            {
+                RequestUser = User,
+                Sigla = sigla
+            });
         }
     }
 }
