@@ -11,6 +11,7 @@ public enum TipoLogProposicao
     GrgRetornaParaDiretoria,
     InclusaoPauta,
     RemocaoPauta,
+    AnotacaoPrevia,
     AprovacaoRd,
     ReprovacaoRd,
     SuspensaoRd,
