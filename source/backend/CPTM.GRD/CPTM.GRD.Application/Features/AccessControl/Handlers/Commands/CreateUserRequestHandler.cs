@@ -43,8 +43,30 @@ public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, UserD
             throw new ValidationException(validationResult);
         }
 
+        User addedUser;
         var userAd = await _authenticationService.GetUsuarioAd(request.CreateUserDto.UsernameAd);
-        var addedUser = await _unitOfWork.UserRepository.AddFromUsuarioAd(userAd, AccessLevel.Sub);
+
+        if (await _authenticationService.IsGerente(request.CreateUserDto.UsernameAd))
+        {
+            addedUser = await _unitOfWork.UserRepository.GetOrAddGerente(userAd);
+        }
+        else if (await _authenticationService.IsDiretor(request.CreateUserDto.UsernameAd))
+        {
+            addedUser = await _unitOfWork.UserRepository.GetOrAddDiretor(userAd);
+        }
+        else if (await _authenticationService.IsGrgMember(request.CreateUserDto.UsernameAd))
+        {
+            addedUser = await _unitOfWork.UserRepository.GetOrAddGrgMember(userAd);
+        }
+        else if (_authenticationService.IsSysAdmin(request.CreateUserDto.UsernameAd))
+        {
+            addedUser = await _unitOfWork.UserRepository.GetOrAddSysAdmin(userAd);
+        }
+        else
+        {
+            addedUser = await _unitOfWork.UserRepository.GetOrAdd(userAd, AccessLevel.Sub);
+        }
+
         await _unitOfWork.Save();
 
         await _emailService.SendEmail(new List<User>() { addedUser }, UserCreationSubject, UserCreationMessage);

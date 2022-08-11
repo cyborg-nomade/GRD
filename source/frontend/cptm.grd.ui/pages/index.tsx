@@ -12,10 +12,6 @@ import {
     VoteWithAjustesProposicaoDto,
 } from "../models/proposicoes/proposicao.model";
 import { AuthResponse, EstruturaResponse } from "../models/responses.model";
-import {
-    CreateParticipanteDto,
-    ParticipanteDto,
-} from "../models/reunioes/children/participante.model";
 import { CreateReuniaoDto, ReuniaoDto } from "../models/reunioes/reuniao.model";
 import GroupsApi from "../services/api/groups.api";
 import ProposicoesApi from "../services/api/proposicoes.api";
@@ -195,38 +191,14 @@ const Home: NextPage = () => {
         reuniao.horarioPrevia = new Date("2022-08-11");
         reuniao.local = "teste";
 
-        const group1 = await groupsAPI.postWithSigla(
-            token,
-            estrutura.diretorias[0]
-        );
-        console.log(group1);
-
-        const group2 = await groupsAPI.postWithSigla(
-            token,
-            estrutura.diretorias[1]
-        );
-        console.log(group2);
-
-        const group3 = await groupsAPI.postWithSigla(
-            token,
-            estrutura.diretorias[2]
-        );
-        console.log(group3);
-
-        const participante1 = new CreateParticipanteDto();
+        const participante1 = new UserDto();
         participante1.nome = "dir1";
-        participante1.email = "dir1@teste.com";
-        participante1.area = group1;
 
-        const participante2 = new CreateParticipanteDto();
+        const participante2 = new UserDto();
         participante2.nome = "dir2";
-        participante2.email = "dir2@teste.com";
-        participante2.area = group2;
 
-        const participante3 = new CreateParticipanteDto();
+        const participante3 = new UserDto();
         participante3.nome = "dir3";
-        participante3.email = "dir3@teste.com";
-        participante3.area = group3;
 
         reuniao.participantes.push(participante1, participante2, participante3);
 

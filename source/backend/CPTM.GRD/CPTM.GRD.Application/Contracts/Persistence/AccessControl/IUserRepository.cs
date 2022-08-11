@@ -15,5 +15,6 @@ public interface IUserRepository : IGenericRepository<User>
     Task<User> GetOrAddDiretor(UsuarioAD usuarioAd);
     Task<User> GetOrAddGrgMember(UsuarioAD usuarioAd);
     Task<User> GetOrAddSysAdmin(UsuarioAD usuarioAd);
+    Task<User> GetOrAdd(UsuarioAD usuarioAd, AccessLevel accessLevel)
     Task<User> AddFromUsuarioAd(UsuarioAD usuarioAd, AccessLevel accessLevel);
 }

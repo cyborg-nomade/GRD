@@ -71,7 +71,7 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         return await GetOrAdd(usuarioAd, AccessLevel.SysAdmin);
     }
 
-    private async Task<User> GetOrAdd(UsuarioAD usuarioAd, AccessLevel accessLevel)
+    public async Task<User> GetOrAdd(UsuarioAD usuarioAd, AccessLevel accessLevel)
     {
         if (!await ExistsUsername(usuarioAd.Login)) return await AddFromUsuarioAd(usuarioAd, accessLevel);
 
