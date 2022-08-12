@@ -8,7 +8,11 @@ import {
     GroupDto,
     UserDto,
 } from "../models/access-control.model";
-import { ObjetoProposicao, TipoVotoRd } from "../models/common.model";
+import {
+    ObjetoProposicao,
+    ProposicaoStatus,
+    TipoVotoRd,
+} from "../models/common.model";
 import { AddProposicaoToReuniaoDto } from "../models/mixed.model";
 import {
     CreateProposicaoDto,
@@ -226,6 +230,44 @@ const Home: NextPage = () => {
             createdProposicao.id
         );
         console.log(response);
+    };
+
+    const proposicaoGetsHandler = async () => {
+        const get1 = await proposicaoAPI.getAll(token);
+        console.log(get1);
+        const get2 = await proposicaoAPI.getByGroup(token, currentArea.id);
+        console.log(get2);
+        const get3 = await proposicaoAPI.getByGroupAndStatus(
+            token,
+            currentArea.id,
+            ProposicaoStatus.AprovadaRd,
+            false
+        );
+        console.log(get3);
+        const get4 = await proposicaoAPI.getByReuniao(token, createdReuniao.id);
+        console.log(get4);
+        const get5 = await proposicaoAPI.getByReuniaoPrevia(
+            token,
+            createdReuniao.id
+        );
+        console.log(get5);
+        const get6 = await proposicaoAPI.getByStatus(
+            token,
+            ProposicaoStatus.AprovadaRd,
+            false
+        );
+        console.log(get6);
+        const get7 = await proposicaoAPI.getByUser(token, currentUser.id);
+        console.log(get7);
+        const get8 = await proposicaoAPI.getByUserAndStatus(
+            token,
+            currentUser.id,
+            ProposicaoStatus.AprovadaRd,
+            false
+        );
+        console.log(get8);
+        const get9 = await proposicaoAPI.getSingle(token, createdProposicao.id);
+        console.log(get9);
     };
 
     const postReuniaoHandler = async () => {
@@ -448,6 +490,13 @@ const Home: NextPage = () => {
                     >
                         <h2>GRG aprova correções &rarr;</h2>
                         <p>UC #012</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a className={styles.card} onClick={proposicaoGetsHandler}>
+                        <h2>Pesquisar Proposições &rarr;</h2>
+                        <p>UC #013</p>
                     </a>
                 </div>
 

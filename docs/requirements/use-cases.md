@@ -458,7 +458,7 @@
         -   sends to grg members;
     -   system creates a change log for the actions
 
-## 013. user searches for a proposicao in a list
+## 013. user searches for a proposicao in a list (API OK)
 
 -   **_primary actor_**: user (any level or group)
 -   **_other actors_**: none
