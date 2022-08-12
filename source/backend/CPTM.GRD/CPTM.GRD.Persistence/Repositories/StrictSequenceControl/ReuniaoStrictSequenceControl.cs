@@ -36,6 +36,6 @@ public class ReuniaoStrictSequenceControl : IReuniaoStrictSequenceControl
     {
         var fileLines = await File.ReadAllLinesAsync(_controlFilePath);
         var currentValue = int.Parse(fileLines[0]);
-        return numeroReuniao < currentValue;
+        return numeroReuniao <= currentValue;
     }
 }
