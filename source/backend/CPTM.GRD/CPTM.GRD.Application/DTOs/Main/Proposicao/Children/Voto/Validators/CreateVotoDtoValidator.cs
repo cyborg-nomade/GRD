@@ -10,6 +10,6 @@ public class CreateVotoDtoValidator : AbstractValidator<CreateVotoDto>
     public CreateVotoDtoValidator(IAuthenticationService authenticationService,
         IUserRepository userRepository)
     {
-        Include(new IBaseVotoDtoValidator(authenticationService, userRepository));
+        Include(new IBaseVotoDtoValidator(userRepository));
     }
 }

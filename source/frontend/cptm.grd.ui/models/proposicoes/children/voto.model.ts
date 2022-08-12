@@ -2,7 +2,7 @@ import { UserDto } from "../../access-control.model";
 import { TipoVotoRd } from "../../common.model";
 
 interface IBaseVotoDto {
-    participante: UserDto;
+    participanteId: number;
     votoRd: TipoVotoRd;
 }
 
@@ -11,22 +11,22 @@ interface IFullVotoDto {
 }
 
 export class CreateVotoDto implements IBaseVotoDto {
-    participante!: UserDto;
+    participanteId!: number;
     votoRd!: TipoVotoRd;
 
     constructor() {
-        this.participante = new UserDto();
+        this.participanteId = 0;
         this.votoRd = TipoVotoRd.Suspensao;
     }
 }
 
 export class VotoDto implements IBaseVotoDto, IFullVotoDto {
-    participante!: UserDto;
+    participanteId!: number;
     votoRd!: TipoVotoRd;
     id!: number;
 
     constructor() {
-        this.participante = new UserDto();
+        this.participanteId = 0;
         this.votoRd = TipoVotoRd.Suspensao;
         this.id = 0;
     }

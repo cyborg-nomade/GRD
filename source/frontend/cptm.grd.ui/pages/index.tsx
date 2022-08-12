@@ -166,24 +166,24 @@ const Home: NextPage = () => {
     };
 
     const grgCoordinatesVoteHandler = async () => {
-        // const voteWithAjustesdir1 = new VoteWithAjustesProposicaoDto();
-        // voteWithAjustesdir1.votoDto.participante =
-        //     createdReuniao.participantesIds[0];
-        // voteWithAjustesdir1.votoDto.votoRd = TipoVotoRd.Aprovacao;
-        // const voteWithAjustesdir2 = new VoteWithAjustesProposicaoDto();
-        // voteWithAjustesdir2.votoDto.participante =
-        //     createdReuniao.participantesIds[1];
-        // voteWithAjustesdir2.votoDto.votoRd = TipoVotoRd.Aprovacao;
-        // const voteWithAjustesdir3 = new VoteWithAjustesProposicaoDto();
-        // voteWithAjustesdir3.votoDto.participante =
-        //     createdReuniao.participantesIds[3];
-        // voteWithAjustesdir3.votoDto.votoRd = TipoVotoRd.Aprovacao;
-        // const response: ProposicaoDto = await proposicaoAPI.rdDeliberateDiretor(
-        //     token,
-        //     createdProposicao.id,
-        //     [voteWithAjustesdir1, voteWithAjustesdir2, voteWithAjustesdir3]
-        // );
-        // console.log(response);
+        const voteWithAjustesdir1 = new VoteWithAjustesProposicaoDto();
+        voteWithAjustesdir1.votoDto.participanteId =
+            createdReuniao.participantesIds[0];
+        voteWithAjustesdir1.votoDto.votoRd = TipoVotoRd.Aprovacao;
+        const voteWithAjustesdir2 = new VoteWithAjustesProposicaoDto();
+        voteWithAjustesdir2.votoDto.participanteId =
+            createdReuniao.participantesIds[1];
+        voteWithAjustesdir2.votoDto.votoRd = TipoVotoRd.Aprovacao;
+        const voteWithAjustesdir3 = new VoteWithAjustesProposicaoDto();
+        voteWithAjustesdir3.votoDto.participanteId =
+            createdReuniao.participantesIds[3];
+        voteWithAjustesdir3.votoDto.votoRd = TipoVotoRd.Aprovacao;
+        const response: ProposicaoDto = await proposicaoAPI.rdDeliberateDiretor(
+            token,
+            createdProposicao.id,
+            [voteWithAjustesdir1, voteWithAjustesdir2, voteWithAjustesdir3]
+        );
+        console.log(response);
     };
 
     const postReuniaoHandler = async () => {

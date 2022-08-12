@@ -1,5 +1,4 @@
-﻿using CPTM.GRD.Application.Contracts.Infrastructure;
-using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
+﻿using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes.Children;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto.Validators;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Interfaces;
@@ -10,8 +9,7 @@ namespace CPTM.GRD.Application.DTOs.Main.Proposicao.Validators.Interfaces;
 
 public class IAutoPropertiesProposicaoDtoValidator : AbstractValidator<IAutoPropertiesProposicaoDto>
 {
-    public IAutoPropertiesProposicaoDtoValidator(IAuthenticationService authenticationService,
-        IUserRepository userRepository,
+    public IAutoPropertiesProposicaoDtoValidator(IUserRepository userRepository,
         IVotoRepository votoRepository)
     {
         RuleFor(p => p.Status).NotNull().IsInEnum();
@@ -19,7 +17,7 @@ public class IAutoPropertiesProposicaoDtoValidator : AbstractValidator<IAutoProp
         RuleFor(p => p.AnotacoesPrevia).NotNull()
             .When(p => p.Status >= ProposicaoStatus.EmPautaDefinitiva);
         RuleForEach(p => p.VotosRd).NotNull()
-            .SetValidator(new VotoDtoValidator(authenticationService, userRepository, votoRepository))
+            .SetValidator(new VotoDtoValidator(userRepository, votoRepository))
             .When(p => p.Status > ProposicaoStatus.EmPautaDefinitiva);
         RuleFor(p => p.MotivoRetornoDiretoriaResp).NotNull().NotEmpty()
             .When(p => p.Status == ProposicaoStatus.ReprovadoDiretoriaResp);

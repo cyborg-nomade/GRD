@@ -54,7 +54,11 @@ public class
                 throw new ValidationException(votoRdDtoValidationResult);
             }
 
+            var voter = await _unitOfWork.UserRepository.Get(voteWithAjustes.VotoDto.ParticipanteId);
+            if (voter == null) throw new NotFoundException(nameof(voter), voteWithAjustes.VotoDto.ParticipanteId);
             var votoRd = _mapper.Map<Voto>(voteWithAjustes.VotoDto);
+            votoRd.Participante = voter;
+
             var ajustes = voteWithAjustes.Ajustes;
 
             proposicao.AddDiretorVote(responsavel, votoRd, ajustes);

@@ -17,7 +17,7 @@ public class ProposicaoDtoValidator : AbstractValidator<ProposicaoDto>
         Include(new IBaseProposicaoDtoValidator(groupRepository, authenticationService, userRepository));
         Include(new IFullProposicaoDtoValidator(proposicaoRepository, proposicaoStrictSequence));
         Include(new IOwnerPropertiesProposicaoDtoValidator(authenticationService, userRepository, groupRepository));
-        Include(new IAutoPropertiesProposicaoDtoValidator(authenticationService, userRepository,
+        Include(new IAutoPropertiesProposicaoDtoValidator(userRepository,
             votoRepository));
     }
 }

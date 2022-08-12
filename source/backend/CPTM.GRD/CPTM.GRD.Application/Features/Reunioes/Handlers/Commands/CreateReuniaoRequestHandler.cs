@@ -7,7 +7,6 @@ using CPTM.GRD.Application.DTOs.Main.Reuniao.Validators;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 using CPTM.GRD.Common;
-using CPTM.GRD.Domain.AccessControl;
 using CPTM.GRD.Domain.Reunioes;
 using MediatR;
 
