@@ -347,7 +347,7 @@
         -   sends to grg members;
     -   system creates a change log for the actions
 
-## 010. grg emits resolucao diretoria for proposicao
+## 010. grg emits resolucao diretoria for proposicao (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: gerente (of the owner group), assessor-diretoria (of the owner group), diretor (of the owner group), grg members

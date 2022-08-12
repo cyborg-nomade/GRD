@@ -202,6 +202,15 @@ const Home: NextPage = () => {
         console.log(response);
     };
 
+    const grgEmitsResolucaoDiretoriaForProposicaoHandler = async () => {
+        const response = await reuniaoAPI.getResolucaoDiretoriaFile(
+            token,
+            createdReuniao.id,
+            createdProposicao.id
+        );
+        console.log(response);
+    };
+
     const postReuniaoHandler = async () => {
         const reuniao = new CreateReuniaoDto();
         reuniao.data = new Date("2022-08-12");
@@ -388,6 +397,18 @@ const Home: NextPage = () => {
                     <a className={styles.card} onClick={diretorVotesHandler}>
                         <h2>Diretor Vota &rarr;</h2>
                         <p>UC #009</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a
+                        className={styles.card}
+                        onClick={grgEmitsResolucaoDiretoriaForProposicaoHandler}
+                    >
+                        <h2>
+                            Emitir Resolução Diretoria para Proposição &rarr;
+                        </h2>
+                        <p>UC #010</p>
                     </a>
                 </div>
 
