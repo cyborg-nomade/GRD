@@ -45,7 +45,7 @@ public class ProposicaoDto : IBaseProposicaoDto, IFullProposicaoDto, IOwnerPrope
     public List<VotoDto>? VotosRd { get; set; } = new List<VotoDto>();
     public string? MotivoRetornoDiretoriaResp { get; set; } = string.Empty;
     public string? MotivoRetornoGrg { get; set; } = string.Empty;
-    public string? MotivoRetornoRd { get; set; } = string.Empty;
+    public string? AjustesRd { get; set; } = string.Empty;
     public string? Deliberacao { get; set; } = string.Empty;
     public bool IsExtraPauta { get; set; }
     public string? NumeroConselho { get; set; }
@@ -110,7 +110,7 @@ public class ProposicaoDto : IBaseProposicaoDto, IFullProposicaoDto, IOwnerPrope
     ], 
 {nameof(MotivoRetornoDiretoriaResp)}: {MotivoRetornoDiretoriaResp}, 
 {nameof(MotivoRetornoGrg)}: {MotivoRetornoGrg}, 
-{nameof(MotivoRetornoRd)}: {MotivoRetornoRd}, 
+{nameof(AjustesRd)}: {AjustesRd}, 
 {nameof(Deliberacao)}: {Deliberacao}, 
 {nameof(IsExtraPauta)}: {IsExtraPauta}, 
 {nameof(NumeroConselho)}: {NumeroConselho}, 

@@ -23,7 +23,7 @@ public class IAutoPropertiesProposicaoDtoValidator : AbstractValidator<IAutoProp
             .When(p => p.Status == ProposicaoStatus.ReprovadoDiretoriaResp);
         RuleFor(p => p.MotivoRetornoGrg).NotNull().NotEmpty()
             .When(p => p.Status == ProposicaoStatus.RetornadoPelaGrgADiretoriaResp);
-        RuleFor(p => p.MotivoRetornoRd).NotNull().NotEmpty()
+        RuleFor(p => p.AjustesRd).NotNull().NotEmpty()
             .When(p => p.Status is ProposicaoStatus.AprovadaRdAguardandoAjustes
                 or ProposicaoStatus.SuspensaRdAguardandoAjustes);
         RuleFor(p => p.Deliberacao).NotNull().NotEmpty()

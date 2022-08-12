@@ -15,7 +15,7 @@ interface IAutoPropertiesProposicaoDto {
     votosRd: VotoDto[];
     motivoRetornoDiretoriaResp?: string;
     motivoRetornoGrg?: string;
-    motivoRetornoRd?: string;
+    ajustesRd?: string;
     deliberacao?: string;
     isExtraPauta: boolean;
     resolucaoDiretoriaFilePath?: string;
@@ -221,7 +221,7 @@ export class ProposicaoDto
     votosRd!: VotoDto[];
     motivoRetornoDiretoriaResp?: string | undefined;
     motivoRetornoGrg?: string | undefined;
-    motivoRetornoRd?: string | undefined;
+    ajustesRd?: string | undefined;
     deliberacao?: string | undefined;
     isExtraPauta!: boolean;
     resolucaoDiretoriaFilePath?: string | undefined;

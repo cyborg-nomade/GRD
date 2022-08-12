@@ -103,7 +103,7 @@ public class Proposicao
 
     public Proposicao SendToDiretoriaResponsavelApproval(User responsavel)
     {
-        if (Status != ProposicaoStatus.EmPreenchimento)
+        if (Status is not (ProposicaoStatus.EmPreenchimento or ProposicaoStatus.ReprovadoDiretoriaResp))
         {
             throw new Exception("Proposição não pode ser encaminhada para aprovação. Status incorreto.");
         }
@@ -315,7 +315,7 @@ public class Proposicao
 
     public Proposicao OnReuniaoRealizada(Reuniao reuniao, User responsavel)
     {
-        if (AjustesRd != string.Empty)
+        if (!string.IsNullOrWhiteSpace(AjustesRd))
         {
             if (Status == ProposicaoStatus.AprovadaRd)
             {
