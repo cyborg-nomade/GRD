@@ -17,8 +17,8 @@
     <Folder Include="Features\Reunioes\Handlers\Queries\" />
     <Folder Include="Features\Reunioes\Requests\Queries\" />
     <Folder Include="Exceptions\" />
+    <Folder Include="Profiles\CustomResolvers\" />
     <Folder Include="Responses\" />
-    <Folder Include="Profiles\" />
   </ItemGroup>
 
   <ItemGroup>
