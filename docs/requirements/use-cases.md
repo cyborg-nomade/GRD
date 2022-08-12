@@ -792,7 +792,7 @@
         -   sends to reuniao participants;
     -   system creates a change log for the actions
 
-## 023. grg emits relatorio deliberativo
+## 023. grg emits relatorio deliberativo (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: assessor-diretoria (participating in reuniao previa), diretor (participating in reuniao), grg members

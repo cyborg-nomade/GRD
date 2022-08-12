@@ -266,6 +266,16 @@ const Home: NextPage = () => {
         setCreatedReuniao(response);
     };
 
+    const grgEmitsRelatorioDeliberativoHandler = async () => {
+        const response: ReuniaoDto =
+            await reuniaoAPI.getRelatorioDeliberativoFile(
+                token,
+                createdReuniao.id
+            );
+        console.log(response);
+        setCreatedReuniao(response);
+    };
+
     const getEstruturaHandler = async () => {
         const estrutura: EstruturaResponse = await groupsAPI.getEstrutura(
             token
@@ -415,6 +425,16 @@ const Home: NextPage = () => {
                     >
                         <h2>Emitir Pauta Definitiva &rarr;</h2>
                         <p>UC #020</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a
+                        className={styles.card}
+                        onClick={grgEmitsRelatorioDeliberativoHandler}
+                    >
+                        <h2>Emitir Relatório Deliberativo &rarr;</h2>
+                        <p>UC #023</p>
                     </a>
                 </div>
 
