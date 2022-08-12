@@ -580,7 +580,7 @@
         -   sends to grg members;
     -   system creates a change log for the actions
 
-## 017. grg emits pauta previa
+## 017. grg emits pauta previa (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: assessor-diretoria (participating in reuniao previa), diretor (participating in reuniao), grg members
@@ -616,7 +616,7 @@
         -   sends to reuniao previa participants;
     -   system creates a change log for the actions
 
-## 018. grg (or assessor-diretoria) annotates proposicao in reuniao previa
+## 018. grg (or assessor-diretoria) annotates proposicao in reuniao previa (API OK)
 
 -   **_primary actor_**: grg member or assessor-diretoria
 -   **_other actors_**: (other) grg members or assessor-diretoria assessor-diretoria (participating in reuniao previa)

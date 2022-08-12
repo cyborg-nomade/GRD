@@ -233,6 +233,15 @@ const Home: NextPage = () => {
         setCreatedReuniao(response);
     };
 
+    const grgEmitsMemoriaPreviaHandler = async () => {
+        const response: ReuniaoDto = await reuniaoAPI.getMemoriaPreviaFile(
+            token,
+            createdReuniao.id
+        );
+        console.log(response);
+        setCreatedReuniao(response);
+    };
+
     const getEstruturaHandler = async () => {
         const estrutura: EstruturaResponse = await groupsAPI.getEstrutura(
             token
@@ -355,6 +364,16 @@ const Home: NextPage = () => {
                     >
                         <h2>Emitir Pauta Prévia &rarr;</h2>
                         <p>UC #017</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a
+                        className={styles.card}
+                        onClick={grgEmitsMemoriaPreviaHandler}
+                    >
+                        <h2>Emitir Memória Prévia &rarr;</h2>
+                        <p>UC #018</p>
                     </a>
                 </div>
 
