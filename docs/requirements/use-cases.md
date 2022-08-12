@@ -616,7 +616,7 @@
         -   sends to reuniao previa participants;
     -   system creates a change log for the actions
 
-## 018. grg (or assessor-diretoria) annotates proposicao in reuniao previa
+## 018. grg (or assessor-diretoria) annotates proposicao in reuniao previa (API OK)
 
 -   **_primary actor_**: grg member or assessor-diretoria
 -   **_other actors_**: (other) grg members or assessor-diretoria assessor-diretoria (participating in reuniao previa)

@@ -339,6 +339,15 @@ const Home: NextPage = () => {
         setCreatedReuniao(response);
     };
 
+    const annotateProposicaoInPreviaHandler = async () => {
+        const response = await proposicaoAPI.annotatePrevia(
+            token,
+            createdProposicao.id,
+            "teste anotação"
+        );
+        console.log(response);
+    };
+
     const grgEmitsMemoriaPreviaHandler = async () => {
         const response: ReuniaoDto = await reuniaoAPI.getMemoriaPreviaFile(
             token,
@@ -540,10 +549,30 @@ const Home: NextPage = () => {
                 <div className={styles.grid}>
                     <a
                         className={styles.card}
+                        onClick={grgAddsProposicaoToReuniaoHandler}
+                    >
+                        <h2>GRG adiciona Proposição a uma Reunião &rarr;</h2>
+                        <p>UC #016</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a
+                        className={styles.card}
                         onClick={grgEmitsPautaPreviaHandler}
                     >
                         <h2>Emitir Pauta Prévia &rarr;</h2>
                         <p>UC #017</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a
+                        className={styles.card}
+                        onClick={annotateProposicaoInPreviaHandler}
+                    >
+                        <h2>Anotar Proposição na Prévia &rarr;</h2>
+                        <p>UC #018</p>
                     </a>
                 </div>
 
