@@ -127,6 +127,13 @@ public class Reuniao
         ProposicoesPrevia = Proposicoes;
         PautaPreviaFilePath = pautaPreviaFilePath;
         ChangeStatus(ReuniaoStatus.Previa, TipoLogReuniao.EmissaoPautaPrevia, responsavel);
+
+        if (ProposicoesPrevia == null) return this;
+        foreach (var proposicao in ProposicoesPrevia)
+        {
+            proposicao.AddToPautaPrevia(responsavel);
+        }
+
         return this;
     }
 

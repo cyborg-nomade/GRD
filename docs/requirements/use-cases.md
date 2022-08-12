@@ -688,7 +688,7 @@
         -   sends to reuniao previa participants;
     -   system creates a change log for the actions
 
-## 020. grg emits pauta definitiva
+## 020. grg emits pauta definitiva (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: assessor-diretoria (participating in reuniao previa), diretor (participating in reuniao), grg members

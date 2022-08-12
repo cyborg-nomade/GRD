@@ -389,9 +389,9 @@ const Home: NextPage = () => {
                 <div className={styles.grid}>
                     <a
                         className={styles.card}
-                        onClick={grgEmitsMemoriaPreviaHandler}
+                        onClick={grgEmitsPautaDefinitivaHandler}
                     >
-                        <h2>Emitir Memória Definitiva &rarr;</h2>
+                        <h2>Emitir Pauta Definitiva &rarr;</h2>
                         <p>UC #020</p>
                     </a>
                 </div>

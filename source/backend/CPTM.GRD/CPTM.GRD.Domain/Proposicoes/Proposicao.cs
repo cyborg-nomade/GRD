@@ -189,6 +189,17 @@ public class Proposicao
         return this;
     }
 
+    public Proposicao AddToPautaPrevia(User responsavel)
+    {
+        if (Status != ProposicaoStatus.InclusaEmReuniao)
+        {
+            throw new Exception("Proposição não está disponível para inclusão em pauta prévia. Status incorreto.");
+        }
+
+        ChangeStatus(ProposicaoStatus.EmPautaPrevia, TipoLogProposicao.Edicao, responsavel);
+        return this;
+    }
+
     public Proposicao AddToPautaDefinitiva(User responsavel)
     {
         if (Status != ProposicaoStatus.EmPautaPrevia)
