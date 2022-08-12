@@ -373,7 +373,7 @@ const Home: NextPage = () => {
                         onClick={grgEmitsMemoriaPreviaHandler}
                     >
                         <h2>Emitir Memória Prévia &rarr;</h2>
-                        <p>UC #018</p>
+                        <p>UC #019</p>
                     </a>
                 </div>
 
