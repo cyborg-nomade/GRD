@@ -190,7 +190,7 @@ public class Reuniao
 
     public Proposicao OnEmitProposicaoResolucaoDiretoria(int pid, User responsavel, string resolucaoDiretoriaFilePath)
     {
-        if (Status != ReuniaoStatus.Pauta)
+        if (Status != ReuniaoStatus.Realizada)
         {
             throw new Exception("Não é possível emitir o Resolução de Diretoria. Reunião em status incorreto.");
         }
