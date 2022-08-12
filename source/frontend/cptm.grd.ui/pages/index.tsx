@@ -176,7 +176,7 @@ const Home: NextPage = () => {
         voteWithAjustesdir2.votoDto.votoRd = TipoVotoRd.Aprovacao;
         const voteWithAjustesdir3 = new VoteWithAjustesProposicaoDto();
         voteWithAjustesdir3.votoDto.participanteId =
-            createdReuniao.participantesIds[3];
+            createdReuniao.participantesIds[2];
         voteWithAjustesdir3.votoDto.votoRd = TipoVotoRd.Aprovacao;
         const response: ProposicaoDto = await proposicaoAPI.rdDeliberateDiretor(
             token,
