@@ -1,5 +1,6 @@
 ﻿using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Views;
+using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Models.AD;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
@@ -95,5 +96,18 @@ public class UserRepository : GenericRepository<User>, IUserRepository
             }
         };
         return await Add(newUser);
+    }
+
+    public async Task<List<User>> GetFromIdList(ICollection<int> ids)
+    {
+        var users = new List<User>();
+        foreach (var id in ids)
+        {
+            var user = await Get(id);
+            if (user == null) throw new NotFoundException(nameof(id), id);
+            users.Add(user);
+        }
+
+        return users;
     }
 }

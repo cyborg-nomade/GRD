@@ -45,9 +45,11 @@ public class Reuniao
         return this;
     }
 
-    public Reuniao OnSave(int numeroReuniao, User responsavel)
+    public Reuniao OnSave(int numeroReuniao, User responsavel, List<User> participantesPrevia, List<User> participantes)
     {
         NumeroReuniao = numeroReuniao;
+        ParticipantesPrevia = participantesPrevia;
+        Participantes = participantes;
         ChangeStatus(ReuniaoStatus.Registrada, TipoLogReuniao.Criacao, responsavel);
         return this;
     }

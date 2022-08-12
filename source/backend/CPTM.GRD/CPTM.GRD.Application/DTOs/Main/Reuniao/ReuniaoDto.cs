@@ -1,5 +1,4 @@
-﻿using CPTM.GRD.Application.DTOs.AccessControl.User;
-using CPTM.GRD.Application.DTOs.Main.Acao;
+﻿using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
 using CPTM.GRD.Application.DTOs.Main.Reuniao.Interfaces;
 using CPTM.GRD.Common;
@@ -16,8 +15,8 @@ public class ReuniaoDto : IBaseReuniaoDto, IFullReuniaoDto, IAutoPropertiesReuni
     public TipoReuniao TipoReuniao { get; set; }
     public ICollection<ProposicaoDto> Proposicoes { get; set; } = new List<ProposicaoDto>();
     public ICollection<ProposicaoDto> ProposicoesPrevia { get; set; } = new List<ProposicaoDto>();
-    public ICollection<UserDto> Participantes { get; set; } = new List<UserDto>();
-    public ICollection<UserDto> ParticipantesPrevia { get; set; } = new List<UserDto>();
+    public ICollection<int> ParticipantesIds { get; set; } = new List<int>();
+    public ICollection<int> ParticipantesPreviaIds { get; set; } = new List<int>();
     public ICollection<AcaoDto> Acoes { get; set; } = new List<AcaoDto>();
     public string? Comunicado { get; set; }
     public string? OutrasObservacoes { get; set; }
@@ -41,8 +40,8 @@ public class ReuniaoDto : IBaseReuniaoDto, IFullReuniaoDto, IAutoPropertiesReuni
 {nameof(TipoReuniao)}: {TipoReuniao}, 
 {nameof(Proposicoes)}: {Proposicoes}, 
 {nameof(ProposicoesPrevia)}: {ProposicoesPrevia}, 
-{nameof(Participantes)}: {Participantes}, 
-{nameof(ParticipantesPrevia)}: {ParticipantesPrevia}, 
+{nameof(ParticipantesIds)}: {ParticipantesIds}, 
+{nameof(ParticipantesPreviaIds)}: {ParticipantesPreviaIds}, 
 {nameof(Acoes)}: {Acoes}, 
 {nameof(Comunicado)}: {Comunicado}, 
 {nameof(OutrasObservacoes)}: {OutrasObservacoes}, 

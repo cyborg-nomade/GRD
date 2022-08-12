@@ -2,7 +2,12 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
-import { AuthUser, GroupDto, UserDto } from "../models/access-control.model";
+import {
+    AuthUser,
+    CreateUserDto,
+    GroupDto,
+    UserDto,
+} from "../models/access-control.model";
 import { ObjetoProposicao, TipoVotoRd } from "../models/common.model";
 import { AddProposicaoToReuniaoDto } from "../models/mixed.model";
 import {
@@ -161,26 +166,24 @@ const Home: NextPage = () => {
     };
 
     const grgCoordinatesVoteHandler = async () => {
-        const voteWithAjustesdir1 = new VoteWithAjustesProposicaoDto();
-        voteWithAjustesdir1.votoDto.participante =
-            createdReuniao.participantes[0];
-        voteWithAjustesdir1.votoDto.votoRd = TipoVotoRd.Aprovacao;
-        const voteWithAjustesdir2 = new VoteWithAjustesProposicaoDto();
-        voteWithAjustesdir2.votoDto.participante =
-            createdReuniao.participantes[1];
-        voteWithAjustesdir2.votoDto.votoRd = TipoVotoRd.Aprovacao;
-        const voteWithAjustesdir3 = new VoteWithAjustesProposicaoDto();
-        voteWithAjustesdir3.votoDto.participante =
-            createdReuniao.participantes[3];
-        voteWithAjustesdir3.votoDto.votoRd = TipoVotoRd.Aprovacao;
-
-        const response: ProposicaoDto = await proposicaoAPI.rdDeliberateDiretor(
-            token,
-            createdProposicao.id,
-            [voteWithAjustesdir1, voteWithAjustesdir2, voteWithAjustesdir3]
-        );
-
-        console.log(response);
+        // const voteWithAjustesdir1 = new VoteWithAjustesProposicaoDto();
+        // voteWithAjustesdir1.votoDto.participante =
+        //     createdReuniao.participantesIds[0];
+        // voteWithAjustesdir1.votoDto.votoRd = TipoVotoRd.Aprovacao;
+        // const voteWithAjustesdir2 = new VoteWithAjustesProposicaoDto();
+        // voteWithAjustesdir2.votoDto.participante =
+        //     createdReuniao.participantesIds[1];
+        // voteWithAjustesdir2.votoDto.votoRd = TipoVotoRd.Aprovacao;
+        // const voteWithAjustesdir3 = new VoteWithAjustesProposicaoDto();
+        // voteWithAjustesdir3.votoDto.participante =
+        //     createdReuniao.participantesIds[3];
+        // voteWithAjustesdir3.votoDto.votoRd = TipoVotoRd.Aprovacao;
+        // const response: ProposicaoDto = await proposicaoAPI.rdDeliberateDiretor(
+        //     token,
+        //     createdProposicao.id,
+        //     [voteWithAjustesdir1, voteWithAjustesdir2, voteWithAjustesdir3]
+        // );
+        // console.log(response);
     };
 
     const postReuniaoHandler = async () => {
@@ -191,16 +194,30 @@ const Home: NextPage = () => {
         reuniao.horarioPrevia = new Date("2022-08-11");
         reuniao.local = "teste";
 
-        const participante1 = new UserDto();
-        participante1.nome = "dir1";
+        const gilsac = new CreateUserDto();
+        gilsac.usernameAd = "GILSAC";
 
-        const participante2 = new UserDto();
-        participante2.nome = "dir2";
+        const argenton = new CreateUserDto();
+        argenton.usernameAd = "ARGENTON";
 
-        const participante3 = new UserDto();
-        participante3.nome = "dir3";
+        const marcelom = new CreateUserDto();
+        marcelom.usernameAd = "MARCELOM";
 
-        reuniao.participantes.push(participante1, participante2, participante3);
+        const participante1 = await usersAPI.post(token, gilsac);
+        const participante2 = await usersAPI.post(token, argenton);
+        const participante3 = await usersAPI.post(token, marcelom);
+
+        console.log(participante1);
+        console.log(participante2);
+        console.log(participante3);
+
+        reuniao.participantesIds.push(
+            participante1.id,
+            participante2.id,
+            participante3.id
+        );
+
+        console.log(reuniao);
 
         var createdReuniao = await reuniaoAPI.post(token, reuniao);
         console.log(createdReuniao);

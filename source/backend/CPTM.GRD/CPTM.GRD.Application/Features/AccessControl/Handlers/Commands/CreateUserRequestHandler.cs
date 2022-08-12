@@ -8,7 +8,6 @@ using CPTM.GRD.Application.Features.AccessControl.Requests.Commands;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
 using MediatR;
-using static CPTM.GRD.Application.Models.EmailSubjectsAndMessages;
 
 namespace CPTM.GRD.Application.Features.AccessControl.Handlers.Commands;
 
@@ -69,7 +68,7 @@ public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, UserD
 
         await _unitOfWork.Save();
 
-        await _emailService.SendEmail(new List<User>() { addedUser }, UserCreationSubject, UserCreationMessage);
+        //await _emailService.SendEmail(new List<User>() { addedUser }, UserCreationSubject, UserCreationMessage);
 
         return _mapper.Map<UserDto>(addedUser);
     }

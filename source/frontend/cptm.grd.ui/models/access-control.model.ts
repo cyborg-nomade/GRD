@@ -32,6 +32,7 @@ interface IBaseUserDto {
     nivelAcesso: AccessLevel;
     areasAcesso: GroupDto[];
     funcao: string;
+    email: string;
 }
 
 interface IFullUserDto {
@@ -65,6 +66,7 @@ export class UpdateUserDto implements IBaseUserDto, IFullUserDto {
     nivelAcesso!: AccessLevel;
     areasAcesso!: GroupDto[];
     funcao!: string;
+    email!: string;
     id!: number;
 
     constructor() {
@@ -72,6 +74,7 @@ export class UpdateUserDto implements IBaseUserDto, IFullUserDto {
         this.nivelAcesso = AccessLevel.Sub;
         this.areasAcesso = [new GroupDto()];
         this.funcao = "";
+        this.email = "";
         this.id = 0;
     }
 }
@@ -81,6 +84,7 @@ export class UserDto implements IBaseUserDto, IFullUserDto, IUsernameAdUserDto {
     nivelAcesso!: AccessLevel;
     areasAcesso!: GroupDto[];
     funcao!: string;
+    email!: string;
     id!: number;
     usernameAd!: string;
 
@@ -89,6 +93,7 @@ export class UserDto implements IBaseUserDto, IFullUserDto, IUsernameAdUserDto {
         this.nivelAcesso = AccessLevel.Sub;
         this.areasAcesso = [new GroupDto()];
         this.funcao = "";
+        this.email = "";
         this.id = 0;
         this.funcao = "";
     }

@@ -15,5 +15,6 @@ public class IBaseUserDtoValidator : AbstractValidator<IBaseUserDto>
         RuleForEach(p => p.AreasAcesso).NotNull().NotEmpty()
             .SetValidator(new IGroupDtoValidator(authenticationService, userRepository));
         RuleFor(p => p.Funcao).NotNull().NotEmpty();
+        RuleFor(p => p.Email).NotNull().NotEmpty().EmailAddress();
     }
 }

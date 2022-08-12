@@ -1,8 +1,8 @@
+import { UserDto } from "../../access-control.model";
 import { TipoVotoRd } from "../../common.model";
-import { ParticipanteDto } from "./../../reunioes/children/participante.model";
 
 interface IBaseVotoDto {
-    participante: ParticipanteDto;
+    participante: UserDto;
     votoRd: TipoVotoRd;
 }
 
@@ -11,22 +11,22 @@ interface IFullVotoDto {
 }
 
 export class CreateVotoDto implements IBaseVotoDto {
-    participante!: ParticipanteDto;
+    participante!: UserDto;
     votoRd!: TipoVotoRd;
 
     constructor() {
-        this.participante = new ParticipanteDto();
+        this.participante = new UserDto();
         this.votoRd = TipoVotoRd.Suspensao;
     }
 }
 
 export class VotoDto implements IBaseVotoDto, IFullVotoDto {
-    participante!: ParticipanteDto;
+    participante!: UserDto;
     votoRd!: TipoVotoRd;
     id!: number;
 
     constructor() {
-        this.participante = new ParticipanteDto();
+        this.participante = new UserDto();
         this.votoRd = TipoVotoRd.Suspensao;
         this.id = 0;
     }

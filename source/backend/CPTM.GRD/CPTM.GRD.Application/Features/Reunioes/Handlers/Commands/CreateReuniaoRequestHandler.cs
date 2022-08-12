@@ -7,6 +7,7 @@ using CPTM.GRD.Application.DTOs.Main.Reuniao.Validators;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Reunioes.Requests.Commands;
 using CPTM.GRD.Common;
+using CPTM.GRD.Domain.AccessControl;
 using CPTM.GRD.Domain.Reunioes;
 using MediatR;
 
@@ -55,7 +56,11 @@ public class CreateReuniaoRequestHandler : IRequestHandler<CreateReuniaoRequest,
         var responsavel = await _unitOfWork.UserRepository.Get(claims.Uid);
         if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
 
-        reuniao.OnSave(numeroReuniao, responsavel);
+        var participantesPrevia =
+            await _unitOfWork.UserRepository.GetFromIdList(request.CreateReuniaoDto.ParticipantesPreviaIds);
+        var participantes = await _unitOfWork.UserRepository.GetFromIdList(request.CreateReuniaoDto.ParticipantesIds);
+
+        reuniao.OnSave(numeroReuniao, responsavel, participantesPrevia, participantes);
 
         var addedReuniao = await _unitOfWork.ReuniaoRepository.Add(reuniao);
         await _unitOfWork.Save();

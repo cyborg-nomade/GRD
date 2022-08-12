@@ -21,8 +21,8 @@ interface IBaseReuniaoDto {
     tipoReuniao: TipoReuniao;
     proposicoes: ProposicaoDto[];
     proposicoesPrevia: ProposicaoDto[];
-    participantes: UserDto[];
-    participantesPrevia: UserDto[];
+    participantesIds: number[];
+    participantesPrevia: number[];
     acoes: AcaoDto[];
     comunicado?: string;
     outrasObservacoes?: string;
@@ -43,8 +43,8 @@ export class CreateReuniaoDto implements IBaseReuniaoDto {
     tipoReuniao!: TipoReuniao;
     proposicoes!: ProposicaoDto[];
     proposicoesPrevia!: ProposicaoDto[];
-    participantes!: UserDto[];
-    participantesPrevia!: UserDto[];
+    participantesIds!: number[];
+    participantesPrevia!: number[];
     acoes!: AcaoDto[];
     comunicado?: string | undefined;
     outrasObservacoes?: string | undefined;
@@ -59,7 +59,7 @@ export class CreateReuniaoDto implements IBaseReuniaoDto {
         this.tipoReuniao = TipoReuniao.Ordinaria;
         this.proposicoes = [];
         this.proposicoesPrevia = [];
-        this.participantes = [];
+        this.participantesIds = [];
         this.participantesPrevia = [];
         this.acoes = [];
     }
@@ -76,8 +76,8 @@ export class ReuniaoDto
     tipoReuniao!: TipoReuniao;
     proposicoes!: ProposicaoDto[];
     proposicoesPrevia!: ProposicaoDto[];
-    participantes!: UserDto[];
-    participantesPrevia!: UserDto[];
+    participantesIds!: number[];
+    participantesPrevia!: number[];
     acoes!: AcaoDto[];
     comunicado?: string | undefined;
     outrasObservacoes?: string | undefined;
@@ -100,7 +100,7 @@ export class ReuniaoDto
         this.tipoReuniao = TipoReuniao.Ordinaria;
         this.proposicoes = [];
         this.proposicoesPrevia = [];
-        this.participantes = [];
+        this.participantesIds = [];
         this.participantesPrevia = [];
         this.acoes = [];
         this.id = 0;
@@ -147,8 +147,8 @@ export class UpdateReuniaoDto implements IBaseReuniaoDto, IFullReuniaoDto {
     tipoReuniao!: TipoReuniao;
     proposicoes!: ProposicaoDto[];
     proposicoesPrevia!: ProposicaoDto[];
-    participantes!: UserDto[];
-    participantesPrevia!: UserDto[];
+    participantesIds!: number[];
+    participantesPrevia!: number[];
     acoes!: AcaoDto[];
     comunicado?: string | undefined;
     outrasObservacoes?: string | undefined;
@@ -165,7 +165,7 @@ export class UpdateReuniaoDto implements IBaseReuniaoDto, IFullReuniaoDto {
         this.tipoReuniao = TipoReuniao.Ordinaria;
         this.proposicoes = [];
         this.proposicoesPrevia = [];
-        this.participantes = [];
+        this.participantesIds = [];
         this.participantesPrevia = [];
         this.acoes = [];
         this.id = 0;

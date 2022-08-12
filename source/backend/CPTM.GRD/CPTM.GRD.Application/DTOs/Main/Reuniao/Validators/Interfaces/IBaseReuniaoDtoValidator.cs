@@ -34,6 +34,16 @@ public class IBaseReuniaoDtoValidator : AbstractValidator<IBaseReuniaoDto>
             .SetValidator(new ProposicaoDtoValidator(groupRepository, authenticationService, userRepository,
                 votoRepository,
                 proposicaoRepository, proposicaoStrictSequence));
+        RuleForEach(p => p.ParticipantesIds).NotNull().NotEmpty().GreaterThan(0).MustAsync(async (id, token) =>
+        {
+            var userExists = await userRepository.Exists(id);
+            return userExists;
+        });
+        RuleForEach(p => p.ParticipantesPreviaIds).NotNull().NotEmpty().GreaterThan(0).MustAsync(async (id, token) =>
+        {
+            var userExists = await userRepository.Exists(id);
+            return userExists;
+        });
         RuleForEach(p => p.Acoes)
             .SetValidator(new IBaseAcaoDtoValidator(groupRepository, authenticationService, userRepository));
     }
