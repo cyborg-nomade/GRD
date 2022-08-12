@@ -512,7 +512,7 @@
 -   **_side effects_**:
     -   system creates a change log for the actions
 
-## 015. grg edits reuniao
+## 015. grg edits reuniao (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: other grg members

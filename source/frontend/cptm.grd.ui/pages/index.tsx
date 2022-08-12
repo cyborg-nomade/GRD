@@ -21,7 +21,11 @@ import {
     VoteWithAjustesProposicaoDto,
 } from "../models/proposicoes/proposicao.model";
 import { AuthResponse, EstruturaResponse } from "../models/responses.model";
-import { CreateReuniaoDto, ReuniaoDto } from "../models/reunioes/reuniao.model";
+import {
+    CreateReuniaoDto,
+    ReuniaoDto,
+    UpdateReuniaoDto,
+} from "../models/reunioes/reuniao.model";
 import GroupsApi from "../services/api/groups.api";
 import ProposicoesApi from "../services/api/proposicoes.api";
 import ReunioesApi from "../services/api/reunioes.api";
@@ -307,6 +311,25 @@ const Home: NextPage = () => {
         setCreatedReuniao(createdReuniao);
     };
 
+    const editReuniaoHandler = async () => {
+        const gottenReuniao = await reuniaoAPI.getSingle(
+            token,
+            createdReuniao.id
+        );
+
+        let reuniaoWithChanges = new UpdateReuniaoDto();
+        reuniaoWithChanges = { ...gottenReuniao };
+        reuniaoWithChanges.local = "teste update";
+
+        const updatedProposicao = await reuniaoAPI.put(
+            token,
+            createdReuniao.id,
+            reuniaoWithChanges
+        );
+        console.log(updatedProposicao);
+        setCreatedReuniao(updatedProposicao);
+    };
+
     const grgEmitsPautaPreviaHandler = async () => {
         const response: ReuniaoDto = await reuniaoAPI.getPautaPreviaFile(
             token,
@@ -504,6 +527,13 @@ const Home: NextPage = () => {
                     <a className={styles.card} onClick={postReuniaoHandler}>
                         <h2>Criar Reunião &rarr;</h2>
                         <p>UC #014</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a className={styles.card} onClick={editReuniaoHandler}>
+                        <h2>Editar Reunião &rarr;</h2>
+                        <p>UC #015</p>
                     </a>
                 </div>
 
