@@ -12,6 +12,7 @@
 
 appsettings.*
 ControlFiles/
+AppFiles/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
