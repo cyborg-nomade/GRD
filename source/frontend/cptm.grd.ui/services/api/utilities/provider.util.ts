@@ -5,7 +5,9 @@ const BASE_URL = process.env.NEXT_PUBLIC_CONNSTR;
 
 const getAll = async (resource: string, token: string) => {
     try {
-        const response = await axios.get(`${BASE_URL}/${resource}`);
+        const response = await axios.get(`${BASE_URL}/${resource}`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
         return handleResponse(response);
     } catch (error) {
         return handleError(error);
