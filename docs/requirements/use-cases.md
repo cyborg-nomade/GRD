@@ -385,7 +385,7 @@
         -   sends to reuniao participants;
     -   system creates a change log for the actions
 
-## 011. user sends proposicao to grg after rd fixes are requested
+## 011. user sends proposicao to grg after rd fixes are requested (API OK)
 
 -   **_primary actor_**: user (any level or group)
 -   **_other actors_**: gerente (of the owner group), assessor-diretoria (of the owner group), diretor (of the owner group), grg members
@@ -421,7 +421,7 @@
         -   sends to grg members;
     -   system creates a change log for the actions
 
-## 012. grg marks fixes done
+## 012. grg marks fixes done (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: gerente (of the owner group), assessor-diretoria (of the owner group), diretor (of the owner group), grg members

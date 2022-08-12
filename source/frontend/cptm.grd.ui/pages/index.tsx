@@ -220,6 +220,14 @@ const Home: NextPage = () => {
         console.log(response);
     };
 
+    const grgMarksFixesDoneHandler = async () => {
+        const response = await proposicaoAPI.fixesDone(
+            token,
+            createdProposicao.id
+        );
+        console.log(response);
+    };
+
     const postReuniaoHandler = async () => {
         const reuniao = new CreateReuniaoDto();
         reuniao.data = new Date("2022-08-12");
@@ -430,6 +438,16 @@ const Home: NextPage = () => {
                     >
                         <h2>Diretoria devolve à GRG após correções &rarr;</h2>
                         <p>UC #011</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a
+                        className={styles.card}
+                        onClick={grgMarksFixesDoneHandler}
+                    >
+                        <h2>GRG aprova correções &rarr;</h2>
+                        <p>UC #012</p>
                     </a>
                 </div>
 
