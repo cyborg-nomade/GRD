@@ -10,6 +10,7 @@ interface IGroupDto {
 }
 
 export class GroupDto implements IGroupDto {
+    id!: number;
     sigla!: string;
     nome!: string;
     siglaGerencia!: string;
@@ -18,6 +19,7 @@ export class GroupDto implements IGroupDto {
     diretoria!: string;
 
     constructor() {
+        this.id = 0;
         this.sigla = "";
         this.nome = "";
         this.siglaGerencia = "";
