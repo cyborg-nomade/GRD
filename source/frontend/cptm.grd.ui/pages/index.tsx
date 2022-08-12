@@ -376,6 +376,10 @@ const Home: NextPage = () => {
         console.log(reuniaoProposicoes);
     };
 
+    const addProposicaoRetroHandler = async () => {
+        await grgAddsProposicaoToReuniaoHandler();
+    };
+
     const grgEmitsRelatorioDeliberativoHandler = async () => {
         const response: ReuniaoDto =
             await reuniaoAPI.getRelatorioDeliberativoFile(
@@ -610,6 +614,16 @@ const Home: NextPage = () => {
                     <a className={styles.card} onClick={reuniaoScreenHandler}>
                         <h2>Tela de Reunião &rarr;</h2>
                         <p>UC #021</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a
+                        className={styles.card}
+                        onClick={addProposicaoRetroHandler}
+                    >
+                        <h2>GRG adiciona Proposição retroativamente &rarr;</h2>
+                        <p>UC #022</p>
                     </a>
                 </div>
 

@@ -753,7 +753,7 @@
 -   **_data outputs_**: list of proposicoes
 -   **_side effects_**: none
 
-## 022. grg adds proposicao to reuniao retroactively
+## 022. grg adds proposicao to reuniao retroactively (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: gerente (of the owner group), assessor-diretoria (of the owner group), diretor (of the owner group), other grg members
