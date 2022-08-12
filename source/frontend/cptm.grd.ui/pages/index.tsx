@@ -33,6 +33,9 @@ const Home: NextPage = () => {
     );
     const [createdReuniao, setCreatedReuniao] = useState(new ReuniaoDto());
     const [estrutura, setEstrutura] = useState(new EstruturaResponse());
+    const [dir1, setDir1] = useState(new UserDto());
+    const [dir2, setDir2] = useState(new UserDto());
+    const [dir3, setDir3] = useState(new UserDto());
 
     const usersAPI = new UsersApi();
     const groupsAPI = new GroupsApi();
@@ -167,21 +170,34 @@ const Home: NextPage = () => {
 
     const grgCoordinatesVoteHandler = async () => {
         const voteWithAjustesdir1 = new VoteWithAjustesProposicaoDto();
-        voteWithAjustesdir1.votoDto.participanteId =
-            createdReuniao.participantesIds[0];
+        voteWithAjustesdir1.votoDto.participanteId = dir1.id;
         voteWithAjustesdir1.votoDto.votoRd = TipoVotoRd.Aprovacao;
+
         const voteWithAjustesdir2 = new VoteWithAjustesProposicaoDto();
-        voteWithAjustesdir2.votoDto.participanteId =
-            createdReuniao.participantesIds[1];
+        voteWithAjustesdir2.votoDto.participanteId = dir2.id;
         voteWithAjustesdir2.votoDto.votoRd = TipoVotoRd.Aprovacao;
+
         const voteWithAjustesdir3 = new VoteWithAjustesProposicaoDto();
-        voteWithAjustesdir3.votoDto.participanteId =
-            createdReuniao.participantesIds[2];
+        voteWithAjustesdir3.votoDto.participanteId = dir3.id;
         voteWithAjustesdir3.votoDto.votoRd = TipoVotoRd.Aprovacao;
+
         const response: ProposicaoDto = await proposicaoAPI.rdDeliberateDiretor(
             token,
             createdProposicao.id,
             [voteWithAjustesdir1, voteWithAjustesdir2, voteWithAjustesdir3]
+        );
+
+        console.log(response);
+    };
+
+    const diretorVotesHandler = async () => {
+        const voteWithAjustes = new VoteWithAjustesProposicaoDto();
+        voteWithAjustes.votoDto.participanteId = currentUser.id;
+        voteWithAjustes.votoDto.votoRd = TipoVotoRd.Aprovacao;
+        const response: ProposicaoDto = await proposicaoAPI.rdDeliberateDiretor(
+            token,
+            createdProposicao.id,
+            [voteWithAjustes]
         );
         console.log(response);
     };
@@ -207,17 +223,16 @@ const Home: NextPage = () => {
         const participante2 = await usersAPI.post(token, argenton);
         const participante3 = await usersAPI.post(token, marcelom);
 
-        console.log(participante1);
-        console.log(participante2);
-        console.log(participante3);
+        setDir1(participante1);
+        setDir2(participante2);
+        setDir3(participante3);
 
         reuniao.participantesIds.push(
             participante1.id,
             participante2.id,
-            participante3.id
+            participante3.id,
+            currentUser.id
         );
-
-        console.log(reuniao);
 
         var createdReuniao = await reuniaoAPI.post(token, reuniao);
         console.log(createdReuniao);
@@ -356,6 +371,13 @@ const Home: NextPage = () => {
                     >
                         <h2>GRG coordena votos em reunião &rarr;</h2>
                         <p>UC #008</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a className={styles.card} onClick={diretorVotesHandler}>
+                        <h2>Diretor Vota &rarr;</h2>
+                        <p>UC #009</p>
                     </a>
                 </div>
 

@@ -306,7 +306,7 @@
         -   sends to grg members;
     -   system creates a change log for the actions
 
-## 009. diretor votes for approval of a proposicao in reuniao presenting screen
+## 009. diretor votes for approval of a proposicao in reuniao presenting screen (API OK)
 
 -   **_primary actor_**: diretor
 -   **_other actors_**: gerente (of the owner group), assessor-diretoria (of the owner group), diretor (of the owner group), grg members, other diretores in reuniao
