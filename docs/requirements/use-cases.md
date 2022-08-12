@@ -724,7 +724,7 @@
         -   sends to reuniao previa participants;
     -   system creates a change log for the actions
 
-## 021. grg (or diretor) opens reuniao presentation screen
+## 021. grg (or diretor) opens reuniao presentation screen (API OK)
 
 -   **_primary actor_**: grg member or diretor (participating in reuniao)
 -   **_other actors_**: none

@@ -366,6 +366,16 @@ const Home: NextPage = () => {
         setCreatedReuniao(response);
     };
 
+    const reuniaoScreenHandler = async () => {
+        const reuniao = await reuniaoAPI.getSingle(token, createdReuniao.id);
+        console.log(reuniao);
+        const reuniaoProposicoes = await proposicaoAPI.getByReuniao(
+            token,
+            createdReuniao.id
+        );
+        console.log(reuniaoProposicoes);
+    };
+
     const grgEmitsRelatorioDeliberativoHandler = async () => {
         const response: ReuniaoDto =
             await reuniaoAPI.getRelatorioDeliberativoFile(
@@ -593,6 +603,13 @@ const Home: NextPage = () => {
                     >
                         <h2>Emitir Pauta Definitiva &rarr;</h2>
                         <p>UC #020</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a className={styles.card} onClick={reuniaoScreenHandler}>
+                        <h2>Tela de Reunião &rarr;</h2>
+                        <p>UC #021</p>
                     </a>
                 </div>
 
