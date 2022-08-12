@@ -213,7 +213,29 @@ public class Proposicao
 
     public Proposicao AddDiretorVote(User responsavel, Voto vote, string ajustes)
     {
-        VotosRd?.Add(vote);
+        if (Reuniao == null)
+        {
+            throw new Exception("Esta Proposição não está em uma Reunião. Não é possível votar");
+        }
+
+        if (Reuniao.Participantes == null)
+        {
+            throw new Exception("Não há participantes nesta reunião. Não é possível realizar votação");
+        }
+
+        if (!Reuniao.Participantes.Contains(vote.Participante))
+        {
+            throw new Exception("Este usuário não é participante desta reunião e, portanto, não pode votar.");
+        }
+
+        if (VotosRd!.Select(v => v.Participante).Contains(vote.Participante))
+        {
+            // Participante has already voted, remove the old vote before adding the new
+            var oldVote = VotosRd!.SingleOrDefault(v => v.Participante.Id == vote.Participante.Id);
+            VotosRd!.Remove(oldVote!);
+        }
+
+        VotosRd!.Add(vote);
         AjustesRd += $"\n\n{ajustes}";
         GenerateProposicaoLog(LogProposicao.ConvertFromTipoVoto(vote.VotoRd), responsavel,
             $@"Voto de Diretor {vote.Participante.Nome} em RD: {vote.VotoRd}");
