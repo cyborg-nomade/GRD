@@ -194,6 +194,7 @@ const Home: NextPage = () => {
         const voteWithAjustes = new VoteWithAjustesProposicaoDto();
         voteWithAjustes.votoDto.participanteId = currentUser.id;
         voteWithAjustes.votoDto.votoRd = TipoVotoRd.Aprovacao;
+        voteWithAjustes.ajustes = "teste ajuste";
         const response: ProposicaoDto = await proposicaoAPI.rdDeliberateDiretor(
             token,
             createdProposicao.id,
@@ -206,6 +207,14 @@ const Home: NextPage = () => {
         const response = await reuniaoAPI.getResolucaoDiretoriaFile(
             token,
             createdReuniao.id,
+            createdProposicao.id
+        );
+        console.log(response);
+    };
+
+    const diretoriaSendProposicaoBackToGrgAfterFixesHandler = async () => {
+        const response = await proposicaoAPI.returnToGrg(
+            token,
             createdProposicao.id
         );
         console.log(response);
@@ -409,6 +418,18 @@ const Home: NextPage = () => {
                             Emitir Resolução Diretoria para Proposição &rarr;
                         </h2>
                         <p>UC #010</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a
+                        className={styles.card}
+                        onClick={
+                            diretoriaSendProposicaoBackToGrgAfterFixesHandler
+                        }
+                    >
+                        <h2>Diretoria devolve à GRG após correções &rarr;</h2>
+                        <p>UC #011</p>
                     </a>
                 </div>
 
