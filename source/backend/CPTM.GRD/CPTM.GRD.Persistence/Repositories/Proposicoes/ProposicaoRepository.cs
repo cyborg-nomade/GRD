@@ -59,7 +59,7 @@ public class ProposicaoRepository : GenericRepository<Proposicao>, IProposicaoRe
 
     public async Task<IReadOnlyList<Proposicao>> GetByReuniao(int rid)
     {
-        return await _grdContext.Proposicoes.Where(p => p.Reuniao.Id == rid).ToListAsync();
+        return await _grdContext.Proposicoes.Where(p => p.Reuniao != null && p.Reuniao.Id == rid).ToListAsync();
     }
 
     public async Task<IReadOnlyList<Proposicao>> GetByReuniaoPrevia(int rid)
@@ -67,10 +67,15 @@ public class ProposicaoRepository : GenericRepository<Proposicao>, IProposicaoRe
         var reuniao = await _grdContext.Reunioes.FindAsync(rid);
         if (reuniao == null) throw new NotFoundException(nameof(reuniao), rid);
         return await _grdContext.Proposicoes
-            .Where(p => p.Reuniao.Id == rid &&
-                        reuniao.ProposicoesPrevia
-                            .Select(p2 => p2.Id)
-                            .Contains(p.Id))
+            .Where(p => reuniao.ProposicoesPrevia != null && p.Reuniao != null && p.Reuniao.Id == rid && reuniao
+                .ProposicoesPrevia
+                .Select(p2 => p2.Id)
+                .Contains(p.Id))
             .ToListAsync();
+    }
+
+    public async Task<Proposicao?> GetWithReuniao(int pid)
+    {
+        return await _grdContext.Proposicoes.Where(p => p.Id == pid).Include(p => p.Reuniao).SingleOrDefaultAsync();
     }
 }

@@ -18,4 +18,12 @@ public class ReuniaoRepository : GenericRepository<Reuniao>, IReuniaoRepository
     {
         return await _grdContext.Reunioes.Where(r => r.Status == status).ToListAsync();
     }
+
+    public new async Task<Reuniao?> Get(int rid)
+    {
+        return await _grdContext.Reunioes.Where(r => r.Id == rid)
+            .Include(r => r.Proposicoes)
+            .Include(r => r.ProposicoesPrevia)
+            .SingleOrDefaultAsync();
+    }
 }

@@ -278,8 +278,6 @@ namespace CPTM.GRD.Persistence
                         .HasConstraintName("FK_AcaoReuniao_ReuniaoId")
                         .OnDelete(DeleteBehavior.SetNull));
 
-            modelBuilder.Entity<Reuniao>().Navigation(r => r.Proposicoes).AutoInclude();
-            modelBuilder.Entity<Reuniao>().Navigation(r => r.ProposicoesPrevia).AutoInclude();
             modelBuilder.Entity<Reuniao>().Navigation(r => r.Participantes).AutoInclude();
             modelBuilder.Entity<Reuniao>().Navigation(r => r.ParticipantesPrevia).AutoInclude();
             modelBuilder.Entity<Reuniao>().Navigation(r => r.Acoes).AutoInclude();

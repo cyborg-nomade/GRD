@@ -34,7 +34,7 @@ public class
     {
         _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Diretor);
 
-        var proposicao = await _unitOfWork.ProposicaoRepository.Get(request.Pid);
+        var proposicao = await _unitOfWork.ProposicaoRepository.GetWithReuniao(request.Pid);
         if (proposicao == null) throw new NotFoundException(nameof(proposicao), request.Pid);
 
         var claims = _authenticationService.GetTokenClaims(request.RequestUser);
