@@ -1005,7 +1005,7 @@
         -   sends to diretores (participating in reuniao where acao has been included);
     -   system creates a change log for the actions
 
-## 029. gerente adds user as subgerente
+## 029. gerente adds user as subgerente (API OK)
 
 -   **_primary actor_**: gerente
 -   **_other actors_**: subgerente
@@ -1036,7 +1036,7 @@
         -   sends to user, confirming inclusion;
     -   system creates a change log for the actions
 
-## 030. diretor adds user as assessor-diretoria
+## 030. diretor adds user as assessor-diretoria (API OK)
 
 -   **_primary actor_**: diretor
 -   **_other actors_**: assessor-diretoria
@@ -1067,7 +1067,7 @@
         -   sends to user, confirming inclusion;
     -   system creates a change log for the actions
 
-## 031. grg (or sysadmin) adds a user
+## 031. grg (or sysadmin) adds a user (API OK)
 
 -   **_primary actor_**: grg member or sysadmin
 -   **_other actors_**: user added

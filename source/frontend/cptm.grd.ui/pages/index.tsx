@@ -481,6 +481,14 @@ const Home: NextPage = () => {
         console.log(response);
     };
 
+    const addUserHandler = async () => {
+        const newUser = new CreateUserDto();
+        newUser.usernameAd = "josene";
+
+        const response = await usersAPI.post(token, newUser);
+        console.log(response);
+    };
+
     const getEstruturaHandler = async () => {
         const estrutura: EstruturaResponse = await groupsAPI.getEstrutura(
             token
@@ -779,6 +787,13 @@ const Home: NextPage = () => {
                     >
                         <h2>Finalizar Ação &rarr;</h2>
                         <p>UC #028</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a className={styles.card} onClick={addUserHandler}>
+                        <h2>Adicionar Usuário &rarr;</h2>
+                        <p>UC #029</p>
                     </a>
                 </div>
 
