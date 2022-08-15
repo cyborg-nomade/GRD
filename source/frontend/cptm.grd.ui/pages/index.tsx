@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
     AuthUser,
     CreateUserDto,
@@ -40,6 +41,10 @@ import GroupsApi from "../services/api/groups.api";
 import ProposicoesApi from "../services/api/proposicoes.api";
 import ReunioesApi from "../services/api/reunioes.api";
 import UsersApi from "../services/api/users.api";
+import {
+    selectAuthState,
+    setAuthState,
+} from "../services/redux/slices/example";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
@@ -530,6 +535,9 @@ const Home: NextPage = () => {
         console.log(group3);
     };
 
+    const authState = useSelector(selectAuthState);
+    const dispatch = useDispatch();
+
     return (
         <div className={styles.container}>
             <Head>
@@ -546,6 +554,19 @@ const Home: NextPage = () => {
 
                 <p className={styles.description}>Teste de API</p>
                 <p className={styles.description}>Token: {token}</p>
+
+                <div>
+                    <div>{authState ? "Logged in" : "Not Logged In"}</div>
+                    <button
+                        onClick={() =>
+                            authState
+                                ? dispatch(setAuthState(false))
+                                : dispatch(setAuthState(true))
+                        }
+                    >
+                        {authState ? "Logout" : "LogIn"}
+                    </button>
+                </div>
 
                 <div className={styles.grid}>
                     <a className={styles.card} onClick={loginHandler}>
