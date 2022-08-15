@@ -8,6 +8,7 @@ import {
     GroupDto,
     UserDto,
 } from "../models/access-control.model";
+import { CreateAcaoDto } from "../models/acoes/acao.model";
 import {
     ObjetoProposicao,
     ProposicaoStatus,
@@ -27,6 +28,7 @@ import {
     ReuniaoDto,
     UpdateReuniaoDto,
 } from "../models/reunioes/reuniao.model";
+import AcoesApi from "../services/api/acoes.api";
 import GroupsApi from "../services/api/groups.api";
 import ProposicoesApi from "../services/api/proposicoes.api";
 import ReunioesApi from "../services/api/reunioes.api";
@@ -50,6 +52,7 @@ const Home: NextPage = () => {
     const groupsAPI = new GroupsApi();
     const proposicaoAPI = new ProposicoesApi();
     const reuniaoAPI = new ReunioesApi();
+    const acaoAPI = new AcoesApi();
 
     const loginHandler = async () => {
         const authUser = new AuthUser();
@@ -412,6 +415,31 @@ const Home: NextPage = () => {
         console.log(get3);
     };
 
+    const addAcaoToReuniaoHandler = async () => {
+        // 1. create acao
+        var acao = new CreateAcaoDto();
+        const dirResp = await groupsAPI.getOrAddBySigla(
+            token,
+            estrutura.diretorias[1]
+        );
+        acao.diretoriaRes = dirResp;
+        acao.definicao = "teste acao";
+        acao.prazoInicial = new Date("2022-08-16");
+        acao.prazoFinal = new Date("2022-08-17");
+        acao.responsavel = currentUser;
+        acao.emailDiretor = "teste@diretor.com";
+
+        const response = await acaoAPI.postToReuniao(
+            token,
+            createdReuniao.id,
+            acao
+        );
+
+        console.log(response);
+
+        // 2. add acao to another reuniao for follow up
+    };
+
     const getEstruturaHandler = async () => {
         const estrutura: EstruturaResponse = await groupsAPI.getEstrutura(
             token
@@ -670,6 +698,16 @@ const Home: NextPage = () => {
                     <a className={styles.card} onClick={reuniaGetsHandler}>
                         <h2>Pesquisar Reuniões &rarr;</h2>
                         <p>UC #025</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a
+                        className={styles.card}
+                        onClick={addAcaoToReuniaoHandler}
+                    >
+                        <h2>Adicionar Ação à Reunião &rarr;</h2>
+                        <p>UC #026</p>
                     </a>
                 </div>
 

@@ -890,7 +890,7 @@
 -   **_data outputs_**: list of reunioes
 -   **_side effects_**: none
 
-## 026. grg includes acoes in reuniao
+## 026. grg includes acoes in reuniao (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: responsavel (user designated to an acao), other grg members, diretores (participating in reuniao where acao has been included)
