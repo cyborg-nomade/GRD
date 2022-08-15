@@ -83,12 +83,11 @@ namespace CPTM.GRD.API.Controllers
         [HttpPost("reuniao/{rid:int}")]
         public async Task<AcaoDto> Post(int rid, [FromBody] CreateAcaoDto createAcaoDto)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new CreateAcaoRequest()
             {
+                RequestUser = User,
                 CreateAcaoDto = createAcaoDto,
-                Rid = rid,
-                Uid = responsavel.Id
+                Rid = rid
             });
         }
 
