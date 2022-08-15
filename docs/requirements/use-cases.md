@@ -932,7 +932,7 @@
         -   sends to responsavel (user designated to an acao);
     -   system creates a change log for the actions
 
-## 027. responsavel adds andamentos to an acao
+## 027. responsavel adds andamentos to an acao (API OK)
 
 -   **_primary actor_**: responsavel (user designated to an acao)
 -   **_other actors_**: grg members, diretores (participating in reuniao where acao has been included)

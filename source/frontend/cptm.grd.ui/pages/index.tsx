@@ -8,7 +8,11 @@ import {
     GroupDto,
     UserDto,
 } from "../models/access-control.model";
-import { CreateAcaoDto } from "../models/acoes/acao.model";
+import { AcaoDto, CreateAcaoDto } from "../models/acoes/acao.model";
+import {
+    AndamentoDto,
+    CreateAndamentoDto,
+} from "../models/acoes/children/andamento.model";
 import {
     ObjetoProposicao,
     ProposicaoStatus,
@@ -43,6 +47,7 @@ const Home: NextPage = () => {
         new ProposicaoDto()
     );
     const [createdReuniao, setCreatedReuniao] = useState(new ReuniaoDto());
+    const [createdAcao, setCreatedAcao] = useState(new AcaoDto());
     const [estrutura, setEstrutura] = useState(new EstruturaResponse());
     const [dir1, setDir1] = useState(new UserDto());
     const [dir2, setDir2] = useState(new UserDto());
@@ -436,8 +441,23 @@ const Home: NextPage = () => {
         );
 
         console.log(response);
+        setCreatedAcao(response);
 
         // 2. add acao to another reuniao for follow up
+    };
+
+    const addAndamentoToAcaoHandler = async () => {
+        const andamento = new CreateAndamentoDto();
+        andamento.user = currentUser;
+        andamento.descricao = "teste andamento";
+
+        const response = await acaoAPI.addAndamento(
+            token,
+            createdAcao.id,
+            andamento
+        );
+
+        console.log(response);
     };
 
     const getEstruturaHandler = async () => {
@@ -708,6 +728,16 @@ const Home: NextPage = () => {
                     >
                         <h2>Adicionar Ação à Reunião &rarr;</h2>
                         <p>UC #026</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a
+                        className={styles.card}
+                        onClick={addAndamentoToAcaoHandler}
+                    >
+                        <h2>Adicionar Andamento à Ação &rarr;</h2>
+                        <p>UC #027</p>
                     </a>
                 </div>
 
