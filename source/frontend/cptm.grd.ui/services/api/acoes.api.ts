@@ -5,7 +5,10 @@ import {
     CreateAcaoDto,
     UpdateAcaoDto,
 } from "../../models/acoes/acao.model";
-import { AndamentoDto } from "../../models/acoes/children/andamento.model";
+import {
+    AndamentoDto,
+    CreateAndamentoDto,
+} from "../../models/acoes/children/andamento.model";
 import { AcaoStatus } from "../../models/common.model";
 import { AddAcaoToReuniaoDto } from "../../models/mixed.model";
 import { ApiCore, ApiCoreOptions } from "./utilities/core.util";
@@ -48,7 +51,7 @@ class AcoesApi extends ApiCore<
     addAndamento!: (
         token: string,
         aid: number,
-        andamentoDto: AndamentoDto
+        andamentoDto: CreateAndamentoDto
     ) => Promise<AcaoDto>;
     followUp!: (
         token: string,
@@ -128,7 +131,7 @@ class AcoesApi extends ApiCore<
         this.addAndamento = async (
             token: string,
             aid: number,
-            andamentoDto: AndamentoDto
+            andamentoDto: CreateAndamentoDto
         ) => {
             try {
                 const response = await axios.post(
