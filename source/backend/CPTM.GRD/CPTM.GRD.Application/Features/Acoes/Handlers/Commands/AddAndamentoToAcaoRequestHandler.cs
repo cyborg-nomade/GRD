@@ -46,7 +46,13 @@ public class AddAndamentoToAcaoRequestHandler : IRequestHandler<AddAndamentoToAc
 
         _authenticationService.AuthorizeByExactUser(request.RequestUser, acao.Responsavel);
 
+        var claims = _authenticationService.GetTokenClaims(request.RequestUser);
+
+        var responsavel = await _unitOfWork.UserRepository.Get(claims.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
+
         var andamento = _mapper.Map<Andamento>(request.AndamentoDto);
+        andamento.User = responsavel;
         acao.AddAndamento(andamento);
 
         var updatedAcao = await _unitOfWork.AcaoRepository.Update(acao);

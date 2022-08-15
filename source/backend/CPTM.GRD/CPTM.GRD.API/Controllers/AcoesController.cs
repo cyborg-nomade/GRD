@@ -109,6 +109,7 @@ namespace CPTM.GRD.API.Controllers
         {
             return await _mediator.Send(new AddAndamentoToAcaoRequest()
             {
+                RequestUser = User,
                 Aid = aid,
                 AndamentoDto = andamentoDto
             });
