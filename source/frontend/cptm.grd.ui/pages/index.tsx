@@ -6,6 +6,7 @@ import {
     AuthUser,
     CreateUserDto,
     GroupDto,
+    UpdateUserDto,
     UserDto,
 } from "../models/access-control.model";
 import { AcaoDto, CreateAcaoDto } from "../models/acoes/acao.model";
@@ -15,6 +16,7 @@ import {
 } from "../models/acoes/children/andamento.model";
 import {
     AcaoStatus,
+    AccessLevel,
     ObjetoProposicao,
     ProposicaoStatus,
     ReuniaoStatus,
@@ -49,6 +51,7 @@ const Home: NextPage = () => {
     );
     const [createdReuniao, setCreatedReuniao] = useState(new ReuniaoDto());
     const [createdAcao, setCreatedAcao] = useState(new AcaoDto());
+    const [createdUser, setCreatedUser] = useState(new UserDto());
     const [estrutura, setEstrutura] = useState(new EstruturaResponse());
     const [dir1, setDir1] = useState(new UserDto());
     const [dir2, setDir2] = useState(new UserDto());
@@ -487,6 +490,23 @@ const Home: NextPage = () => {
 
         const response = await usersAPI.post(token, newUser);
         console.log(response);
+        setCreatedUser(response);
+    };
+
+    const editUserHandler = async () => {
+        const gottenUser = await usersAPI.getSingle(token, createdUser.id);
+
+        let userWithChanges = new UpdateUserDto();
+        userWithChanges = { ...gottenUser };
+        userWithChanges.nivelAcesso = AccessLevel.Grg;
+
+        const response = await usersAPI.put(
+            token,
+            createdUser.id,
+            userWithChanges
+        );
+        console.log(response);
+        setCreatedUser(response);
     };
 
     const getEstruturaHandler = async () => {
@@ -793,7 +813,14 @@ const Home: NextPage = () => {
                 <div className={styles.grid}>
                     <a className={styles.card} onClick={addUserHandler}>
                         <h2>Adicionar Usuário &rarr;</h2>
-                        <p>UC #029</p>
+                        <p>UCs #029, #030 and #031</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a className={styles.card} onClick={editUserHandler}>
+                        <h2>Editar Usuário &rarr;</h2>
+                        <p>UCs #032</p>
                     </a>
                 </div>
 

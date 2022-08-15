@@ -1098,7 +1098,7 @@
         -   sends to user, confirming inclusion
     -   system creates a change log for the actions
 
-## 032. grg (or sysadmin) edits a user
+## 032. grg (or sysadmin) edits a user (API OK)
 
 -   **_primary actor_**: grg member or sysadmin
 -   **_other actors_**: user added
