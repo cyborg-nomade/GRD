@@ -6,11 +6,11 @@ public class ReuniaoListDto
 {
     public int Id { get; set; }
     public int NumeroReuniao { get; set; }
-    public DateOnly Data { get; set; }
-    public TimeOnly Horario { get; set; }
+    public DateTime Data { get; set; }
+    public DateTime Horario { get; set; }
     public ReuniaoStatus Status { get; set; }
-    public DateOnly DataPrevia { get; set; }
-    public TimeOnly HorarioPrevia { get; set; }
+    public DateTime DataPrevia { get; set; }
+    public DateTime HorarioPrevia { get; set; }
     public string Local { get; set; } = string.Empty;
     public TipoReuniao TipoReuniao { get; set; }
 }
