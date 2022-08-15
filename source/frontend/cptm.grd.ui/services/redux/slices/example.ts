@@ -1,16 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { HYDRATE } from "next-redux-wrapper";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AuthResponse } from "../../../models/responses.model";
 import { AppState } from "../store";
 
-// Type for our state
-export interface AuthState {
-    authState: boolean;
-}
-
-// Initial state
-const initialState: AuthState = {
-    authState: false,
-};
+const initialState: AuthResponse = new AuthResponse();
 
 // Actual Slice
 export const authSlice = createSlice({
@@ -18,8 +10,12 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         // Action to set the authentication status
-        setAuthState(state, action) {
-            state.authState = action.payload;
+        setAuthState(state, action: PayloadAction<AuthResponse>) {
+            // state = action.payload;
+            console.log(action.type);
+            console.log(action.payload);
+
+            return state;
         },
 
         // // Special reducer for hydrating the state. Special case for next-redux-wrapper
@@ -36,6 +32,6 @@ export const authSlice = createSlice({
 
 export const { setAuthState } = authSlice.actions;
 
-export const selectAuthState = (state: AppState) => state.auth.authState;
+export const selectAuthState = (state: AppState) => state.auth;
 
 export default authSlice.reducer;

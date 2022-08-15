@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
     AuthUser,
     CreateUserDto,
@@ -41,6 +40,7 @@ import GroupsApi from "../services/api/groups.api";
 import ProposicoesApi from "../services/api/proposicoes.api";
 import ReunioesApi from "../services/api/reunioes.api";
 import UsersApi from "../services/api/users.api";
+import { useAppDispatch, useAppSelector } from "../services/redux/hooks";
 import {
     selectAuthState,
     setAuthState,
@@ -68,6 +68,9 @@ const Home: NextPage = () => {
     const reuniaoAPI = new ReunioesApi();
     const acaoAPI = new AcoesApi();
 
+    const authState = useAppSelector((state) => state.auth);
+    const dispatch = useAppDispatch();
+
     const loginHandler = async () => {
         const authUser = new AuthUser();
         authUser.username = "urielf";
@@ -75,6 +78,10 @@ const Home: NextPage = () => {
 
         const authResponse: AuthResponse = await usersAPI.login(authUser);
         console.log(authResponse);
+        console.log("hi", authState);
+
+        dispatch(setAuthState(authResponse));
+
         setToken(authResponse.token);
         setCurrentUser(authResponse.user);
         setCurrentArea(authResponse.user.areasAcesso[0]);
@@ -535,9 +542,6 @@ const Home: NextPage = () => {
         console.log(group3);
     };
 
-    const authState = useSelector(selectAuthState);
-    const dispatch = useDispatch();
-
     return (
         <div className={styles.container}>
             <Head>
@@ -553,20 +557,7 @@ const Home: NextPage = () => {
                 <h1 className={styles.title}>CPTM - GRD</h1>
 
                 <p className={styles.description}>Teste de API</p>
-                <p className={styles.description}>Token: {token}</p>
-
-                <div>
-                    <div>{authState ? "Logged in" : "Not Logged In"}</div>
-                    <button
-                        onClick={() =>
-                            authState
-                                ? dispatch(setAuthState(false))
-                                : dispatch(setAuthState(true))
-                        }
-                    >
-                        {authState ? "Logout" : "LogIn"}
-                    </button>
-                </div>
+                <p className={styles.description}>Token: {authState.token}</p>
 
                 <div className={styles.grid}>
                     <a className={styles.card} onClick={loginHandler}>
