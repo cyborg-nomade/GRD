@@ -971,7 +971,7 @@
         -   sends to diretores (participating in reuniao where acao has been included);
     -   system creates a change log for the actions
 
-## 028. grg marks acao as concluded
+## 028. grg marks acao as concluded (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: responsavel (user designated to an acao), diretores (participating in reuniao where acao has been included)

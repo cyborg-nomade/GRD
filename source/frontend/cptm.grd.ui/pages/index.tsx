@@ -14,6 +14,7 @@ import {
     CreateAndamentoDto,
 } from "../models/acoes/children/andamento.model";
 import {
+    AcaoStatus,
     ObjetoProposicao,
     ProposicaoStatus,
     ReuniaoStatus,
@@ -420,30 +421,41 @@ const Home: NextPage = () => {
         console.log(get3);
     };
 
-    const addAcaoToReuniaoHandler = async () => {
+    const addAcaoToReuniaoHandler = async (flow: number) => {
         // 1. create acao
-        var acao = new CreateAcaoDto();
-        const dirResp = await groupsAPI.getOrAddBySigla(
-            token,
-            estrutura.diretorias[1]
-        );
-        acao.diretoriaRes = dirResp;
-        acao.definicao = "teste acao";
-        acao.prazoInicial = new Date("2022-08-16");
-        acao.prazoFinal = new Date("2022-08-17");
-        acao.responsavel = currentUser;
-        acao.emailDiretor = "teste@diretor.com";
+        if (flow === 1) {
+            var acao = new CreateAcaoDto();
+            const dirResp = await groupsAPI.getOrAddBySigla(
+                token,
+                estrutura.diretorias[1]
+            );
+            acao.diretoriaRes = dirResp;
+            acao.definicao = "teste acao";
+            acao.prazoInicial = new Date("2022-08-16");
+            acao.prazoFinal = new Date("2022-08-17");
+            acao.responsavel = currentUser;
+            acao.emailDiretor = "teste@diretor.com";
 
-        const response = await acaoAPI.postToReuniao(
-            token,
-            createdReuniao.id,
-            acao
-        );
+            const response = await acaoAPI.postToReuniao(
+                token,
+                createdReuniao.id,
+                acao
+            );
 
-        console.log(response);
-        setCreatedAcao(response);
+            console.log(response);
+            setCreatedAcao(response);
+        }
 
         // 2. add acao to another reuniao for follow up
+        if (flow === 2) {
+            const response = await acaoAPI.followUp(
+                token,
+                createdAcao.id,
+                createdReuniao.id
+            );
+
+            console.log(response);
+        }
     };
 
     const addAndamentoToAcaoHandler = async () => {
@@ -457,6 +469,15 @@ const Home: NextPage = () => {
             andamento
         );
 
+        console.log(response);
+    };
+
+    const markAcaoFinishedHandler = async () => {
+        const response = await acaoAPI.finish(
+            token,
+            createdAcao.id,
+            AcaoStatus.EncerradaSemConclusao
+        );
         console.log(response);
     };
 
@@ -724,9 +745,19 @@ const Home: NextPage = () => {
                 <div className={styles.grid}>
                     <a
                         className={styles.card}
-                        onClick={addAcaoToReuniaoHandler}
+                        onClick={() => addAcaoToReuniaoHandler(1)}
                     >
-                        <h2>Adicionar Ação à Reunião &rarr;</h2>
+                        <h2>Adicionar Ação à Reunião (Criar) &rarr;</h2>
+                        <p>UC #026</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a
+                        className={styles.card}
+                        onClick={() => addAcaoToReuniaoHandler(2)}
+                    >
+                        <h2>Adicionar Ação à Reunião (Acompanhar) &rarr;</h2>
                         <p>UC #026</p>
                     </a>
                 </div>
@@ -738,6 +769,16 @@ const Home: NextPage = () => {
                     >
                         <h2>Adicionar Andamento à Ação &rarr;</h2>
                         <p>UC #027</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a
+                        className={styles.card}
+                        onClick={markAcaoFinishedHandler}
+                    >
+                        <h2>Finalizar Ação &rarr;</h2>
+                        <p>UC #028</p>
                     </a>
                 </div>
 
