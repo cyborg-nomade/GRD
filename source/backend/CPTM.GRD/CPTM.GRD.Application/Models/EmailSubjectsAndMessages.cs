@@ -115,7 +115,7 @@ Atenciosamente, GRG";
     public static string AcaoAddAndamentoMessage(Acao acao, Andamento andamento) =>
         @$"Prezados,
 
-{andamento.NomeResponsavel} incluiu um novo andamento na Ação ID {acao.Id}, com a seguinte descrição: 
+{andamento.User.Nome} incluiu um novo andamento na Ação ID {acao.Id}, com a seguinte descrição: 
 
 {andamento.Descricao}
 

@@ -12,7 +12,6 @@ export class AndamentoDto implements IAndamentoDto {
     id!: number;
     data!: Date;
     user!: UserDto;
-    nomeResponsavel!: string;
     status!: AndamentoStatus;
     descricao!: string;
     anexosFilePaths!: string[];
@@ -21,7 +20,6 @@ export class AndamentoDto implements IAndamentoDto {
         this.id = 0;
         this.data = new Date();
         this.user = new UserDto();
-        this.nomeResponsavel = "";
         this.status = AndamentoStatus.Ativo;
         this.descricao = "";
         this.anexosFilePaths = [];
