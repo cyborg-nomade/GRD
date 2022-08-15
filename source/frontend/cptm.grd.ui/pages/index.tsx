@@ -509,6 +509,11 @@ const Home: NextPage = () => {
         setCreatedUser(response);
     };
 
+    const removeUserHandler = async () => {
+        const response = await usersAPI.remove(token, createdUser.id);
+        console.log("user removed");
+    };
+
     const getEstruturaHandler = async () => {
         const estrutura: EstruturaResponse = await groupsAPI.getEstrutura(
             token
@@ -820,7 +825,14 @@ const Home: NextPage = () => {
                 <div className={styles.grid}>
                     <a className={styles.card} onClick={editUserHandler}>
                         <h2>Editar Usuário &rarr;</h2>
-                        <p>UCs #032</p>
+                        <p>UC #032</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a className={styles.card} onClick={removeUserHandler}>
+                        <h2>Remover Usuário &rarr;</h2>
+                        <p>UC #032</p>
                     </a>
                 </div>
 

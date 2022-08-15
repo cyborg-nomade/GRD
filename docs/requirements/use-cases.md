@@ -1129,7 +1129,7 @@
         -   sends to user, confirming edition;
     -   system creates a change log for the actions
 
-## 033. grg (or sysadmin) removes a user
+## 033. grg (or sysadmin) removes a user (API OK)
 
 -   **_primary actor_**: grg member or sysadmin
 -   **_preconditions_**:
