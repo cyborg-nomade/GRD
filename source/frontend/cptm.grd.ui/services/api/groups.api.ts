@@ -24,6 +24,7 @@ const groupsApiOptions: ApiCoreOptions = {
 class GroupsApi extends ApiCore<GroupDto> {
     getByUser!: (token: string, uid: number) => Promise<GroupDto[]>;
     getEstrutura!: (token: string) => Promise<EstruturaResponse>;
+    getOrAddBySigla!: (token: string, sigla: string) => Promise<GroupDto>;
     postWithSigla!: (token: string, sigla: string) => Promise<GroupDto>;
 
     constructor() {
@@ -47,6 +48,20 @@ class GroupsApi extends ApiCore<GroupDto> {
             try {
                 const response = await axios.get(
                     `${BASE_URL}/${url}/estrutura`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
+                );
+                return handleResponse(response);
+            } catch (error) {
+                return handleError(error);
+            }
+        };
+
+        this.getOrAddBySigla = async (token: string, sigla: string) => {
+            try {
+                const response = await axios.get(
+                    `${BASE_URL}/${url}/sigla/${sigla}`,
                     {
                         headers: { Authorization: `Bearer ${token}` },
                     }

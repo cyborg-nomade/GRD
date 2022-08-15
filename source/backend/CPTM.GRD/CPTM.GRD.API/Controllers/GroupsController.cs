@@ -62,6 +62,17 @@ namespace CPTM.GRD.API.Controllers
             return await _mediator.Send(new GetEstruturaRequest());
         }
 
+        // GET /api/groups/sigla/:sigla:
+        [HttpGet("sigla/{sigla}")]
+        public async Task<GroupDto> GetOrAddBySigla(string sigla)
+        {
+            return await _mediator.Send(new GetOrAddBySiglaGroupRequest()
+            {
+                RequestUser = User,
+                Sigla = sigla
+            });
+        }
+
         // POST /api/groups/
         [HttpPost]
         public async Task<GroupDto> Post([FromBody] string sigla)
