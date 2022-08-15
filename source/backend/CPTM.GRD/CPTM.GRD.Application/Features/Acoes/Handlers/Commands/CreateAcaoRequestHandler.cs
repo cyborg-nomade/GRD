@@ -43,13 +43,25 @@ public class CreateAcaoRequestHandler : IRequestHandler<CreateAcaoRequest, AcaoD
             throw new ValidationException(acaoDtoValidationResult);
         }
 
+        var dirRespAcao = await _unitOfWork.GroupRepository.Get(request.CreateAcaoDto.DiretoriaRes.Id);
+        if (dirRespAcao == null)
+            throw new NotFoundException(nameof(dirRespAcao), request.CreateAcaoDto.DiretoriaRes.Sigla);
+
+        var responsavelAcao = await _unitOfWork.UserRepository.Get(request.CreateAcaoDto.Responsavel.Id);
+        if (responsavelAcao == null)
+            throw new NotFoundException(nameof(responsavelAcao), request.CreateAcaoDto.Responsavel.Id);
+
         var acao = _mapper.Map<Acao>(request.CreateAcaoDto);
+        acao.DiretoriaRes = dirRespAcao;
+        acao.Responsavel = responsavelAcao;
 
         var reuniao = await _unitOfWork.ReuniaoRepository.Get(request.Rid);
         if (reuniao == null) throw new NotFoundException(nameof(reuniao), request.Rid);
 
-        var responsavel = await _unitOfWork.UserRepository.Get(request.Uid);
-        if (responsavel == null) throw new NotFoundException(nameof(responsavel), request.Uid);
+        var claims = _authenticationService.GetTokenClaims(request.RequestUser);
+
+        var responsavel = await _unitOfWork.UserRepository.Get(claims.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
 
         reuniao.CreateAcao(acao, responsavel);
 
