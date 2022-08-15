@@ -818,13 +818,6 @@ namespace CPTM.GRD.Persistence
             });
 
             #endregion
-
-            OnModelCreatingPartial();
-        }
-
-        private void OnModelCreatingPartial()
-        {
-            throw new NotImplementedException();
         }
     }
 }
