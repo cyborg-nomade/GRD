@@ -1,4 +1,5 @@
-﻿using CPTM.GRD.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
 using CPTM.GRD.Domain.Acoes;
 using CPTM.GRD.Domain.Logging;
@@ -6,6 +7,7 @@ using CPTM.GRD.Domain.Proposicoes;
 
 namespace CPTM.GRD.Domain.Reunioes;
 
+[SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
 public class Reuniao
 {
     public int Id { get; set; }

@@ -1,4 +1,5 @@
-﻿using CPTM.GRD.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
 using CPTM.GRD.Domain.Logging;
 using CPTM.GRD.Domain.Proposicoes.Children;
@@ -6,14 +7,15 @@ using CPTM.GRD.Domain.Reunioes;
 
 namespace CPTM.GRD.Domain.Proposicoes;
 
+[SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
 public class Proposicao
 {
     public int Id { get; set; }
     public int IdPrd { get; set; }
     public ProposicaoStatus Status { get; set; }
     public bool Arquivada { get; set; }
-    public User Criador { get; set; } = new User();
-    public Group Area { get; set; } = new Group();
+    public User? Criador { get; set; } = new User();
+    public Group? Area { get; set; } = new Group();
     public string Titulo { get; set; } = string.Empty;
     public ObjetoProposicao Objeto { get; set; }
     public string DescricaoProposicao { get; set; } = string.Empty;
@@ -223,7 +225,7 @@ public class Proposicao
             throw new Exception("Não há participantes nesta reunião. Não é possível realizar votação");
         }
 
-        if (!Reuniao.Participantes.Contains(vote.Participante))
+        if (!Reuniao.Participantes.Contains(vote.Participante ?? new User()))
         {
             throw new Exception("Este usuário não é participante desta reunião e, portanto, não pode votar.");
         }
@@ -231,14 +233,14 @@ public class Proposicao
         if (VotosRd!.Select(v => v.Participante).Contains(vote.Participante))
         {
             // Participante has already voted, remove the old vote before adding the new
-            var oldVote = VotosRd!.SingleOrDefault(v => v.Participante.Id == vote.Participante.Id);
+            var oldVote = VotosRd!.SingleOrDefault(v => vote.Participante != null && v.Participante != null && v.Participante.Id == vote.Participante.Id);
             VotosRd!.Remove(oldVote!);
         }
 
         VotosRd!.Add(vote);
         AjustesRd += $"\n\n{ajustes}";
         GenerateProposicaoLog(LogProposicao.ConvertFromTipoVoto(vote.VotoRd), responsavel,
-            $@"Voto de Diretor {vote.Participante.Nome} em RD: {vote.VotoRd}");
+            $@"Voto de Diretor {vote.Participante?.Nome} em RD: {vote.VotoRd}");
         return this;
     }
 

@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace CPTM.GRD.Persistence
 {
-    public partial class GrdContext : DbContext
+    public class GrdContext : DbContext
     {
         public GrdContext()
         {
@@ -80,13 +80,13 @@ namespace CPTM.GRD.Persistence
                         .WithMany()
                         .HasForeignKey("GroupId")
                         .HasConstraintName("FK_UserGroup_GroupId")
-                        .OnDelete(DeleteBehavior.SetNull),
+                        .OnDelete(DeleteBehavior.Cascade),
                     j => j
                         .HasOne<User>()
                         .WithMany()
                         .HasForeignKey("UserId")
                         .HasConstraintName("FK_UserGroup_UserId")
-                        .OnDelete(DeleteBehavior.SetNull));
+                        .OnDelete(DeleteBehavior.Cascade));
 
             modelBuilder.Entity<User>().Navigation(u => u.AreasAcesso).AutoInclude();
 
@@ -236,13 +236,13 @@ namespace CPTM.GRD.Persistence
                         .WithMany()
                         .HasForeignKey("PartId")
                         .HasConstraintName("FK_PartReuniao_PartId")
-                        .OnDelete(DeleteBehavior.SetNull),
+                        .OnDelete(DeleteBehavior.Cascade),
                     j => j
                         .HasOne<Reuniao>()
                         .WithMany()
                         .HasForeignKey("ReuniaoId")
                         .HasConstraintName("FK_PartReuniao_ReuniaoId")
-                        .OnDelete(DeleteBehavior.SetNull));
+                        .OnDelete(DeleteBehavior.Cascade));
             modelBuilder.Entity<Reuniao>()
                 .HasMany(r => r.ParticipantesPrevia)
                 .WithMany(pa => pa.Previas)
@@ -253,13 +253,13 @@ namespace CPTM.GRD.Persistence
                         .WithMany()
                         .HasForeignKey("PartId")
                         .HasConstraintName("FK_PartPrevReuniao_PartId")
-                        .OnDelete(DeleteBehavior.SetNull),
+                        .OnDelete(DeleteBehavior.Cascade),
                     j => j
                         .HasOne<Reuniao>()
                         .WithMany()
                         .HasForeignKey("ReuId")
                         .HasConstraintName("FK_PartPrevReuniao_ReuId")
-                        .OnDelete(DeleteBehavior.SetNull));
+                        .OnDelete(DeleteBehavior.Cascade));
             modelBuilder.Entity<Reuniao>()
                 .HasMany(r => r.Acoes)
                 .WithMany(a => a.Reunioes)
@@ -270,13 +270,13 @@ namespace CPTM.GRD.Persistence
                         .WithMany()
                         .HasForeignKey("AcaoId")
                         .HasConstraintName("FK_AcaoReuniao_AcaoId")
-                        .OnDelete(DeleteBehavior.SetNull),
+                        .OnDelete(DeleteBehavior.Cascade),
                     j => j
                         .HasOne<Reuniao>()
                         .WithMany()
                         .HasForeignKey("ReuniaoId")
                         .HasConstraintName("FK_AcaoReuniao_ReuniaoId")
-                        .OnDelete(DeleteBehavior.SetNull));
+                        .OnDelete(DeleteBehavior.Cascade));
 
             modelBuilder.Entity<Reuniao>().Navigation(r => r.Participantes).AutoInclude();
             modelBuilder.Entity<Reuniao>().Navigation(r => r.ParticipantesPrevia).AutoInclude();
@@ -819,9 +819,12 @@ namespace CPTM.GRD.Persistence
 
             #endregion
 
-            OnModelCreatingPartial(modelBuilder);
+            OnModelCreatingPartial();
         }
 
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        private void OnModelCreatingPartial()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
