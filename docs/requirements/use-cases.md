@@ -864,7 +864,7 @@
         -   sends to reuniao previa participants;
     -   system creates a change log for the actions
 
-## 025. grg searches for a reuniao in a list
+## 025. grg searches for a reuniao in a list (API OK)
 
 -   **_primary actor_**: grg member (or, more rarely, diretor before participating in reuniao)
 -   **_other actors_**: none

@@ -11,6 +11,7 @@ import {
 import {
     ObjetoProposicao,
     ProposicaoStatus,
+    ReuniaoStatus,
     TipoVotoRd,
 } from "../models/common.model";
 import { AddProposicaoToReuniaoDto } from "../models/mixed.model";
@@ -399,6 +400,18 @@ const Home: NextPage = () => {
         setCreatedReuniao(response);
     };
 
+    const reuniaGetsHandler = async () => {
+        const get1 = await reuniaoAPI.getAll(token);
+        console.log(get1);
+        const get2 = await reuniaoAPI.getByStatus(
+            token,
+            ReuniaoStatus.Realizada
+        );
+        console.log(get2);
+        const get3 = await reuniaoAPI.getSingle(token, createdReuniao.id);
+        console.log(get3);
+    };
+
     const getEstruturaHandler = async () => {
         const estrutura: EstruturaResponse = await groupsAPI.getEstrutura(
             token
@@ -650,6 +663,13 @@ const Home: NextPage = () => {
                     <a className={styles.card} onClick={grgEmitsAtaHandler}>
                         <h2>Emitir Ata &rarr;</h2>
                         <p>UC #024</p>
+                    </a>
+                </div>
+
+                <div className={styles.grid}>
+                    <a className={styles.card} onClick={reuniaGetsHandler}>
+                        <h2>Pesquisar Reuniões &rarr;</h2>
+                        <p>UC #025</p>
                     </a>
                 </div>
 
