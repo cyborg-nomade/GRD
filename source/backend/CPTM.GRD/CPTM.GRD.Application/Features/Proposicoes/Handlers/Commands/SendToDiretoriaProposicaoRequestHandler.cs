@@ -38,7 +38,8 @@ public class SendToDiretoriaProposicaoRequestHandler : IRequestHandler<SendToDir
         var proposicao = await _unitOfWork.ProposicaoRepository.Get(request.Pid);
         if (proposicao == null) throw new NotFoundException(nameof(proposicao), request.Pid);
 
-        await _authenticationService.AuthorizeByMinGroups(request.RequestUser, proposicao.Area.Id);
+        if (proposicao.Area != null)
+            await _authenticationService.AuthorizeByMinGroups(request.RequestUser, proposicao.Area.Id);
 
         var claims = _authenticationService.GetTokenClaims(request.RequestUser);
 

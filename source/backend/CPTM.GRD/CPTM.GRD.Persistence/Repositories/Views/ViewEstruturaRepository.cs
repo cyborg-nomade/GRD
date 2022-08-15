@@ -45,7 +45,7 @@ public class ViewEstruturaRepository : IViewEstruturaRepository
                 os.TxSigla != "LICSVENC")
             .Select(os => os.DirSigla)
             .Distinct()
-            .OrderBy(s => s.Trim()
+            .OrderBy(s => s!.Trim()
                 .ToLower())
             .ToListAsync();
         var gerenciasGerais = await _grdContext.GrdVwEstruturasOrg
@@ -58,7 +58,7 @@ public class ViewEstruturaRepository : IViewEstruturaRepository
             .OrderBy(os => os.DirSigla)
             .Select(os => os.GgSigla)
             .Distinct()
-            .OrderBy(s => s.Trim()
+            .OrderBy(s => s!.Trim()
                 .ToLower())
             .ToListAsync();
         var gerencias = await _grdContext.GrdVwEstruturasOrg
@@ -71,7 +71,7 @@ public class ViewEstruturaRepository : IViewEstruturaRepository
             .OrderBy(os => os.DirSigla)
             .Select(os => os.GerSigla)
             .Distinct()
-            .OrderBy(s => s.Trim()
+            .OrderBy(s => s!.Trim()
                 .ToLower())
             .ToListAsync();
         var departamentos = await _grdContext.GrdVwEstruturasOrg
@@ -84,7 +84,7 @@ public class ViewEstruturaRepository : IViewEstruturaRepository
             .OrderBy(os => os.DirSigla)
             .Select(os => os.DepSigla)
             .Distinct()
-            .OrderBy(s => s.Trim()
+            .OrderBy(s => s!.Trim()
                 .ToLower())
             .ToListAsync();
 

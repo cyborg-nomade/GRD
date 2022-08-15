@@ -55,9 +55,9 @@ public class CreateProposicaoRequestHandler : IRequestHandler<CreateProposicaoRe
         var proposicao = _mapper.Map<Proposicao>(request.CreateProposicaoDto);
 
         var idPrd = await _sequenceControl.GetNextIdPrd();
-        var criador = await _unitOfWork.UserRepository.Get(proposicao.Criador.Id);
+        var criador = await _unitOfWork.UserRepository.Get(proposicao.Criador!.Id);
         if (criador == null) throw new NotFoundException(nameof(criador), request.CreateProposicaoDto.Criador);
-        var areaSolicitante = await _unitOfWork.GroupRepository.Get(proposicao.Area.Id);
+        var areaSolicitante = await _unitOfWork.GroupRepository.Get(proposicao.Area!.Id);
         if (areaSolicitante == null)
             throw new NotFoundException(nameof(areaSolicitante), request.CreateProposicaoDto.Area);
 

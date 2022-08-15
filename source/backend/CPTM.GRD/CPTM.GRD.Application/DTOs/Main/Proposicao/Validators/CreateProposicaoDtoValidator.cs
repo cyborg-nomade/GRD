@@ -10,7 +10,7 @@ public class CreateProposicaoDtoValidator : AbstractValidator<CreateProposicaoDt
     public CreateProposicaoDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
         IUserRepository userRepository)
     {
-        Include(new IBaseProposicaoDtoValidator(groupRepository, authenticationService, userRepository));
+        Include(new IBaseProposicaoDtoValidator());
         Include(new IOwnerPropertiesProposicaoDtoValidator(authenticationService, userRepository, groupRepository));
     }
 }

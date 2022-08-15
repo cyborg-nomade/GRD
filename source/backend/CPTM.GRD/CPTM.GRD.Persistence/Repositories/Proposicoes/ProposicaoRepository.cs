@@ -26,7 +26,7 @@ public class ProposicaoRepository : GenericRepository<Proposicao>, IProposicaoRe
 
     public async Task<IReadOnlyList<Proposicao>> GetByUser(int uid)
     {
-        return await _grdContext.Proposicoes.Where(p => p.Criador.Id == uid).ToListAsync();
+        return await _grdContext.Proposicoes.Where(p => p.Criador != null && p.Criador.Id == uid).ToListAsync();
     }
 
     public async Task<IReadOnlyList<Proposicao>> GetByGroup(int gid)
@@ -34,7 +34,7 @@ public class ProposicaoRepository : GenericRepository<Proposicao>, IProposicaoRe
         var groupWithSubordinates = await _groupRepository.GetSubordinateGroups(gid);
 
         return await _grdContext.Proposicoes
-            .Where(p => groupWithSubordinates
+            .Where(p => p.Area != null && groupWithSubordinates
                 .Select(g => g.Id)
                 .Contains(p.Area.Id))
             .ToListAsync();

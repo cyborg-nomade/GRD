@@ -30,7 +30,7 @@ public class UpdateUserRequestHandler : IRequestHandler<UpdateUserRequest, UserD
     {
         _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Grg);
 
-        var validator = new UpdateUserDtoValidator(_authenticationService, _unitOfWork.UserRepository);
+        var validator = new UpdateUserDtoValidator(_unitOfWork.UserRepository);
         var validationResult = await validator.ValidateAsync(request.UpdateUserDto, cancellationToken);
 
         if (!validationResult.IsValid)

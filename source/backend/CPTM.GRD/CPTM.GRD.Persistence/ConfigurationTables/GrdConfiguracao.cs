@@ -1,6 +1,6 @@
 ﻿namespace CPTM.GRD.Persistence.ConfigurationTables
 {
-    public partial class GrdConfiguracao
+    public class GrdConfiguracao
     {
         public string Parametro { get; set; } = null!;
         public string? TxDescricao { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace CPTM.GRD.Persistence.Views
 {
-    public partial class GrdVwUsuario
+    public class GrdVwUsuario
     {
         public int IdCodusuario { get; set; }
         public string TxUsername { get; set; } = null!;

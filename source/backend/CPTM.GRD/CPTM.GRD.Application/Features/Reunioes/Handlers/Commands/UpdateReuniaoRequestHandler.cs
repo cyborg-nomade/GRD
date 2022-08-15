@@ -61,7 +61,7 @@ public class UpdateReuniaoRequestHandler : IRequestHandler<UpdateReuniaoRequest,
         var responsavel = await _unitOfWork.UserRepository.Get(claims.Uid);
         if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
 
-        savedReuniao.OnUpdate(responsavel, _differentiator.GetDifferenceString<Reuniao>(
+        savedReuniao.OnUpdate(responsavel, _differentiator.GetDifferenceString(
             savedReuniao,
             _mapper.Map<Reuniao>(request.UpdateReuniaoDto)));
 

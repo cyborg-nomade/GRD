@@ -45,8 +45,7 @@ public class
         foreach (var voteWithAjustes in request.VotesWithAjustes)
         {
             var votoRdDtoValidator =
-                new CreateVotoDtoValidator(_authenticationService,
-                    _unitOfWork.UserRepository);
+                new CreateVotoDtoValidator(_unitOfWork.UserRepository);
             var votoRdDtoValidationResult =
                 await votoRdDtoValidator.ValidateAsync(voteWithAjustes.VotoDto, cancellationToken);
             if (!votoRdDtoValidationResult.IsValid)

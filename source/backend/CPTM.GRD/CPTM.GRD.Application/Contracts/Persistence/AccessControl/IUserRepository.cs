@@ -11,11 +11,11 @@ public interface IUserRepository : IGenericRepository<User>
     Task<IReadOnlyList<User>> GetByGroupAndLevel(int gid, AccessLevel level);
     Task<User?> GetByUsername(string username);
     Task<bool> ExistsUsername(string username);
-    Task<User> GetOrAddGerente(UsuarioAD usuarioAd);
-    Task<User> GetOrAddDiretor(UsuarioAD usuarioAd);
-    Task<User> GetOrAddGrgMember(UsuarioAD usuarioAd);
-    Task<User> GetOrAddSysAdmin(UsuarioAD usuarioAd);
-    Task<User> GetOrAdd(UsuarioAD usuarioAd, AccessLevel accessLevel);
-    Task<User> AddFromUsuarioAd(UsuarioAD usuarioAd, AccessLevel accessLevel);
+    Task<User> GetOrAddGerente(UsuarioAd usuarioAd);
+    Task<User> GetOrAddDiretor(UsuarioAd usuarioAd);
+    Task<User> GetOrAddGrgMember(UsuarioAd usuarioAd);
+    Task<User> GetOrAddSysAdmin(UsuarioAd usuarioAd);
+    Task<User> GetOrAdd(UsuarioAd usuarioAd, AccessLevel accessLevel);
+    Task<User> AddFromUsuarioAd(UsuarioAd usuarioAd, AccessLevel accessLevel);
     Task<List<User>> GetFromIdList(ICollection<int> ids);
 }

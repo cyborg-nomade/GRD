@@ -29,7 +29,7 @@ public class AcaoRepository : GenericRepository<Acao>, IAcaoRepository
 
     public async Task<IReadOnlyList<Acao>> GetByResponsavel(int uid)
     {
-        return await _grdContext.Acoes.Where(a => a.Responsavel.Id == uid).ToListAsync();
+        return await _grdContext.Acoes.Where(a => a.Responsavel != null && a.Responsavel.Id == uid).ToListAsync();
     }
 
     public async Task<IReadOnlyList<Acao>> GetFromSubordinados(int suid)
@@ -46,7 +46,8 @@ public class AcaoRepository : GenericRepository<Acao>, IAcaoRepository
         var subordinateGroupsIds = subordinateGroups.Distinct().Select(g => g.Id).ToList();
 
         var acoes = await _grdContext.Acoes
-            .Where(a => subordinateGroupsIds.Intersect(a.Responsavel.AreasAcesso.Select(g => g.Id)).Any())
+            .Where(a => a.Responsavel != null &&
+                        subordinateGroupsIds.Intersect(a.Responsavel.AreasAcesso.Select(g => g.Id)).Any())
             .ToListAsync();
 
         return acoes;

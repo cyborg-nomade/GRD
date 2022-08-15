@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using CPTM.GRD.Application.Exceptions;
 using Newtonsoft.Json;
 
@@ -67,6 +68,7 @@ public class ExceptionMiddleware
         return context.Response.WriteAsync(result);
     }
 
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
     private class ErrorDetails
     {
         public string ErrorType { get; init; } = string.Empty;

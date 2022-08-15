@@ -16,6 +16,8 @@ using CPTM.GRD.Persistence.Repositories.Proposicoes.Children;
 using CPTM.GRD.Persistence.Repositories.Reunioes;
 using CPTM.GRD.Persistence.Repositories.Views;
 
+#pragma warning disable CS0649
+
 namespace CPTM.GRD.Persistence.Repositories;
 
 public class UnitOfWork : IUnitOfWork

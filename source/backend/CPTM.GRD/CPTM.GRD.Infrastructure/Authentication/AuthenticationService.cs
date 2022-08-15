@@ -2,10 +2,8 @@
 using System.Net;
 using System.Security.Claims;
 using System.Text;
-using AutoMapper;
 using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
-using CPTM.GRD.Application.Contracts.Persistence.Views;
 using CPTM.GRD.Application.DTOs.AccessControl.User;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Models;
@@ -33,10 +31,8 @@ public class AuthenticationService : IAuthenticationService
     public AuthenticationService(
         IOptions<AuthenticationServiceSettings> authOptions,
         IOptions<JwtSettings> jwtSettings,
-        IViewUsuarioRepository viewUsuarioRepository,
         IUserRepository userRepository,
-        IGroupRepository groupRepository,
-        IMapper mapper)
+        IGroupRepository groupRepository)
     {
         _jwtSettings = jwtSettings.Value;
         _userRepository = userRepository;
@@ -62,24 +58,24 @@ public class AuthenticationService : IAuthenticationService
         return Convert.ToBoolean(autenticado);
     }
 
-    public async Task<UsuarioAD> GetUsuarioAd(string username)
+    public async Task<UsuarioAd> GetUsuarioAd(string username)
     {
         var response = await SendRequest("obter-usuario", username);
         if (response.Content == null) throw new NotFoundException(nameof(response.Content), username);
         var deserializedResponse = JObject.Parse(response.Content);
         var usuario = deserializedResponse.GetValue("usuarioAd");
         if (usuario == null) throw new NotFoundException(nameof(usuario), nameof(usuario));
-        return JsonConvert.DeserializeObject<UsuarioAD>(usuario.ToString()) ?? throw new InvalidOperationException();
+        return JsonConvert.DeserializeObject<UsuarioAd>(usuario.ToString()) ?? throw new InvalidOperationException();
     }
 
-    public async Task<GrupoAD> GetGroupAd(string groupName)
+    public async Task<GrupoAd> GetGroupAd(string groupName)
     {
         var response = await SendRequest("obter-grupo", groupName);
         if (response.Content == null) throw new NotFoundException(nameof(response.Content), groupName);
         var deserializedResponse = JObject.Parse(response.Content);
         var grupo = deserializedResponse.GetValue("grupoAd");
         if (grupo == null) throw new NotFoundException(nameof(grupo), nameof(grupo));
-        return JsonConvert.DeserializeObject<GrupoAD>(grupo.ToString()) ?? throw new InvalidOperationException();
+        return JsonConvert.DeserializeObject<GrupoAd>(grupo.ToString()) ?? throw new InvalidOperationException();
     }
 
     public async Task<bool> IsGerente(string username)
@@ -145,7 +141,6 @@ public class AuthenticationService : IAuthenticationService
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                result = result || false;
             }
         }
 
@@ -249,7 +244,7 @@ public class AuthenticationService : IAuthenticationService
     private async Task<RestResponse> SendRequest(string endpoint, string username = "", AuthUser? user = null)
     {
         ServicePointManager.ServerCertificateValidationCallback +=
-            (sender, certificate, chain, sslPolicyErrors) => true;
+            (_, _, _, _) => true;
 
         var authClient = new RestClient(AuthenticationServiceSettings.AbiUrl);
 

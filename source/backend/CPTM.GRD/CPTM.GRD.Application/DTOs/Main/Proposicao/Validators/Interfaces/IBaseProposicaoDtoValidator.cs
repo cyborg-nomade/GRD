@@ -1,14 +1,13 @@
-﻿using CPTM.GRD.Application.Contracts.Infrastructure;
-using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
+﻿using System.Diagnostics.CodeAnalysis;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Interfaces;
 using FluentValidation;
 
 namespace CPTM.GRD.Application.DTOs.Main.Proposicao.Validators.Interfaces;
 
+[SuppressMessage("ReSharper", "InconsistentNaming")]
 public class IBaseProposicaoDtoValidator : AbstractValidator<IBaseProposicaoDto>
 {
-    public IBaseProposicaoDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
-        IUserRepository userRepository)
+    public IBaseProposicaoDtoValidator()
     {
         RuleFor(p => p.Titulo).NotNull().NotEmpty().MaximumLength(250);
         RuleFor(p => p.Objeto).NotNull().IsInEnum();

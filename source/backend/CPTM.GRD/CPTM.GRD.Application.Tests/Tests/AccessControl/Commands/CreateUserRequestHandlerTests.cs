@@ -1,29 +1,21 @@
 ﻿using AutoMapper;
-using CPTM.GRD.Application.Contracts.Infrastructure;
-using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Profiles;
-using CPTM.GRD.Application.Tests.Mocks.Infrastructure;
-using CPTM.GRD.Application.Tests.Mocks.Persistence.AccessControl;
-using Moq;
+using CPTM.GRD.Application.UnitTests.Mocks.Infrastructure;
+using CPTM.GRD.Application.UnitTests.Mocks.Persistence.AccessControl;
 
-namespace CPTM.GRD.Application.Tests.Tests.AccessControl.Commands;
+namespace CPTM.GRD.Application.UnitTests.Tests.AccessControl.Commands;
 
 public class CreateUserRequestHandlerTests
 {
-    private readonly Mock<IUserRepository> _userRepository;
-    private readonly Mock<IAuthenticationService> _authenticationService;
-    private readonly IMapper _mapper;
-    private readonly Mock<IEmailService> _emailService;
-
     public CreateUserRequestHandlerTests()
     {
-        _userRepository = MockUserRepository.GetUserRepository();
-        _authenticationService = MockAuthenticationService.GetAuthenticationService();
-        _emailService = MockEmailService.GetEmailService();
+        MockUserRepository.GetUserRepository();
+        MockAuthenticationService.GetAuthenticationService();
+        MockEmailService.GetEmailService();
 
         var mapperConfig = new MapperConfiguration(c => { c.AddProfile<MappingProfile>(); });
 
-        _mapper = mapperConfig.CreateMapper();
+        mapperConfig.CreateMapper();
     }
 
     //[Fact]

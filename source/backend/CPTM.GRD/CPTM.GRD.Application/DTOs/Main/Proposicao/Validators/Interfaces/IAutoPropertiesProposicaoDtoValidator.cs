@@ -1,4 +1,5 @@
-﻿using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
+﻿using System.Diagnostics.CodeAnalysis;
+using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes.Children;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Children.Voto.Validators;
 using CPTM.GRD.Application.DTOs.Main.Proposicao.Interfaces;
@@ -7,6 +8,7 @@ using FluentValidation;
 
 namespace CPTM.GRD.Application.DTOs.Main.Proposicao.Validators.Interfaces;
 
+[SuppressMessage("ReSharper", "InconsistentNaming")]
 public class IAutoPropertiesProposicaoDtoValidator : AbstractValidator<IAutoPropertiesProposicaoDto>
 {
     public IAutoPropertiesProposicaoDtoValidator(IUserRepository userRepository,

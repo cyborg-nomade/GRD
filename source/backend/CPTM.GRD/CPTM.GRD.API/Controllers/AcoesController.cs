@@ -1,5 +1,4 @@
-﻿using CPTM.GRD.Application.DTOs.AccessControl.User;
-using CPTM.GRD.Application.DTOs.Main.Acao;
+﻿using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.DTOs.Main.Acao.Children;
 using CPTM.GRD.Application.DTOs.Main.Mixed;
 using CPTM.GRD.Application.Features.Acoes.Requests.Commands;

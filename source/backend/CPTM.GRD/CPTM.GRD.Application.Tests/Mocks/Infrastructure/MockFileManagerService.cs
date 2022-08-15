@@ -3,7 +3,7 @@ using CPTM.GRD.Domain.Proposicoes;
 using CPTM.GRD.Domain.Reunioes;
 using Moq;
 
-namespace CPTM.GRD.Application.Tests.Mocks.Infrastructure;
+namespace CPTM.GRD.Application.UnitTests.Mocks.Infrastructure;
 
 public static class MockFileManagerService
 {

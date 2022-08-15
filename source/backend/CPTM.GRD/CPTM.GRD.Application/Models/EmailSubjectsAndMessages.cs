@@ -35,7 +35,7 @@ Atenciosamente, GRG";
     public static string ProposicaoCreationMessage(Proposicao proposicao) =>
         @$"Prezados,
 
-A área {proposicao.Area.Sigla} criou a Proposição IDPRD {proposicao.IdPrd}, com a seguinte descrição: {proposicao.DescricaoProposicao}.
+A área {proposicao.Area?.Sigla} criou a Proposição IDPRD {proposicao.IdPrd}, com a seguinte descrição: {proposicao.DescricaoProposicao}.
 Para verificar, acesse o sistema GRD com seu login de rede na URL http://grd.cptm.info/. 
 
 Atenciosamente, GRG";
@@ -107,7 +107,7 @@ Na Reunião de Diretoria número {reuniao.NumeroReuniao}, realizada em {reuniao.
 
 {acao.Definicao}
 
-O responsável designado para acompanhamento é {acao.Responsavel.Nome}.
+O responsável designado para acompanhamento é {acao.Responsavel?.Nome}.
 Para verificar, acesse o sistema GRD com seu login de rede na URL http://grd.cptm.info/. 
 
 Atenciosamente, GRG";
@@ -115,7 +115,7 @@ Atenciosamente, GRG";
     public static string AcaoAddAndamentoMessage(Acao acao, Andamento andamento) =>
         @$"Prezados,
 
-{andamento.User.Nome} incluiu um novo andamento na Ação ID {acao.Id}, com a seguinte descrição: 
+{andamento.User?.Nome} incluiu um novo andamento na Ação ID {acao.Id}, com a seguinte descrição: 
 
 {andamento.Descricao}
 

@@ -12,8 +12,8 @@ public interface IAuthenticationService
 {
     Task<bool> ExistsAd(string username);
     Task<bool> Authenticate(AuthUser user);
-    Task<UsuarioAD> GetUsuarioAd(string username);
-    Task<GrupoAD> GetGroupAd(string groupName);
+    Task<UsuarioAd> GetUsuarioAd(string username);
+    Task<GrupoAd> GetGroupAd(string groupName);
     Task<bool> IsGerente(string username);
     Task<bool> IsDiretor(string username);
     Task<bool> IsGrgMember(string username);

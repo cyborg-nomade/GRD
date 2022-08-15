@@ -1,17 +1,20 @@
-﻿using CPTM.GRD.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
 using CPTM.GRD.Domain.Reunioes;
 
 namespace CPTM.GRD.Domain.Logging;
 
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Local")]
 public class LogReuniao
 {
     public int Id { get; set; }
     public TipoLogReuniao Tipo { get; set; }
-    public string ReuniaoRef { get; set; }
-    public string Diferenca { get; set; }
+    public string ReuniaoRef { get; set; } = string.Empty;
+    public string Diferenca { get; set; } = string.Empty;
     public DateTime Data { get; set; }
-    public User Resp { get; set; }
+    public User? Resp { get; set; }
 
     private LogReuniao()
     {

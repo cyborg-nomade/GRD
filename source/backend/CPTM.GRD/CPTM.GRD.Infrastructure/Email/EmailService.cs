@@ -66,7 +66,7 @@ public class EmailService : IEmailService
     {
         var destinatarios = new List<User>();
         destinatarios.AddRange(GetDestinatariosFromReuniao(reuniao));
-        destinatarios.Add(acao.Responsavel);
+        if (acao.Responsavel != null) destinatarios.Add(acao.Responsavel);
 
         var args = await SetEmailArgs(destinatarios, assunto, mensagem);
         return await Send(args);
@@ -86,49 +86,59 @@ public class EmailService : IEmailService
             _ => throw new ArgumentOutOfRangeException(nameof(tipoArquivo), tipoArquivo, null)
         };
 
-        var anexos = await GetAnexosDictionary(filePath);
-
-        var assunto = tipoArquivo switch
+        if (filePath == null)
         {
-            TipoArquivo.PautaPrevia => $"Envio de Pauta Prévia da Reunião Número {reuniao.NumeroReuniao}",
-            TipoArquivo.MemoriaPrevia => $"Envio de Memória da Prévia da Reunião Número {reuniao.NumeroReuniao}",
-            TipoArquivo.PautaDefinitiva => $"Envio de Pauta Definitiva da Reunião Número {reuniao.NumeroReuniao}",
-            TipoArquivo.RelatorioDeliberativo =>
-                $"Envio do Relatório Deliberativo da Reunião Número {reuniao.NumeroReuniao}",
-            TipoArquivo.Ata => $"Envio de Ata da Reunião Número {reuniao.NumeroReuniao}",
-            TipoArquivo.ResolucaoDiretoria => throw new ArgumentOutOfRangeException(nameof(tipoArquivo), tipoArquivo,
-                null),
-            _ => throw new ArgumentOutOfRangeException(nameof(tipoArquivo), tipoArquivo, null)
-        };
-
-        var variableMensagem = tipoArquivo switch
+            throw new BadRequestException("Arquivo solicitado não existe");
+        }
+        else
         {
-            TipoArquivo.PautaPrevia => "a Pauta Prévia",
-            TipoArquivo.MemoriaPrevia => "a Memória da Prévia",
-            TipoArquivo.PautaDefinitiva => "a Pauta Definitiva",
-            TipoArquivo.RelatorioDeliberativo => "o Relatório Deliberativo",
-            TipoArquivo.Ata => "a Ata",
-            TipoArquivo.ResolucaoDiretoria => throw new ArgumentOutOfRangeException(nameof(tipoArquivo), tipoArquivo,
-                null),
-            _ => throw new ArgumentOutOfRangeException(nameof(tipoArquivo), tipoArquivo, null)
-        };
+            var anexos = await GetAnexosDictionary(filePath);
 
-        var mensagem =
-            $"Prezados,\n\nSegue em anexo {variableMensagem} para a Reunião número {reuniao.NumeroReuniao}.\n\nAtenciosamente,\nGRG";
+            var assunto = tipoArquivo switch
+            {
+                TipoArquivo.PautaPrevia => $"Envio de Pauta Prévia da Reunião Número {reuniao.NumeroReuniao}",
+                TipoArquivo.MemoriaPrevia => $"Envio de Memória da Prévia da Reunião Número {reuniao.NumeroReuniao}",
+                TipoArquivo.PautaDefinitiva => $"Envio de Pauta Definitiva da Reunião Número {reuniao.NumeroReuniao}",
+                TipoArquivo.RelatorioDeliberativo =>
+                    $"Envio do Relatório Deliberativo da Reunião Número {reuniao.NumeroReuniao}",
+                TipoArquivo.Ata => $"Envio de Ata da Reunião Número {reuniao.NumeroReuniao}",
+                TipoArquivo.ResolucaoDiretoria => throw new ArgumentOutOfRangeException(nameof(tipoArquivo),
+                    tipoArquivo,
+                    null),
+                _ => throw new ArgumentOutOfRangeException(nameof(tipoArquivo), tipoArquivo, null)
+            };
 
-        var args = await SetEmailArgs(receivers, assunto, mensagem, anexos);
+            var variableMensagem = tipoArquivo switch
+            {
+                TipoArquivo.PautaPrevia => "a Pauta Prévia",
+                TipoArquivo.MemoriaPrevia => "a Memória da Prévia",
+                TipoArquivo.PautaDefinitiva => "a Pauta Definitiva",
+                TipoArquivo.RelatorioDeliberativo => "o Relatório Deliberativo",
+                TipoArquivo.Ata => "a Ata",
+                TipoArquivo.ResolucaoDiretoria => throw new ArgumentOutOfRangeException(nameof(tipoArquivo),
+                    tipoArquivo,
+                    null),
+                _ => throw new ArgumentOutOfRangeException(nameof(tipoArquivo), tipoArquivo, null)
+            };
 
-        return await Send(args);
+            var mensagem =
+                $"Prezados,\n\nSegue em anexo {variableMensagem} para a Reunião número {reuniao.NumeroReuniao}.\n\nAtenciosamente,\nGRG";
+
+            var args = await SetEmailArgs(receivers, assunto, mensagem, anexos);
+
+            return await Send(args);
+        }
     }
 
     public async Task<bool> SendEmailWithFile(Proposicao proposicao)
     {
         var destinatarios = new List<User>();
         destinatarios.AddRange(await GetDestinatariosFromProposicao(proposicao));
-        destinatarios.AddRange(GetDestinatariosFromReuniao(proposicao.Reuniao));
+        if (proposicao.Reuniao != null) destinatarios.AddRange(GetDestinatariosFromReuniao(proposicao.Reuniao));
 
         var filePath = proposicao.ResolucaoDiretoriaFilePath;
-        var anexos = await GetAnexosDictionary(filePath);
+        var anexos =
+            await GetAnexosDictionary(filePath ?? throw new BadRequestException("Não existe o arquivo solicitado"));
 
         var assunto = $"Envio de Resolução de Diretoria para a Proposição IDPRD {proposicao.IdPrd}";
         var mensagem =
@@ -142,7 +152,7 @@ public class EmailService : IEmailService
     private async Task<bool> Send(EmailArgs args)
     {
         ServicePointManager.ServerCertificateValidationCallback +=
-            (sender, certificate, chain, sslPolicyErrors) => true;
+            (_, _, _, _) => true;
 
         var emailClient = new RestClient(EmailServiceSettings.AbiUrl + "enviar");
 
@@ -174,6 +184,11 @@ public class EmailService : IEmailService
 
     private async Task<List<User>> GetDestinatariosFromProposicao(Proposicao proposicao)
     {
+        if (proposicao.Area == null)
+        {
+            throw new NotFoundException(nameof(proposicao.Area), proposicao);
+        }
+
         var destinarioGroups = await _groupRepository.GetSuperordinateGroups(proposicao.Area.Id);
         var destinatarios = new List<User>();
         foreach (var group in destinarioGroups)
@@ -208,7 +223,7 @@ public class EmailService : IEmailService
             Assunto = assunto,
             Destinatarios = destinatariosWithoutDuplicates,
             EnviarEm = DateTime.Now,
-            IdUsuarioCpu = await _viewUsuarioRepository.GetCodigoCPU(EmailServiceSettings.SenderUsernameAd),
+            IdUsuarioCpu = await _viewUsuarioRepository.GetCodigoCpu(EmailServiceSettings.SenderUsernameAd),
             Mensagem = mensagem,
             MensagemErro = "Houve um erro no envio do e-mail!",
             RementeNome = senderUsuarioAd.Nome,

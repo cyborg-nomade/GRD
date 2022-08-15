@@ -12,14 +12,14 @@ public class ViewUsuarioRepository : IViewUsuarioRepository
         _grdContext = grdContext;
     }
 
-    public async Task<int> GetCodigoCPU(string username)
+    public async Task<int> GetCodigoCpu(string username)
     {
         return await _grdContext.GrdVwUsuarios.Where(u => u.TxUsername == username.ToUpper())
             .Select(u => u.IdCodusuario)
             .SingleOrDefaultAsync();
     }
 
-    public async Task<string?> GetCargoCPU(string username)
+    public async Task<string?> GetCargoCpu(string username)
     {
         return await _grdContext.GrdVwUsuarios.Where(u => u.TxUsername == username.ToUpper())
             .Select(u => u.TxCargo)

@@ -16,6 +16,8 @@ public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, UserD
     private readonly IUnitOfWork _unitOfWork;
     private readonly IAuthenticationService _authenticationService;
     private readonly IMapper _mapper;
+
+    // ReSharper disable once NotAccessedField.Local
     private readonly IEmailService _emailService;
 
     public CreateUserRequestHandler(
@@ -34,7 +36,7 @@ public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, UserD
     {
         _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Gerente);
 
-        var validator = new CreateUserDtoValidator(_authenticationService, _unitOfWork.UserRepository);
+        var validator = new CreateUserDtoValidator(_authenticationService);
         var validationResult = await validator.ValidateAsync(request.CreateUserDto, cancellationToken);
 
         if (!validationResult.IsValid)

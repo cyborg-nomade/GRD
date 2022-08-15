@@ -43,9 +43,8 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
     {
         _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Sub);
 
-        var proposicaoDtoValidator = new UpdateProposicaoDtoValidator(_unitOfWork.GroupRepository,
-            _authenticationService,
-            _unitOfWork.UserRepository, _unitOfWork.ProposicaoRepository, _proposicaoStrictSequence);
+        var proposicaoDtoValidator =
+            new UpdateProposicaoDtoValidator(_unitOfWork.ProposicaoRepository, _proposicaoStrictSequence);
         var proposicaoDtoValidationResult =
             await proposicaoDtoValidator.ValidateAsync(request.UpdateProposicaoDto, cancellationToken);
 
@@ -58,7 +57,8 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
         if (savedProposicao == null)
             throw new NotFoundException(nameof(savedProposicao), request.Pid);
 
-        await _authenticationService.AuthorizeByMinGroups(request.RequestUser, savedProposicao.Area.Id);
+        if (savedProposicao.Area != null)
+            await _authenticationService.AuthorizeByMinGroups(request.RequestUser, savedProposicao.Area.Id);
 
         var claims = _authenticationService.GetTokenClaims(request.RequestUser);
 
@@ -66,7 +66,7 @@ public class UpdateProposicaoRequestHandler : IRequestHandler<UpdateProposicaoRe
         if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
 
         savedProposicao.OnUpdate(responsavel,
-            _differentiator.GetDifferenceString<Proposicao>(savedProposicao,
+            _differentiator.GetDifferenceString(savedProposicao,
                 _mapper.Map<Proposicao>(request.UpdateProposicaoDto)));
 
         _mapper.Map(request.UpdateProposicaoDto, savedProposicao);

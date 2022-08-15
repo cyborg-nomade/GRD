@@ -2,13 +2,13 @@
 using CPTM.GRD.Application.Models.AD;
 using Moq;
 
-namespace CPTM.GRD.Application.Tests.Mocks.Infrastructure;
+namespace CPTM.GRD.Application.UnitTests.Mocks.Infrastructure;
 
 public static class MockAuthenticationService
 {
     public static Mock<IAuthenticationService> GetAuthenticationService()
     {
-        var mockUsuarioAd = new UsuarioAD()
+        var mockUsuarioAd = new UsuarioAd()
         {
             Nome = "Uriel"
         };

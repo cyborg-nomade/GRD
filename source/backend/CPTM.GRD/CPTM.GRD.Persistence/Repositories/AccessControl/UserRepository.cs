@@ -52,27 +52,27 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         return user != null;
     }
 
-    public async Task<User> GetOrAddGerente(UsuarioAD usuarioAd)
+    public async Task<User> GetOrAddGerente(UsuarioAd usuarioAd)
     {
         return await GetOrAdd(usuarioAd, AccessLevel.Gerente);
     }
 
-    public async Task<User> GetOrAddDiretor(UsuarioAD usuarioAd)
+    public async Task<User> GetOrAddDiretor(UsuarioAd usuarioAd)
     {
         return await GetOrAdd(usuarioAd, AccessLevel.Diretor);
     }
 
-    public async Task<User> GetOrAddGrgMember(UsuarioAD usuarioAd)
+    public async Task<User> GetOrAddGrgMember(UsuarioAd usuarioAd)
     {
         return await GetOrAdd(usuarioAd, AccessLevel.Grg);
     }
 
-    public async Task<User> GetOrAddSysAdmin(UsuarioAD usuarioAd)
+    public async Task<User> GetOrAddSysAdmin(UsuarioAd usuarioAd)
     {
         return await GetOrAdd(usuarioAd, AccessLevel.SysAdmin);
     }
 
-    public async Task<User> GetOrAdd(UsuarioAD usuarioAd, AccessLevel accessLevel)
+    public async Task<User> GetOrAdd(UsuarioAd usuarioAd, AccessLevel accessLevel)
     {
         if (!await ExistsUsername(usuarioAd.Login)) return await AddFromUsuarioAd(usuarioAd, accessLevel);
 
@@ -81,14 +81,14 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         return await Update(user);
     }
 
-    public async Task<User> AddFromUsuarioAd(UsuarioAD usuarioAd, AccessLevel accessLevel)
+    public async Task<User> AddFromUsuarioAd(UsuarioAd usuarioAd, AccessLevel accessLevel)
     {
         var newUser = new User()
         {
             UsernameAd = usuarioAd.Login,
             Nome = usuarioAd.Nome,
             Email = usuarioAd.Email,
-            Funcao = await _viewUsuarioRepository.GetCargoCPU(usuarioAd.Login) ?? string.Empty,
+            Funcao = await _viewUsuarioRepository.GetCargoCpu(usuarioAd.Login) ?? string.Empty,
             NivelAcesso = accessLevel,
             AreasAcesso = new List<Group>()
             {

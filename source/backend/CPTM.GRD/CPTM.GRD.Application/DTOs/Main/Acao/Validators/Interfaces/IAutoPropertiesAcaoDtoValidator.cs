@@ -1,4 +1,5 @@
-﻿using CPTM.GRD.Application.Contracts.Infrastructure;
+﻿using System.Diagnostics.CodeAnalysis;
+using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.DTOs.Main.Acao.Children.Validators;
 using CPTM.GRD.Application.DTOs.Main.Acao.Interfaces;
@@ -6,6 +7,7 @@ using FluentValidation;
 
 namespace CPTM.GRD.Application.DTOs.Main.Acao.Validators.Interfaces;
 
+[SuppressMessage("ReSharper", "InconsistentNaming")]
 public class IAutoPropertiesAcaoDtoValidator : AbstractValidator<IAutoPropertiesAcaoDto>
 {
   public IAutoPropertiesAcaoDtoValidator(IAuthenticationService authenticationService,

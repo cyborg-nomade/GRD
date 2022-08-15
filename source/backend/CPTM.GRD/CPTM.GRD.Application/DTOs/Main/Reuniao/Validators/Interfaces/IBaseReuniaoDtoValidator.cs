@@ -1,4 +1,5 @@
-﻿using CPTM.GRD.Application.Contracts.Infrastructure;
+﻿using System.Diagnostics.CodeAnalysis;
+using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes.Children;
@@ -10,6 +11,7 @@ using FluentValidation;
 
 namespace CPTM.GRD.Application.DTOs.Main.Reuniao.Validators.Interfaces;
 
+[SuppressMessage("ReSharper", "InconsistentNaming")]
 public class IBaseReuniaoDtoValidator : AbstractValidator<IBaseReuniaoDto>
 {
     public IBaseReuniaoDtoValidator(
@@ -34,12 +36,12 @@ public class IBaseReuniaoDtoValidator : AbstractValidator<IBaseReuniaoDto>
             .SetValidator(new ProposicaoDtoValidator(groupRepository, authenticationService, userRepository,
                 votoRepository,
                 proposicaoRepository, proposicaoStrictSequence));
-        RuleForEach(p => p.ParticipantesIds).NotNull().NotEmpty().GreaterThan(0).MustAsync(async (id, token) =>
+        RuleForEach(p => p.ParticipantesIds).NotNull().NotEmpty().GreaterThan(0).MustAsync(async (id, _) =>
         {
             var userExists = await userRepository.Exists(id);
             return userExists;
         });
-        RuleForEach(p => p.ParticipantesPreviaIds).NotNull().NotEmpty().GreaterThan(0).MustAsync(async (id, token) =>
+        RuleForEach(p => p.ParticipantesPreviaIds).NotNull().NotEmpty().GreaterThan(0).MustAsync(async (id, _) =>
         {
             var userExists = await userRepository.Exists(id);
             return userExists;
