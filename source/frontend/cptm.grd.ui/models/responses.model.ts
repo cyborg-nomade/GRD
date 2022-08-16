@@ -3,12 +3,12 @@ import { UserDto } from "./access-control.model";
 export class AuthResponse {
     user!: UserDto;
     token!: string;
-    expirationDate!: Date;
+    expirationDate!: string;
 
     constructor() {
         this.user = new UserDto();
         this.token = "";
-        this.expirationDate = new Date();
+        this.expirationDate = new Date().toISOString();
     }
 }
 
