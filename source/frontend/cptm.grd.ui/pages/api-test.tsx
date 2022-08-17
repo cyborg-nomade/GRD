@@ -41,7 +41,7 @@ import ProposicoesApi from "../services/api/proposicoes.api";
 import ReunioesApi from "../services/api/reunioes.api";
 import UsersApi from "../services/api/users.api";
 import { useAppDispatch, useAppSelector } from "../services/redux/hooks";
-import { selectAuthState, login } from "../services/redux/slices/auth";
+import { selectAuthState, loginAction } from "../services/redux/slices/auth";
 import styles from "../styles/Home.module.css";
 
 const APITest: NextPage = () => {
@@ -77,7 +77,7 @@ const APITest: NextPage = () => {
         console.log(authResponse);
         console.log("hi", authState);
 
-        dispatch(login(authResponse));
+        dispatch(loginAction(authResponse));
 
         setToken(authResponse.token);
         setCurrentUser(authResponse.user);

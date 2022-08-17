@@ -40,7 +40,9 @@ export const authSlice = createSlice({
     name: "auth",
     initialState: authInitialState,
     reducers: {
-        login(state, action: PayloadAction<AuthResponse>) {
+        loginAction(state, action: PayloadAction<AuthResponse>) {
+            console.log("action", action);
+
             state.currentUser = action.payload.user;
             state.currentArea = action.payload.user.areasAcesso[0];
             state.token = action.payload.token;
@@ -49,7 +51,7 @@ export const authSlice = createSlice({
 
             return state;
         },
-        logout(state, action: PayloadAction<void>) {
+        logoutAction(state, action: PayloadAction<void>) {
             state = authInitialState;
             localStorage.removeItem("persist:root");
 
@@ -68,7 +70,7 @@ export const authSlice = createSlice({
     },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { loginAction, logoutAction } = authSlice.actions;
 
 export const selectAuthState = (state: AppState) => state.auth;
 

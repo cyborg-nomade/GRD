@@ -1,19 +1,20 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { useEffect } from "react";
+import Link from "next/link";
 import { AuthUser } from "../models/access-control.model";
 import { AuthResponse } from "../models/responses.model";
 import UsersApi from "../services/api/users.api";
-import { useAppDispatch, useAppSelector } from "../services/redux/hooks";
-import { login, logout } from "../services/redux/slices/auth";
+import { useAuth } from "../services/local-storage/auth-hook";
+import { useAppSelector } from "../services/redux/hooks";
 import styles from "../styles/Home.module.css";
+import APITest from "./api-test";
 
 const Home: NextPage = () => {
     const usersAPI = new UsersApi();
+    const { login, logout } = useAuth();
 
     const authState = useAppSelector((state) => state.auth);
-    const dispatch = useAppDispatch();
 
     const loginHandler = async () => {
         const authUser = new AuthUser();
@@ -23,11 +24,11 @@ const Home: NextPage = () => {
         const authResponse: AuthResponse = await usersAPI.login(authUser);
         console.log(authResponse);
 
-        dispatch(login(authResponse));
+        login(authResponse);
     };
 
     const logoutHandler = () => {
-        dispatch(logout());
+        logout();
     };
 
     const showStateHandler = () => {
@@ -69,6 +70,8 @@ const Home: NextPage = () => {
                         <p>UC #001</p>
                     </a>
                 </div>
+
+                <Link href="/api-test">Teste API</Link>
             </main>
 
             <footer className={styles.footer}>
