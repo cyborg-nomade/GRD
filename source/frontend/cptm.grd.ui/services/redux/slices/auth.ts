@@ -12,7 +12,7 @@ export interface AuthState {
     isLoggedIn: boolean;
 }
 
-const initialState: AuthState = {
+export const authInitialState: AuthState = {
     currentArea: {
         diretoria: "",
         gerencia: "",
@@ -38,7 +38,7 @@ const initialState: AuthState = {
 
 export const authSlice = createSlice({
     name: "auth",
-    initialState,
+    initialState: authInitialState,
     reducers: {
         login(state, action: PayloadAction<AuthResponse>) {
             state.currentUser = action.payload.user;
@@ -50,7 +50,8 @@ export const authSlice = createSlice({
             return state;
         },
         logout(state, action: PayloadAction<void>) {
-            state = initialState;
+            state = authInitialState;
+            localStorage.removeItem("persist:root");
 
             return state;
         },
