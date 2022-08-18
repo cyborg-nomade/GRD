@@ -8,12 +8,9 @@ import {
     GroupDto,
     UpdateUserDto,
     UserDto,
-} from "../models/access-control.model";
-import { AcaoDto, CreateAcaoDto } from "../models/acoes/acao.model";
-import {
-    AndamentoDto,
-    CreateAndamentoDto,
-} from "../models/acoes/children/andamento.model";
+} from "../../models/access-control.model";
+import { AcaoDto, CreateAcaoDto } from "../../models/acoes/acao.model";
+import { CreateAndamentoDto } from "../../models/acoes/children/andamento.model";
 import {
     AcaoStatus,
     AccessLevel,
@@ -21,27 +18,27 @@ import {
     ProposicaoStatus,
     ReuniaoStatus,
     TipoVotoRd,
-} from "../models/common.model";
-import { AddProposicaoToReuniaoDto } from "../models/mixed.model";
+} from "../../models/common.model";
+import { AddProposicaoToReuniaoDto } from "../../models/mixed.model";
 import {
     CreateProposicaoDto,
     ProposicaoDto,
     UpdateProposicaoDto,
     VoteWithAjustesProposicaoDto,
-} from "../models/proposicoes/proposicao.model";
-import { AuthResponse, EstruturaResponse } from "../models/responses.model";
+} from "../../models/proposicoes/proposicao.model";
+import { AuthResponse, EstruturaResponse } from "../../models/responses.model";
 import {
     CreateReuniaoDto,
     ReuniaoDto,
     UpdateReuniaoDto,
-} from "../models/reunioes/reuniao.model";
-import AcoesApi from "../services/api/acoes.api";
-import GroupsApi from "../services/api/groups.api";
-import ProposicoesApi from "../services/api/proposicoes.api";
-import ReunioesApi from "../services/api/reunioes.api";
-import UsersApi from "../services/api/users.api";
-import { useAppDispatch, useAppSelector } from "../services/redux/hooks";
-import { selectAuthState, loginAction } from "../services/redux/slices/auth";
+} from "../../models/reunioes/reuniao.model";
+import AcoesApi from "../../services/api/acoes.api";
+import GroupsApi from "../../services/api/groups.api";
+import ProposicoesApi from "../../services/api/proposicoes.api";
+import ReunioesApi from "../../services/api/reunioes.api";
+import UsersApi from "../../services/api/users.api";
+import { useAppDispatch, useAppSelector } from "../../services/redux/hooks";
+import { loginAction } from "../../services/redux/slices/auth";
 import styles from "../styles/Home.module.css";
 
 const APITest: NextPage = () => {

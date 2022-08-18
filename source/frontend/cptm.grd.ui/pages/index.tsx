@@ -8,33 +8,9 @@ import UsersApi from "../services/api/users.api";
 import { useAuth } from "../services/local-storage/auth-hook";
 import { useAppSelector } from "../services/redux/hooks";
 import styles from "../styles/Home.module.css";
-import APITest from "./api-test";
+import APITest from "./tests/api-test";
 
 const Home: NextPage = () => {
-    const usersAPI = new UsersApi();
-    const { login, logout } = useAuth();
-
-    const authState = useAppSelector((state) => state.auth);
-
-    const loginHandler = async () => {
-        const authUser = new AuthUser();
-        authUser.username = "urielf";
-        authUser.password = "H2CKQ3A1q&Sq";
-
-        const authResponse: AuthResponse = await usersAPI.login(authUser);
-        console.log(authResponse);
-
-        login(authResponse);
-    };
-
-    const logoutHandler = () => {
-        logout();
-    };
-
-    const showStateHandler = () => {
-        console.log(authState);
-    };
-
     return (
         <div className={styles.container}>
             <Head>
@@ -46,33 +22,7 @@ const Home: NextPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <main className={styles.main}>
-                <h1 className={styles.title}>CPTM - GRD</h1>
-
-                <p className={styles.description}>Teste Redux Store</p>
-                <p className={styles.description}>Token: {authState.token}</p>
-
-                <div className={styles.grid}>
-                    <a className={styles.card} onClick={loginHandler}>
-                        <h2>Login &rarr;</h2>
-                        <p>UC #001</p>
-                    </a>
-                </div>
-                <div className={styles.grid}>
-                    <a className={styles.card} onClick={logoutHandler}>
-                        <h2>Logout &rarr;</h2>
-                        <p>UC #001</p>
-                    </a>
-                </div>
-                <div className={styles.grid}>
-                    <a className={styles.card} onClick={showStateHandler}>
-                        <h2>Show State &rarr;</h2>
-                        <p>UC #001</p>
-                    </a>
-                </div>
-
-                <Link href="/api-test">Teste API</Link>
-            </main>
+            <main className={styles.main}></main>
 
             <footer className={styles.footer}>
                 <a
