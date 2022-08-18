@@ -5,15 +5,33 @@
 # 1. acesso subgerencial
 
 -   **/sub/:uid:/**: sub homepage. shows list of user's registered Proposicoes that haven't been archived;
--   **/sub/:uid:/novo**: empty Proposicao form, with sub activities (save/cancel);
+-   **/sub/:uid:/proposicao**: shows list of user's registered Proposicoes that haven't been archived;
+-   **/sub/:uid:/proposicao/aprovadas-rd**: shows list of user's registered Proposicoes that have been rd-approved;
+-   **/sub/:uid:/proposicao/revisao**: shows list of user's registered Proposicoes that need review;
+-   **/sub/:uid:/proposicao/arquivo**: shows list of user's registered Proposicoes that have been archived;
+-   **/sub/:uid:/proposicao/novo**: empty Proposicao form, with sub activities (save/cancel);
 -   **/sub/:uid:/proposicao/:pid:/**: Proposicao form for registered Proposicao, with sub activities (save/cancel);
+-   **/sub/:uid:/acao/**: shows list of all acoes under user's responsibility;
+-   **/sub/:uid:/acao/em-andamento**: shows list of all acoes under user's responsibility that are ongoing;
+-   **/sub/:uid:/acao/arquivo**: shows list of all acoes under user's responsibility that have been archived;
+-   **/sub/:uid:/acao/:aid:**: Acao form for registered Acao, with sub activities;
 
 # 2. acesso gerencial
 
--   **/gerente/:uid:/**: gerente homepage. shows list of area's registered Proposicoes that haven't been archived;
--   **/gerente/:uid:/novo**: empty Proposicao form, with gerente activities (save/send to diretoria approval/cancel);
--   **/gerente/:uid:/proposicao/:pid:/**: Proposicao form for registered Proposicao, with gerente activities (save/send to diretoria approval/cancel);
--   **/gerente/:uid:/acessos/**: User mgmt cockpit, showing users allowed with sub acess, and allowing to add and remove individually;
+-   **/gerente/:uid:/**: gerente homepage. shows list of user's registered Proposicoes that haven't been archived;
+-   **/gerente/:uid:/proposicao**: shows list of user's registered Proposicoes that haven't been archived;
+-   **/gerente/:uid:/proposicao/novas**: shows list of user's newly registered Proposicoes;
+-   **/gerente/:uid:/proposicao/aprovadas-rd**: shows list of user's registered Proposicoes that have been rd-approved;
+-   **/gerente/:uid:/proposicao/revisao**: shows list of user's registered Proposicoes that need review;
+-   **/gerente/:uid:/proposicao/arquivo**: shows list of user's registered Proposicoes that have been archived;
+-   **/gerente/:uid:/proposicao/novo**: empty Proposicao form, with gerent activities (save/cancel);
+-   **/gerente/:uid:/proposicao/:pid:/**: Proposicao form for registered Proposicao, with gerent activities (save/cancel);
+-   **/gerente/:uid:/acao/**: shows list of all acoes under user's responsibility;
+-   **/gerente/:uid:/acao/em-andamento**: shows list of all acoes under user's responsibility that are ongoing;
+-   **/gerente/:uid:/acao/arquivo**: shows list of all acoes under user's responsibility that have been archived;
+-   **/gerente/:uid:/acao/:aid:**: Acao form for registered Acao, with gerente activities;
+-   **/gerente/:uid:/acessos/**: list of all users subordinated to gerente;
+-   **/gerente/:uid:/acessos/:euid:**: User form for registered User, with gerente activities for mgmt;
 
 # 3. acesso de diretoria
 
