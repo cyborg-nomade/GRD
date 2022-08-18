@@ -27,7 +27,7 @@ export const authInitialState: AuthState = {
         email: "",
         funcao: "",
         id: 0,
-        nivelAcesso: AccessLevel.Sub,
+        nivelAcesso: -1,
         nome: "",
         usernameAd: "",
     },
