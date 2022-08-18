@@ -39,7 +39,7 @@ import ReunioesApi from "../../services/api/reunioes.api";
 import UsersApi from "../../services/api/users.api";
 import { useAppDispatch, useAppSelector } from "../../services/redux/hooks";
 import { loginAction } from "../../services/redux/slices/auth";
-import styles from "../styles/Home.module.css";
+import styles from "styles/Home.module.css";
 
 const APITest: NextPage = () => {
     const [token, setToken] = useState("");
