@@ -51,15 +51,25 @@
 -   **/assessor-diretoria/:uid:/reuniao/:rid:/apresentacao/previa**: Reuniao Previa presentation screen, showing Proposicoes for that Reuniao;
 -   **/assessor-diretoria/:uid:/reuniao/:rid:/apresentacao/previa/proposicao/:pid:/**: Proposicao form, with Previa activities (annotation);
 
-# 3. acesso de diretoria
+# 4. acesso de diretoria
 
--   **/diretoria/:uid:/**: diretor homepage. shows list of all subordinate area's registered Proposicoes that haven't been archived;
--   **/diretoria/:uid:/novo**: empty Proposicao form, with diretor activities (approve/repprove/save/cancel);
--   **/diretoria/:uid:/proposicao/:pid:/**: Proposicao form for registered Proposicao, with diretoria activities (approve/repprove/save/cancel);
--   **/diretoria/:uid:/acessos/**: User mgmt cockpit, showing users allowed with equal diretor acess, and allowing to add and remove;
--   **/diretoria/:uid:/rd/**: List of Reunioes, showing list of upcoming Reunioes in Pauta status;
--   **/diretoria/:uid:/rd/:rid:/apresentacao/**: Reuniao presentation screen, showing Proposicoes for that Reuniao;
--   **/diretoria/:uid:/rd/:rid:/apresentacao/proposicao/:pid:/**: Proposicao form, with RD activities (approve/repprove/etc);
+-   **/diretoria/:uid:/**: diretoria homepage. shows list of all subordinate area's registered Proposicoes that haven't been archived;
+-   **/diretoria/:uid:/proposicao**: shows list of user's registered Proposicoes that haven't been archived;
+-   **/diretoria/:uid:/proposicao/aprovacao**: shows list of Proposicoes that need approval;
+-   **/diretoria/:uid:/proposicao/aprovadas-rd**: shows list of user's registered Proposicoes that have been rd-approved;
+-   **/diretoria/:uid:/proposicao/revisao**: shows list of user's registered Proposicoes that need review;
+-   **/diretoria/:uid:/proposicao/arquivo**: shows list of user's registered Proposicoes that have been archived;
+-   **/diretoria/:uid:/proposicao/novo**: empty Proposicao form, with gerent activities (save/cancel);
+-   **/diretoria/:uid:/proposicao/:pid:/**: Proposicao form for registered Proposicao, with gerent activities (save/cancel);
+-   **/diretoria/:uid:/acao/**: shows list of all acoes under user's responsibility;
+-   **/diretoria/:uid:/acao/em-andamento**: shows list of all acoes under user's responsibility that are ongoing;
+-   **/diretoria/:uid:/acao/arquivo**: shows list of all acoes under user's responsibility that have been archived;
+-   **/diretoria/:uid:/acao/:aid:**: Acao form for registered Acao, with diretoria activities;
+-   **/diretoria/:uid:/reuniao/**: List of Reunioes, showing list of upcoming Reunioes in Prévia status;
+-   **/diretoria/:uid:/reuniao/:rid:/apresentacao**: Reuniao presentation screen, showing Proposicoes for that Reuniao;
+-   **/diretoria/:uid:/reuniao/:rid:/apresentacao/proposicao/:pid:/**: Proposicao form, with RD activities (approve/repprove/etc);
+-   **/diretoria/:uid:/acessos/**: list of all users subordinated to diretoria;
+-   **/diretoria/:uid:/acessos/:euid:**: User form for registered User, with diretoria activities for mgmt;
 
 # 5. acesso grg
 
