@@ -101,11 +101,11 @@
 
 # 6. acesso SysAdmin
 
+-   **/admin/**: admin home page. shows options to enter all of the levels views + admin;
 -   **/admin/acessos/**: shows list of all users and their levels and groups, allowing add, edit and remove;
+-   **/admin/acessos/:euid:**: User form for registered User, with grg activities for mgmt;
 -   **/admin/proposicoes/**: list of all Proposicoes;
 -   **/admin/proposicoes/:pid:/**: Proposicao form for registered Proposicao, with all actions;
--   **/admin/proposicoes/:pid:/aprovacoes**: list of all Aprovacoes of a Proposicao;
--   **/admin/proposicoes/:pid:/info**: list of all technical infos of a Proposicao;
 -   **/admin/reunioes/**: list of all Reunioes;
 -   **/admin/reunioes/:rid:/**: Reuniao form for registered Reuniao, with all actions;
 -   **/admin/acoes/**: list of all Acoes;
