@@ -24,8 +24,8 @@
 -   **/gerente/:uid:/proposicao/aprovadas-rd**: shows list of user's registered Proposicoes that have been rd-approved;
 -   **/gerente/:uid:/proposicao/revisao**: shows list of user's registered Proposicoes that need review;
 -   **/gerente/:uid:/proposicao/arquivo**: shows list of user's registered Proposicoes that have been archived;
--   **/gerente/:uid:/proposicao/novo**: empty Proposicao form, with gerent activities (save/cancel);
--   **/gerente/:uid:/proposicao/:pid:/**: Proposicao form for registered Proposicao, with gerent activities (save/cancel);
+-   **/gerente/:uid:/proposicao/novo**: empty Proposicao form, with gerente activities (save/cancel);
+-   **/gerente/:uid:/proposicao/:pid:/**: Proposicao form for registered Proposicao, with gerente activities (save/cancel);
 -   **/gerente/:uid:/acao/**: shows list of all acoes under user's responsibility;
 -   **/gerente/:uid:/acao/em-andamento**: shows list of all acoes under user's responsibility that are ongoing;
 -   **/gerente/:uid:/acao/arquivo**: shows list of all acoes under user's responsibility that have been archived;
@@ -41,8 +41,8 @@
 -   **/assessor-diretoria/:uid:/proposicao/aprovadas-rd**: shows list of user's registered Proposicoes that have been rd-approved;
 -   **/assessor-diretoria/:uid:/proposicao/revisao**: shows list of user's registered Proposicoes that need review;
 -   **/assessor-diretoria/:uid:/proposicao/arquivo**: shows list of user's registered Proposicoes that have been archived;
--   **/assessor-diretoria/:uid:/proposicao/novo**: empty Proposicao form, with gerent activities (save/cancel);
--   **/assessor-diretoria/:uid:/proposicao/:pid:/**: Proposicao form for registered Proposicao, with gerent activities (save/cancel);
+-   **/assessor-diretoria/:uid:/proposicao/novo**: empty Proposicao form, with assessor activities (save/cancel);
+-   **/assessor-diretoria/:uid:/proposicao/:pid:/**: Proposicao form for registered Proposicao, with assessor activities (save/cancel);
 -   **/assessor-diretoria/:uid:/acao/**: shows list of all acoes under user's responsibility;
 -   **/assessor-diretoria/:uid:/acao/em-andamento**: shows list of all acoes under user's responsibility that are ongoing;
 -   **/assessor-diretoria/:uid:/acao/arquivo**: shows list of all acoes under user's responsibility that have been archived;
@@ -59,8 +59,8 @@
 -   **/diretoria/:uid:/proposicao/aprovadas-rd**: shows list of user's registered Proposicoes that have been rd-approved;
 -   **/diretoria/:uid:/proposicao/revisao**: shows list of user's registered Proposicoes that need review;
 -   **/diretoria/:uid:/proposicao/arquivo**: shows list of user's registered Proposicoes that have been archived;
--   **/diretoria/:uid:/proposicao/novo**: empty Proposicao form, with gerent activities (save/cancel);
--   **/diretoria/:uid:/proposicao/:pid:/**: Proposicao form for registered Proposicao, with gerent activities (save/cancel);
+-   **/diretoria/:uid:/proposicao/novo**: empty Proposicao form, with diretoria activities (save/cancel);
+-   **/diretoria/:uid:/proposicao/:pid:/**: Proposicao form for registered Proposicao, with diretoria activities (save/cancel);
 -   **/diretoria/:uid:/acao/**: shows list of all acoes under user's responsibility;
 -   **/diretoria/:uid:/acao/em-andamento**: shows list of all acoes under user's responsibility that are ongoing;
 -   **/diretoria/:uid:/acao/arquivo**: shows list of all acoes under user's responsibility that have been archived;
@@ -74,16 +74,30 @@
 # 5. acesso grg
 
 -   **/grg/:uid:/**: grg homepage. shows list of all registered Proposicoes that haven't been archived;
--   **/grg/:uid:/novo**: empty Proposicao form, with grg activities (include in Reuniao/save/cancel);
--   **/grg/:uid:/proposicao/:pid:/**: Proposicao form for registered Proposicao, with grg activities;
+-   **/grg/:uid:/proposicao**: shows list of all registered Proposicoes that haven't been archived;
+-   **/grg/:uid:/proposicao/disponiveis**: shows list of all Proposicoes that available to be included in Reuniao;
+-   **/grg/:uid:/proposicao/inclusas-rd**: shows list of all registered Proposicoes that have been included in a Reuniao;
+-   **/grg/:uid:/proposicao/revisao**: shows list of all registered Proposicoes that need review;
+-   **/grg/:uid:/proposicao/aprovacao**: shows list of all registered Proposicoes that need to be approved;
+-   **/grg/:uid:/proposicao/arquivo**: shows list of all registered Proposicoes that have been archived;
+-   **/grg/:uid:/proposicao/novo**: empty Proposicao form, with grg activities (save/cancel);
+-   **/grg/:uid:/proposicao/:pid:/**: Proposicao form for registered Proposicao, with grg activities (save/cancel);
+-   **/grg/:uid:/reuniao/**: List of Reunioes, showing list of all Reunioes in descending order of data, initially with only the latest 10;
+-   **/grg/:uid:/reuniao/registradas**: List of Reunioes, showing list of all Reunioes in "registrada" status in descending order of data, initially with only the latest 10;
+-   **/grg/:uid:/reuniao/arquivo**: List of Reunioes, showing list of all archived Reunioes in descending order of data, initially with only the latest 10;
+-   **/grg/:uid:/reuniao/nova**: empty Reuniao form, with grg activities;
+-   **/grg/:uid:/reuniao/:rid:/**: Reuniao form for registered Reuniao, with grg activities;
+-   **/grg/:uid:/reuniao/:rid:/apresentacao/**: Reuniao presentation screen, showing Proposicoes for that Reuniao;
+-   **/grg/:uid:/reuniao/:rid:/apresentacao/previa**: Reuniao Previa presentation screen, showing Proposicoes for that Reuniao;
+-   **/grg/:uid:/reuniao/:rid:/apresentacao/previa/proposicao/:pid:/**: Proposicao form, with grg Previa activities (annotations);
+-   **/grg/:uid:/reuniao/:rid:/apresentacao/proposicao/:pid:/**: Proposicao form, with grg RD activities (approve/repprove/etc);
+-   **/grg/:uid:/acao/**: shows list of all acoes under user's responsibility;
+-   **/grg/:uid:/acao/em-andamento**: shows list of all acoes under user's responsibility that are ongoing;
+-   **/grg/:uid:/acao/arquivo**: shows list of all acoes under user's responsibility that have been archived;
+-   **/grg/:uid:/acao/nova**: empty Acao form, with grg activities;
+-   **/grg/:uid:/acao/:aid:**: Acao form for registered Acao, with diretoria activities;
 -   **/grg/:uid:/acessos/**: User mgmt cockpit, showing all users and their access levels and groups, and allowing to add, edit and remove;
--   **/grg/:uid:/rd/**: List of Reunioes, showing list of all Reunioes in descending order of data, initially with only the latest 10;
--   **/grg/:uid:/rd/novo**: empty Reuniao form, with grg activities;
--   **/grg/:uid:/rd/:rid:/**: Reuniao form for registered Reuniao, with grg activities;
--   **/grg/:uid:/rd/:rid:/apresentacao/**: Reuniao presentation screen, showing Proposicoes for that Reuniao;
--   **/grg/:uid:/rd/:rid:/apresentacao/previa**: Reuniao Previa presentation screen, showing Proposicoes for that Reuniao;
--   **/grg/:uid:/rd/:rid:/apresentacao/previa/proposicao/:pid:/**: Proposicao form, with grg Previa activities (annotations);
--   **/grg/:uid:/rd/:rid:/apresentacao/proposicao/:pid:/**: Proposicao form, with grg RD activities (approve/repprove/etc);
+-   **/grg/:uid:/acessos/:euid:**: User form for registered User, with grg activities for mgmt;
 
 # 6. acesso SysAdmin
 
