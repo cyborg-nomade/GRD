@@ -42,6 +42,8 @@
     -   my acoes
         -   ongoing
         -   archive
+-   reunioes
+    -   my previas
 
 ## diretor
 
