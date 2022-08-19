@@ -92,8 +92,8 @@
 -   **/grg/:uid:/reuniao/:rid:/apresentacao/previa/proposicao/:pid:/**: Proposicao form, with grg Previa activities (annotations);
 -   **/grg/:uid:/reuniao/:rid:/apresentacao/proposicao/:pid:/**: Proposicao form, with grg RD activities (approve/repprove/etc);
 -   **/grg/:uid:/acao/**: shows list of all acoes under user's responsibility;
--   **/grg/:uid:/acao/em-andamento**: shows list of all acoes under user's responsibility that are ongoing;
--   **/grg/:uid:/acao/arquivo**: shows list of all acoes under user's responsibility that have been archived;
+-   **/grg/:uid:/acao/em-andamento**: shows list of all acoes that are ongoing;
+-   **/grg/:uid:/acao/arquivo**: shows list of all acoes that have been archived;
 -   **/grg/:uid:/acao/nova**: empty Acao form, with grg activities;
 -   **/grg/:uid:/acao/:aid:**: Acao form for registered Acao, with diretoria activities;
 -   **/grg/:uid:/acessos/**: User mgmt cockpit, showing all users and their access levels and groups, and allowing to add, edit and remove;
