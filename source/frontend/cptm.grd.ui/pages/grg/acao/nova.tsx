@@ -1,5 +1,5 @@
-const grgAcaoNew = () => {
+const GrgAcaoNew = () => {
     return <div>nova ação - grg</div>;
 };
 
-export default grgAcaoNew;
+export default GrgAcaoNew;

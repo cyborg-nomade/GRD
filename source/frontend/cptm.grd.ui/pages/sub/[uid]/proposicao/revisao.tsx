@@ -1,5 +1,5 @@
-const subRevisao = () => {
+const SubRevisao = () => {
     return <div>Proposições em Revisão - Sub</div>;
 };
 
-export default subRevisao;
+export default SubRevisao;

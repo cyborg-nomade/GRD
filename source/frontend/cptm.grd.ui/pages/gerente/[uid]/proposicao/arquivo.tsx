@@ -1,5 +1,5 @@
-const gerenteProposicaoArchive = () => {
+const GerenteProposicaoArchive = () => {
     return <div>proposições arquivadas - gerente</div>;
 };
 
-export default gerenteProposicaoArchive;
+export default GerenteProposicaoArchive;

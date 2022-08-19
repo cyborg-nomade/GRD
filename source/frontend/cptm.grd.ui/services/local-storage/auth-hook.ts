@@ -1,8 +1,13 @@
+import { AccessLevel } from "models/common.model";
 import { useCallback, useEffect } from "react";
 import { GroupDto } from "../../models/access-control.model";
 import { AuthResponse } from "../../models/responses.model";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { loginAction, logoutAction } from "../redux/slices/auth";
+import {
+    loginAction,
+    logoutAction,
+    changeLevelAction,
+} from "../redux/slices/auth";
 
 let logoutTimer: NodeJS.Timeout;
 
@@ -31,6 +36,33 @@ export const useAuth = () => {
         // console.log("change group, group: ", g);
         // setAreaTratamentoDados((prevState) => ({ ...prevState, area: g.nome }));
     };
+
+    const changeLevel = useCallback(
+        (l: AccessLevel) => {
+            const storedAuthResponse = localStorage.getItem("authResponse");
+            const authResponseObject: AuthResponse = storedAuthResponse
+                ? JSON.parse(storedAuthResponse)
+                : null;
+            const storedExpirationDate = authResponseObject
+                ? new Date(authResponseObject.expirationDate)
+                : undefined;
+            if (
+                authResponseObject &&
+                authResponseObject.token &&
+                storedExpirationDate &&
+                storedExpirationDate > new Date()
+            ) {
+                localStorage.removeItem("authResponse");
+                dispatch(changeLevelAction(l));
+                authResponseObject.user.nivelAcesso = l;
+                localStorage.setItem(
+                    "authResponse",
+                    JSON.stringify(authResponseObject)
+                );
+            }
+        },
+        [dispatch]
+    );
 
     //handle token expiration & auto-logout
     useEffect(() => {
@@ -71,5 +103,6 @@ export const useAuth = () => {
         login,
         logout,
         changeGroup,
+        changeLevel,
     };
 };

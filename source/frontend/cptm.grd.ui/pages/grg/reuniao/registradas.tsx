@@ -1,5 +1,5 @@
-const grgReuniaoRegistered = () => {
+const GrgReuniaoRegistered = () => {
     return <div>reuniões registradas - grg</div>;
 };
 
-export default grgReuniaoRegistered;
+export default GrgReuniaoRegistered;

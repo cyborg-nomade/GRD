@@ -1,5 +1,5 @@
-const diretoriaProposicaoArchive = () => {
+const DiretoriaProposicaoArchive = () => {
     return <div>arquivo de proposições - diretoria</div>;
 };
 
-export default diretoriaProposicaoArchive;
+export default DiretoriaProposicaoArchive;

@@ -1,5 +1,5 @@
-const grgAccessControl = () => {
+const GrgAccessControl = () => {
     return <div>controle de acessos - grg</div>;
 };
 
-export default grgAccessControl;
+export default GrgAccessControl;

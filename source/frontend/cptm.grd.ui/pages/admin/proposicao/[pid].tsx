@@ -1,5 +1,5 @@
-const adminProposicaoView = () => {
+const AdminProposicaoView = () => {
     return <div>visualizar proposição - sysadmin</div>;
 };
 
-export default adminProposicaoView;
+export default AdminProposicaoView;

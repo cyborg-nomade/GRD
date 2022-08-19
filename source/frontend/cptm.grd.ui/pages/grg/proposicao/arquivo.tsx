@@ -1,5 +1,5 @@
-const grgProposicaoArchive = () => {
+const GrgProposicaoArchive = () => {
     return <div>proposições arquivadas - grg</div>;
 };
 
-export default grgProposicaoArchive;
+export default GrgProposicaoArchive;

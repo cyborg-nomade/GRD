@@ -1,5 +1,5 @@
-const subProposicaoArchive = () => {
+const SubProposicaoArchive = () => {
     return <div>Arquivo de Proposições - Acesso Sub</div>;
 };
 
-export default subProposicaoArchive;
+export default SubProposicaoArchive;

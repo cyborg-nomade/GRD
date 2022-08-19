@@ -1,5 +1,5 @@
-const subAcao = () => {
+const SubAcao = () => {
     return <div>Minhas Ações - Sub</div>;
 };
 
-export default subAcao;
+export default SubAcao;

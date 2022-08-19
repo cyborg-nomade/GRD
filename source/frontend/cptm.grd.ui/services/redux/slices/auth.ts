@@ -53,7 +53,11 @@ export const authSlice = createSlice({
         },
         logoutAction(state, action: PayloadAction<void>) {
             state = authInitialState;
-            localStorage.removeItem("persist:root");
+
+            return state;
+        },
+        changeLevelAction(state, action: PayloadAction<AccessLevel>) {
+            state.currentUser.nivelAcesso = action.payload;
 
             return state;
         },
@@ -70,7 +74,8 @@ export const authSlice = createSlice({
     },
 });
 
-export const { loginAction, logoutAction } = authSlice.actions;
+export const { loginAction, logoutAction, changeLevelAction } =
+    authSlice.actions;
 
 export const selectAuthState = (state: AppState) => state.auth;
 

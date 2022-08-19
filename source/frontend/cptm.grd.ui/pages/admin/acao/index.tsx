@@ -1,5 +1,5 @@
-const adminAcao = () => {
+const AdminAcao = () => {
     return <div>ação home - admin</div>;
 };
 
-export default adminAcao;
+export default AdminAcao;

@@ -1,5 +1,5 @@
-const grgAcao = () => {
+const GrgAcao = () => {
     return <div>grg acao home</div>;
 };
 
-export default grgAcao;
+export default GrgAcao;

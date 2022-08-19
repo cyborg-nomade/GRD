@@ -1,5 +1,5 @@
-const diretoriaHome = () => {
+const DiretoriaHome = () => {
     return <div>diretoria home</div>;
 };
 
-export default diretoriaHome;
+export default DiretoriaHome;

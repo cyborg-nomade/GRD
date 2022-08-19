@@ -1,5 +1,5 @@
-const diretoriaAccessControl = () => {
+const DiretoriaAccessControl = () => {
     return <div>controle de acessos - diretoria</div>;
 };
 
-export default diretoriaAccessControl;
+export default DiretoriaAccessControl;

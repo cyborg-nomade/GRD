@@ -1,5 +1,5 @@
-const grgHome = () => {
+const GrgHome = () => {
     return <div>grg home</div>;
 };
 
-export default grgHome;
+export default GrgHome;

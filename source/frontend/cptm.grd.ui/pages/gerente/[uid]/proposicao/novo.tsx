@@ -1,5 +1,5 @@
-const gerenteProposicaoNew = () => {
+const GerenteProposicaoNew = () => {
     return <div>nova proposição - gerente</div>;
 };
 
-export default gerenteProposicaoNew;
+export default GerenteProposicaoNew;

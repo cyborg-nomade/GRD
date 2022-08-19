@@ -1,5 +1,5 @@
-const subAcaoArchive = () => {
+const SubAcaoArchive = () => {
     return <div>MInhas Ações Arquivadas - Sub</div>;
 };
 
-export default subAcaoArchive;
+export default SubAcaoArchive;

@@ -1,5 +1,5 @@
-const grgProposicaoAvailable = () => {
+const GrgProposicaoAvailable = () => {
     return <div>proposições disponíveis para inclusão em pauta - grg</div>;
 };
 
-export default grgProposicaoAvailable;
+export default GrgProposicaoAvailable;

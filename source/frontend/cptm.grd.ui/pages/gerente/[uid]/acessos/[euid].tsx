@@ -1,5 +1,5 @@
-const gerenteUserView = () => {
+const GerenteUserView = () => {
     return <div>visualizar um usuário - gerente;</div>;
 };
 
-export default gerenteUserView;
+export default GerenteUserView;

@@ -1,5 +1,5 @@
-const diretoriaUserView = () => {
+const DiretoriaUserView = () => {
     return <div>visualizar usuário - diretoria</div>;
 };
 
-export default diretoriaUserView;
+export default DiretoriaUserView;

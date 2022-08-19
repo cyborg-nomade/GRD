@@ -1,5 +1,5 @@
-const gerenteProposicaoView = () => {
+const GerenteProposicaoView = () => {
     return <div>proposição registrada detalhada - gerente</div>;
 };
 
-export default gerenteProposicaoView;
+export default GerenteProposicaoView;

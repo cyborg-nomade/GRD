@@ -1,5 +1,5 @@
-const subProposicao = () => {
+const SubProposicao = () => {
     return <div>Minhas Proposições - Sub</div>;
 };
 
-export default subProposicao;
+export default SubProposicao;

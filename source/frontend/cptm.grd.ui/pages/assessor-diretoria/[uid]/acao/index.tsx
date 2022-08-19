@@ -1,5 +1,5 @@
-const assessorAcao = () => {
+const AssessorAcao = () => {
     return <div>ações sob minha responsabilidade - assessor</div>;
 };
 
-export default assessorAcao;
+export default AssessorAcao;

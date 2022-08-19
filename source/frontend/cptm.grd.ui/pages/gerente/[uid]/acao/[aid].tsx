@@ -1,5 +1,5 @@
-const gerenteAcaoView = () => {
+const GerenteAcaoView = () => {
     return <div>visualizar ação - gerente</div>;
 };
 
-export default gerenteAcaoView;
+export default GerenteAcaoView;

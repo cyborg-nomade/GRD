@@ -1,5 +1,5 @@
-const assessorAcaoOngoing = () => {
+const AssessorAcaoOngoing = () => {
     return <div>ações em andamento - assessor</div>;
 };
 
-export default assessorAcaoOngoing;
+export default AssessorAcaoOngoing;

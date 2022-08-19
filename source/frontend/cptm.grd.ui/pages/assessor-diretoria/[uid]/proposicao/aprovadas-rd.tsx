@@ -1,5 +1,5 @@
-const assessorProposicaoRdApproved = () => {
+const AssessorProposicaoRdApproved = () => {
     return <div>proposições aprovadas em rd - aseessor</div>;
 };
 
-export default assessorProposicaoRdApproved;
+export default AssessorProposicaoRdApproved;

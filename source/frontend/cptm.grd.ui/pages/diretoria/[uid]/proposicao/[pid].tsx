@@ -1,5 +1,5 @@
-const diretoriaProposicaoView = () => {
+const DiretoriaProposicaoView = () => {
     return <div>visualizar proposição - diretoria</div>;
 };
 
-export default diretoriaProposicaoView;
+export default DiretoriaProposicaoView;

@@ -1,5 +1,5 @@
-const subProposicaoView = () => {
+const SubProposicaoView = () => {
     return <div>Visualizar Proposição - Acesso Sub-Gerencial</div>;
 };
 
-export default subProposicaoView;
+export default SubProposicaoView;

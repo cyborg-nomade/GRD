@@ -1,5 +1,5 @@
-const gerenteProposicaoReview = () => {
+const GerenteProposicaoReview = () => {
     return <div>proposições que necessitam revisão - gerente</div>;
 };
 
-export default gerenteProposicaoReview;
+export default GerenteProposicaoReview;

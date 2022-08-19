@@ -1,5 +1,5 @@
-const adminReuniao = () => {
+const AdminReuniao = () => {
     return <div>reunião home - admin</div>;
 };
 
-export default adminReuniao;
+export default AdminReuniao;

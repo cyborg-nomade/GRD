@@ -1,5 +1,5 @@
-const grgProposicaoApproval = () => {
+const GrgProposicaoApproval = () => {
     return <div>proposições que precisam de aprovação - grg</div>;
 };
 
-export default grgProposicaoApproval;
+export default GrgProposicaoApproval;

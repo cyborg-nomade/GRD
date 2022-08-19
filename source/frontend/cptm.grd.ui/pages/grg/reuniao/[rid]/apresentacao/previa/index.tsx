@@ -1,5 +1,5 @@
-const grgReuniaoApresentacaoPrevia = () => {
+const GrgReuniaoApresentacaoPrevia = () => {
     return <div>tela de apresentação da prévia - grg</div>;
 };
 
-export default grgReuniaoApresentacaoPrevia;
+export default GrgReuniaoApresentacaoPrevia;

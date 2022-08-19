@@ -1,5 +1,5 @@
-const grgProposicaoNew = () => {
+const GrgProposicaoNew = () => {
     return <div>nova proposição - grg</div>;
 };
 
-export default grgProposicaoNew;
+export default GrgProposicaoNew;

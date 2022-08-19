@@ -1,5 +1,5 @@
-const grgProposicaoView = () => {
+const GrgProposicaoView = () => {
     return <div>visualizar proposição - grg</div>;
 };
 
-export default grgProposicaoView;
+export default GrgProposicaoView;

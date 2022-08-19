@@ -1,5 +1,5 @@
-const gerenteHome = () => {
+const GerenteHome = () => {
     return <div>Gerente HomePage</div>;
 };
 
-export default gerenteHome;
+export default GerenteHome;

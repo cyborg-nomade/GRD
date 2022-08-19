@@ -1,5 +1,5 @@
-const grgReuniaoApresentacaoPreviaProposicaoView = () => {
+const GrgReuniaoApresentacaoPreviaProposicaoView = () => {
     return <div>visualizar proposição em apresentação prévia - grg</div>;
 };
 
-export default grgReuniaoApresentacaoPreviaProposicaoView;
+export default GrgReuniaoApresentacaoPreviaProposicaoView;

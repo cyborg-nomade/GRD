@@ -1,5 +1,5 @@
-const diretoriaProposicao = () => {
+const DiretoriaProposicao = () => {
     return <div>diretoria proposições home</div>;
 };
 
-export default diretoriaProposicao;
+export default DiretoriaProposicao;

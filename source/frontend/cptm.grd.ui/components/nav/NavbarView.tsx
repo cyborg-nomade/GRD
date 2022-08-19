@@ -80,7 +80,7 @@ const NavbarView = (props: React.PropsWithChildren) => {
                     {drawer}
                 </Drawer>
             </Box>
-            <Box component="main" sx={{ p: 3 }}>
+            <Box component="main" sx={{ pt: 10, pl: 3 }}>
                 {props.children}
             </Box>
         </Box>

@@ -1,5 +1,5 @@
-const grgProposicao = () => {
+const GrgProposicao = () => {
     return <div>grg proposição home</div>;
 };
 
-export default grgProposicao;
+export default GrgProposicao;

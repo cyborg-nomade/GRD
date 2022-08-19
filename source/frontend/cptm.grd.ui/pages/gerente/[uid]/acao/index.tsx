@@ -1,5 +1,5 @@
-const gerenteAcao = () => {
+const GerenteAcao = () => {
     return <div>ações sob minha responsabilidade - gerente</div>;
 };
 
-export default gerenteAcao;
+export default GerenteAcao;

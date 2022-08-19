@@ -33,6 +33,7 @@ import {
     Today,
     List,
     People,
+    Logout,
 } from "@mui/icons-material";
 
 type NavItem = {
@@ -607,11 +608,17 @@ const NavbarItems = () => {
             default:
                 break;
         }
+        navItems.push({
+            icon: <Logout />,
+            name: "Logout",
+            link: "/logout",
+            indent: 0,
+        });
     } else {
         navItems.push({
             icon: <LoginIcon />,
             name: "Login",
-            link: "",
+            link: "/login",
             indent: 0,
         });
     }

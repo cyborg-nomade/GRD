@@ -1,5 +1,5 @@
-const gerenteAcaoArchive = () => {
+const GerenteAcaoArchive = () => {
     return <div>arquivo de ações - gerente</div>;
 };
 
-export default gerenteAcaoArchive;
+export default GerenteAcaoArchive;

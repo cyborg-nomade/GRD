@@ -1,5 +1,5 @@
-const subProposicaoRdApproved = () => {
+const SubProposicaoRdApproved = () => {
     return <div>Proposições aprovadas em RD - Acesso Sub</div>;
 };
 
-export default subProposicaoRdApproved;
+export default SubProposicaoRdApproved;

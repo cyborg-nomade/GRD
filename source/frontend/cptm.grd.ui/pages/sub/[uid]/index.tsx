@@ -1,5 +1,5 @@
-const subHome = () => {
+const SubHome = () => {
     return <div>Homepage - Acesso Sub-Gerencial</div>;
 };
 
-export default subHome;
+export default SubHome;
