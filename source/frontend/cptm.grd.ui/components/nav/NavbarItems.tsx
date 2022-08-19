@@ -280,6 +280,19 @@ const NavbarItems = () => {
                     indent: 8,
                 });
 
+                navItems.push({
+                    icon: <Groups />,
+                    name: "Reuniões",
+                    link: "",
+                    indent: 0,
+                });
+                navItems.push({
+                    icon: <PeopleOutline />,
+                    name: "Apresentação Prévia",
+                    link: "",
+                    indent: 4,
+                });
+
                 break;
             case AccessLevel.Diretor:
                 navItems.push({
@@ -611,8 +624,8 @@ const NavbarItems = () => {
 
     return (
         <React.Fragment>
-            {navItems.map((item) => (
-                <ListItem key={item.name} disablePadding>
+            {navItems.map((item, index) => (
+                <ListItem key={`${item.name}-${index}`} disablePadding>
                     <ListItemButton
                         onClick={() => navHandler(item.link)}
                         sx={{ pl: item.indent }}
