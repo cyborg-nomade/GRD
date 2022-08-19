@@ -106,7 +106,7 @@
 -   **/admin/acessos/:euid:**: User form for registered User, with grg activities for mgmt;
 -   **/admin/proposicoes/**: list of all Proposicoes;
 -   **/admin/proposicoes/:pid:/**: Proposicao form for registered Proposicao, with all actions;
--   **/admin/reunioes/**: list of all Reunioes;
--   **/admin/reunioes/:rid:/**: Reuniao form for registered Reuniao, with all actions;
+-   **/admin/reuniao/**: list of all Reunioes;
+-   **/admin/reuniao/:rid:/**: Reuniao form for registered Reuniao, with all actions;
 -   **/admin/acoes/**: list of all Acoes;
 -   **/admin/acoes/:aid:/**: Acoes form for registered Acoes, with all actions;
