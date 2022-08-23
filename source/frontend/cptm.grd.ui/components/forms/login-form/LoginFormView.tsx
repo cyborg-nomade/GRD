@@ -1,4 +1,14 @@
-import { Button, Container, Paper, TextField, Typography } from "@mui/material";
+import { Login } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
+import {
+    Alert,
+    AlertTitle,
+    Button,
+    Container,
+    Paper,
+    TextField,
+    Typography,
+} from "@mui/material";
 import { Stack } from "@mui/system";
 import { AuthUser } from "models/access-control.model";
 import React from "react";
@@ -7,6 +17,10 @@ import { Controller, UseFormReturn } from "react-hook-form";
 const LoginFormView = (props: {
     loginHandler: (authUser: AuthUser) => {};
     methods: UseFormReturn<AuthUser>;
+    isLoading: boolean;
+    isWarning: boolean;
+    error: any;
+    clearError: () => void;
 }) => {
     return (
         <Paper
@@ -14,6 +28,17 @@ const LoginFormView = (props: {
             sx={{ width: "28rem", padding: "10px", margin: "auto" }}
             onSubmit={props.methods.handleSubmit(props.loginHandler)}
         >
+            {props.error && (
+                <Alert
+                    severity={props.isWarning ? "warning" : "error"}
+                    onClose={props.clearError}
+                >
+                    <AlertTitle>
+                        {props.isWarning ? "Atenção" : "Erro"}
+                    </AlertTitle>
+                    {props.error}
+                </Alert>
+            )}
             <Stack spacing={2}>
                 <Typography variant="h6" ml={1}>
                     Login
@@ -55,9 +80,15 @@ const LoginFormView = (props: {
                         />
                     )}
                 />
-                <Button variant="contained" type="submit">
+                <LoadingButton
+                    variant="contained"
+                    type="submit"
+                    loading={props.isLoading}
+                    loadingPosition="start"
+                    startIcon={<Login />}
+                >
                     Login
-                </Button>
+                </LoadingButton>
             </Stack>
         </Paper>
     );
