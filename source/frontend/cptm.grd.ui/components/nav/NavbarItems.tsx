@@ -26,13 +26,11 @@ import {
     EventAvailable,
     GroupAdd,
     Groups,
-    ManageAccounts,
     MeetingRoom,
     PeopleOutline,
     PlaylistAdd,
     Today,
     List,
-    People,
     Logout,
 } from "@mui/icons-material";
 
@@ -57,13 +55,13 @@ const NavbarItems = () => {
                 navItems.push({
                     icon: <PlaylistAddCheckIcon />,
                     name: "Ações",
-                    link: "",
+                    link: `/resp-acao/${authState.currentUser.id}`,
                     indent: 0,
                 });
                 navItems.push({
                     icon: <PersonIcon />,
                     name: "Minhas Ações",
-                    link: "",
+                    link: `/resp-acao/${authState.currentUser.id}`,
                     indent: 4,
                 });
                 break;
@@ -71,62 +69,62 @@ const NavbarItems = () => {
                 navItems.push({
                     icon: <ArticleIcon />,
                     name: "Proposições",
-                    link: "",
+                    link: `/sub/${authState.currentUser.id}/proposicao`,
                     indent: 0,
                 });
                 navItems.push({
                     icon: <NoteAddIcon />,
                     name: "Criar Proposição",
-                    link: "",
+                    link: `/sub/${authState.currentUser.id}/proposicao/novo`,
                     indent: 4,
                 });
                 navItems.push({
                     icon: <PersonIcon />,
                     name: "Minhas Proposições",
-                    link: "",
+                    link: `/sub/${authState.currentUser.id}/proposicao`,
                     indent: 4,
                 });
                 navItems.push({
                     icon: <CheckCircleIcon />,
                     name: "Aprovadas em RD",
-                    link: "",
+                    link: `/sub/${authState.currentUser.id}/proposicao/aprovadas-rd`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <VisibilityIcon />,
                     name: "A Revisar",
-                    link: "",
+                    link: `/sub/${authState.currentUser.id}/proposicao/revisao`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <InventoryIcon />,
                     name: "Arquivadas",
-                    link: "",
+                    link: `/sub/${authState.currentUser.id}/proposicao/arquivo`,
                     indent: 8,
                 });
 
                 navItems.push({
                     icon: <PlaylistAddCheckIcon />,
                     name: "Ações",
-                    link: "",
+                    link: `/sub/${authState.currentUser.id}/acao`,
                     indent: 0,
                 });
                 navItems.push({
                     icon: <PersonIcon />,
                     name: "Minhas Ações",
-                    link: "",
+                    link: `/sub/${authState.currentUser.id}/acao`,
                     indent: 4,
                 });
                 navItems.push({
                     icon: <HourglassBottomIcon />,
                     name: "Em Andamento",
-                    link: "",
+                    link: `/sub/${authState.currentUser.id}/acao/em-andamento`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <InventoryIcon />,
                     name: "Arquivadas",
-                    link: "",
+                    link: `/sub/${authState.currentUser.id}/acao/arquivo`,
                     indent: 8,
                 });
                 break;
@@ -134,164 +132,152 @@ const NavbarItems = () => {
                 navItems.push({
                     icon: <ArticleIcon />,
                     name: "Proposições",
-                    link: "",
+                    link: `/gerente/${authState.currentUser.id}/proposicao`,
                     indent: 0,
                 });
                 navItems.push({
                     icon: <NoteAddIcon />,
                     name: "Criar Proposição",
-                    link: "",
+                    link: `/gerente/${authState.currentUser.id}/proposicao/novo`,
                     indent: 4,
                 });
                 navItems.push({
                     icon: <PersonIcon />,
                     name: "Minhas Proposições",
-                    link: "",
+                    link: `/gerente/${authState.currentUser.id}/proposicao`,
                     indent: 4,
                 });
                 navItems.push({
                     icon: <NotificationsActiveIcon />,
                     name: "Novas",
-                    link: "",
+                    link: `/gerente/${authState.currentUser.id}/proposicao/novas`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <CheckCircleIcon />,
                     name: "Aprovadas em RD",
-                    link: "",
+                    link: `/gerente/${authState.currentUser.id}/proposicao/aprovadas-rd`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <VisibilityIcon />,
                     name: "A Revisar",
-                    link: "",
+                    link: `/gerente/${authState.currentUser.id}/proposicao/revisao`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <InventoryIcon />,
                     name: "Arquivadas",
-                    link: "",
+                    link: `/gerente/${authState.currentUser.id}/proposicao/arquivo`,
                     indent: 8,
                 });
 
                 navItems.push({
                     icon: <PlaylistAddCheckIcon />,
                     name: "Ações",
-                    link: "",
+                    link: `/gerente/${authState.currentUser.id}/acao`,
                     indent: 0,
                 });
                 navItems.push({
                     icon: <PersonIcon />,
                     name: "Minhas Ações",
-                    link: "",
+                    link: `/gerente/${authState.currentUser.id}/acao`,
                     indent: 4,
                 });
                 navItems.push({
                     icon: <HourglassBottomIcon />,
                     name: "Em Andamento",
-                    link: "",
+                    link: `/gerente/${authState.currentUser.id}/acao/em-andamento`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <InventoryIcon />,
                     name: "Arquivadas",
-                    link: "",
+                    link: `/gerente/${authState.currentUser.id}/acao/arquivo`,
                     indent: 8,
                 });
 
                 navItems.push({
                     icon: <MeetingRoom />,
                     name: "Gestão de Acessos",
-                    link: "",
+                    link: `/gerente/${authState.currentUser.id}/acessos`,
                     indent: 0,
-                });
-                navItems.push({
-                    icon: <ManageAccounts />,
-                    name: "Gerir Subordinados",
-                    link: "",
-                    indent: 4,
                 });
                 break;
             case AccessLevel.AssessorDiretoria:
                 navItems.push({
                     icon: <ArticleIcon />,
                     name: "Proposições",
-                    link: "",
+                    link: `/assessor-diretoria/${authState.currentUser.id}/proposicao`,
                     indent: 0,
                 });
                 navItems.push({
                     icon: <NoteAddIcon />,
                     name: "Criar Proposição",
-                    link: "",
+                    link: `/assessor-diretoria/${authState.currentUser.id}/proposicao/novo`,
                     indent: 4,
                 });
                 navItems.push({
                     icon: <PersonIcon />,
                     name: "Minhas Proposições",
-                    link: "",
+                    link: `/assessor-diretoria/${authState.currentUser.id}/proposicao`,
                     indent: 4,
                 });
                 navItems.push({
                     icon: <Approval />,
                     name: "A Aprovar",
-                    link: "",
+                    link: `/assessor-diretoria/${authState.currentUser.id}/proposicao/aprovacao`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <CheckCircleIcon />,
                     name: "Aprovadas em RD",
-                    link: "",
+                    link: `/assessor-diretoria/${authState.currentUser.id}/proposicao/aprovadas-rd`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <VisibilityIcon />,
                     name: "A Revisar",
-                    link: "",
+                    link: `/assessor-diretoria/${authState.currentUser.id}/proposicao/revisao`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <InventoryIcon />,
                     name: "Arquivadas",
-                    link: "",
+                    link: `/assessor-diretoria/${authState.currentUser.id}/proposicao/arquivo`,
                     indent: 8,
                 });
 
                 navItems.push({
                     icon: <PlaylistAddCheckIcon />,
                     name: "Ações",
-                    link: "",
+                    link: `/assessor-diretoria/${authState.currentUser.id}/acao`,
                     indent: 0,
                 });
                 navItems.push({
                     icon: <PersonIcon />,
                     name: "Minhas Ações",
-                    link: "",
+                    link: `/assessor-diretoria/${authState.currentUser.id}/acao`,
                     indent: 4,
                 });
                 navItems.push({
                     icon: <HourglassBottomIcon />,
                     name: "Em Andamento",
-                    link: "",
+                    link: `/assessor-diretoria/${authState.currentUser.id}/acao/em-andamento`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <InventoryIcon />,
                     name: "Arquivadas",
-                    link: "",
+                    link: `/assessor-diretoria/${authState.currentUser.id}/acao/arquivo`,
                     indent: 8,
                 });
 
                 navItems.push({
                     icon: <Groups />,
                     name: "Reuniões",
-                    link: "",
+                    link: `/assessor-diretoria/${authState.currentUser.id}/reuniao`,
                     indent: 0,
-                });
-                navItems.push({
-                    icon: <PeopleOutline />,
-                    name: "Apresentação Prévia",
-                    link: "",
-                    indent: 4,
                 });
 
                 break;
@@ -299,309 +285,224 @@ const NavbarItems = () => {
                 navItems.push({
                     icon: <ArticleIcon />,
                     name: "Proposições",
-                    link: "",
+                    link: `/diretoria/${authState.currentUser.id}/proposicao`,
                     indent: 0,
                 });
                 navItems.push({
                     icon: <NoteAddIcon />,
                     name: "Criar Proposição",
-                    link: "",
+                    link: `/diretoria/${authState.currentUser.id}/proposicao/novo`,
                     indent: 4,
                 });
                 navItems.push({
                     icon: <PersonIcon />,
                     name: "Minhas Proposições",
-                    link: "",
+                    link: `/diretoria/${authState.currentUser.id}/proposicao`,
                     indent: 4,
                 });
                 navItems.push({
                     icon: <Approval />,
                     name: "A Aprovar",
-                    link: "",
+                    link: `/diretoria/${authState.currentUser.id}/proposicao/aprovacao`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <CheckCircleIcon />,
                     name: "Aprovadas em RD",
-                    link: "",
+                    link: `/diretoria/${authState.currentUser.id}/proposicao/aprovadas-rd`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <VisibilityIcon />,
                     name: "A Revisar",
-                    link: "",
+                    link: `/diretoria/${authState.currentUser.id}/proposicao/revisao`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <InventoryIcon />,
                     name: "Arquivadas",
-                    link: "",
+                    link: `/diretoria/${authState.currentUser.id}/proposicao/arquivo`,
                     indent: 8,
                 });
 
                 navItems.push({
                     icon: <PlaylistAddCheckIcon />,
                     name: "Ações",
-                    link: "",
+                    link: `/diretoria/${authState.currentUser.id}/acao`,
                     indent: 0,
                 });
                 navItems.push({
                     icon: <PersonIcon />,
                     name: "Minhas Ações",
-                    link: "",
+                    link: `/diretoria/${authState.currentUser.id}/acao`,
                     indent: 4,
                 });
                 navItems.push({
                     icon: <HourglassBottomIcon />,
                     name: "Em Andamento",
-                    link: "",
+                    link: `/diretoria/${authState.currentUser.id}/acao/em-andamento`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <InventoryIcon />,
                     name: "Arquivadas",
-                    link: "",
+                    link: `/diretoria/${authState.currentUser.id}/acao/arquivo`,
                     indent: 8,
                 });
 
                 navItems.push({
                     icon: <MeetingRoom />,
                     name: "Gestão de Acessos",
-                    link: "",
+                    link: `/diretoria/${authState.currentUser.id}/acessos`,
                     indent: 0,
-                });
-                navItems.push({
-                    icon: <ManageAccounts />,
-                    name: "Gerir Subordinados",
-                    link: "",
-                    indent: 4,
                 });
                 break;
             case AccessLevel.Grg:
                 navItems.push({
                     icon: <ArticleIcon />,
                     name: "Proposições",
-                    link: "",
+                    link: `/grg/${authState.currentUser.id}/proposicao`,
                     indent: 0,
                 });
                 navItems.push({
                     icon: <NoteAddIcon />,
                     name: "Criar Proposição",
-                    link: "",
+                    link: `/grg/${authState.currentUser.id}/proposicao/novo`,
                     indent: 4,
                 });
                 navItems.push({
                     icon: <DensitySmall />,
                     name: "Todas as Proposições",
-                    link: "",
+                    link: `/grg/${authState.currentUser.id}/proposicao`,
                     indent: 4,
                 });
                 navItems.push({
                     icon: <EventAvailable />,
                     name: "Disponíveis para Inclusão em Pauta",
-                    link: "",
+                    link: `/grg/${authState.currentUser.id}/proposicao/disponiveis`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <BookmarkAdded />,
                     name: "Inclusa em Reunião",
-                    link: "",
+                    link: `/grg/${authState.currentUser.id}/proposicao/inclusas-rd`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <VisibilityIcon />,
                     name: "A Revisar",
-                    link: "",
+                    link: `/grg/${authState.currentUser.id}/proposicao/revisao`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <Approval />,
                     name: "A Aprovar",
-                    link: "",
+                    link: `/grg/${authState.currentUser.id}/proposicao/aprovacao`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <InventoryIcon />,
                     name: "Arquivadas",
-                    link: "",
+                    link: `/grg/${authState.currentUser.id}/proposicao/arquivo`,
                     indent: 8,
                 });
 
                 navItems.push({
                     icon: <Groups />,
                     name: "Reuniões",
-                    link: "",
+                    link: `/grg/${authState.currentUser.id}/reuniao`,
                     indent: 0,
                 });
                 navItems.push({
                     icon: <GroupAdd />,
                     name: "Criar Reunião",
-                    link: "",
+                    link: `/grg/${authState.currentUser.id}/reuniao/nova`,
                     indent: 4,
                 });
                 navItems.push({
                     icon: <PeopleOutline />,
                     name: "Todas as Reuniões",
-                    link: "",
+                    link: `/grg/${authState.currentUser.id}/reuniao`,
                     indent: 4,
                 });
                 navItems.push({
                     icon: <Today />,
                     name: "Registradas",
-                    link: "",
+                    link: `/grg/${authState.currentUser.id}/reuniao/registradas`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <InventoryIcon />,
                     name: "Arquivadas",
-                    link: "",
+                    link: `/grg/${authState.currentUser.id}/reuniao/arquivo`,
                     indent: 8,
                 });
 
                 navItems.push({
                     icon: <PlaylistAddCheckIcon />,
                     name: "Ações",
-                    link: "",
+                    link: `/grg/${authState.currentUser.id}/acao`,
                     indent: 0,
                 });
                 navItems.push({
                     icon: <PlaylistAdd />,
                     name: "Criar Ação",
-                    link: "",
+                    link: `/grg/${authState.currentUser.id}/acao/nova`,
                     indent: 4,
                 });
                 navItems.push({
                     icon: <List />,
                     name: "Todas as Ações",
-                    link: "",
+                    link: `/grg/${authState.currentUser.id}/acao`,
                     indent: 4,
                 });
                 navItems.push({
                     icon: <HourglassBottomIcon />,
                     name: "Em Andamento",
-                    link: "",
+                    link: `/grg/${authState.currentUser.id}/acao/em-andamento`,
                     indent: 8,
                 });
                 navItems.push({
                     icon: <InventoryIcon />,
                     name: "Arquivadas",
-                    link: "",
+                    link: `/grg/${authState.currentUser.id}/acao/arquivo`,
                     indent: 8,
                 });
 
                 navItems.push({
                     icon: <MeetingRoom />,
                     name: "Gestão de Acessos",
-                    link: "",
+                    link: `/grg/${authState.currentUser.id}/acessos`,
                     indent: 0,
-                });
-                navItems.push({
-                    icon: <ManageAccounts />,
-                    name: "Gerir Usuários do Sistema",
-                    link: "",
-                    indent: 4,
                 });
                 break;
             case AccessLevel.SysAdmin:
                 navItems.push({
-                    icon: <People />,
-                    name: "Sub",
-                    link: "",
-                    indent: 0,
-                });
-                navItems.push({
-                    icon: <People />,
-                    name: "Gerente",
-                    link: "",
-                    indent: 0,
-                });
-                navItems.push({
-                    icon: <People />,
-                    name: "Acessor",
-                    link: "",
-                    indent: 0,
-                });
-                navItems.push({
-                    icon: <People />,
-                    name: "Diretor",
-                    link: "",
-                    indent: 0,
-                });
-                navItems.push({
-                    icon: <People />,
-                    name: "GRG",
-                    link: "",
-                    indent: 0,
-                });
-
-                navItems.push({
                     icon: <ArticleIcon />,
-                    name: "Proposições",
-                    link: "",
+                    name: "Proposiçõeees",
+                    link: "admin/proposicao/",
                     indent: 0,
-                });
-                navItems.push({
-                    icon: <NoteAddIcon />,
-                    name: "Criar Proposição",
-                    link: "",
-                    indent: 4,
-                });
-                navItems.push({
-                    icon: <DensitySmall />,
-                    name: "Todas as Proposições",
-                    link: "",
-                    indent: 4,
                 });
 
                 navItems.push({
                     icon: <Groups />,
                     name: "Reuniões",
-                    link: "",
+                    link: "admin/reuniao",
                     indent: 0,
-                });
-                navItems.push({
-                    icon: <GroupAdd />,
-                    name: "Criar Reunião",
-                    link: "",
-                    indent: 4,
-                });
-                navItems.push({
-                    icon: <PeopleOutline />,
-                    name: "Todas as Reuniões",
-                    link: "",
-                    indent: 4,
                 });
 
                 navItems.push({
                     icon: <PlaylistAddCheckIcon />,
                     name: "Ações",
-                    link: "",
+                    link: "admin/acao",
                     indent: 0,
-                });
-                navItems.push({
-                    icon: <PlaylistAdd />,
-                    name: "Criar Ação",
-                    link: "",
-                    indent: 4,
-                });
-                navItems.push({
-                    icon: <List />,
-                    name: "Todas as Ações",
-                    link: "",
-                    indent: 4,
                 });
 
                 navItems.push({
                     icon: <MeetingRoom />,
                     name: "Gestão de Acessos",
-                    link: "",
+                    link: "admin/acessos",
                     indent: 0,
-                });
-                navItems.push({
-                    icon: <ManageAccounts />,
-                    name: "Gerir Usuários do Sistema",
-                    link: "",
-                    indent: 4,
                 });
 
                 break;
