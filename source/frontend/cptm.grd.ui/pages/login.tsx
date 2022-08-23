@@ -20,33 +20,9 @@ const Login = () => {
             const authResponse: AuthResponse = await usersAPI.login(authUser);
             console.log(authResponse);
             login(authResponse);
-
-            switch (authResponse.user.nivelAcesso) {
-                case AccessLevel.Sub:
-                    router.push(`/sub/${authResponse.user.id}`);
-                    break;
-                case AccessLevel.Gerente:
-                    router.push(`/gerente/${authResponse.user.id}`);
-                    break;
-                case AccessLevel.AssessorDiretoria:
-                    router.push(`/assessor-diretoria/${authResponse.user.id}`);
-                    break;
-                case AccessLevel.Diretor:
-                    router.push(`/diretoria/${authResponse.user.id}`);
-                    break;
-                case AccessLevel.Grg:
-                    router.push(`/grg/${authResponse.user.id}`);
-                    break;
-                case AccessLevel.SysAdmin:
-                    router.push(`/admin`);
-                    break;
-
-                default:
-                    break;
-            }
         };
 
-        loginHandler();
+        // loginHandler();
         return () => {};
     }, [login, router]);
 
