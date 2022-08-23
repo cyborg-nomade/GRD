@@ -9,11 +9,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import NavbarItems from "./NavbarItems";
+import { useRouter } from "next/router";
 
 const drawerWidth = 300;
 
 const NavbarView = (props: React.PropsWithChildren) => {
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const router = useRouter();
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -44,6 +46,10 @@ const NavbarView = (props: React.PropsWithChildren) => {
                         sx={{
                             flexGrow: 1,
                             display: { sm: "block" },
+                            cursor: "pointer",
+                        }}
+                        onClick={() => {
+                            router.push("../");
                         }}
                     >
                         GRD
