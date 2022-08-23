@@ -8,7 +8,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import NavbarView from "components/nav/NavbarView";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { useAppSelector } from "services/redux/hooks";
-import { useRouter } from "next/router";
+import Router from "next/router";
 
 const theme = createTheme({
     palette: {
@@ -28,13 +28,12 @@ const theme = createTheme({
 function MyApp({ Component, pageProps }: AppProps) {
     useAuth();
     const authState = useAppSelector((state) => state.auth);
-    const router = useRouter();
 
     useEffect(() => {
         if (authState.currentUser.id === 0) {
-            router.push("/login");
+            Router.push("/login");
         }
-    }, [authState.currentUser.id, router]);
+    }, [authState.currentUser.id]);
 
     return (
         <React.Fragment>

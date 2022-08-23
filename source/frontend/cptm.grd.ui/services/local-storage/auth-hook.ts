@@ -1,5 +1,5 @@
 import { AccessLevel } from "models/common.model";
-import { useRouter } from "next/router";
+import Router from "next/router";
 import { useCallback, useEffect } from "react";
 import { GroupDto } from "../../models/access-control.model";
 import { AuthResponse } from "../../models/responses.model";
@@ -15,7 +15,6 @@ let logoutTimer: NodeJS.Timeout;
 export const useAuth = () => {
     const authState = useAppSelector((state) => state.auth);
     const dispatch = useAppDispatch();
-    const router = useRouter();
 
     const login = useCallback(
         (authResponse: AuthResponse) => {
@@ -27,29 +26,29 @@ export const useAuth = () => {
 
             switch (authResponse.user.nivelAcesso) {
                 case AccessLevel.Sub:
-                    router.push(`/sub/${authResponse.user.id}`);
+                    Router.push(`/sub/${authResponse.user.id}`);
                     break;
                 case AccessLevel.Gerente:
-                    router.push(`/gerente/${authResponse.user.id}`);
+                    Router.push(`/gerente/${authResponse.user.id}`);
                     break;
                 case AccessLevel.AssessorDiretoria:
-                    router.push(`/assessor-diretoria/${authResponse.user.id}`);
+                    Router.push(`/assessor-diretoria/${authResponse.user.id}`);
                     break;
                 case AccessLevel.Diretor:
-                    router.push(`/diretoria/${authResponse.user.id}`);
+                    Router.push(`/diretoria/${authResponse.user.id}`);
                     break;
                 case AccessLevel.Grg:
-                    router.push(`/grg/${authResponse.user.id}`);
+                    Router.push(`/grg/${authResponse.user.id}`);
                     break;
                 case AccessLevel.SysAdmin:
-                    router.push(`/admin`);
+                    Router.push(`/admin`);
                     break;
 
                 default:
                     break;
             }
         },
-        [dispatch, router]
+        [dispatch]
     );
 
     const logout = useCallback(() => {

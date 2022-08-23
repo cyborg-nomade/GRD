@@ -1,14 +1,12 @@
 import { AuthUser } from "models/access-control.model";
-import { AccessLevel } from "models/common.model";
+
 import { AuthResponse } from "models/responses.model";
-import { useRouter } from "next/router";
 import { useEffect } from "react";
 import UsersApi from "services/api/users.api";
 import { useAuth } from "services/local-storage/auth-hook";
 
 const Login = () => {
     const { login, logout } = useAuth();
-    const router = useRouter();
 
     useEffect(() => {
         const loginHandler = async () => {
@@ -22,9 +20,9 @@ const Login = () => {
             login(authResponse);
         };
 
-        // loginHandler();
+        loginHandler();
         return () => {};
-    }, [login, router]);
+    }, [login]);
 
     return <div>Login Page</div>;
 };
