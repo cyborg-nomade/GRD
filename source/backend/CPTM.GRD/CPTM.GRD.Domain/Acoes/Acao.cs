@@ -1,4 +1,5 @@
-﻿using CPTM.GRD.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
 using CPTM.GRD.Domain.Acoes.Children;
 using CPTM.GRD.Domain.Logging;
@@ -6,17 +7,18 @@ using CPTM.GRD.Domain.Reunioes;
 
 namespace CPTM.GRD.Domain.Acoes;
 
+[SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
 public class Acao
 {
     public int Id { get; set; }
     public TipoAcao Tipo { get; set; }
-    public Group DiretoriaRes { get; set; } = new Group();
+    public Group? DiretoriaRes { get; set; } = new Group();
     public string Definicao { get; set; } = string.Empty;
     public TipoPeriodicidadeAcao Periodicidade { get; set; }
     public DateTime PrazoInicial { get; set; }
     public AcaoStatus Status { get; set; }
     public bool Arquivada { get; set; }
-    public User Responsavel { get; set; } = new User();
+    public User? Responsavel { get; set; } = new User();
     public string EmailDiretor { get; set; } = string.Empty;
     public string? NumeroContrato { get; set; }
     public string? Fornecedor { get; set; }
@@ -28,9 +30,14 @@ public class Acao
     public ICollection<Reuniao> Reunioes { get; set; } = new List<Reuniao>();
     public ICollection<LogAcao>? Logs { get; set; } = new List<LogAcao>();
 
+    public Acao()
+    {
+        CalculateDiasParaVencimento();
+    }
+
     private Acao GenerateAcaoLog(TipoLogAcao tipoLogAcao, string diferenca, User responsavel)
     {
-        Logs.Add(new LogAcao(this, tipoLogAcao, diferenca, responsavel));
+        Logs?.Add(new LogAcao(this, tipoLogAcao, diferenca, responsavel));
         return this;
     }
 
@@ -49,7 +56,6 @@ public class Acao
 
     internal Acao AddToReuniao(Reuniao reuniao, User responsavel)
     {
-        GenerateAcaoLog(TipoLogAcao.Criacao, "Salvamento inicial", responsavel);
         Reunioes.Add(reuniao);
         ChangeStatus(AcaoStatus.EmAndamento, TipoLogAcao.Criacao, responsavel);
         return this;
@@ -57,9 +63,12 @@ public class Acao
 
     internal Acao RemoveFromReuniao(Reuniao reuniao, User responsavel)
     {
-        GenerateAcaoLog(TipoLogAcao.RemocaoDeReuniao, $@"Remoção da pauta da RD número {reuniao.NumeroReuniao}",
-            responsavel);
-        Reunioes.Remove(reuniao);
+        if (!Reunioes.Remove(reuniao))
+        {
+            throw new Exception("Esta ação não está nesta reunião");
+        }
+
+        reuniao.RemoveAcao(this, responsavel);
         ChangeStatus(AcaoStatus.EmAndamento, TipoLogAcao.RemocaoDeReuniao, responsavel);
         return this;
     }
@@ -72,16 +81,18 @@ public class Acao
 
     public Acao AddAndamento(Andamento newAndamento)
     {
-        GenerateAcaoLog(TipoLogAcao.InclusaoAndamento, $@"Novo Andamento: {newAndamento.Descricao}", newAndamento.User);
-        Andamentos.Add(newAndamento);
+        if (newAndamento.User == null) throw new Exception("Não é possível adicionar um andamento sem responsável");
+        Andamentos?.Add(newAndamento);
+        GenerateAcaoLog(TipoLogAcao.InclusaoAndamento, $@"Novo Andamento: {newAndamento.Descricao}",
+            newAndamento.User);
         return this;
     }
 
     public Acao FollowUp(Reuniao reuniao, User responsavel)
     {
-        ChangeStatus(AcaoStatus.EmAcompanhamento, TipoLogAcao.Edicao, responsavel);
-        reuniao.FollowUpAcao(this);
         Reunioes.Add(reuniao);
+        reuniao.FollowUpAcao(this);
+        ChangeStatus(AcaoStatus.EmAcompanhamento, TipoLogAcao.Edicao, responsavel);
         return this;
     }
 

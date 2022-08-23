@@ -34,14 +34,18 @@ public class
     {
         _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Diretor);
 
-        var proposicao = await _unitOfWork.ProposicaoRepository.Get(request.Pid);
+        var proposicao = await _unitOfWork.ProposicaoRepository.GetWithReuniao(request.Pid);
         if (proposicao == null) throw new NotFoundException(nameof(proposicao), request.Pid);
+
+        var claims = _authenticationService.GetTokenClaims(request.RequestUser);
+
+        var responsavel = await _unitOfWork.UserRepository.Get(claims.Uid);
+        if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
 
         foreach (var voteWithAjustes in request.VotesWithAjustes)
         {
             var votoRdDtoValidator =
-                new CreateVotoDtoValidator(_unitOfWork.GroupRepository, _authenticationService,
-                    _unitOfWork.UserRepository);
+                new CreateVotoDtoValidator(_unitOfWork.UserRepository);
             var votoRdDtoValidationResult =
                 await votoRdDtoValidator.ValidateAsync(voteWithAjustes.VotoDto, cancellationToken);
             if (!votoRdDtoValidationResult.IsValid)
@@ -49,16 +53,14 @@ public class
                 throw new ValidationException(votoRdDtoValidationResult);
             }
 
-            var diretor = await _unitOfWork.UserRepository.Get(voteWithAjustes.VotoDto.Participante.User.Id);
-            if (diretor == null)
-                throw new NotFoundException(nameof(diretor), voteWithAjustes.VotoDto.Participante.User.Id);
-
+            var voter = await _unitOfWork.UserRepository.Get(voteWithAjustes.VotoDto.ParticipanteId);
+            if (voter == null) throw new NotFoundException(nameof(voter), voteWithAjustes.VotoDto.ParticipanteId);
             var votoRd = _mapper.Map<Voto>(voteWithAjustes.VotoDto);
+            votoRd.Participante = voter;
 
-            var ajustes = voteWithAjustes.Ajustes ??
-                          throw new BadRequestException($"{nameof(voteWithAjustes.Ajustes)} não pode ser nulo");
+            var ajustes = voteWithAjustes.Ajustes;
 
-            proposicao.AddDiretorVote(diretor, votoRd, ajustes);
+            proposicao.AddDiretorVote(responsavel, votoRd, ajustes);
         }
 
         proposicao.CalculateNewProposicaoStatusFromVotes();

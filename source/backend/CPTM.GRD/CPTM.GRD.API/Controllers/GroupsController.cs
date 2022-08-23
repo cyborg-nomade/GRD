@@ -1,5 +1,7 @@
 ﻿using CPTM.GRD.Application.DTOs.AccessControl.Group;
+using CPTM.GRD.Application.Features.AccessControl.Requests.Commands;
 using CPTM.GRD.Application.Features.AccessControl.Requests.Queries;
+using CPTM.GRD.Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -50,6 +52,35 @@ namespace CPTM.GRD.API.Controllers
             {
                 RequestUser = User,
                 Gid = gid
+            });
+        }
+
+        // GET /api/groups/estrutura
+        [HttpGet("estrutura")]
+        public async Task<EstruturaResponse> GetEstrutura()
+        {
+            return await _mediator.Send(new GetEstruturaRequest());
+        }
+
+        // GET /api/groups/sigla/:sigla:
+        [HttpGet("sigla/{sigla}")]
+        public async Task<GroupDto> GetOrAddBySigla(string sigla)
+        {
+            return await _mediator.Send(new GetOrAddBySiglaGroupRequest()
+            {
+                RequestUser = User,
+                Sigla = sigla
+            });
+        }
+
+        // POST /api/groups/
+        [HttpPost]
+        public async Task<GroupDto> Post([FromBody] string sigla)
+        {
+            return await _mediator.Send(new CreateGroupRequest()
+            {
+                RequestUser = User,
+                Sigla = sigla
             });
         }
     }

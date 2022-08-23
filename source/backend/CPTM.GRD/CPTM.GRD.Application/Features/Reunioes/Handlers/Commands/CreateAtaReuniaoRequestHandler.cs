@@ -49,13 +49,15 @@ public class CreateAtaReuniaoRequestHandler : IRequestHandler<CreateAtaReuniaoRe
         var updatedReuniao = await _unitOfWork.ReuniaoRepository.Update(reuniao);
         await _unitOfWork.Save();
 
-        foreach (var proposicao in reuniao.Proposicoes)
-        {
-            await _emailService.SendEmail(proposicao, ProposicaoArquivamentoSubject,
-                ProposicaoArquivamentoMessage(proposicao, responsavel));
-        }
+        if (reuniao.Proposicoes != null)
+            foreach (var proposicao in reuniao.Proposicoes)
+            {
+                await _emailService.SendEmail(proposicao, ProposicaoArquivamentoSubject,
+                    ProposicaoArquivamentoMessage(proposicao, responsavel));
+            }
 
-        await _emailService.SendEmailWithFile(updatedReuniao.ParticipantesPrevia.Select(p => p.User), reuniao,
+        if (updatedReuniao.Participantes == null) throw new BadRequestException("Reunião não possui participantes");
+        await _emailService.SendEmailWithFile(updatedReuniao.Participantes, reuniao,
             TipoArquivo.Ata);
 
         return _mapper.Map<ReuniaoDto>(updatedReuniao);

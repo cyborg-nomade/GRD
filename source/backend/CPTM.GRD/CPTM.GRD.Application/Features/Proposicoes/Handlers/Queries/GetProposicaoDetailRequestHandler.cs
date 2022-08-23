@@ -30,7 +30,8 @@ public class GetProposicaoDetailRequestHandler : IRequestHandler<GetProposicaoDe
         _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Sub);
         var proposicao = await _unitOfWork.ProposicaoRepository.Get(request.Pid);
         if (proposicao == null) throw new NotFoundException(nameof(proposicao), request.Pid);
-        await _authenticationService.AuthorizeByMinGroups(request.RequestUser, proposicao.Area.Id);
+        if (proposicao.Area != null)
+            await _authenticationService.AuthorizeByMinGroups(request.RequestUser, proposicao.Area.Id);
         return _mapper.Map<ProposicaoDto>(proposicao);
     }
 }

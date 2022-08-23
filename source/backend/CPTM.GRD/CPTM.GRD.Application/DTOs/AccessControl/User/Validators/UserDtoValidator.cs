@@ -9,7 +9,7 @@ public class UserDtoValidator : AbstractValidator<UserDto>
 {
     public UserDtoValidator(IAuthenticationService authenticationService, IUserRepository userRepository)
     {
-        Include(new IBaseUserDtoValidator(authenticationService, userRepository));
+        Include(new IBaseUserDtoValidator());
         Include(new IUsernameAdUserDtoValidator(authenticationService));
         Include(new IFullUserDtoValidator(userRepository));
     }

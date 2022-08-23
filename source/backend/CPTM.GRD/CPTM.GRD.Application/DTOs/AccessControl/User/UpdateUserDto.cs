@@ -11,4 +11,5 @@ public class UpdateUserDto : IBaseUserDto, IFullUserDto
     public AccessLevel NivelAcesso { get; set; }
     public ICollection<GroupDto> AreasAcesso { get; set; } = new List<GroupDto>();
     public string Funcao { get; set; } = string.Empty;
+    public string Email { get; init; } = string.Empty;
 }

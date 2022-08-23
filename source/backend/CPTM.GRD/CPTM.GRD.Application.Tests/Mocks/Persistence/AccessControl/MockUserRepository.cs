@@ -4,7 +4,7 @@ using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
 using Moq;
 
-namespace CPTM.GRD.Application.Tests.Mocks.Persistence.AccessControl;
+namespace CPTM.GRD.Application.UnitTests.Mocks.Persistence.AccessControl;
 
 public static class MockUserRepository
 {

@@ -65,7 +65,7 @@
             -   send to diretor of proposicao owner group;
     -   system creates a change log for the actions
 
-## 003. user edits proposicao
+## 003. user edits proposicao (API OK)
 
 -   **_primary actor_**: user (any level or group)
 -   **_other actors_**: gerente (of the owner group), assessor-diretoria (of the owner group), diretor (of the owner group), grg members
@@ -107,7 +107,7 @@
             -   sends to grg members, proposicao owner group's gerente, diretor and other assesores-diretoria, and to proposicao creator;
     -   system creates a change log for the actions
 
-## 004. creator removes proposicao
+## 004. creator removes proposicao (API OK)
 
 -   **_primary actor_**: user in proposicao's owner group
 -   **_other actors_**: gerente (of the owner group), assessor-diretoria (of the owner group), diretor (of the owner group)
@@ -145,7 +145,7 @@
             -   sends proposicao owner group's gerente and assesores-diretoria, and to proposicao creator;
     -   system creates a change log for the actions
 
-## 005. gerente sends proposicao to approval
+## 005. gerente sends proposicao to approval (API OK)
 
 -   **_primary actor_**: gerente
 -   **_other actors_**: assessor-diretoria (of the owner group), diretor (of the owner group)
@@ -180,7 +180,7 @@
     -   system sends an email to user, confirming action, and to proposicao owner group's diretor and assessores-diretoria;
     -   system creates a change log for the actions
 
-## 006. diretor (or assessor-diretoria) approves/repproves proposicao
+## 006. diretor (or assessor-diretoria) approves/repproves proposicao (API OK)
 
 -   **_primary actor_**: diretor or assessor-diretoria
 -   **_other actors_**: proposicao creator, gerente (of the owner group), grg members
@@ -216,7 +216,7 @@
         -   sends to grg members, if approved;
     -   system creates a change log for the actions
 
-## 007. grg includes proposicao in reuniao
+## 007. grg includes proposicao in reuniao (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: gerente (of the owner group), assessor-diretoria (of the owner group), diretor (of the owner group), other grg members
@@ -265,7 +265,7 @@
         -   sends to grg members;
     -   system creates a change log for the actions
 
-## 008. grg coordinates vote for approval of a proposicao in reuniao presenting screen
+## 008. grg coordinates vote for approval of a proposicao in reuniao presenting screen (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: gerente (of the owner group), assessor-diretoria (of the owner group), diretor (of the owner group), grg members, other diretores in reuniao
@@ -306,7 +306,7 @@
         -   sends to grg members;
     -   system creates a change log for the actions
 
-## 009. diretor votes for approval of a proposicao in reuniao presenting screen
+## 009. diretor votes for approval of a proposicao in reuniao presenting screen (API OK)
 
 -   **_primary actor_**: diretor
 -   **_other actors_**: gerente (of the owner group), assessor-diretoria (of the owner group), diretor (of the owner group), grg members, other diretores in reuniao
@@ -347,7 +347,7 @@
         -   sends to grg members;
     -   system creates a change log for the actions
 
-## 010. grg emits resolucao diretoria for proposicao
+## 010. grg emits resolucao diretoria for proposicao (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: gerente (of the owner group), assessor-diretoria (of the owner group), diretor (of the owner group), grg members
@@ -385,7 +385,7 @@
         -   sends to reuniao participants;
     -   system creates a change log for the actions
 
-## 011. user sends proposicao to grg after rd fixes are requested
+## 011. user sends proposicao to grg after rd fixes are requested (API OK)
 
 -   **_primary actor_**: user (any level or group)
 -   **_other actors_**: gerente (of the owner group), assessor-diretoria (of the owner group), diretor (of the owner group), grg members
@@ -421,7 +421,7 @@
         -   sends to grg members;
     -   system creates a change log for the actions
 
-## 012. grg marks fixes done
+## 012. grg marks fixes done (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: gerente (of the owner group), assessor-diretoria (of the owner group), diretor (of the owner group), grg members
@@ -458,7 +458,7 @@
         -   sends to grg members;
     -   system creates a change log for the actions
 
-## 013. user searches for a proposicao in a list
+## 013. user searches for a proposicao in a list (API OK)
 
 -   **_primary actor_**: user (any level or group)
 -   **_other actors_**: none
@@ -483,7 +483,7 @@
 -   **_data outputs_**: list of proposicoes
 -   **_side effects_**: none
 
-## 014. grg creates reuniao
+## 014. grg creates reuniao (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: other grg members
@@ -512,7 +512,7 @@
 -   **_side effects_**:
     -   system creates a change log for the actions
 
-## 015. grg edits reuniao
+## 015. grg edits reuniao (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: other grg members
@@ -542,7 +542,7 @@
 -   **_side effects_**:
     -   system creates a change log for the actions
 
-## 016. grg add proposicao to reuniao
+## 016. grg add proposicao to reuniao (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: gerente (of the owner group), assessor-diretoria (of the owner group), diretor (of the owner group), other grg members
@@ -580,7 +580,7 @@
         -   sends to grg members;
     -   system creates a change log for the actions
 
-## 017. grg emits pauta previa
+## 017. grg emits pauta previa (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: assessor-diretoria (participating in reuniao previa), diretor (participating in reuniao), grg members
@@ -616,7 +616,7 @@
         -   sends to reuniao previa participants;
     -   system creates a change log for the actions
 
-## 018. grg (or assessor-diretoria) annotates proposicao in reuniao previa
+## 018. grg (or assessor-diretoria) annotates proposicao in reuniao previa (API OK)
 
 -   **_primary actor_**: grg member or assessor-diretoria
 -   **_other actors_**: (other) grg members or assessor-diretoria assessor-diretoria (participating in reuniao previa)
@@ -652,7 +652,7 @@
 -   **_side effects_**:
     -   system creates a change log for the actions
 
-## 019. grg emits memoria previa
+## 019. grg emits memoria previa (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: assessor-diretoria (participating in reuniao previa), diretor (participating in reuniao), grg members
@@ -688,7 +688,7 @@
         -   sends to reuniao previa participants;
     -   system creates a change log for the actions
 
-## 020. grg emits pauta definitiva
+## 020. grg emits pauta definitiva (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: assessor-diretoria (participating in reuniao previa), diretor (participating in reuniao), grg members
@@ -724,7 +724,7 @@
         -   sends to reuniao previa participants;
     -   system creates a change log for the actions
 
-## 021. grg (or diretor) opens reuniao presentation screen
+## 021. grg (or diretor) opens reuniao presentation screen (API OK)
 
 -   **_primary actor_**: grg member or diretor (participating in reuniao)
 -   **_other actors_**: none
@@ -753,7 +753,7 @@
 -   **_data outputs_**: list of proposicoes
 -   **_side effects_**: none
 
-## 022. grg adds proposicao to reuniao retroactively
+## 022. grg adds proposicao to reuniao retroactively (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: gerente (of the owner group), assessor-diretoria (of the owner group), diretor (of the owner group), other grg members
@@ -792,7 +792,7 @@
         -   sends to reuniao participants;
     -   system creates a change log for the actions
 
-## 023. grg emits relatorio deliberativo
+## 023. grg emits relatorio deliberativo (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: assessor-diretoria (participating in reuniao previa), diretor (participating in reuniao), grg members
@@ -828,7 +828,7 @@
         -   sends to reuniao previa participants;
     -   system creates a change log for the actions
 
-## 024. grg emits ata
+## 024. grg emits ata (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: assessor-diretoria (participating in reuniao previa), diretor (participating in reuniao), grg members
@@ -864,7 +864,7 @@
         -   sends to reuniao previa participants;
     -   system creates a change log for the actions
 
-## 025. grg searches for a reuniao in a list
+## 025. grg searches for a reuniao in a list (API OK)
 
 -   **_primary actor_**: grg member (or, more rarely, diretor before participating in reuniao)
 -   **_other actors_**: none
@@ -890,7 +890,7 @@
 -   **_data outputs_**: list of reunioes
 -   **_side effects_**: none
 
-## 026. grg includes acoes in reuniao
+## 026. grg includes acoes in reuniao (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: responsavel (user designated to an acao), other grg members, diretores (participating in reuniao where acao has been included)
@@ -932,7 +932,7 @@
         -   sends to responsavel (user designated to an acao);
     -   system creates a change log for the actions
 
-## 027. responsavel adds andamentos to an acao
+## 027. responsavel adds andamentos to an acao (API OK)
 
 -   **_primary actor_**: responsavel (user designated to an acao)
 -   **_other actors_**: grg members, diretores (participating in reuniao where acao has been included)
@@ -971,7 +971,7 @@
         -   sends to diretores (participating in reuniao where acao has been included);
     -   system creates a change log for the actions
 
-## 028. grg marks acao as concluded
+## 028. grg marks acao as concluded (API OK)
 
 -   **_primary actor_**: grg member
 -   **_other actors_**: responsavel (user designated to an acao), diretores (participating in reuniao where acao has been included)
@@ -1005,7 +1005,7 @@
         -   sends to diretores (participating in reuniao where acao has been included);
     -   system creates a change log for the actions
 
-## 029. gerente adds user as subgerente
+## 029. gerente adds user as subgerente (API OK)
 
 -   **_primary actor_**: gerente
 -   **_other actors_**: subgerente
@@ -1036,7 +1036,7 @@
         -   sends to user, confirming inclusion;
     -   system creates a change log for the actions
 
-## 030. diretor adds user as assessor-diretoria
+## 030. diretor adds user as assessor-diretoria (API OK)
 
 -   **_primary actor_**: diretor
 -   **_other actors_**: assessor-diretoria
@@ -1067,7 +1067,7 @@
         -   sends to user, confirming inclusion;
     -   system creates a change log for the actions
 
-## 031. grg (or sysadmin) adds a user
+## 031. grg (or sysadmin) adds a user (API OK)
 
 -   **_primary actor_**: grg member or sysadmin
 -   **_other actors_**: user added
@@ -1098,7 +1098,7 @@
         -   sends to user, confirming inclusion
     -   system creates a change log for the actions
 
-## 032. grg (or sysadmin) edits a user
+## 032. grg (or sysadmin) edits a user (API OK)
 
 -   **_primary actor_**: grg member or sysadmin
 -   **_other actors_**: user added
@@ -1129,7 +1129,7 @@
         -   sends to user, confirming edition;
     -   system creates a change log for the actions
 
-## 033. grg (or sysadmin) removes a user
+## 033. grg (or sysadmin) removes a user (API OK)
 
 -   **_primary actor_**: grg member or sysadmin
 -   **_preconditions_**:

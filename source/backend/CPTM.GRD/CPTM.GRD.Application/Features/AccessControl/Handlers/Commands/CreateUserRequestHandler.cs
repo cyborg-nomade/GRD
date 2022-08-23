@@ -8,7 +8,6 @@ using CPTM.GRD.Application.Features.AccessControl.Requests.Commands;
 using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
 using MediatR;
-using static CPTM.GRD.Application.Models.EmailSubjectsAndMessages;
 
 namespace CPTM.GRD.Application.Features.AccessControl.Handlers.Commands;
 
@@ -17,6 +16,8 @@ public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, UserD
     private readonly IUnitOfWork _unitOfWork;
     private readonly IAuthenticationService _authenticationService;
     private readonly IMapper _mapper;
+
+    // ReSharper disable once NotAccessedField.Local
     private readonly IEmailService _emailService;
 
     public CreateUserRequestHandler(
@@ -35,7 +36,7 @@ public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, UserD
     {
         _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Gerente);
 
-        var validator = new CreateUserDtoValidator(_authenticationService, _unitOfWork.UserRepository);
+        var validator = new CreateUserDtoValidator(_authenticationService);
         var validationResult = await validator.ValidateAsync(request.CreateUserDto, cancellationToken);
 
         if (!validationResult.IsValid)
@@ -43,11 +44,33 @@ public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, UserD
             throw new ValidationException(validationResult);
         }
 
-        var user = _mapper.Map<User>(request.CreateUserDto);
-        var addedUser = await _unitOfWork.UserRepository.Add(user);
+        User addedUser;
+        var userAd = await _authenticationService.GetUsuarioAd(request.CreateUserDto.UsernameAd);
+
+        if (await _authenticationService.IsGerente(request.CreateUserDto.UsernameAd))
+        {
+            addedUser = await _unitOfWork.UserRepository.GetOrAddGerente(userAd);
+        }
+        else if (await _authenticationService.IsDiretor(request.CreateUserDto.UsernameAd))
+        {
+            addedUser = await _unitOfWork.UserRepository.GetOrAddDiretor(userAd);
+        }
+        else if (await _authenticationService.IsGrgMember(request.CreateUserDto.UsernameAd))
+        {
+            addedUser = await _unitOfWork.UserRepository.GetOrAddGrgMember(userAd);
+        }
+        else if (_authenticationService.IsSysAdmin(request.CreateUserDto.UsernameAd))
+        {
+            addedUser = await _unitOfWork.UserRepository.GetOrAddSysAdmin(userAd);
+        }
+        else
+        {
+            addedUser = await _unitOfWork.UserRepository.GetOrAdd(userAd, AccessLevel.Sub);
+        }
+
         await _unitOfWork.Save();
 
-        await _emailService.SendEmail(new List<User>() { user }, UserCreationSubject, UserCreationMessage);
+        //await _emailService.SendEmail(new List<User>() { addedUser }, UserCreationSubject, UserCreationMessage);
 
         return _mapper.Map<UserDto>(addedUser);
     }

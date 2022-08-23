@@ -1,10 +1,10 @@
 ﻿namespace CPTM.GRD.Application.Models.AD;
 
-public class GrupoAD
+public class GrupoAd
 {
-    public GrupoAD() => this.Membros = new List<string>();
+    public GrupoAd() => this.Membros = new List<string>();
 
-    public string ObjectGUID { get; set; } = string.Empty;
+    public string ObjectGuid { get; set; } = string.Empty;
 
     public string NomeContainer { get; set; } = string.Empty;
 
@@ -30,7 +30,7 @@ public class GrupoAD
     {
         public Filtro() => this.CarregarMembros = true;
 
-        public string ObjectGUID { get; set; } = string.Empty;
+        public string ObjectGuid { get; set; } = string.Empty;
 
         public string Nome { get; set; } = string.Empty;
 

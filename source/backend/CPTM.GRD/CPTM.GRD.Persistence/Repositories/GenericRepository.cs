@@ -23,10 +23,12 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return await _grdContext.FindAsync<T>(id);
     }
 
-    public async Task<T> Add(T entity)
+    public Task<T> Add(T entity)
     {
-        await _grdContext.AddAsync(entity);
-        return entity;
+        //await _grdContext.AddAsync(entity);
+        //return entity;
+        _grdContext.Set<T>().Update(entity);
+        return Task.FromResult(entity);
     }
 
     public Task<T> Update(T entity)

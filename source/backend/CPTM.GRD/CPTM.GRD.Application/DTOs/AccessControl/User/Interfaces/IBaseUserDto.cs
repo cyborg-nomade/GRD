@@ -9,4 +9,5 @@ public interface IBaseUserDto
     public AccessLevel NivelAcesso { get; set; }
     public ICollection<GroupDto> AreasAcesso { get; set; }
     public string Funcao { get; set; }
+    public string Email { get; init; }
 }

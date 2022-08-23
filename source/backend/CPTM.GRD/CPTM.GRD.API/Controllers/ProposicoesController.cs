@@ -33,7 +33,7 @@ namespace CPTM.GRD.API.Controllers
         }
 
         // GET /api/proposicoes/user/:uid:/
-        [HttpGet("user/{uid::int}")]
+        [HttpGet("user/{uid:int}")]
         public async Task<List<ProposicaoListDto>> GetByUser(int uid)
         {
             return await _mediator.Send(new GetByUserProposicoesListRequest()
@@ -219,13 +219,13 @@ namespace CPTM.GRD.API.Controllers
         // PUT /api/proposicoes/:pid:/rd-deliberate/
         [HttpPut("{pid:int}/rd-deliberate")]
         public async Task<ProposicaoDto> RdDeliberateDiretor(int pid,
-            [FromBody] List<VoteWithAjustesProposicaoDto> voteWithAjustes)
+            [FromBody] List<VoteWithAjustesProposicaoDto> votesWithAjustes)
         {
             return await _mediator.Send(new AddDiretorVoteToProposicaoRequest()
             {
                 RequestUser = User,
                 Pid = pid,
-                VotesWithAjustes = voteWithAjustes
+                VotesWithAjustes = votesWithAjustes
             });
         }
 

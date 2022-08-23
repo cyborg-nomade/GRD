@@ -1,6 +1,5 @@
-﻿using CPTM.GRD.Application.DTOs.Main.Acao.Interfaces;
+﻿using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
-using CPTM.GRD.Application.DTOs.Main.Reuniao.Children.Interfaces;
 using CPTM.GRD.Application.DTOs.Main.Reuniao.Interfaces;
 using CPTM.GRD.Common;
 
@@ -16,9 +15,9 @@ public class CreateReuniaoDto : IBaseReuniaoDto
     public TipoReuniao TipoReuniao { get; set; }
     public ICollection<ProposicaoDto> Proposicoes { get; set; } = new List<ProposicaoDto>();
     public ICollection<ProposicaoDto> ProposicoesPrevia { get; set; } = new List<ProposicaoDto>();
-    public ICollection<IBaseParticipanteDto> Participantes { get; set; } = new List<IBaseParticipanteDto>();
-    public ICollection<IBaseParticipanteDto> ParticipantesPrevia { get; set; } = new List<IBaseParticipanteDto>();
-    public ICollection<IBaseAcaoDto> Acoes { get; set; } = new List<IBaseAcaoDto>();
+    public ICollection<int> ParticipantesIds { get; set; } = new List<int>();
+    public ICollection<int> ParticipantesPreviaIds { get; set; } = new List<int>();
+    public ICollection<AcaoDto> Acoes { get; set; } = new List<AcaoDto>();
     public string? Comunicado { get; set; }
     public string? OutrasObservacoes { get; set; }
     public string? MensagemEMail { get; set; }

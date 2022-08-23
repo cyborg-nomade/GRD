@@ -13,11 +13,11 @@ public class Group
 
     public bool CheckIsDiretoria()
     {
-        return Sigla == SiglaDiretoria && SiglaGerencia == string.Empty;
+        return Sigla == SiglaDiretoria && SiglaGerencia == SiglaDiretoria;
     }
 
     public bool CheckIsGerencia()
     {
-        return Sigla == SiglaGerencia;
+        return Sigla == SiglaGerencia && SiglaDiretoria != SiglaGerencia;
     }
 }

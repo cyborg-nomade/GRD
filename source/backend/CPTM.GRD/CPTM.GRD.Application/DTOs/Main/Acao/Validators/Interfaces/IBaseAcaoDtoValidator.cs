@@ -1,4 +1,5 @@
-﻿using CPTM.GRD.Application.Contracts.Infrastructure;
+﻿using System.Diagnostics.CodeAnalysis;
+using CPTM.GRD.Application.Contracts.Infrastructure;
 using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
 using CPTM.GRD.Application.DTOs.AccessControl.Group.Validators;
 using CPTM.GRD.Application.DTOs.AccessControl.User.Validators;
@@ -7,6 +8,7 @@ using FluentValidation;
 
 namespace CPTM.GRD.Application.DTOs.Main.Acao.Validators.Interfaces;
 
+[SuppressMessage("ReSharper", "InconsistentNaming")]
 public class IBaseAcaoDtoValidator : AbstractValidator<IBaseAcaoDto>
 {
   public IBaseAcaoDtoValidator(IGroupRepository groupRepository, IAuthenticationService authenticationService,
@@ -14,7 +16,7 @@ public class IBaseAcaoDtoValidator : AbstractValidator<IBaseAcaoDto>
   {
     RuleFor(p => p.Tipo).NotNull().IsInEnum();
     RuleFor(p => p.DiretoriaRes).NotNull().NotEmpty()
-        .SetValidator(new GroupDtoValidator(groupRepository, authenticationService, userRepository));
+        .SetValidator(new GroupDtoValidator(groupRepository));
     RuleFor(p => p.Definicao).NotNull().NotEmpty();
     RuleFor(p => p.Periodicidade).NotNull().IsInEnum();
     RuleFor(p => p.PrazoInicial).NotNull().NotEmpty().LessThanOrEqualTo(p => p.PrazoFinal)

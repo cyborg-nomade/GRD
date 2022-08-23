@@ -1,13 +1,13 @@
-﻿using CPTM.GRD.Application.Contracts.Infrastructure;
-using CPTM.GRD.Application.Contracts.Persistence.AccessControl;
+﻿using System.Diagnostics.CodeAnalysis;
 using CPTM.GRD.Application.DTOs.AccessControl.Group.Interfaces;
 using FluentValidation;
 
 namespace CPTM.GRD.Application.DTOs.AccessControl.Group.Validators;
 
+[SuppressMessage("ReSharper", "InconsistentNaming")]
 public class IGroupDtoValidator : AbstractValidator<IGroupDto>
 {
-    public IGroupDtoValidator(IAuthenticationService authenticationService, IUserRepository userRepository)
+    public IGroupDtoValidator()
     {
         RuleFor(p => p.Sigla).NotNull().NotEmpty().MaximumLength(4);
         RuleFor(p => p.Nome).NotNull().NotEmpty().MaximumLength(100);

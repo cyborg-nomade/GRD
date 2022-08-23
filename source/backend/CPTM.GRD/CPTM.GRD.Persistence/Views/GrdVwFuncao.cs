@@ -1,6 +1,6 @@
 ﻿namespace CPTM.GRD.Persistence.Views
 {
-    public partial class GrdVwFuncao
+    public class GrdVwFuncao
     {
         public int IdFuncao { get; set; }
         public string? TxFuncao { get; set; }

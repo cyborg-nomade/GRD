@@ -26,7 +26,7 @@ public class ProposicaoRepository : GenericRepository<Proposicao>, IProposicaoRe
 
     public async Task<IReadOnlyList<Proposicao>> GetByUser(int uid)
     {
-        return await _grdContext.Proposicoes.Where(p => p.Criador.Id == uid).ToListAsync();
+        return await _grdContext.Proposicoes.Where(p => p.Criador != null && p.Criador.Id == uid).ToListAsync();
     }
 
     public async Task<IReadOnlyList<Proposicao>> GetByGroup(int gid)
@@ -34,7 +34,7 @@ public class ProposicaoRepository : GenericRepository<Proposicao>, IProposicaoRe
         var groupWithSubordinates = await _groupRepository.GetSubordinateGroups(gid);
 
         return await _grdContext.Proposicoes
-            .Where(p => groupWithSubordinates
+            .Where(p => p.Area != null && groupWithSubordinates
                 .Select(g => g.Id)
                 .Contains(p.Area.Id))
             .ToListAsync();
@@ -59,7 +59,7 @@ public class ProposicaoRepository : GenericRepository<Proposicao>, IProposicaoRe
 
     public async Task<IReadOnlyList<Proposicao>> GetByReuniao(int rid)
     {
-        return await _grdContext.Proposicoes.Where(p => p.Reuniao.Id == rid).ToListAsync();
+        return await _grdContext.Proposicoes.Where(p => p.Reuniao != null && p.Reuniao.Id == rid).ToListAsync();
     }
 
     public async Task<IReadOnlyList<Proposicao>> GetByReuniaoPrevia(int rid)
@@ -67,10 +67,15 @@ public class ProposicaoRepository : GenericRepository<Proposicao>, IProposicaoRe
         var reuniao = await _grdContext.Reunioes.FindAsync(rid);
         if (reuniao == null) throw new NotFoundException(nameof(reuniao), rid);
         return await _grdContext.Proposicoes
-            .Where(p => p.Reuniao.Id == rid &&
-                        reuniao.ProposicoesPrevia
-                            .Select(p2 => p2.Id)
-                            .Contains(p.Id))
+            .Where(p => reuniao.ProposicoesPrevia != null && p.Reuniao != null && p.Reuniao.Id == rid && reuniao
+                .ProposicoesPrevia
+                .Select(p2 => p2.Id)
+                .Contains(p.Id))
             .ToListAsync();
+    }
+
+    public async Task<Proposicao?> GetWithReuniao(int pid)
+    {
+        return await _grdContext.Proposicoes.Where(p => p.Id == pid).Include(p => p.Reuniao).SingleOrDefaultAsync();
     }
 }

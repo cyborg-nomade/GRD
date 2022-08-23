@@ -1,8 +1,8 @@
 ﻿namespace CPTM.GRD.Application.Models.AD;
 
-public class UsuarioAD
+public class UsuarioAd
 {
-    public string ObjectGUID { get; set; } = string.Empty;
+    public string ObjectGuid { get; set; } = string.Empty;
 
     public string Login { get; set; } = string.Empty;
 
@@ -106,7 +106,7 @@ public class UsuarioAD
 
     public string Fax { get; set; } = string.Empty;
 
-    public string TelefoneIP { get; set; } = string.Empty;
+    public string TelefoneIp { get; set; } = string.Empty;
 
     public string Pager { get; set; } = string.Empty;
 
@@ -114,7 +114,7 @@ public class UsuarioAD
 
     public class Filtro
     {
-        public string ObjectGUID { get; set; } = string.Empty;
+        public string ObjectGuid { get; set; } = string.Empty;
 
         public string Login { get; set; } = string.Empty;
 
@@ -134,11 +134,11 @@ public class UsuarioAD
 
         public DateTime DataExpiracaoContaFim { get; set; }
 
-        public bool SomenteMixAD { get; set; }
+        public bool SomenteMixAd { get; set; }
 
         public string Pager { get; set; } = string.Empty;
 
-        public string TelefoneIP { get; set; } = string.Empty;
+        public string TelefoneIp { get; set; } = string.Empty;
 
         public string PagerDiferente { get; set; } = string.Empty;
     }

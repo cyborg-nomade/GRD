@@ -12,4 +12,5 @@ public interface IProposicaoRepository : IGenericRepository<Proposicao>
     Task<IReadOnlyList<Proposicao>> GetByGroupAndStatus(int gid, ProposicaoStatus status, bool arquivada);
     Task<IReadOnlyList<Proposicao>> GetByReuniao(int rid);
     Task<IReadOnlyList<Proposicao>> GetByReuniaoPrevia(int rid);
+    Task<Proposicao?> GetWithReuniao(int pid);
 }

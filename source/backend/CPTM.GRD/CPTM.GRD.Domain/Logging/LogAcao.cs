@@ -1,17 +1,20 @@
-﻿using CPTM.GRD.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
 using CPTM.GRD.Domain.Acoes;
 
 namespace CPTM.GRD.Domain.Logging;
 
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Local")]
 public class LogAcao
 {
     public int Id { get; set; }
     public TipoLogAcao Tipo { get; set; }
-    public string AcaoRef { get; set; }
-    public string Diferenca { get; set; }
+    public string AcaoRef { get; set; } = string.Empty;
+    public string Diferenca { get; set; } = string.Empty;
     public DateTime Data { get; set; }
-    public User Resp { get; set; }
+    public User? Resp { get; set; }
 
     private LogAcao()
     {

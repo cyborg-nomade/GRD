@@ -1,7 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using CPTM.GRD.Application.DTOs.Main.Proposicao;
-using CPTM.GRD.Application.Models;
 using CPTM.GRD.Application.Responses;
 using CPTM.GRD.Common;
 using Newtonsoft.Json;
@@ -56,7 +55,7 @@ var proposicaoToCreate = new CreateProposicaoDto()
     InicioVigenciaReserva = DateTime.Now.AddDays(-1),
     FimVigenciaReserva = DateTime.Now.AddDays(1),
     NumeroProposicao = "1000",
-    ProtoloExpediente = "1000f",
+    ProtocoloExpediente = "1000f",
     NumeroProcessoLicit = "1f1",
     CronogramaFisFinFilePath = "C:\\",
     EditalFilePath = "C:\\",

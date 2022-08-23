@@ -53,13 +53,15 @@ public class
         var updatedReuniao = await _unitOfWork.ReuniaoRepository.Update(reuniao);
         await _unitOfWork.Save();
 
-        foreach (var proposicao in reuniao.Proposicoes)
-        {
-            await _emailService.SendEmail(proposicao, reuniao, ProposicaoDeliberacaoRdSubject,
-                ProposicaoDeliberacaoRdMessage(proposicao, reuniao));
-        }
+        if (reuniao.Proposicoes != null)
+            foreach (var proposicao in reuniao.Proposicoes)
+            {
+                await _emailService.SendEmail(proposicao, reuniao, ProposicaoDeliberacaoRdSubject,
+                    ProposicaoDeliberacaoRdMessage(proposicao, reuniao));
+            }
 
-        await _emailService.SendEmailWithFile(updatedReuniao.ParticipantesPrevia.Select(p => p.User), reuniao,
+        if (updatedReuniao.Participantes == null) throw new BadRequestException("Não há participantes na reunião");
+        await _emailService.SendEmailWithFile(updatedReuniao.Participantes, reuniao,
             TipoArquivo.RelatorioDeliberativo);
 
         return _mapper.Map<ReuniaoDto>(updatedReuniao);

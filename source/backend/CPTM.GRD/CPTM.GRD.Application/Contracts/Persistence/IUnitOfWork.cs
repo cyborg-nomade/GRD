@@ -5,7 +5,6 @@ using CPTM.GRD.Application.Contracts.Persistence.Logging;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
-using CPTM.GRD.Application.Contracts.Persistence.Reunioes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.Views;
 
 namespace CPTM.GRD.Application.Contracts.Persistence;
@@ -23,7 +22,6 @@ public interface IUnitOfWork : IDisposable
     IVotoRepository VotoRepository { get; }
 
     IReuniaoRepository ReuniaoRepository { get; }
-    IParticipanteRepository ParticipanteRepository { get; }
 
     ILogAcaoRepository LogAcaoRepository { get; }
     ILogProposicaoRepository LogProposicaoRepository { get; }

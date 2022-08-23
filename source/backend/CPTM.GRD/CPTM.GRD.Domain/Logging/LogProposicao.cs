@@ -1,17 +1,20 @@
-﻿using CPTM.GRD.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+using CPTM.GRD.Common;
 using CPTM.GRD.Domain.AccessControl;
 using CPTM.GRD.Domain.Proposicoes;
 
 namespace CPTM.GRD.Domain.Logging;
 
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Local")]
 public class LogProposicao
 {
     public int Id { get; set; }
     public TipoLogProposicao Tipo { get; set; }
-    public string ProposicaoRef { get; set; }
-    public string Diferenca { get; set; }
+    public string ProposicaoRef { get; set; } = string.Empty;
+    public string Diferenca { get; set; } = string.Empty;
     public DateTime Data { get; set; }
-    public User Resp { get; set; }
+    public User? Resp { get; set; }
 
     private LogProposicao()
     {

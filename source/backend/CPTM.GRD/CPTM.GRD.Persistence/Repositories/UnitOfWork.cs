@@ -6,7 +6,6 @@ using CPTM.GRD.Application.Contracts.Persistence.Logging;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
-using CPTM.GRD.Application.Contracts.Persistence.Reunioes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.Views;
 using CPTM.GRD.Persistence.Repositories.AccessControl;
 using CPTM.GRD.Persistence.Repositories.Acoes;
@@ -15,8 +14,9 @@ using CPTM.GRD.Persistence.Repositories.Logging;
 using CPTM.GRD.Persistence.Repositories.Proposicoes;
 using CPTM.GRD.Persistence.Repositories.Proposicoes.Children;
 using CPTM.GRD.Persistence.Repositories.Reunioes;
-using CPTM.GRD.Persistence.Repositories.Reunioes.Children;
 using CPTM.GRD.Persistence.Repositories.Views;
+
+#pragma warning disable CS0649
 
 namespace CPTM.GRD.Persistence.Repositories;
 
@@ -31,7 +31,6 @@ public class UnitOfWork : IUnitOfWork
     private readonly IResolucaoRepository? _resolucaoRepository;
     private readonly IVotoRepository? _votoRepository;
     private readonly IReuniaoRepository? _reuniaoRepository;
-    private readonly IParticipanteRepository? _participanteRepository;
     private readonly ILogAcaoRepository? _logAcaoRepository;
     private readonly ILogProposicaoRepository? _logProposicaoRepository;
     private readonly ILogReuniaoRepository? _logReuniaoRepository;
@@ -58,9 +57,6 @@ public class UnitOfWork : IUnitOfWork
     public IVotoRepository VotoRepository => _votoRepository ?? new VotoRepository(_grdContext);
 
     public IReuniaoRepository ReuniaoRepository => _reuniaoRepository ?? new ReuniaoRepository(_grdContext);
-
-    public IParticipanteRepository ParticipanteRepository =>
-        _participanteRepository ?? new ParticipanteRepository(_grdContext);
 
     public ILogAcaoRepository LogAcaoRepository => _logAcaoRepository ?? new LogAcaoRepository(_grdContext);
 

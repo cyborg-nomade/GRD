@@ -6,7 +6,6 @@ using CPTM.GRD.Application.Contracts.Persistence.Logging;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes;
 using CPTM.GRD.Application.Contracts.Persistence.Proposicoes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.Reunioes;
-using CPTM.GRD.Application.Contracts.Persistence.Reunioes.Children;
 using CPTM.GRD.Application.Contracts.Persistence.StrictSequenceControl;
 using CPTM.GRD.Application.Contracts.Persistence.Views;
 using CPTM.GRD.Application.Models.Settings;
@@ -18,7 +17,6 @@ using CPTM.GRD.Persistence.Repositories.Logging;
 using CPTM.GRD.Persistence.Repositories.Proposicoes;
 using CPTM.GRD.Persistence.Repositories.Proposicoes.Children;
 using CPTM.GRD.Persistence.Repositories.Reunioes;
-using CPTM.GRD.Persistence.Repositories.Reunioes.Children;
 using CPTM.GRD.Persistence.Repositories.StrictSequenceControl;
 using CPTM.GRD.Persistence.Repositories.Views;
 using Microsoft.EntityFrameworkCore;
@@ -51,7 +49,6 @@ public static class PersistenceServicesRegistration
         services.AddScoped<IVotoRepository, VotoRepository>();
         services.AddScoped<IProposicaoRepository, ProposicaoRepository>();
 
-        services.AddScoped<IParticipanteRepository, ParticipanteRepository>();
         services.AddScoped<IReuniaoRepository, ReuniaoRepository>();
 
         services.AddScoped<ILogAcaoRepository, LogAcaoRepository>();

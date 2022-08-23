@@ -3,6 +3,7 @@ using CPTM.GRD.Application.Contracts.Persistence;
 using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Common;
+using CPTM.GRD.Domain.AccessControl;
 using CPTM.GRD.Domain.Logging;
 using MediatR;
 
@@ -26,12 +27,23 @@ public class DeleteProposicaoRequestHandler : IRequestHandler<DeleteProposicaoRe
         var proposicao = await _unitOfWork.ProposicaoRepository.Get(request.Pid);
         if (proposicao == null) throw new NotFoundException(nameof(proposicao), request.Pid);
 
-        _authenticationService.AuthorizeByExactUser(request.RequestUser, proposicao.Criador);
+        var responsavel = new User();
+        if (proposicao.Criador != null)
+        {
+            _authenticationService.AuthorizeByExactUser(request.RequestUser, proposicao.Criador);
+        }
+        else
+        {
+            var claims = _authenticationService.GetTokenClaims(request.RequestUser);
+
+            responsavel = await _unitOfWork.UserRepository.Get(claims.Uid);
+            if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
+        }
 
         var removeLog = new LogProposicao(
             proposicao,
             TipoLogProposicao.Remocao,
-            proposicao.Criador,
+            proposicao.Criador ?? responsavel,
             "Remoção");
 
         await _unitOfWork.LogProposicaoRepository.Add(removeLog);

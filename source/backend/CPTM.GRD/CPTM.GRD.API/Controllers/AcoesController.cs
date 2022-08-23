@@ -1,5 +1,4 @@
-﻿using CPTM.GRD.Application.DTOs.AccessControl.User;
-using CPTM.GRD.Application.DTOs.Main.Acao;
+﻿using CPTM.GRD.Application.DTOs.Main.Acao;
 using CPTM.GRD.Application.DTOs.Main.Acao.Children;
 using CPTM.GRD.Application.DTOs.Main.Mixed;
 using CPTM.GRD.Application.Features.Acoes.Requests.Commands;
@@ -83,12 +82,11 @@ namespace CPTM.GRD.API.Controllers
         [HttpPost("reuniao/{rid:int}")]
         public async Task<AcaoDto> Post(int rid, [FromBody] CreateAcaoDto createAcaoDto)
         {
-            var responsavel = new UserDto();
             return await _mediator.Send(new CreateAcaoRequest()
             {
+                RequestUser = User,
                 CreateAcaoDto = createAcaoDto,
-                Rid = rid,
-                Uid = responsavel.Id
+                Rid = rid
             });
         }
 
@@ -110,6 +108,7 @@ namespace CPTM.GRD.API.Controllers
         {
             return await _mediator.Send(new AddAndamentoToAcaoRequest()
             {
+                RequestUser = User,
                 Aid = aid,
                 AndamentoDto = andamentoDto
             });

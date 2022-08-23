@@ -43,8 +43,7 @@ public class UpdateReuniaoRequestHandler : IRequestHandler<UpdateReuniaoRequest,
         _authenticationService.AuthorizeByMinLevel(request.RequestUser, AccessLevel.Grg);
 
         var reuniaoDtoValidator = new UpdateReuniaoDtoValidator(_unitOfWork.GroupRepository, _authenticationService,
-            _unitOfWork.UserRepository,
-            _unitOfWork.AcaoRepository, _unitOfWork.VotoRepository, _unitOfWork.ParticipanteRepository,
+            _unitOfWork.UserRepository, _unitOfWork.VotoRepository,
             _unitOfWork.ReuniaoRepository, _reuniaoStrictSequence,
             _unitOfWork.ProposicaoRepository, _proposicaoStrictSequence);
         var reuniaoDtoValidationResult =
@@ -62,7 +61,7 @@ public class UpdateReuniaoRequestHandler : IRequestHandler<UpdateReuniaoRequest,
         var responsavel = await _unitOfWork.UserRepository.Get(claims.Uid);
         if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
 
-        savedReuniao.OnUpdate(responsavel, _differentiator.GetDifferenceString<Reuniao>(
+        savedReuniao.OnUpdate(responsavel, _differentiator.GetDifferenceString(
             savedReuniao,
             _mapper.Map<Reuniao>(request.UpdateReuniaoDto)));
 

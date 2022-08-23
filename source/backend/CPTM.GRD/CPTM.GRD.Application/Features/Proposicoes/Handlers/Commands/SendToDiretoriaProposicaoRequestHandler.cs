@@ -6,6 +6,8 @@ using CPTM.GRD.Application.Exceptions;
 using CPTM.GRD.Application.Features.Proposicoes.Requests.Commands;
 using CPTM.GRD.Common;
 using MediatR;
+using static CPTM.GRD.Application.Models.EmailSubjectsAndMessages;
+
 
 namespace CPTM.GRD.Application.Features.Proposicoes.Handlers.Commands;
 
@@ -14,15 +16,18 @@ public class SendToDiretoriaProposicaoRequestHandler : IRequestHandler<SendToDir
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IAuthenticationService _authenticationService;
+    private readonly IEmailService _emailService;
 
     public SendToDiretoriaProposicaoRequestHandler(
         IUnitOfWork unitOfWork,
         IMapper mapper,
-        IAuthenticationService authenticationService)
+        IAuthenticationService authenticationService,
+        IEmailService emailService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _authenticationService = authenticationService;
+        _emailService = emailService;
     }
 
     public async Task<ProposicaoDto> Handle(SendToDiretoriaProposicaoRequest request,
@@ -33,7 +38,8 @@ public class SendToDiretoriaProposicaoRequestHandler : IRequestHandler<SendToDir
         var proposicao = await _unitOfWork.ProposicaoRepository.Get(request.Pid);
         if (proposicao == null) throw new NotFoundException(nameof(proposicao), request.Pid);
 
-        await _authenticationService.AuthorizeByMinGroups(request.RequestUser, proposicao.Area.Id);
+        if (proposicao.Area != null)
+            await _authenticationService.AuthorizeByMinGroups(request.RequestUser, proposicao.Area.Id);
 
         var claims = _authenticationService.GetTokenClaims(request.RequestUser);
 
@@ -44,6 +50,9 @@ public class SendToDiretoriaProposicaoRequestHandler : IRequestHandler<SendToDir
 
         var updatedProposicao = await _unitOfWork.ProposicaoRepository.Update(proposicao);
         await _unitOfWork.Save();
+
+        await _emailService.SendEmail(updatedProposicao, ProposicaoSendToDiretoriaApprovalSubject,
+            ProposicaoSendToDiretorialApprovalMessage(updatedProposicao, responsavel));
 
         return _mapper.Map<ProposicaoDto>(updatedProposicao);
     }

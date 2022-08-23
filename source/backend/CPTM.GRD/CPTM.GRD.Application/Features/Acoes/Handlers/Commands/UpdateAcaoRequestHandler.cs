@@ -53,7 +53,7 @@ public class UpdateAcaoRequestHandler : IRequestHandler<UpdateAcaoRequest, AcaoD
         if (responsavel == null) throw new NotFoundException(nameof(responsavel), claims.Uid);
 
         savedAcao.OnUpdate(
-            _differentiator.GetDifferenceString<Acao>(
+            _differentiator.GetDifferenceString(
                 savedAcao,
                 _mapper.Map<Acao>(request.UpdateAcaoDto)),
             responsavel);

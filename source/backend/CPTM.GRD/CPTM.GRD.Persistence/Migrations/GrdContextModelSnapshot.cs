@@ -18,7 +18,7 @@ namespace CPTM.GRD.Persistence.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("GRD")
-                .HasAnnotation("ProductVersion", "6.0.7")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -39,9 +39,6 @@ namespace CPTM.GRD.Persistence.Migrations
                 .IncrementsBy(10);
 
             modelBuilder.HasSequence("SEQ_LOGS_REUNIAO")
-                .IncrementsBy(10);
-
-            modelBuilder.HasSequence("SEQ_PARTICIPANTES")
                 .IncrementsBy(10);
 
             modelBuilder.HasSequence("SEQ_PROPOSICOES")
@@ -153,7 +150,7 @@ namespace CPTM.GRD.Persistence.Migrations
                     b.Property<int>("DiasParaVencimento")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("DiretoriaResId")
+                    b.Property<int?>("DiretoriaResId")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("EmailDiretor")
@@ -178,7 +175,7 @@ namespace CPTM.GRD.Persistence.Migrations
                     b.Property<int>("PrazoProrrogadoDias")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("ResponsavelId")
+                    b.Property<int?>("ResponsavelId")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<int>("Status")
@@ -218,14 +215,10 @@ namespace CPTM.GRD.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<string>("NomeResponsavel")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
-
                     b.Property<int>("Status")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("NUMBER(10)");
 
                     b.HasKey("Id");
@@ -259,7 +252,7 @@ namespace CPTM.GRD.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<int>("RespId")
+                    b.Property<int?>("RespId")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<int>("Tipo")
@@ -296,7 +289,7 @@ namespace CPTM.GRD.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<int>("RespId")
+                    b.Property<int?>("RespId")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<int>("Tipo")
@@ -326,7 +319,7 @@ namespace CPTM.GRD.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<int>("RespId")
+                    b.Property<int?>("RespId")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<int?>("ReuniaoId")
@@ -384,7 +377,7 @@ namespace CPTM.GRD.Persistence.Migrations
 
                     OraclePropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "SEQ_VOTOS");
 
-                    b.Property<int>("ParticipanteId")
+                    b.Property<int?>("ParticipanteId")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<int?>("ProposicaoId")
@@ -419,7 +412,7 @@ namespace CPTM.GRD.Persistence.Migrations
                     b.Property<string>("AreaAtual")
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<int>("AreaId")
+                    b.Property<int?>("AreaId")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<bool>("Arquivada")
@@ -429,7 +422,7 @@ namespace CPTM.GRD.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<int>("CriadorId")
+                    b.Property<int?>("CriadorId")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("CronogramaFisFinFilePath")
@@ -537,7 +530,7 @@ namespace CPTM.GRD.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<string>("ProtoloExpediente")
+                    b.Property<string>("ProtocoloExpediente")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
@@ -624,38 +617,6 @@ namespace CPTM.GRD.Persistence.Migrations
                     b.HasIndex("ReuniaoId1");
 
                     b.ToTable("GRD_PROPOSICOES", "GRD");
-                });
-
-            modelBuilder.Entity("CPTM.GRD.Domain.Reunioes.Children.Participante", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
-
-                    OraclePropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "SEQ_PARTICIPANTES");
-
-                    b.Property<int>("AreaId")
-                        .HasColumnType("NUMBER(10)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("NUMBER(10)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AreaId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("GRD_PARTICIPANTES", "GRD");
                 });
 
             modelBuilder.Entity("CPTM.GRD.Domain.Reunioes.Reuniao", b =>
@@ -1336,13 +1297,13 @@ namespace CPTM.GRD.Persistence.Migrations
                     b.HasOne("CPTM.GRD.Domain.AccessControl.Group", "DiretoriaRes")
                         .WithMany()
                         .HasForeignKey("DiretoriaResId")
-                        .IsRequired()
+                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("FK_Acoes_Group");
 
                     b.HasOne("CPTM.GRD.Domain.AccessControl.User", "Responsavel")
                         .WithMany()
                         .HasForeignKey("ResponsavelId")
-                        .IsRequired()
+                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("FK_Acoes_User");
 
                     b.Navigation("DiretoriaRes");
@@ -1361,7 +1322,7 @@ namespace CPTM.GRD.Persistence.Migrations
                     b.HasOne("CPTM.GRD.Domain.AccessControl.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .IsRequired()
+                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("FK_Andamentos_Users");
 
                     b.Navigation("User");
@@ -1372,12 +1333,13 @@ namespace CPTM.GRD.Persistence.Migrations
                     b.HasOne("CPTM.GRD.Domain.Acoes.Acao", null)
                         .WithMany("Logs")
                         .HasForeignKey("AcaoId")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("FK_LogsA_Acao");
 
                     b.HasOne("CPTM.GRD.Domain.AccessControl.User", "Resp")
                         .WithMany()
                         .HasForeignKey("RespId")
-                        .IsRequired()
+                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("FK_LogsA_User");
 
                     b.Navigation("Resp");
@@ -1388,12 +1350,13 @@ namespace CPTM.GRD.Persistence.Migrations
                     b.HasOne("CPTM.GRD.Domain.Proposicoes.Proposicao", null)
                         .WithMany("Logs")
                         .HasForeignKey("PropId")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("FK_LogsP_Proposicao");
 
                     b.HasOne("CPTM.GRD.Domain.AccessControl.User", "Resp")
                         .WithMany()
                         .HasForeignKey("RespId")
-                        .IsRequired()
+                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("FK_LogsP_User");
 
                     b.Navigation("Resp");
@@ -1404,12 +1367,13 @@ namespace CPTM.GRD.Persistence.Migrations
                     b.HasOne("CPTM.GRD.Domain.AccessControl.User", "Resp")
                         .WithMany()
                         .HasForeignKey("RespId")
-                        .IsRequired()
+                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("FK_LogsR_User");
 
                     b.HasOne("CPTM.GRD.Domain.Reunioes.Reuniao", null)
                         .WithMany("Logs")
                         .HasForeignKey("ReuniaoId")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("FK_LogsR_Reuniao");
 
                     b.Navigation("Resp");
@@ -1417,10 +1381,10 @@ namespace CPTM.GRD.Persistence.Migrations
 
             modelBuilder.Entity("CPTM.GRD.Domain.Proposicoes.Children.Voto", b =>
                 {
-                    b.HasOne("CPTM.GRD.Domain.Reunioes.Children.Participante", "Participante")
+                    b.HasOne("CPTM.GRD.Domain.AccessControl.User", "Participante")
                         .WithMany()
                         .HasForeignKey("ParticipanteId")
-                        .IsRequired()
+                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("FK_Votos_Part");
 
                     b.HasOne("CPTM.GRD.Domain.Proposicoes.Proposicao", null)
@@ -1437,23 +1401,25 @@ namespace CPTM.GRD.Persistence.Migrations
                     b.HasOne("CPTM.GRD.Domain.AccessControl.Group", "Area")
                         .WithMany()
                         .HasForeignKey("AreaId")
-                        .IsRequired()
+                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("FK_Proposicoes_Group");
 
                     b.HasOne("CPTM.GRD.Domain.AccessControl.User", "Criador")
                         .WithMany()
                         .HasForeignKey("CriadorId")
-                        .IsRequired()
+                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("FK_Proposicoes_User");
 
                     b.HasOne("CPTM.GRD.Domain.Reunioes.Reuniao", "Reuniao")
                         .WithMany("Proposicoes")
                         .HasForeignKey("ReuniaoId")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("FK_Reunioes_Prop");
 
                     b.HasOne("CPTM.GRD.Domain.Reunioes.Reuniao", null)
                         .WithMany("ProposicoesPrevia")
                         .HasForeignKey("ReuniaoId1")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("FK_Reunioes_PropPrev");
 
                     b.Navigation("Area");
@@ -1463,69 +1429,53 @@ namespace CPTM.GRD.Persistence.Migrations
                     b.Navigation("Reuniao");
                 });
 
-            modelBuilder.Entity("CPTM.GRD.Domain.Reunioes.Children.Participante", b =>
-                {
-                    b.HasOne("CPTM.GRD.Domain.AccessControl.Group", "Area")
-                        .WithMany()
-                        .HasForeignKey("AreaId")
-                        .IsRequired()
-                        .HasConstraintName("FK_Part_Group");
-
-                    b.HasOne("CPTM.GRD.Domain.AccessControl.User", "User")
-                        .WithOne()
-                        .HasForeignKey("CPTM.GRD.Domain.Reunioes.Children.Participante", "UserId")
-                        .IsRequired()
-                        .HasConstraintName("FK_Part_User");
-
-                    b.Navigation("Area");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("GRD_ACAO_REUNIAO", b =>
                 {
                     b.HasOne("CPTM.GRD.Domain.Acoes.Acao", null)
                         .WithMany()
                         .HasForeignKey("AcaoId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_AcaoReuniao_AcaoId");
 
                     b.HasOne("CPTM.GRD.Domain.Reunioes.Reuniao", null)
                         .WithMany()
                         .HasForeignKey("ReuniaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_AcaoReuniao_ReuniaoId");
                 });
 
             modelBuilder.Entity("GRD_PART_REUNIAO", b =>
                 {
-                    b.HasOne("CPTM.GRD.Domain.Reunioes.Children.Participante", null)
+                    b.HasOne("CPTM.GRD.Domain.AccessControl.User", null)
                         .WithMany()
                         .HasForeignKey("PartId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_PartReuniao_PartId");
 
                     b.HasOne("CPTM.GRD.Domain.Reunioes.Reuniao", null)
                         .WithMany()
                         .HasForeignKey("ReuniaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_PartReuniao_ReuniaoId");
                 });
 
             modelBuilder.Entity("GRD_PARTPREV_REUNIAO", b =>
                 {
-                    b.HasOne("CPTM.GRD.Domain.Reunioes.Children.Participante", null)
+                    b.HasOne("CPTM.GRD.Domain.AccessControl.User", null)
                         .WithMany()
                         .HasForeignKey("PartId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_PartPrevReuniao_PartId");
 
                     b.HasOne("CPTM.GRD.Domain.Reunioes.Reuniao", null)
                         .WithMany()
                         .HasForeignKey("ReuId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_PartPrevReuniao_ReuId");
                 });
@@ -1535,13 +1485,14 @@ namespace CPTM.GRD.Persistence.Migrations
                     b.HasOne("CPTM.GRD.Domain.AccessControl.Group", null)
                         .WithMany()
                         .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_UserGroup_GroupId");
 
                     b.HasOne("CPTM.GRD.Domain.AccessControl.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_UserGroup_UserId");
                 });

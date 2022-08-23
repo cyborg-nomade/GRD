@@ -42,6 +42,8 @@
     -   my acoes
         -   ongoing
         -   archive
+-   reunioes
+    -   my previas
 
 ## diretor
 
@@ -56,6 +58,8 @@
     -   my acoes
         -   ongoing
         -   archive
+-   reunioes
+    -   my reunioes
 -   access mgmt
     -   manage assessor users
 

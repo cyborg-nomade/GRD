@@ -1,6 +1,6 @@
 ﻿namespace CPTM.GRD.Persistence.Views
 {
-    public partial class GrdVwEstruturaOrg
+    public class GrdVwEstruturaOrg
     {
         public string IdEstrutura { get; set; } = null!;
         public string? TxNome { get; set; }
