@@ -6,7 +6,7 @@ import React, { useEffect } from "react";
 import Head from "next/head";
 import CssBaseline from "@mui/material/CssBaseline";
 import NavbarView from "components/nav/NavbarView";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { Container, createTheme, ThemeProvider } from "@mui/material";
 import { useAppSelector } from "services/redux/hooks";
 import Router from "next/router";
 
@@ -54,7 +54,16 @@ function MyApp({ Component, pageProps }: AppProps) {
             </Head>
             <ThemeProvider theme={theme}>
                 <NavbarView>
-                    <Component {...pageProps} />
+                    <Container
+                        maxWidth="lg"
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            height: "600px",
+                        }}
+                    >
+                        <Component {...pageProps} />
+                    </Container>
                 </NavbarView>
             </ThemeProvider>
         </React.Fragment>

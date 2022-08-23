@@ -10,6 +10,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import NavbarItems from "./NavbarItems";
 import { useRouter } from "next/router";
+import { Container } from "@mui/system";
 
 const drawerWidth = 300;
 
@@ -86,7 +87,8 @@ const NavbarView = (props: React.PropsWithChildren) => {
                     {drawer}
                 </Drawer>
             </Box>
-            <Box component="main" sx={{ pt: 10, pl: 3 }}>
+
+            <Box component="main" sx={{ width: "100%" }}>
                 {props.children}
             </Box>
         </Box>
