@@ -17,7 +17,7 @@ export const useHttpClient = () => {
             try {
                 console.log(args);
 
-                const response = await request(args);
+                const response = await request(...args);
                 console.log("response: ", response);
 
                 activeHttpRequests.current = activeHttpRequests.current.filter(
