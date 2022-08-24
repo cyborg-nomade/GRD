@@ -33,17 +33,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         if (authState.currentUser.id === 0) {
             Router.push("/login");
         }
-        if (
-            pageProps.accessLevel &&
-            pageProps.accessLevel != authState.currentUser.nivelAcesso
-        ) {
-            Router.push("/login");
-        }
-    }, [
-        authState.currentUser.id,
-        authState.currentUser.nivelAcesso,
-        pageProps.accessLevel,
-    ]);
+    }, [authState.currentUser.id]);
 
     return (
         <React.Fragment>
