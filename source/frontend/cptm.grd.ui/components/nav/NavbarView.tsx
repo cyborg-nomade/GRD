@@ -10,7 +10,6 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import NavbarItems from "./NavbarItems";
 import { useRouter } from "next/router";
-import { Container } from "@mui/system";
 
 const drawerWidth = 300;
 
@@ -46,7 +45,7 @@ const NavbarView = (props: React.PropsWithChildren) => {
                         component="div"
                         sx={{
                             flexGrow: 1,
-                            display: { sm: "block" },
+                            display: { xs: "block", lg: "none" },
                             cursor: "pointer",
                         }}
                         onClick={() => {
@@ -54,6 +53,20 @@ const NavbarView = (props: React.PropsWithChildren) => {
                         }}
                     >
                         GRD
+                    </Typography>
+                    <Typography
+                        variant="h6"
+                        component="div"
+                        sx={{
+                            flexGrow: 1,
+                            display: { xs: "none", lg: "block" },
+                            cursor: "pointer",
+                        }}
+                        onClick={() => {
+                            router.push("../");
+                        }}
+                    >
+                        GRD - Sistema de Gestão de Reuniões de Diretoria
                     </Typography>
                     <IconButton
                         color="inherit"
