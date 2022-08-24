@@ -52,6 +52,7 @@ const LoginFormView = (props: {
                     name="username"
                     render={({ field: { onChange, onBlur, value, ref } }) => (
                         <TextField
+                            id="username"
                             required
                             label="Usuário"
                             ref={ref}
@@ -70,6 +71,7 @@ const LoginFormView = (props: {
                     name="password"
                     render={({ field: { onChange, onBlur, value, ref } }) => (
                         <TextField
+                            id="password"
                             required
                             label="Senha"
                             type="password"
