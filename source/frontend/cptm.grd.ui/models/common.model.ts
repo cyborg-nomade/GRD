@@ -91,6 +91,50 @@ export enum ObjetoProposicao {
     ViagemExterior,
 }
 
+export const ObjetoProposicaoView: {
+    label: string;
+    value: ObjetoProposicao;
+}[] = [
+    { label: "Aditamento", value: ObjetoProposicao.Aditamento },
+    { label: "Alienação Leilão", value: ObjetoProposicao.AlienacaoLeilao },
+    {
+        label: "Alteração Estrutura Org.",
+        value: ObjetoProposicao.AlteracaoEstruturaOrg,
+    },
+    {
+        label: "Aprovação Norma Geral",
+        value: ObjetoProposicao.AprovacaoNormaGeral,
+    },
+    {
+        label: "Aprovação Regulamento",
+        value: ObjetoProposicao.AprovacaoRegulamento,
+    },
+    { label: "Aprovação Edital", value: ObjetoProposicao.AprovacaoEdital },
+    { label: "Aprovação Política", value: ObjetoProposicao.AprovacaoPolitica },
+    { label: "Ata Registro Preços", value: ObjetoProposicao.AtaRegistroPrecos },
+    {
+        label: "Atualização Revisão Normas",
+        value: ObjetoProposicao.AtualizacaoRevisaoNormas,
+    },
+    { label: "Cancelamento RD", value: ObjetoProposicao.CancelamentoRd },
+    { label: "Contratação", value: ObjetoProposicao.Contratacao },
+    { label: "Contratação Direta", value: ObjetoProposicao.ContratacaoDireta },
+    { label: "Convênio", value: ObjetoProposicao.Convenio },
+    { label: "Dispensa Licitação", value: ObjetoProposicao.DispensaLicitacao },
+    { label: "Homologação", value: ObjetoProposicao.Homologacao },
+    { label: "Inexigibilidade", value: ObjetoProposicao.Inexigibilidade },
+    {
+        label: "Início Procedimentos Licit.",
+        value: ObjetoProposicao.InicioProcedimentosLicit,
+    },
+    { label: "Outros", value: ObjetoProposicao.Outros },
+    { label: "Prorrogação", value: ObjetoProposicao.Prorrogacao },
+    { label: "Renovação TPU", value: ObjetoProposicao.RenovacaoTpu },
+    { label: "Rati-Retificacao RD", value: ObjetoProposicao.RetiRetificacaoRd },
+    { label: "Termo Permissão Uso", value: ObjetoProposicao.TermoPermissaoUso },
+    { label: "Viagem Exterior", value: ObjetoProposicao.ViagemExterior },
+];
+
 export enum ReceitaDespesa {
     Receita,
     Despesa,

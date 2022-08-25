@@ -9,8 +9,9 @@ import NavbarView from "components/nav/NavbarView";
 import { Container, createTheme, ThemeProvider } from "@mui/material";
 import { useAppSelector } from "services/redux/hooks";
 import Router from "next/router";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import ptBrLocale from "dayjs/locale/pt-br";
 
 const theme = createTheme({
     palette: {
@@ -55,7 +56,10 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <ThemeProvider theme={theme}>
-                <LocalizationProvider dateAdapter={AdapterMoment}>
+                <LocalizationProvider
+                    dateAdapter={AdapterDayjs}
+                    adapterLocale={ptBrLocale}
+                >
                     <NavbarView>
                         <Container
                             maxWidth="lg"
