@@ -57,6 +57,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                     <Container
                         maxWidth="lg"
                         sx={{
+                            marginTop: "50px",
                             display: "flex",
                             alignItems: "center",
                             height: "600px",
