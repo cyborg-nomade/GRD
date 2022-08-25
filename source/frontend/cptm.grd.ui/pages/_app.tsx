@@ -67,7 +67,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                                 marginTop: "50px",
                                 display: "flex",
                                 alignItems: "center",
-                                height: "700px",
+                                height: "1000px",
                             }}
                         >
                             <Component {...pageProps} />
