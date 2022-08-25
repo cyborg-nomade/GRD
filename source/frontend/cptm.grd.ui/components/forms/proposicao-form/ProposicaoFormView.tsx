@@ -17,7 +17,11 @@ import {
 import React from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
 import Grid from "@mui/material/Unstable_Grid2";
-import { ObjetoProposicao, ObjetoProposicaoView } from "models/common.model";
+import {
+    ObjetoProposicao,
+    ObjetoProposicaoView,
+    ReceitaDespesaView,
+} from "models/common.model";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 const ProposicaoFormView = (props: {
@@ -221,7 +225,7 @@ const ProposicaoFormView = (props: {
                             )}
                         />
                     </Grid>
-                    <Grid xs={12} md={12}>
+                    <Grid xs={12} md={2}>
                         <Controller
                             rules={{
                                 required: true,
@@ -237,8 +241,207 @@ const ProposicaoFormView = (props: {
                                     value={value}
                                     onChange={onChange}
                                     renderInput={(params) => (
-                                        <TextField {...params} />
+                                        <TextField
+                                            {...params}
+                                            id="data-base-valor"
+                                        />
                                     )}
+                                />
+                            )}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={2}>
+                        <Controller
+                            rules={{
+                                required: true,
+                            }}
+                            control={props.methods.control}
+                            name="receitaDespesa"
+                            render={({
+                                field: { onChange, onBlur, value, ref },
+                            }) => (
+                                <TextField
+                                    required
+                                    fullWidth
+                                    select
+                                    label="Receita/Despesa"
+                                    ref={ref}
+                                    value={value}
+                                    onChange={onChange}
+                                    onBlur={onBlur}
+                                >
+                                    {ReceitaDespesaView.map((option) => (
+                                        <MenuItem
+                                            key={option.value}
+                                            value={option.value}
+                                        >
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            )}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={1}>
+                        <Controller
+                            rules={{
+                                required: true,
+                                maxLength: 250,
+                            }}
+                            control={props.methods.control}
+                            name="moeda"
+                            render={({
+                                field: { onChange, onBlur, value, ref },
+                            }) => (
+                                <TextField
+                                    required
+                                    fullWidth
+                                    label="Moeda"
+                                    ref={ref}
+                                    value={value}
+                                    onChange={onChange}
+                                    onBlur={onBlur}
+                                />
+                            )}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={3}>
+                        <Controller
+                            rules={{
+                                required: true,
+                                maxLength: 250,
+                            }}
+                            control={props.methods.control}
+                            name="valorTotalProposicao"
+                            render={({
+                                field: { onChange, onBlur, value, ref },
+                            }) => (
+                                <TextField
+                                    required
+                                    fullWidth
+                                    type="number"
+                                    label="Valor Total da Proposição"
+                                    ref={ref}
+                                    value={value}
+                                    onChange={onChange}
+                                    onBlur={onBlur}
+                                />
+                            )}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={2}>
+                        <Controller
+                            rules={{
+                                required: true,
+                                maxLength: 250,
+                            }}
+                            control={props.methods.control}
+                            name="valorOriginalContrato"
+                            render={({
+                                field: { onChange, onBlur, value, ref },
+                            }) => (
+                                <TextField
+                                    required
+                                    fullWidth
+                                    type="number"
+                                    label="Valor Original do Contrato"
+                                    ref={ref}
+                                    value={value}
+                                    onChange={onChange}
+                                    onBlur={onBlur}
+                                />
+                            )}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={2}>
+                        <Controller
+                            rules={{
+                                required: true,
+                                maxLength: 250,
+                            }}
+                            control={props.methods.control}
+                            name="valorAtualContrato"
+                            render={({
+                                field: { onChange, onBlur, value, ref },
+                            }) => (
+                                <TextField
+                                    required
+                                    fullWidth
+                                    type="number"
+                                    label="Valor Atual do Contrato"
+                                    ref={ref}
+                                    value={value}
+                                    onChange={onChange}
+                                    onBlur={onBlur}
+                                />
+                            )}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={4}>
+                        <Controller
+                            rules={{
+                                required: true,
+                                maxLength: 250,
+                            }}
+                            control={props.methods.control}
+                            name="numeroContrato"
+                            render={({
+                                field: { onChange, onBlur, value, ref },
+                            }) => (
+                                <TextField
+                                    required
+                                    fullWidth
+                                    label="Número do Contrato"
+                                    ref={ref}
+                                    value={value}
+                                    onChange={onChange}
+                                    onBlur={onBlur}
+                                />
+                            )}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={4}>
+                        <Controller
+                            rules={{
+                                required: true,
+                                maxLength: 250,
+                            }}
+                            control={props.methods.control}
+                            name="fornecedor"
+                            render={({
+                                field: { onChange, onBlur, value, ref },
+                            }) => (
+                                <TextField
+                                    required
+                                    fullWidth
+                                    label="Fornecedor"
+                                    ref={ref}
+                                    value={value}
+                                    onChange={onChange}
+                                    onBlur={onBlur}
+                                />
+                            )}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={4}>
+                        <Controller
+                            rules={{
+                                required: true,
+                                maxLength: 250,
+                            }}
+                            control={props.methods.control}
+                            name="termo"
+                            render={({
+                                field: { onChange, onBlur, value, ref },
+                            }) => (
+                                <TextField
+                                    required
+                                    fullWidth
+                                    label="Termo"
+                                    ref={ref}
+                                    value={value}
+                                    onChange={onChange}
+                                    onBlur={onBlur}
                                 />
                             )}
                         />
@@ -248,16 +451,6 @@ const ProposicaoFormView = (props: {
         </Paper>
     );
 };
-
-//     dataBaseValor!: Date;
-//     receitaDespesa!: ReceitaDespesa;
-//     moeda!: string;
-//     valorTotalProposicao!: number;
-//     valorOriginalContrato!: number;
-//     valorAtualContrato!: number;
-//     numeroContrato!: string;
-//     fornecedor!: string;
-//     termo!: string;
 
 //     numeroReservaVerba!: string;
 //     valorReservaVerba!: number;

@@ -140,6 +140,11 @@ export enum ReceitaDespesa {
     Despesa,
 }
 
+export const ReceitaDespesaView: { label: string; value: ReceitaDespesa }[] = [
+    { label: "Receita", value: ReceitaDespesa.Receita },
+    { label: "Despesa", value: ReceitaDespesa.Despesa },
+];
+
 export enum ReuniaoStatus {
     EmCriacao,
     Registrada,
