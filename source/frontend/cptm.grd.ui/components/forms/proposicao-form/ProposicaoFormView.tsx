@@ -23,6 +23,8 @@ import {
     ReceitaDespesaView,
 } from "models/common.model";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import ProposicaoFormItem from "./ProposicaoFormItem";
+import FormTitleDivider from "../FormTitleDivider";
 
 const ProposicaoFormView = (props: {
     saveProposicaoHandler: (proposicao: CreateProposicaoDto) => {};
@@ -39,411 +41,297 @@ const ProposicaoFormView = (props: {
             onSubmit={props.methods.handleSubmit(props.saveProposicaoHandler)}
         >
             <Box sx={{ flexGrow: 1 }}>
-                <Divider textAlign="left">
-                    <Typography variant="overline">Dados Gerais</Typography>
-                </Divider>
+                <FormTitleDivider title="Dados Gerais" />
                 <Grid container spacing={1}>
                     <Grid xs={12} md={7}>
-                        <Controller
-                            rules={{
-                                required: true,
-                                maxLength: 250,
-                            }}
-                            control={props.methods.control}
+                        <ProposicaoFormItem
+                            label="Título"
+                            methods={props.methods}
                             name="titulo"
-                            render={({
-                                field: { onChange, onBlur, value, ref },
-                            }) => (
-                                <TextField
-                                    required
-                                    fullWidth
-                                    label="Título"
-                                    ref={ref}
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                />
-                            )}
+                            text
+                            rules={{ required: true, maxLength: 250 }}
                         />
                     </Grid>
                     <Grid xs={12} md={3}>
-                        <Controller
-                            rules={{
-                                required: true,
-                            }}
-                            control={props.methods.control}
+                        <ProposicaoFormItem
+                            label="Objeto"
+                            methods={props.methods}
                             name="objeto"
-                            render={({
-                                field: { onChange, onBlur, value, ref },
-                            }) => (
-                                <TextField
-                                    required
-                                    fullWidth
-                                    select
-                                    label="Objeto"
-                                    ref={ref}
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                >
-                                    {ObjetoProposicaoView.map((option) => (
-                                        <MenuItem
-                                            key={option.value}
-                                            value={option.value}
-                                        >
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            )}
+                            select
+                            options={ObjetoProposicaoView}
+                            rules={{ required: true }}
                         />
                     </Grid>
                     <Grid xs={12} md={2}>
-                        <Controller
-                            rules={{
-                                required: true,
-                            }}
-                            control={props.methods.control}
+                        <ProposicaoFormItem
+                            label="Possui Parecer Jurídico?"
+                            methods={props.methods}
                             name="possuiParecerJuridico"
-                            render={({
-                                field: { onChange, onBlur, value, ref },
-                            }) => (
-                                <FormGroup>
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                checked={value}
-                                                onChange={onChange}
-                                                onBlur={onBlur}
-                                                ref={ref}
-                                            />
-                                        }
-                                        label="Possui Parecer Jurídico?"
-                                        labelPlacement="start"
-                                    />
-                                </FormGroup>
-                            )}
+                            checkbox
+                            rules={{ required: true }}
                         />
                     </Grid>
                     <Grid xs={12} md={12}>
-                        <Controller
-                            rules={{
-                                required: true,
-                            }}
-                            control={props.methods.control}
+                        <ProposicaoFormItem
+                            label="Descrição Proposição"
+                            methods={props.methods}
                             name="descricaoProposicao"
-                            render={({
-                                field: { onChange, onBlur, value, ref },
-                            }) => (
-                                <TextField
-                                    required
-                                    fullWidth
-                                    multiline
-                                    rows={5}
-                                    label="Descrição Proposição"
-                                    ref={ref}
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                />
-                            )}
+                            text
+                            multiline
+                            rows={5}
+                            rules={{ required: true }}
                         />
                     </Grid>
                     <Grid xs={12} md={12}>
-                        <Controller
-                            rules={{
-                                required: true,
-                            }}
-                            control={props.methods.control}
+                        <ProposicaoFormItem
+                            label="Resumo Geral da Resolução"
+                            methods={props.methods}
                             name="resumoGeralResolucao"
-                            render={({
-                                field: { onChange, onBlur, value, ref },
-                            }) => (
-                                <TextField
-                                    required
-                                    fullWidth
-                                    multiline
-                                    rows={3}
-                                    label="Resumo Geral da Resolução"
-                                    ref={ref}
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                />
-                            )}
+                            text
+                            multiline
+                            rows={3}
+                            rules={{ required: true }}
                         />
                     </Grid>
                     <Grid xs={12} md={12}>
-                        <Controller
-                            rules={{
-                                required: true,
-                            }}
-                            control={props.methods.control}
+                        <ProposicaoFormItem
+                            label="Competência Conforme Normas"
+                            methods={props.methods}
                             name="competenciasConformeNormas"
-                            render={({
-                                field: { onChange, onBlur, value, ref },
-                            }) => (
-                                <TextField
-                                    required
-                                    fullWidth
-                                    label="Competência Conforme Normas"
-                                    ref={ref}
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                />
-                            )}
+                            text
+                            rules={{ required: true }}
                         />
                     </Grid>
                 </Grid>
-                <Divider textAlign="left">
-                    <Typography variant="overline">
-                        Contratação / Custos
-                    </Typography>
-                </Divider>
+                <FormTitleDivider title="Contratação / Custos" />
                 <Grid container spacing={1}>
                     <Grid xs={12} md={12}>
-                        <Controller
-                            rules={{
-                                required: true,
-                                maxLength: 250,
-                            }}
-                            control={props.methods.control}
+                        <ProposicaoFormItem
+                            label="Observações sobre Custos"
+                            methods={props.methods}
                             name="observacoesCustos"
-                            render={({
-                                field: { onChange, onBlur, value, ref },
-                            }) => (
-                                <TextField
-                                    required
-                                    fullWidth
-                                    label="Observações sobre Custos"
-                                    ref={ref}
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                />
-                            )}
-                        />
-                    </Grid>
-                    <Grid xs={12} md={2}>
-                        <Controller
+                            text
                             rules={{
                                 required: true,
                                 maxLength: 250,
                             }}
-                            control={props.methods.control}
-                            name="dataBaseValor"
-                            render={({
-                                field: { onChange, onBlur, value, ref },
-                            }) => (
-                                <DatePicker
-                                    label="Data Base do Valor"
-                                    value={value}
-                                    onChange={onChange}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            id="data-base-valor"
-                                        />
-                                    )}
-                                />
-                            )}
                         />
                     </Grid>
                     <Grid xs={12} md={2}>
-                        <Controller
+                        <ProposicaoFormItem
+                            label="Data Base do Valor"
+                            methods={props.methods}
+                            name="dataBaseValor"
+                            date
                             rules={{
                                 required: true,
                             }}
-                            control={props.methods.control}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={2}>
+                        <ProposicaoFormItem
+                            label="Receita/Despesa"
+                            methods={props.methods}
                             name="receitaDespesa"
-                            render={({
-                                field: { onChange, onBlur, value, ref },
-                            }) => (
-                                <TextField
-                                    required
-                                    fullWidth
-                                    select
-                                    label="Receita/Despesa"
-                                    ref={ref}
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                >
-                                    {ReceitaDespesaView.map((option) => (
-                                        <MenuItem
-                                            key={option.value}
-                                            value={option.value}
-                                        >
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            )}
+                            select
+                            options={ReceitaDespesaView}
+                            rules={{
+                                required: true,
+                            }}
                         />
                     </Grid>
                     <Grid xs={12} md={1}>
-                        <Controller
+                        <ProposicaoFormItem
+                            label="Moeda"
+                            methods={props.methods}
+                            name="moeda"
+                            text
                             rules={{
                                 required: true,
                                 maxLength: 250,
                             }}
-                            control={props.methods.control}
-                            name="moeda"
-                            render={({
-                                field: { onChange, onBlur, value, ref },
-                            }) => (
-                                <TextField
-                                    required
-                                    fullWidth
-                                    label="Moeda"
-                                    ref={ref}
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                />
-                            )}
                         />
                     </Grid>
                     <Grid xs={12} md={3}>
-                        <Controller
-                            rules={{
-                                required: true,
-                                maxLength: 250,
-                            }}
-                            control={props.methods.control}
+                        <ProposicaoFormItem
+                            label="Valor Total da Proposição"
+                            methods={props.methods}
                             name="valorTotalProposicao"
-                            render={({
-                                field: { onChange, onBlur, value, ref },
-                            }) => (
-                                <TextField
-                                    required
-                                    fullWidth
-                                    type="number"
-                                    label="Valor Total da Proposição"
-                                    ref={ref}
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                />
-                            )}
+                            text
+                            typeNumber
+                            rules={{ required: true }}
                         />
                     </Grid>
                     <Grid xs={12} md={2}>
-                        <Controller
-                            rules={{
-                                required: true,
-                                maxLength: 250,
-                            }}
-                            control={props.methods.control}
+                        <ProposicaoFormItem
+                            label="Valor Original do Contrato"
+                            methods={props.methods}
                             name="valorOriginalContrato"
-                            render={({
-                                field: { onChange, onBlur, value, ref },
-                            }) => (
-                                <TextField
-                                    required
-                                    fullWidth
-                                    type="number"
-                                    label="Valor Original do Contrato"
-                                    ref={ref}
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                />
-                            )}
+                            text
+                            typeNumber
+                            rules={{ required: true }}
                         />
                     </Grid>
                     <Grid xs={12} md={2}>
-                        <Controller
-                            rules={{
-                                required: true,
-                                maxLength: 250,
-                            }}
-                            control={props.methods.control}
+                        <ProposicaoFormItem
+                            label="Valor Atual do Contrato"
+                            methods={props.methods}
                             name="valorAtualContrato"
-                            render={({
-                                field: { onChange, onBlur, value, ref },
-                            }) => (
-                                <TextField
-                                    required
-                                    fullWidth
-                                    type="number"
-                                    label="Valor Atual do Contrato"
-                                    ref={ref}
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                />
-                            )}
+                            text
+                            typeNumber
+                            rules={{ required: true }}
                         />
                     </Grid>
                     <Grid xs={12} md={4}>
-                        <Controller
-                            rules={{
-                                required: true,
-                                maxLength: 250,
-                            }}
-                            control={props.methods.control}
+                        <ProposicaoFormItem
+                            label="Número do Contrato"
+                            methods={props.methods}
                             name="numeroContrato"
-                            render={({
-                                field: { onChange, onBlur, value, ref },
-                            }) => (
-                                <TextField
-                                    required
-                                    fullWidth
-                                    label="Número do Contrato"
-                                    ref={ref}
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                />
-                            )}
-                        />
-                    </Grid>
-                    <Grid xs={12} md={4}>
-                        <Controller
+                            text
                             rules={{
                                 required: true,
                                 maxLength: 250,
                             }}
-                            control={props.methods.control}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={4}>
+                        <ProposicaoFormItem
+                            label="Fornecedor"
+                            methods={props.methods}
                             name="fornecedor"
-                            render={({
-                                field: { onChange, onBlur, value, ref },
-                            }) => (
-                                <TextField
-                                    required
-                                    fullWidth
-                                    label="Fornecedor"
-                                    ref={ref}
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                />
-                            )}
-                        />
-                    </Grid>
-                    <Grid xs={12} md={4}>
-                        <Controller
+                            text
                             rules={{
                                 required: true,
                                 maxLength: 250,
                             }}
-                            control={props.methods.control}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={4}>
+                        <ProposicaoFormItem
+                            label="Termo"
+                            methods={props.methods}
                             name="termo"
-                            render={({
-                                field: { onChange, onBlur, value, ref },
-                            }) => (
-                                <TextField
-                                    required
-                                    fullWidth
-                                    label="Termo"
-                                    ref={ref}
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                />
-                            )}
+                            text
+                            rules={{
+                                required: true,
+                                maxLength: 250,
+                            }}
+                        />
+                    </Grid>
+                </Grid>
+                <FormTitleDivider title="Reserva de Verba" />
+                <Grid container spacing={1}>
+                    <Grid xs={12} md={12}>
+                        <ProposicaoFormItem
+                            label="Observações sobre Custos"
+                            methods={props.methods}
+                            name="observacoesCustos"
+                            text
+                            rules={{
+                                required: true,
+                                maxLength: 250,
+                            }}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={2}>
+                        <ProposicaoFormItem
+                            label="Data Base do Valor"
+                            methods={props.methods}
+                            name="dataBaseValor"
+                            date
+                            rules={{
+                                required: true,
+                            }}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={2}>
+                        <ProposicaoFormItem
+                            label="Receita/Despesa"
+                            methods={props.methods}
+                            name="receitaDespesa"
+                            select
+                            options={ReceitaDespesaView}
+                            rules={{
+                                required: true,
+                            }}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={1}>
+                        <ProposicaoFormItem
+                            label="Moeda"
+                            methods={props.methods}
+                            name="moeda"
+                            text
+                            rules={{
+                                required: true,
+                                maxLength: 250,
+                            }}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={3}>
+                        <ProposicaoFormItem
+                            label="Valor Total da Proposição"
+                            methods={props.methods}
+                            name="valorTotalProposicao"
+                            text
+                            typeNumber
+                            rules={{ required: true }}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={2}>
+                        <ProposicaoFormItem
+                            label="Valor Original do Contrato"
+                            methods={props.methods}
+                            name="valorOriginalContrato"
+                            text
+                            typeNumber
+                            rules={{ required: true }}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={2}>
+                        <ProposicaoFormItem
+                            label="Valor Atual do Contrato"
+                            methods={props.methods}
+                            name="valorAtualContrato"
+                            text
+                            typeNumber
+                            rules={{ required: true }}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={4}>
+                        <ProposicaoFormItem
+                            label="Número do Contrato"
+                            methods={props.methods}
+                            name="numeroContrato"
+                            text
+                            rules={{
+                                required: true,
+                                maxLength: 250,
+                            }}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={4}>
+                        <ProposicaoFormItem
+                            label="Fornecedor"
+                            methods={props.methods}
+                            name="fornecedor"
+                            text
+                            rules={{
+                                required: true,
+                                maxLength: 250,
+                            }}
+                        />
+                    </Grid>
+                    <Grid xs={12} md={4}>
+                        <ProposicaoFormItem
+                            label="Termo"
+                            methods={props.methods}
+                            name="termo"
+                            text
+                            rules={{
+                                required: true,
+                                maxLength: 250,
+                            }}
                         />
                     </Grid>
                 </Grid>
