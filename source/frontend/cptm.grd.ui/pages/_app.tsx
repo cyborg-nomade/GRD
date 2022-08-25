@@ -9,6 +9,8 @@ import NavbarView from "components/nav/NavbarView";
 import { Container, createTheme, ThemeProvider } from "@mui/material";
 import { useAppSelector } from "services/redux/hooks";
 import Router from "next/router";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
 
 const theme = createTheme({
     palette: {
@@ -53,19 +55,21 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <ThemeProvider theme={theme}>
-                <NavbarView>
-                    <Container
-                        maxWidth="lg"
-                        sx={{
-                            marginTop: "50px",
-                            display: "flex",
-                            alignItems: "center",
-                            height: "600px",
-                        }}
-                    >
-                        <Component {...pageProps} />
-                    </Container>
-                </NavbarView>
+                <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <NavbarView>
+                        <Container
+                            maxWidth="lg"
+                            sx={{
+                                marginTop: "50px",
+                                display: "flex",
+                                alignItems: "center",
+                                height: "600px",
+                            }}
+                        >
+                            <Component {...pageProps} />
+                        </Container>
+                    </NavbarView>
+                </LocalizationProvider>
             </ThemeProvider>
         </React.Fragment>
     );
