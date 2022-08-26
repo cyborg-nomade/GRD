@@ -2,6 +2,10 @@
   "dependencies": {
     "@mui/x-data-grid": "^5.16.0",
     "@mui/x-date-pickers": "^5.0.0-beta.7",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.184"
   }
 }
