@@ -6,6 +6,7 @@ import ProposicaoFormItem from "./ProposicaoFormItem";
 import FormSection from "../FormSection";
 import FormPaper from "../FormPaper";
 import { useAppSelector } from "services/redux/hooks";
+import ProposicaoFormActions from "./ProposicaoFormActions";
 
 const ProposicaoFormView = (props: {
     saveProposicaoHandler: (proposicao: CreateProposicaoDto) => {};
@@ -454,6 +455,7 @@ const ProposicaoFormView = (props: {
                     required
                 />
             </FormSection>
+            <ProposicaoFormActions />
         </FormPaper>
     );
 };
