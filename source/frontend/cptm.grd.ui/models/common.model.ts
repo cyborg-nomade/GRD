@@ -65,6 +65,54 @@ export enum ProposicaoStatus {
     SuspensaRdAjustesRealizados,
 }
 
+export const ProposicaoStatusView: {
+    label: string;
+    value: ProposicaoStatus;
+}[] = [
+    { label: "Em Preenchimento", value: ProposicaoStatus.EmPreenchimento },
+    {
+        label: "Em Aprovacao da Diretoria Responsável",
+        value: ProposicaoStatus.EmAprovacaoDiretoriaResp,
+    },
+    {
+        label: "Reprovado pela Diretoria Resp",
+        value: ProposicaoStatus.ReprovadoDiretoriaResp,
+    },
+    {
+        label: "Disponivel para Inclusão Pauta",
+        value: ProposicaoStatus.DisponivelInclusaoPauta,
+    },
+    {
+        label: "Retornado Pela GRG à Diretoria Resp",
+        value: ProposicaoStatus.RetornadoPelaGrgADiretoriaResp,
+    },
+    {
+        label: "Inclusa Em Reunião de Diretoria",
+        value: ProposicaoStatus.InclusaEmReuniao,
+    },
+    { label: "Em Pauta Prévia", value: ProposicaoStatus.EmPautaPrevia },
+    { label: "Em Pauta Definitiva", value: ProposicaoStatus.EmPautaDefinitiva },
+    { label: "Aprovada em RD", value: ProposicaoStatus.AprovadaRd },
+    { label: "Reprovada em RD", value: ProposicaoStatus.ReprovadaRd },
+    { label: "Suspensa em RD", value: ProposicaoStatus.SuspensaRd },
+    {
+        label: "Aprovada RD - Aguardando Ajustes",
+        value: ProposicaoStatus.AprovadaRdAguardandoAjustes,
+    },
+    {
+        label: "Suspensa RD - Aguardando Ajustes",
+        value: ProposicaoStatus.SuspensaRdAguardandoAjustes,
+    },
+    {
+        label: "Aprovada RD - Ajustes Realizados",
+        value: ProposicaoStatus.AprovadaRdAjustesRealizados,
+    },
+    {
+        label: "Suspensa RD - Ajustes Realizados",
+        value: ProposicaoStatus.SuspensaRdAjustesRealizados,
+    },
+];
+
 export enum ObjetoProposicao {
     Aditamento,
     AlienacaoLeilao,

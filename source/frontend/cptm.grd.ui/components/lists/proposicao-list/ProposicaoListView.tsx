@@ -3,13 +3,29 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { ProposicaoListDto } from "models/proposicoes/proposicao.model";
 import { keys } from "lodash";
 import ListPaper from "../ListPaper";
+import {
+    ObjetoProposicaoView,
+    ProposicaoStatusView,
+    ReceitaDespesaView,
+} from "models/common.model";
 
 const ProposicaoListView = (props: { rows: ProposicaoListDto[] }) => {
-    const fields = keys(new ProposicaoListDto());
+    const fields = keys(new ProposicaoListDto()).filter((key) => {
+        return key != "criador" && key != "areaSolicitante" && key != "id";
+    });
     const cols: GridColDef[] = fields.map((field) => {
         return {
             field: field,
-            width: 150,
+            width:
+                field === "idPrd"
+                    ? 70
+                    : field === "status"
+                    ? 250
+                    : field === "moeda"
+                    ? 80
+                    : field === "valorTotalProposicao"
+                    ? 160
+                    : 140,
             headerName: field
                 .replace(/([A-Z])/g, " $1")
                 .replace(/^./, function (str) {
@@ -17,10 +33,24 @@ const ProposicaoListView = (props: { rows: ProposicaoListDto[] }) => {
                 }),
         };
     });
+    const rows = props.rows.map((proposicao) => {
+        return {
+            ...proposicao,
+            objeto: ObjetoProposicaoView.find(
+                (o) => o.value === proposicao.objeto
+            )?.label,
+            receitaDespesa: ReceitaDespesaView.find(
+                (o) => o.value === proposicao.receitaDespesa
+            )?.label,
+            status: ProposicaoStatusView.find(
+                (o) => o.value === proposicao.status
+            )?.label,
+        };
+    });
 
     return (
         <ListPaper>
-            <DataGrid rows={props.rows} columns={cols} />
+            <DataGrid rows={rows} columns={cols} />
         </ListPaper>
     );
 };
