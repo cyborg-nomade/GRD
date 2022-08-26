@@ -1,7 +1,15 @@
+import { Typography } from "@mui/material";
+import { Stack } from "@mui/system";
 import ProposicaoFormContainer from "components/forms/proposicao-form/ProposicaoFormContainer";
+import React from "react";
 
 const SubProposicaoNovo = () => {
-    return <ProposicaoFormContainer />;
+    return (
+        <Stack>
+            <Typography variant="h4">Nova Proposição</Typography>
+            <ProposicaoFormContainer />
+        </Stack>
+    );
 };
 
 export default SubProposicaoNovo;
