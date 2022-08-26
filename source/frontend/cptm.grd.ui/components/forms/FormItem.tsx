@@ -51,6 +51,7 @@ const FormItem = <T extends FieldValues>(props: FormItemProps<T>) => {
                                     <TextField
                                         {...params}
                                         id={`data-${props.name}"`}
+                                        required
                                     />
                                 )}
                             />
