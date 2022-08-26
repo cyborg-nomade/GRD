@@ -30,6 +30,8 @@ export type FormItemProps<T extends FieldValues> = {
     checkbox?: boolean;
     gridSizeSmall: number;
     gridSizeLarge: number;
+    disabled?: boolean;
+    required?: boolean;
 };
 
 const FormItem = <T extends FieldValues>(props: FormItemProps<T>) => {
@@ -51,14 +53,16 @@ const FormItem = <T extends FieldValues>(props: FormItemProps<T>) => {
                                     <TextField
                                         {...params}
                                         id={`data-${props.name}"`}
-                                        required
+                                        required={props.required}
+                                        disabled={props.disabled}
                                     />
                                 )}
                             />
                         )}
                         {props.select && props.options && (
                             <TextField
-                                required
+                                disabled={props.disabled}
+                                required={props.required}
                                 fullWidth
                                 select
                                 label={props.label}
@@ -79,7 +83,8 @@ const FormItem = <T extends FieldValues>(props: FormItemProps<T>) => {
                         )}
                         {props.text && (
                             <TextField
-                                required
+                                disabled={props.disabled}
+                                required={props.required}
                                 fullWidth
                                 multiline={props.multiline}
                                 rows={props.rows}
@@ -111,6 +116,8 @@ const FormItem = <T extends FieldValues>(props: FormItemProps<T>) => {
                                             onChange={onChange}
                                             onBlur={onBlur}
                                             ref={ref}
+                                            disabled={props.disabled}
+                                            required={props.required}
                                         />
                                     }
                                     label={props.label}

@@ -29,6 +29,7 @@ const ProposicaoFormView = (props: {
                     rules={{ required: true, maxLength: 250 }}
                     gridSizeLarge={7}
                     gridSizeSmall={12}
+                    required
                 />
                 <ProposicaoFormItem
                     label="Objeto"
@@ -39,6 +40,7 @@ const ProposicaoFormView = (props: {
                     rules={{ required: true }}
                     gridSizeLarge={3}
                     gridSizeSmall={12}
+                    required
                 />
                 <ProposicaoFormItem
                     label="Possui Parecer Jurídico?"
@@ -48,6 +50,7 @@ const ProposicaoFormView = (props: {
                     rules={{ required: true }}
                     gridSizeLarge={2}
                     gridSizeSmall={12}
+                    required
                 />
                 <ProposicaoFormItem
                     label="Descrição Proposição"
@@ -59,6 +62,7 @@ const ProposicaoFormView = (props: {
                     rules={{ required: true }}
                     gridSizeLarge={12}
                     gridSizeSmall={12}
+                    required
                 />
                 <ProposicaoFormItem
                     label="Resumo Geral da Resolução"
@@ -70,6 +74,7 @@ const ProposicaoFormView = (props: {
                     rules={{ required: true }}
                     gridSizeLarge={12}
                     gridSizeSmall={12}
+                    required
                 />
                 <ProposicaoFormItem
                     label="Competência Conforme Normas"
@@ -77,6 +82,56 @@ const ProposicaoFormView = (props: {
                     name="competenciasConformeNormas"
                     text
                     rules={{ required: true }}
+                    gridSizeLarge={12}
+                    gridSizeSmall={12}
+                    required
+                />
+            </FormSection>
+            <FormSection title="Identificação">
+                <ProposicaoFormItem
+                    label="Nº da Proposição"
+                    methods={props.methods}
+                    name="numeroProposicao"
+                    text
+                    gridSizeLarge={3}
+                    gridSizeSmall={12}
+                    disabled
+                />
+                <ProposicaoFormItem
+                    label="Protocolo / Expediente"
+                    methods={props.methods}
+                    name="protocoloExpediente"
+                    text
+                    gridSizeLarge={3}
+                    gridSizeSmall={12}
+                    rules={{ required: true, maxLength: 250 }}
+                    required
+                />
+                <ProposicaoFormItem
+                    label="Nº Processo Licitatório"
+                    methods={props.methods}
+                    name="numeroProcessoLicit"
+                    text
+                    gridSizeLarge={3}
+                    gridSizeSmall={12}
+                    rules={{ required: true, maxLength: 250 }}
+                    required
+                />
+                <ProposicaoFormItem
+                    label="Nº do Conselho"
+                    methods={props.methods}
+                    name="numeroConselho"
+                    text
+                    gridSizeLarge={3}
+                    gridSizeSmall={12}
+                />
+                <ProposicaoFormItem
+                    label="Outras Observações"
+                    methods={props.methods}
+                    name="outrasObservacoes"
+                    text
+                    multiline
+                    rows={2}
                     gridSizeLarge={12}
                     gridSizeSmall={12}
                 />
@@ -93,6 +148,7 @@ const ProposicaoFormView = (props: {
                     }}
                     gridSizeLarge={12}
                     gridSizeSmall={12}
+                    required
                 />
                 <ProposicaoFormItem
                     label="Data Base do Valor"
@@ -104,6 +160,7 @@ const ProposicaoFormView = (props: {
                     }}
                     gridSizeLarge={2}
                     gridSizeSmall={12}
+                    required
                 />
                 <ProposicaoFormItem
                     label="Receita/Despesa"
@@ -116,6 +173,7 @@ const ProposicaoFormView = (props: {
                     }}
                     gridSizeLarge={2}
                     gridSizeSmall={12}
+                    required
                 />
                 <ProposicaoFormItem
                     label="Moeda"
@@ -128,6 +186,7 @@ const ProposicaoFormView = (props: {
                     }}
                     gridSizeLarge={1}
                     gridSizeSmall={12}
+                    required
                 />
                 <ProposicaoFormItem
                     label="Valor Total da Proposição"
@@ -138,6 +197,7 @@ const ProposicaoFormView = (props: {
                     rules={{ required: true }}
                     gridSizeLarge={3}
                     gridSizeSmall={12}
+                    required
                 />
                 <ProposicaoFormItem
                     label="Valor Original do Contrato"
@@ -148,6 +208,7 @@ const ProposicaoFormView = (props: {
                     rules={{ required: true }}
                     gridSizeLarge={2}
                     gridSizeSmall={12}
+                    required
                 />
                 <ProposicaoFormItem
                     label="Valor Atual do Contrato"
@@ -158,6 +219,7 @@ const ProposicaoFormView = (props: {
                     rules={{ required: true }}
                     gridSizeLarge={2}
                     gridSizeSmall={12}
+                    required
                 />
                 <ProposicaoFormItem
                     label="Número do Contrato"
@@ -170,6 +232,7 @@ const ProposicaoFormView = (props: {
                     }}
                     gridSizeLarge={4}
                     gridSizeSmall={12}
+                    required
                 />
                 <ProposicaoFormItem
                     label="Fornecedor"
@@ -182,6 +245,7 @@ const ProposicaoFormView = (props: {
                     }}
                     gridSizeLarge={4}
                     gridSizeSmall={12}
+                    required
                 />
                 <ProposicaoFormItem
                     label="Termo"
@@ -194,6 +258,7 @@ const ProposicaoFormView = (props: {
                     }}
                     gridSizeLarge={4}
                     gridSizeSmall={12}
+                    required
                 />
             </FormSection>
             <FormSection title="Reserva de Verba">
@@ -208,6 +273,7 @@ const ProposicaoFormView = (props: {
                     }}
                     gridSizeLarge={3}
                     gridSizeSmall={12}
+                    required
                 />
                 <ProposicaoFormItem
                     label="Valor da Reserva de Verba"
@@ -220,6 +286,7 @@ const ProposicaoFormView = (props: {
                     }}
                     gridSizeLarge={3}
                     gridSizeSmall={12}
+                    required
                 />
                 <ProposicaoFormItem
                     label="Início da Vigência da Reserva de Verba"
@@ -231,6 +298,7 @@ const ProposicaoFormView = (props: {
                     }}
                     gridSizeLarge={3}
                     gridSizeSmall={12}
+                    required
                 />
                 <ProposicaoFormItem
                     label="Fim da Vigência da Reserva de Verba"
@@ -242,18 +310,12 @@ const ProposicaoFormView = (props: {
                     }}
                     gridSizeLarge={3}
                     gridSizeSmall={12}
+                    required
                 />
             </FormSection>
         </FormPaper>
     );
 };
-
-//     numeroProposicao!: string;
-//     protocoloExpediente!: string;
-//     numeroProcessoLicit!: string;
-
-//     outrasObservacoes?: string | undefined;
-//     numeroConselho?: string | undefined;
 
 //     sinteseProcessoFilePath!: string;
 //     notaTecnicaFilePath!: string;
