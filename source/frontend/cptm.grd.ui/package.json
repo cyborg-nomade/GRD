@@ -9,8 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/cache": "^11.10.3",
     "@emotion/react": "^11.10.0",
+    "@emotion/serialize": "^1.1.0",
     "@emotion/styled": "^11.10.0",
+    "@emotion/utils": "^1.2.0",
     "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.8.4",
     "@mui/lab": "^5.0.0-alpha.96",

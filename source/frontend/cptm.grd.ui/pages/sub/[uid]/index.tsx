@@ -4,8 +4,8 @@ import ProposicaoListContainer from "components/lists/proposicao-list/Proposicao
 
 const SubHome = () => {
     return (
-        <Stack>
-            <Typography variant="h4">Home</Typography>
+        <Stack width={"100%"}>
+            <Typography variant="h4">Página Inicial</Typography>
             <ProposicaoListContainer />
         </Stack>
     );
