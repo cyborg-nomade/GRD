@@ -64,10 +64,10 @@ function MyApp({ Component, pageProps }: AppProps) {
                         <Container
                             maxWidth="lg"
                             sx={{
-                                marginTop: "50px",
+                                marginTop: "80px",
+                                marginBottom: "80px",
                                 display: "flex",
                                 alignItems: "center",
-                                height: "1000px",
                             }}
                         >
                             <Component {...pageProps} />
