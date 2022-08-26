@@ -222,104 +222,31 @@ const ProposicaoFormView = (props: {
                     gridSizeSmall={12}
                 />
                 <ProposicaoFormItem
-                    label="Receita/Despesa"
+                    label="Início da Vigência da Reserva de Verba"
                     methods={props.methods}
-                    name="receitaDespesa"
-                    select
-                    options={ReceitaDespesaView}
+                    name="inicioVigenciaReserva"
+                    date
                     rules={{
                         required: true,
                     }}
-                    gridSizeLarge={2}
-                    gridSizeSmall={12}
-                />
-                <ProposicaoFormItem
-                    label="Moeda"
-                    methods={props.methods}
-                    name="moeda"
-                    text
-                    rules={{
-                        required: true,
-                        maxLength: 250,
-                    }}
-                    gridSizeLarge={1}
-                    gridSizeSmall={12}
-                />
-                <ProposicaoFormItem
-                    label="Valor Total da Proposição"
-                    methods={props.methods}
-                    name="valorTotalProposicao"
-                    text
-                    typeNumber
-                    rules={{ required: true }}
                     gridSizeLarge={3}
                     gridSizeSmall={12}
                 />
                 <ProposicaoFormItem
-                    label="Valor Original do Contrato"
+                    label="Fim da Vigência da Reserva de Verba"
                     methods={props.methods}
-                    name="valorOriginalContrato"
-                    text
-                    typeNumber
-                    rules={{ required: true }}
-                    gridSizeLarge={2}
-                    gridSizeSmall={12}
-                />
-                <ProposicaoFormItem
-                    label="Valor Atual do Contrato"
-                    methods={props.methods}
-                    name="valorAtualContrato"
-                    text
-                    typeNumber
-                    rules={{ required: true }}
-                    gridSizeLarge={2}
-                    gridSizeSmall={12}
-                />
-                <ProposicaoFormItem
-                    label="Número do Contrato"
-                    methods={props.methods}
-                    name="numeroContrato"
-                    text
+                    name="fimVigenciaReserva"
+                    date
                     rules={{
                         required: true,
-                        maxLength: 250,
                     }}
-                    gridSizeLarge={4}
-                    gridSizeSmall={12}
-                />
-                <ProposicaoFormItem
-                    label="Fornecedor"
-                    methods={props.methods}
-                    name="fornecedor"
-                    text
-                    rules={{
-                        required: true,
-                        maxLength: 250,
-                    }}
-                    gridSizeLarge={4}
-                    gridSizeSmall={12}
-                />
-                <ProposicaoFormItem
-                    label="Termo"
-                    methods={props.methods}
-                    name="termo"
-                    text
-                    rules={{
-                        required: true,
-                        maxLength: 250,
-                    }}
-                    gridSizeLarge={4}
+                    gridSizeLarge={3}
                     gridSizeSmall={12}
                 />
             </FormSection>
         </FormPaper>
     );
 };
-
-//     numeroReservaVerba!: string;
-//     valorReservaVerba!: number;
-//     inicioVigenciaReserva!: Date;
-//     fimVigenciaReserva!: Date;
 
 //     numeroProposicao!: string;
 //     protocoloExpediente!: string;
