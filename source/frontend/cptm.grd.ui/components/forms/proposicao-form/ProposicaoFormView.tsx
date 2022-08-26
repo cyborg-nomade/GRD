@@ -25,6 +25,7 @@ import {
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import ProposicaoFormItem from "./ProposicaoFormItem";
 import FormTitleDivider from "../FormTitleDivider";
+import FormSection from "../FormSection";
 
 const ProposicaoFormView = (props: {
     saveProposicaoHandler: (proposicao: CreateProposicaoDto) => {};
@@ -41,8 +42,7 @@ const ProposicaoFormView = (props: {
             onSubmit={props.methods.handleSubmit(props.saveProposicaoHandler)}
         >
             <Box sx={{ flexGrow: 1 }}>
-                <FormTitleDivider title="Dados Gerais" />
-                <Grid container spacing={1}>
+                <FormSection title="Dados Gerais">
                     <ProposicaoFormItem
                         label="Título"
                         methods={props.methods}
@@ -102,9 +102,8 @@ const ProposicaoFormView = (props: {
                         gridSizeLarge={12}
                         gridSizeSmall={12}
                     />
-                </Grid>
-                <FormTitleDivider title="Contratação / Custos" />
-                <Grid container spacing={1}>
+                </FormSection>
+                <FormSection title="Contratação / Custos">
                     <ProposicaoFormItem
                         label="Observações sobre Custos"
                         methods={props.methods}
@@ -218,9 +217,8 @@ const ProposicaoFormView = (props: {
                         gridSizeLarge={4}
                         gridSizeSmall={12}
                     />
-                </Grid>
-                <FormTitleDivider title="Reserva de Verba" />
-                <Grid container spacing={1}>
+                </FormSection>
+                <FormSection title="Reserva de Verba">
                     <ProposicaoFormItem
                         label="Número da Reserva de Verba"
                         methods={props.methods}
@@ -335,7 +333,7 @@ const ProposicaoFormView = (props: {
                         gridSizeLarge={4}
                         gridSizeSmall={12}
                     />
-                </Grid>
+                </FormSection>
             </Box>
         </Paper>
     );
