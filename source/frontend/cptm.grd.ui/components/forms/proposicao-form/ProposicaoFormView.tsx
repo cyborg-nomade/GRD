@@ -5,6 +5,7 @@ import { ObjetoProposicaoView, ReceitaDespesaView } from "models/common.model";
 import ProposicaoFormItem from "./ProposicaoFormItem";
 import FormSection from "../FormSection";
 import FormPaper from "../FormPaper";
+import { useAppSelector } from "services/redux/hooks";
 
 const ProposicaoFormView = (props: {
     saveProposicaoHandler: (proposicao: CreateProposicaoDto) => {};
@@ -14,6 +15,8 @@ const ProposicaoFormView = (props: {
     error: any;
     clearError: () => void;
 }) => {
+    const authState = useAppSelector((state) => state.auth);
+
     return (
         <FormPaper
             submitHandler={props.methods.handleSubmit(
@@ -126,13 +129,22 @@ const ProposicaoFormView = (props: {
                     gridSizeSmall={12}
                 />
                 <ProposicaoFormItem
+                    label="Área"
+                    methods={props.methods}
+                    name="area"
+                    select
+                    options={authState.currentUser.areasAcesso.map((area) => {
+                        return { label: area.sigla, value: area.id };
+                    })}
+                    gridSizeLarge={3}
+                    gridSizeSmall={12}
+                />
+                <ProposicaoFormItem
                     label="Outras Observações"
                     methods={props.methods}
                     name="outrasObservacoes"
                     text
-                    multiline
-                    rows={2}
-                    gridSizeLarge={12}
+                    gridSizeLarge={9}
                     gridSizeSmall={12}
                 />
             </FormSection>
@@ -445,8 +457,5 @@ const ProposicaoFormView = (props: {
         </FormPaper>
     );
 };
-
-//     criador!: UserDto;
-//     area!: GroupDto;
 
 export default ProposicaoFormView;
