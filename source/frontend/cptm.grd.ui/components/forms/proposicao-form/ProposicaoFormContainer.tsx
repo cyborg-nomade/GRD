@@ -1,4 +1,3 @@
-import { CreateAcaoDto } from "models/acoes/acao.model";
 import { CreateProposicaoDto } from "models/proposicoes/proposicao.model";
 import React from "react";
 import { useForm } from "react-hook-form";
