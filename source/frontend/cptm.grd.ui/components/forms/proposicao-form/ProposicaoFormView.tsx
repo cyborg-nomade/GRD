@@ -313,26 +313,138 @@ const ProposicaoFormView = (props: {
                     required
                 />
             </FormSection>
+            <FormSection title="Anexos">
+                <ProposicaoFormItem
+                    label="Síntese do Processo"
+                    methods={props.methods}
+                    name="sinteseProcessoFilePath"
+                    file
+                    gridSizeLarge={12}
+                    gridSizeSmall={12}
+                    required
+                />
+                <ProposicaoFormItem
+                    label="Nota Técnica"
+                    methods={props.methods}
+                    name="notaTecnicaFilePath"
+                    file
+                    gridSizeLarge={12}
+                    gridSizeSmall={12}
+                    required
+                />
+                <ProposicaoFormItem
+                    label="PRD"
+                    methods={props.methods}
+                    name="prdFilePath"
+                    file
+                    gridSizeLarge={12}
+                    gridSizeSmall={12}
+                    required
+                />
+                <ProposicaoFormItem
+                    label="Parecer Jurídico"
+                    methods={props.methods}
+                    name="parecerJuridicoFilePath"
+                    file
+                    gridSizeLarge={12}
+                    gridSizeSmall={12}
+                    required
+                />
+                <ProposicaoFormItem
+                    label="Termo de Referência"
+                    methods={props.methods}
+                    name="trFilePath"
+                    file
+                    gridSizeLarge={12}
+                    gridSizeSmall={12}
+                    required
+                />
+                <ProposicaoFormItem
+                    label="Relatório Técnico"
+                    methods={props.methods}
+                    name="relatorioTecnicoFilePath"
+                    file
+                    gridSizeLarge={12}
+                    gridSizeSmall={12}
+                    required
+                />
+                <ProposicaoFormItem
+                    label="Planilha Quantitativa"
+                    methods={props.methods}
+                    name="planilhaQuantFilePath"
+                    file
+                    gridSizeLarge={12}
+                    gridSizeSmall={12}
+                    required
+                />
+                <ProposicaoFormItem
+                    label="Edital"
+                    methods={props.methods}
+                    name="editalFilePath"
+                    file
+                    gridSizeLarge={12}
+                    gridSizeSmall={12}
+                    required
+                />
+                <ProposicaoFormItem
+                    label="Reserva de Verba"
+                    methods={props.methods}
+                    name="reservaVerbaFilePath"
+                    file
+                    gridSizeLarge={12}
+                    gridSizeSmall={12}
+                    required
+                />
+                <ProposicaoFormItem
+                    label="SC"
+                    methods={props.methods}
+                    name="scFilePath"
+                    file
+                    gridSizeLarge={12}
+                    gridSizeSmall={12}
+                    required
+                />
+                <ProposicaoFormItem
+                    label="RAV"
+                    methods={props.methods}
+                    name="ravFilePath"
+                    file
+                    gridSizeLarge={12}
+                    gridSizeSmall={12}
+                    required
+                />
+                <ProposicaoFormItem
+                    label="Cronograma Físico-Financeiro"
+                    methods={props.methods}
+                    name="cronogramaFisFinFilePath"
+                    file
+                    gridSizeLarge={12}
+                    gridSizeSmall={12}
+                    required
+                />
+                <ProposicaoFormItem
+                    label="PCA"
+                    methods={props.methods}
+                    name="pcaFilePath"
+                    file
+                    gridSizeLarge={12}
+                    gridSizeSmall={12}
+                    required
+                />
+                <ProposicaoFormItem
+                    label="Outros"
+                    methods={props.methods}
+                    name="outrosFilePath"
+                    file
+                    multiFile
+                    gridSizeLarge={12}
+                    gridSizeSmall={12}
+                    required
+                />
+            </FormSection>
         </FormPaper>
     );
 };
-
-//     sinteseProcessoFilePath!: string;
-//     notaTecnicaFilePath!: string;
-//     prdFilePath!: string;
-//     parecerJuridicoFilePath!: string;
-//     trFilePath!: string;
-//     relatorioTecnicoFilePath!: string;
-//     planilhaQuantFilePath!: string;
-//     editalFilePath!: string;
-//     reservaVerbaFilePath!: string;
-//     scFilePath!: string;
-//     ravFilePath!: string;
-//     cronogramaFisFinFilePath!: string;
-//     pcaFilePath!: string;
-//     outrosFilePath!: string[];
-
-//     seq!: number;
 
 //     criador!: UserDto;
 //     area!: GroupDto;

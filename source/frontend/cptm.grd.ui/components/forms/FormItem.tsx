@@ -14,6 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Grid from "@mui/material/Unstable_Grid2";
+import { FileCopy } from "@mui/icons-material";
 
 export type FormItemProps<T extends FieldValues> = {
     label: string;
@@ -28,6 +29,8 @@ export type FormItemProps<T extends FieldValues> = {
     rows?: number;
     typeNumber?: boolean;
     checkbox?: boolean;
+    file?: boolean;
+    multiFile?: boolean;
     gridSizeSmall: number;
     gridSizeLarge: number;
     disabled?: boolean;
@@ -124,6 +127,29 @@ const FormItem = <T extends FieldValues>(props: FormItemProps<T>) => {
                                     labelPlacement="start"
                                 />
                             </FormGroup>
+                        )}
+                        {props.file && (
+                            <TextField
+                                disabled={props.disabled}
+                                required={props.required}
+                                fullWidth
+                                type="file"
+                                label={props.label}
+                                ref={ref}
+                                value={value}
+                                onChange={onChange}
+                                onBlur={onBlur}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <FileCopy />
+                                        </InputAdornment>
+                                    ),
+                                }}
+                                inputProps={
+                                    props.multiFile ? { multiple: true } : {}
+                                }
+                            />
                         )}
                     </React.Fragment>
                 )}

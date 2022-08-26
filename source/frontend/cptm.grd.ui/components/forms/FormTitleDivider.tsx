@@ -7,7 +7,7 @@ const FormTitleDivider = (props: { title: string }) => {
     return (
         <Divider
             textAlign="left"
-            sx={{ marginTop: "25px", marginBottom: "5px" }}
+            sx={{ marginTop: "25px", marginBottom: "9px" }}
         >
             <Chip
                 color="primary"
