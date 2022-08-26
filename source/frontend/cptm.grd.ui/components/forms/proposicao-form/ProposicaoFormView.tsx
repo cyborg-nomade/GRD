@@ -1,30 +1,8 @@
-import {
-    Box,
-    Checkbox,
-    Chip,
-    Divider,
-    FormControlLabel,
-    FormGroup,
-    MenuItem,
-    Paper,
-    TextField,
-    Typography,
-} from "@mui/material";
-import {
-    CreateProposicaoDto,
-    ProposicaoDto,
-} from "models/proposicoes/proposicao.model";
+import { CreateProposicaoDto } from "models/proposicoes/proposicao.model";
 import React from "react";
-import { Controller, UseFormReturn } from "react-hook-form";
-import Grid from "@mui/material/Unstable_Grid2";
-import {
-    ObjetoProposicao,
-    ObjetoProposicaoView,
-    ReceitaDespesaView,
-} from "models/common.model";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { UseFormReturn } from "react-hook-form";
+import { ObjetoProposicaoView, ReceitaDespesaView } from "models/common.model";
 import ProposicaoFormItem from "./ProposicaoFormItem";
-import FormTitleDivider from "../FormTitleDivider";
 import FormSection from "../FormSection";
 import FormPaper from "../FormPaper";
 
