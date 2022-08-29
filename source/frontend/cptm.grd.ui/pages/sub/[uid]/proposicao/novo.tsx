@@ -7,7 +7,7 @@ const SubProposicaoNovo = () => {
     return (
         <Stack>
             <Typography variant="h4">Nova Proposição</Typography>
-            <ProposicaoFormContainer />
+            <ProposicaoFormContainer new />
         </Stack>
     );
 };
