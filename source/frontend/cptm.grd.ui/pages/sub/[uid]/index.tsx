@@ -6,7 +6,7 @@ const SubHome = () => {
     return (
         <Stack width={"100%"}>
             <Typography variant="h4">
-                Início - Todos as suas Proposições
+                Início - Todas as suas Proposições
             </Typography>
             <ProposicaoListContainer byUser />
         </Stack>
