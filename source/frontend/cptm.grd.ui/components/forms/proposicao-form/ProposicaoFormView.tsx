@@ -133,10 +133,7 @@ const ProposicaoFormView = (props: {
                     label="Área"
                     methods={props.methods}
                     name="area"
-                    select
-                    options={authState.currentUser.areasAcesso.map((area) => {
-                        return { label: area.sigla, value: area.id };
-                    })}
+                    selectArea
                     gridSizeLarge={3}
                     gridSizeSmall={12}
                 />
@@ -455,7 +452,10 @@ const ProposicaoFormView = (props: {
                     required
                 />
             </FormSection>
-            <ProposicaoFormActions />
+            <ProposicaoFormActions
+                saveProposicaoHandler={props.saveProposicaoHandler}
+                methods={props.methods}
+            />
         </FormPaper>
     );
 };

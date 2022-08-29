@@ -15,6 +15,7 @@ import TextField from "@mui/material/TextField";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Grid from "@mui/material/Unstable_Grid2";
 import { FileCopy } from "@mui/icons-material";
+import { useAppSelector } from "services/redux/hooks";
 
 export type FormItemProps<T extends FieldValues> = {
     label: string;
@@ -23,6 +24,7 @@ export type FormItemProps<T extends FieldValues> = {
     rules?: RegisterOptions;
     date?: boolean;
     select?: boolean;
+    selectArea?: boolean;
     options?: { label: string; value: number }[];
     text?: boolean;
     multiline?: boolean;
@@ -38,6 +40,8 @@ export type FormItemProps<T extends FieldValues> = {
 };
 
 const FormItem = <T extends FieldValues>(props: FormItemProps<T>) => {
+    const authState = useAppSelector((state) => state.auth);
+
     return (
         <Grid xs={props.gridSizeSmall} md={props.gridSizeLarge}>
             <Controller
@@ -82,6 +86,43 @@ const FormItem = <T extends FieldValues>(props: FormItemProps<T>) => {
                                         {option.label}
                                     </MenuItem>
                                 ))}
+                            </TextField>
+                        )}
+                        {props.selectArea && (
+                            <TextField
+                                disabled={props.disabled}
+                                required={props.required}
+                                fullWidth
+                                select
+                                label={props.label}
+                                ref={ref}
+                                value={value.id || ""}
+                                onChange={(val) => {
+                                    console.log(val);
+                                    console.log(
+                                        authState.currentUser.areasAcesso.find(
+                                            (o) => o.id === +val.target.value
+                                        )
+                                    );
+
+                                    return onChange(
+                                        authState.currentUser.areasAcesso.find(
+                                            (o) => o.id === +val.target.value
+                                        )
+                                    );
+                                }}
+                                onBlur={onBlur}
+                            >
+                                {authState.currentUser.areasAcesso.map(
+                                    (option) => (
+                                        <MenuItem
+                                            key={option.id}
+                                            value={option.id}
+                                        >
+                                            {option.sigla}
+                                        </MenuItem>
+                                    )
+                                )}
                             </TextField>
                         )}
                         {props.text && (
