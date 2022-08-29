@@ -5,8 +5,10 @@ import ProposicaoListContainer from "components/lists/proposicao-list/Proposicao
 const SubHome = () => {
     return (
         <Stack width={"100%"}>
-            <Typography variant="h4">Página Inicial</Typography>
-            <ProposicaoListContainer />
+            <Typography variant="h4">
+                Início - Todos as suas Proposições
+            </Typography>
+            <ProposicaoListContainer byUser />
         </Stack>
     );
 };

@@ -5,7 +5,7 @@ import { useAppSelector } from "services/redux/hooks";
 import { useHttpClient } from "services/util/http-hook";
 import ProposicaoListView from "./ProposicaoListView";
 
-const ProposicaoListContainer = () => {
+const ProposicaoListContainer = (props: { byUser?: boolean }) => {
     const authState = useAppSelector((state) => state.auth);
     const [proposicoes, setProposicoes] = useState<ProposicaoListDto[]>([]);
 
@@ -13,12 +13,16 @@ const ProposicaoListContainer = () => {
         useHttpClient();
 
     useEffect(() => {
-        const getProposicaoListHandler = async () => {
+        const getProposicaoListByUserHandler = async () => {
             const proposicaoAPI = new ProposicoesApi();
             try {
                 const proposicaoList: ProposicaoListDto[] = await sendRequest<
                     ProposicaoListDto[]
-                >(proposicaoAPI.getAll, authState.token);
+                >(
+                    proposicaoAPI.getByUser,
+                    authState.token,
+                    authState.currentUser.id
+                );
                 console.log(proposicaoList);
                 setProposicoes(proposicaoList);
             } catch (err) {
@@ -26,12 +30,14 @@ const ProposicaoListContainer = () => {
             }
         };
 
-        getProposicaoListHandler();
+        if (props.byUser) {
+            getProposicaoListByUserHandler();
+        }
 
         return () => {
             setProposicoes([]);
         };
-    }, [authState.token, sendRequest]);
+    }, [authState.currentUser.id, authState.token, props.byUser, sendRequest]);
 
     return <ProposicaoListView rows={proposicoes} />;
 };
