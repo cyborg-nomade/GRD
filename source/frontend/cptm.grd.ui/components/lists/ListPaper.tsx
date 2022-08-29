@@ -10,9 +10,11 @@ const ListPaper = (props: { children?: React.ReactNode }) => {
                 padding: "10px",
                 margin: "auto",
                 width: "100%",
+                height: "100%",
+                display: "flex",
             }}
         >
-            <Box sx={{ flexGrow: 1, height: "600px" }}>{props.children}</Box>
+            <Box sx={{ flexGrow: 1 }}>{props.children}</Box>
         </Paper>
     );
 };

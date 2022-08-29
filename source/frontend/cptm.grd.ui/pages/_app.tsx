@@ -12,21 +12,25 @@ import Router from "next/router";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import ptBrLocale from "dayjs/locale/pt-br";
+import { ptBR } from "@mui/x-data-grid";
 
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: "#455a64",
-            light: "#718792",
-            dark: "#1c313a",
-        },
-        secondary: {
-            main: "#424242",
-            light: "#6d6d6d",
-            dark: "#1b1b1b",
+const theme = createTheme(
+    {
+        palette: {
+            primary: {
+                main: "#455a64",
+                light: "#718792",
+                dark: "#1c313a",
+            },
+            secondary: {
+                main: "#424242",
+                light: "#6d6d6d",
+                dark: "#1b1b1b",
+            },
         },
     },
-});
+    ptBR
+);
 
 function MyApp({ Component, pageProps }: AppProps) {
     useAuth();

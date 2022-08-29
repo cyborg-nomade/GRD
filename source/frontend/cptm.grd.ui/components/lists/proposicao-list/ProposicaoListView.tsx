@@ -50,7 +50,17 @@ const ProposicaoListView = (props: { rows: ProposicaoListDto[] }) => {
 
     return (
         <ListPaper>
-            <DataGrid rows={rows} columns={cols} />
+            <DataGrid
+                autoHeight
+                rows={rows}
+                columns={cols}
+                rowsPerPageOptions={[5, 10, 20]}
+                initialState={{
+                    pagination: {
+                        pageSize: 5,
+                    },
+                }}
+            />
         </ListPaper>
     );
 };
