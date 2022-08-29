@@ -28,17 +28,6 @@ const LoginFormView = (props: {
             sx={{ width: "28rem", padding: "10px", margin: "auto" }}
             onSubmit={props.methods.handleSubmit(props.loginHandler)}
         >
-            {props.error && (
-                <Alert
-                    severity={props.isWarning ? "warning" : "error"}
-                    onClose={props.clearError}
-                >
-                    <AlertTitle>
-                        {props.isWarning ? "Atenção" : "Erro"}
-                    </AlertTitle>
-                    {props.error}
-                </Alert>
-            )}
             <Stack spacing={2}>
                 <Typography variant="h6" ml={1}>
                     Login
@@ -92,6 +81,17 @@ const LoginFormView = (props: {
                     Login
                 </LoadingButton>
             </Stack>
+            {props.error && (
+                <Alert
+                    severity={props.isWarning ? "warning" : "error"}
+                    onClose={props.clearError}
+                >
+                    <AlertTitle>
+                        {props.isWarning ? "Atenção" : "Erro"}
+                    </AlertTitle>
+                    {props.error}
+                </Alert>
+            )}
         </Paper>
     );
 };
