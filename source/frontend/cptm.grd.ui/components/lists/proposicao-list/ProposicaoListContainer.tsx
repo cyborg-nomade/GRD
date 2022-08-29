@@ -39,7 +39,7 @@ const ProposicaoListContainer = (props: { byUser?: boolean }) => {
         };
     }, [authState.currentUser.id, authState.token, props.byUser, sendRequest]);
 
-    return <ProposicaoListView rows={proposicoes} />;
+    return <ProposicaoListView rows={proposicoes} isLoading={isLoading} />;
 };
 
 export default ProposicaoListContainer;

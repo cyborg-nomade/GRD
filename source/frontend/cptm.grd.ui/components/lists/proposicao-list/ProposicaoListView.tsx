@@ -1,5 +1,10 @@
 import React from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {
+    DataGrid,
+    GridColDef,
+    GridEventListener,
+    GridToolbar,
+} from "@mui/x-data-grid";
 import { ProposicaoListDto } from "models/proposicoes/proposicao.model";
 import { keys } from "lodash";
 import ListPaper from "../ListPaper";
@@ -8,8 +13,12 @@ import {
     ProposicaoStatusView,
     ReceitaDespesaView,
 } from "models/common.model";
+import { useRouter } from "next/router";
 
-const ProposicaoListView = (props: { rows: ProposicaoListDto[] }) => {
+const ProposicaoListView = (props: {
+    rows: ProposicaoListDto[];
+    isLoading: boolean;
+}) => {
     const fields = keys(new ProposicaoListDto()).filter((key) => {
         return key != "criador" && key != "areaSolicitante" && key != "id";
     });
@@ -48,6 +57,13 @@ const ProposicaoListView = (props: { rows: ProposicaoListDto[] }) => {
         };
     });
 
+    const router = useRouter();
+
+    const handleRowClick: GridEventListener<"rowClick"> = (params) => {
+        console.log(params);
+        router.push(`${router.asPath}/proposicao/${params.id}`);
+    };
+
     return (
         <ListPaper>
             <DataGrid
@@ -60,6 +76,10 @@ const ProposicaoListView = (props: { rows: ProposicaoListDto[] }) => {
                         pageSize: 5,
                     },
                 }}
+                disableSelectionOnClick
+                components={{ Toolbar: GridToolbar }}
+                loading={props.isLoading}
+                onRowClick={handleRowClick}
             />
         </ListPaper>
     );
