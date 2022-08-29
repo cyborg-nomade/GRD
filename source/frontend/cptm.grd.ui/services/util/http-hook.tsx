@@ -15,10 +15,10 @@ export const useHttpClient = () => {
             activeHttpRequests.current.push(httpAbortController);
 
             try {
-                console.log(args);
+                // console.log(args);
 
                 const response = await request(...args);
-                console.log("response: ", response);
+                // console.log("response: ", response);
 
                 activeHttpRequests.current = activeHttpRequests.current.filter(
                     (reqCtrl) => reqCtrl !== httpAbortController
