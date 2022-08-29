@@ -2,8 +2,13 @@ import { Button } from "@mui/material";
 import React from "react";
 import FormActionSection from "../FormActionSection";
 import Grid from "@mui/system/Unstable_Grid";
+import { CreateProposicaoDto } from "models/proposicoes/proposicao.model";
+import { UseFormReturn } from "react-hook-form";
 
-const ProposicaoFormActions = () => {
+const ProposicaoFormActions = (props: {
+    saveProposicaoHandler: (proposicao: CreateProposicaoDto) => {};
+    methods: UseFormReturn<CreateProposicaoDto>;
+}) => {
     const cancelar = (
         <Button variant="outlined" color="error">
             Cancelar
@@ -11,7 +16,13 @@ const ProposicaoFormActions = () => {
     );
 
     const salvar = (
-        <Button variant="contained" color="success">
+        <Button
+            variant="contained"
+            color="success"
+            onClick={() =>
+                props.saveProposicaoHandler(props.methods.getValues())
+            }
+        >
             Salvar
         </Button>
     );
