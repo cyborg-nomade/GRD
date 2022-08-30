@@ -16,6 +16,8 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Grid from "@mui/material/Unstable_Grid2";
 import { FileCopy } from "@mui/icons-material";
 import { useAppSelector } from "services/redux/hooks";
+import _ from "lodash";
+import { FormControl, FormHelperText, FormLabel } from "@mui/material";
 
 export type FormItemProps<T extends FieldValues> = {
     label: string;
@@ -43,25 +45,37 @@ const FormItem = <T extends FieldValues>(props: FormItemProps<T>) => {
     const authState = useAppSelector((state) => state.auth);
 
     return (
-        <Grid xs={props.gridSizeSmall} md={props.gridSizeLarge}>
+        <Grid
+            xs={props.gridSizeSmall}
+            md={props.gridSizeLarge}
+            container={props.checkbox}
+            direction={"row"}
+            alignItems={"center"}
+            justifyContent={"flex-end"}
+            pr={props.checkbox ? "10px" : undefined}
+        >
             <Controller
                 rules={props.rules}
                 control={props.methods.control}
                 name={props.name}
-                render={({ field: { onChange, onBlur, value, ref } }) => (
+                render={({
+                    field: { onChange, onBlur, value, ref },
+                    fieldState: { error },
+                }) => (
                     <React.Fragment>
                         {props.date && (
                             <DatePicker
                                 label={props.label}
                                 value={value}
                                 onChange={onChange}
-                                ref={ref}
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
                                         id={`data-${props.name}"`}
                                         required={props.required}
                                         disabled={props.disabled}
+                                        error={!!error}
+                                        inputRef={ref}
                                     />
                                 )}
                             />
@@ -73,10 +87,11 @@ const FormItem = <T extends FieldValues>(props: FormItemProps<T>) => {
                                 fullWidth
                                 select
                                 label={props.label}
-                                ref={ref}
+                                inputRef={ref}
                                 value={value}
                                 onChange={onChange}
                                 onBlur={onBlur}
+                                error={!!error}
                             >
                                 {props.options.map((option) => (
                                     <MenuItem
@@ -95,7 +110,7 @@ const FormItem = <T extends FieldValues>(props: FormItemProps<T>) => {
                                 fullWidth
                                 select
                                 label={props.label}
-                                ref={ref}
+                                inputRef={ref}
                                 value={value.id || ""}
                                 onChange={(val) => {
                                     console.log(val);
@@ -112,6 +127,7 @@ const FormItem = <T extends FieldValues>(props: FormItemProps<T>) => {
                                     );
                                 }}
                                 onBlur={onBlur}
+                                error={!!error}
                             >
                                 {authState.currentUser.areasAcesso.map(
                                     (option) => (
@@ -134,10 +150,11 @@ const FormItem = <T extends FieldValues>(props: FormItemProps<T>) => {
                                 rows={props.rows}
                                 type={props.typeNumber ? "number" : "text"}
                                 label={props.label}
-                                ref={ref}
+                                inputRef={ref}
                                 value={value}
                                 onChange={onChange}
                                 onBlur={onBlur}
+                                error={!!error}
                                 InputProps={
                                     props.typeNumber
                                         ? {
@@ -152,22 +169,50 @@ const FormItem = <T extends FieldValues>(props: FormItemProps<T>) => {
                             />
                         )}
                         {props.checkbox && (
-                            <FormGroup>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={value as boolean}
-                                            onChange={onChange}
-                                            onBlur={onBlur}
-                                            ref={ref}
-                                            disabled={props.disabled}
-                                            required={props.required}
-                                        />
-                                    }
-                                    label={props.label}
-                                    labelPlacement="start"
-                                />
-                            </FormGroup>
+                            <FormControl
+                                required={props.required}
+                                error={!!error}
+                                component="fieldset"
+                                variant="standard"
+                            >
+                                <FormGroup>
+                                    <FormLabel component="legend">
+                                        Parecer Jurídico
+                                    </FormLabel>
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                checked={value as boolean}
+                                                onChange={onChange}
+                                                onBlur={onBlur}
+                                                inputRef={ref}
+                                                disabled={props.disabled}
+                                                required={props.required}
+                                                sx={{
+                                                    color: !!error
+                                                        ? "#d32f2f"
+                                                        : "#000000de",
+                                                }}
+                                            />
+                                        }
+                                        label={props.label}
+                                        labelPlacement="start"
+                                        sx={{
+                                            color: !!error
+                                                ? "#d32f2f"
+                                                : "#000000de",
+                                        }}
+                                    />
+                                </FormGroup>
+                                {!!_.get(
+                                    props.methods.formState.errors,
+                                    props.name
+                                ) && (
+                                    <FormHelperText>
+                                        Este campo é obrigatório
+                                    </FormHelperText>
+                                )}
+                            </FormControl>
                         )}
                         {props.file && (
                             <TextField
@@ -176,7 +221,7 @@ const FormItem = <T extends FieldValues>(props: FormItemProps<T>) => {
                                 fullWidth
                                 type="file"
                                 label={props.label}
-                                ref={ref}
+                                inputRef={ref}
                                 value={value}
                                 onChange={onChange}
                                 onBlur={onBlur}
@@ -190,6 +235,7 @@ const FormItem = <T extends FieldValues>(props: FormItemProps<T>) => {
                                 inputProps={
                                     props.multiFile ? { multiple: true } : {}
                                 }
+                                error={!!error}
                             />
                         )}
                     </React.Fragment>
