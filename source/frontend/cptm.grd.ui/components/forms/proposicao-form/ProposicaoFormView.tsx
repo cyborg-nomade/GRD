@@ -10,7 +10,7 @@ import ProposicaoFormActions from "./ProposicaoFormActions";
 
 const ProposicaoFormView = (props: {
     showFiles: boolean;
-    saveProposicaoHandler: (proposicao: CreateProposicaoDto) => {};
+
     methods: UseFormReturn<CreateProposicaoDto>;
     isLoading: boolean;
     isWarning: boolean;
@@ -20,11 +20,7 @@ const ProposicaoFormView = (props: {
     const authState = useAppSelector((state) => state.auth);
 
     return (
-        <FormPaper
-            submitHandler={props.methods.handleSubmit(
-                props.saveProposicaoHandler
-            )}
-        >
+        <FormPaper>
             <FormSection title="Dados Gerais">
                 <ProposicaoFormItem
                     label="Título"
@@ -455,10 +451,7 @@ const ProposicaoFormView = (props: {
                     />
                 </FormSection>
             )}
-            <ProposicaoFormActions
-                saveProposicaoHandler={props.saveProposicaoHandler}
-                methods={props.methods}
-            />
+            <ProposicaoFormActions methods={props.methods} />
         </FormPaper>
     );
 };

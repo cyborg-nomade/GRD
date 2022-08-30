@@ -65,11 +65,6 @@ const ProposicaoFormContainer = (props: {
         sendRequest,
     ]);
 
-    const saveProposicaoHandler = (proposicao: CreateProposicaoDto) => {
-        console.log(proposicao);
-        return {};
-    };
-
     return (
         <ProposicaoFormView
             methods={methods}
@@ -77,7 +72,6 @@ const ProposicaoFormContainer = (props: {
             error={error}
             isLoading={isLoading}
             isWarning={isWarning}
-            saveProposicaoHandler={saveProposicaoHandler}
             showFiles={!props.edit || false}
         />
     );

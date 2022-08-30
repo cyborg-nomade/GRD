@@ -6,7 +6,6 @@ import { CreateProposicaoDto } from "models/proposicoes/proposicao.model";
 import { UseFormReturn } from "react-hook-form";
 
 const ProposicaoFormActions = (props: {
-    saveProposicaoHandler: (proposicao: CreateProposicaoDto) => {};
     methods: UseFormReturn<CreateProposicaoDto>;
 }) => {
     const cancelar = (
@@ -15,13 +14,16 @@ const ProposicaoFormActions = (props: {
         </Button>
     );
 
+    const saveProposicaoHandler = (proposicao: CreateProposicaoDto) => {
+        console.log(proposicao);
+        return {};
+    };
+
     const salvar = (
         <Button
             variant="contained"
             color="success"
-            onClick={() =>
-                props.saveProposicaoHandler(props.methods.getValues())
-            }
+            onClick={() => saveProposicaoHandler(props.methods.getValues())}
         >
             Salvar
         </Button>
