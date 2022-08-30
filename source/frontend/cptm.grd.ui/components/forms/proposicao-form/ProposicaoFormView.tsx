@@ -44,14 +44,12 @@ const ProposicaoFormView = (props: {
                     required
                 />
                 <ProposicaoFormItem
-                    label="Possui Parecer Jurídico?"
+                    label="Possui?"
                     methods={props.methods}
                     name="possuiParecerJuridico"
                     checkbox
-                    rules={{ required: true }}
                     gridSizeLarge={2}
                     gridSizeSmall={12}
-                    required
                 />
                 <ProposicaoFormItem
                     label="Descrição Proposição"
@@ -133,6 +131,8 @@ const ProposicaoFormView = (props: {
                     selectArea
                     gridSizeLarge={3}
                     gridSizeSmall={12}
+                    rules={{ required: true }}
+                    required
                 />
                 <ProposicaoFormItem
                     label="Outras Observações"
