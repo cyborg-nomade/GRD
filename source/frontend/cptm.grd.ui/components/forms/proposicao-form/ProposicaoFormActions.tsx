@@ -1,18 +1,32 @@
-import { Button } from "@mui/material";
-import React from "react";
+import { Alert, AlertTitle, Button, CircularProgress } from "@mui/material";
+import React, { useState } from "react";
 import FormActionSection from "../FormActionSection";
 import Grid from "@mui/system/Unstable_Grid";
-import { CreateProposicaoDto } from "models/proposicoes/proposicao.model";
+import {
+    CreateProposicaoDto,
+    ProposicaoDto,
+} from "models/proposicoes/proposicao.model";
 import { UseFormReturn } from "react-hook-form";
 import { useAppSelector } from "services/redux/hooks";
 import { useRouter } from "next/router";
 import { getFirstError } from "services/util/getFirstError";
+import ConfirmationModalContainer from "components/modals/confirmation-modal/ConfirmationModalContainer";
+import { useHttpClient } from "services/util/http-hook";
+import ProposicoesApi from "services/api/proposicoes.api";
 
 const ProposicaoFormActions = (props: {
     methods: UseFormReturn<CreateProposicaoDto>;
 }) => {
+    const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
+    const [shouldFocusError, setShouldFocusError] = useState(true);
     const authState = useAppSelector((state) => state.auth);
     const router = useRouter();
+    const { clearError, error, isLoading, isWarning, sendRequest } =
+        useHttpClient();
+
+    const handleCloseModal = () => {
+        setConfirmationModalOpen(false);
+    };
 
     const cancelarHandler = () => {
         router.back();
@@ -27,11 +41,37 @@ const ProposicaoFormActions = (props: {
     const salvarHandler = (proposicao: CreateProposicaoDto) => {
         console.log(proposicao);
 
-        console.log(props.methods.formState.errors);
         props.methods.trigger();
 
-        console.log(getFirstError(props.methods.formState.errors));
-        props.methods.setFocus(getFirstError(props.methods.formState.errors));
+        if (props.methods.formState.errors && shouldFocusError) {
+            console.log(props.methods.formState.errors);
+            console.log(getFirstError(props.methods.formState.errors));
+            props.methods.setFocus(
+                getFirstError(props.methods.formState.errors)
+            );
+            setShouldFocusError(false);
+        } else {
+            setConfirmationModalOpen(true);
+        }
+    };
+
+    const salvarAgreeModalHandler = async () => {
+        const proposicaoAPI = new ProposicoesApi();
+        try {
+            const proposicaoToSend = props.methods.getValues();
+            proposicaoToSend.criador = authState.currentUser;
+            const postProposicaoResponse: ProposicaoDto =
+                await sendRequest<ProposicaoDto>(
+                    proposicaoAPI.post,
+                    authState.token,
+                    proposicaoToSend
+                );
+            console.log(postProposicaoResponse);
+            // setConfirmationModalOpen(false);
+            router.push("/");
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     const salvar = (
@@ -129,27 +169,52 @@ const ProposicaoFormActions = (props: {
     );
 
     return (
-        <FormActionSection>
-            <Grid
-                xs={12}
-                container
-                justifyContent="space-between"
-                alignItems="center"
-                flexDirection={{ xs: "column", sm: "row" }}
-                sx={{ fontSize: "12px" }}
+        <React.Fragment>
+            <ConfirmationModalContainer
+                open={confirmationModalOpen}
+                agreeHandler={salvarAgreeModalHandler}
+                disagreeHandler={handleCloseModal}
+                handleClose={handleCloseModal}
+                title="Salvar Proposição"
             >
-                <Grid sx={{ order: { xs: 2, sm: 1 } }}>{cancelar}</Grid>
+                {isLoading ? (
+                    <CircularProgress />
+                ) : error ? (
+                    <Alert
+                        severity={isWarning ? "warning" : "error"}
+                        onClose={clearError}
+                    >
+                        <AlertTitle>
+                            {isWarning ? "Atenção" : "Erro"}
+                        </AlertTitle>
+                        {error}
+                    </Alert>
+                ) : (
+                    "Deseja mesmo salvar esta Proposição"
+                )}
+            </ConfirmationModalContainer>
+            <FormActionSection>
                 <Grid
+                    xs={12}
                     container
-                    columnSpacing={1}
-                    sx={{ order: { xs: 1, sm: 2 } }}
+                    justifyContent="space-between"
+                    alignItems="center"
+                    flexDirection={{ xs: "column", sm: "row" }}
+                    sx={{ fontSize: "12px" }}
                 >
-                    <Grid>{remover}</Grid>
-                    <Grid>{enviarAprovacao}</Grid>
-                    <Grid>{salvar}</Grid>
+                    <Grid sx={{ order: { xs: 2, sm: 1 } }}>{cancelar}</Grid>
+                    <Grid
+                        container
+                        columnSpacing={1}
+                        sx={{ order: { xs: 1, sm: 2 } }}
+                    >
+                        <Grid>{remover}</Grid>
+                        <Grid>{enviarAprovacao}</Grid>
+                        <Grid>{salvar}</Grid>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </FormActionSection>
+            </FormActionSection>
+        </React.Fragment>
     );
 };
 

@@ -223,7 +223,13 @@ const FormItem = <T extends FieldValues>(props: FormItemProps<T>) => {
                                 label={props.label}
                                 inputRef={ref}
                                 value={value}
-                                onChange={onChange}
+                                onChange={
+                                    props.multiFile
+                                        ? (val) => {
+                                              value.push(val.target.value);
+                                          }
+                                        : onChange
+                                }
                                 onBlur={onBlur}
                                 InputProps={{
                                     startAdornment: (

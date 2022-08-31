@@ -201,7 +201,7 @@ const ProposicaoFormView = (props: {
                     name="valorTotalProposicao"
                     text
                     typeNumber
-                    rules={{ required: true }}
+                    rules={{ required: true, min: 1 }}
                     gridSizeLarge={3}
                     gridSizeSmall={12}
                     required
@@ -212,7 +212,7 @@ const ProposicaoFormView = (props: {
                     name="valorOriginalContrato"
                     text
                     typeNumber
-                    rules={{ required: true }}
+                    rules={{ required: true, min: 1 }}
                     gridSizeLarge={2}
                     gridSizeSmall={12}
                     required
@@ -223,7 +223,7 @@ const ProposicaoFormView = (props: {
                     name="valorAtualContrato"
                     text
                     typeNumber
-                    rules={{ required: true }}
+                    rules={{ required: true, min: 1 }}
                     gridSizeLarge={2}
                     gridSizeSmall={12}
                     required
@@ -290,6 +290,7 @@ const ProposicaoFormView = (props: {
                     typeNumber
                     rules={{
                         required: true,
+                        min: 1,
                     }}
                     gridSizeLarge={3}
                     gridSizeSmall={12}
