@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Oracle.EntityFrameworkCore" Version="6.21.61" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CPTM.GRD.Application\CPTM.GRD.Application.csproj" />
+    <ProjectReference Include="..\CPTM.GRD.Common\CPTM.GRD.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+    <Folder Include="Repositories\AccessControl\" />
+    <Folder Include="Repositories\Acoes\Children\" />
+    <Folder Include="Repositories\Logging\" />
+    <Folder Include="Repositories\Views\" />
+    <Folder Include="Repositories\Proposicoes\Children\" />
+    <Folder Include="Repositories\Reunioes\Children\" />
+  </ItemGroup>
+
+</Project>
