@@ -45,7 +45,7 @@ const NavbarView = (props: React.PropsWithChildren) => {
                         component="div"
                         sx={{
                             flexGrow: 1,
-                            display: { sm: "block" },
+                            display: { xs: "block", lg: "none" },
                             cursor: "pointer",
                         }}
                         onClick={() => {
@@ -53,6 +53,20 @@ const NavbarView = (props: React.PropsWithChildren) => {
                         }}
                     >
                         GRD
+                    </Typography>
+                    <Typography
+                        variant="h6"
+                        component="div"
+                        sx={{
+                            flexGrow: 1,
+                            display: { xs: "none", lg: "block" },
+                            cursor: "pointer",
+                        }}
+                        onClick={() => {
+                            router.push("../");
+                        }}
+                    >
+                        GRD - Sistema de Gestão de Reuniões de Diretoria
                     </Typography>
                     <IconButton
                         color="inherit"
@@ -86,7 +100,8 @@ const NavbarView = (props: React.PropsWithChildren) => {
                     {drawer}
                 </Drawer>
             </Box>
-            <Box component="main" sx={{ pt: 10, pl: 3 }}>
+
+            <Box component="main" sx={{ width: "100%" }}>
                 {props.children}
             </Box>
         </Box>
